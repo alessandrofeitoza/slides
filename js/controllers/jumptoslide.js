@@ -45,6 +45,9 @@ export default class JumpToSlide {
 		if( this.isVisible() ) {
 			this.element.remove();
 			this.jumpInput.value = '';
+
+			clearTimeout( this.jumpTimeout );
+			delete this.jumpTimeout;
 		}
 
 	}
@@ -55,18 +58,58 @@ export default class JumpToSlide {
 
 	}
 
+	/**
+	 * Parses the current input and jumps to the given slide.
+	 */
 	jump() {
 
-		const value = this.jumpInput.value.trim( '' );
-		const indices = this.Reveal.location.getIndicesFromHash( value );
+		clearTimeout( this.jumpTimeout );
+		delete this.jumpTimeout;
 
-		if( indices && value !== '' ) {
+		const query = this.jumpInput.value.trim( '' );
+		let indices = this.Reveal.location.getIndicesFromHash( query, { oneBasedIndex: true } );
+
+		// If no valid index was found and the input query is a
+		// string, fall back on a simple search
+		if( !indices && /\S+/i.test( query ) ) {
+			indices = this.search( query );
+		}
+
+		if( indices && query !== '' && query.length > 1 ) {
 			this.Reveal.slide( indices.h, indices.v, indices.f );
 			return true;
 		}
 		else {
 			this.Reveal.slide( this.indicesOnShow.h, this.indicesOnShow.v, this.indicesOnShow.f );
 			return false;
+		}
+
+	}
+
+	jumpAfter( delay ) {
+
+		clearTimeout( this.jumpTimeout );
+		this.jumpTimeout = setTimeout( () => this.jump(), delay );
+
+	}
+
+	/**
+	 * A lofi search that looks for the given query in all
+	 * of our slides and returns the first match.
+	 */
+	search( query ) {
+
+		const regex = new RegExp( '\\b' + query.trim() + '\\b', 'i' );
+
+		const slide = this.Reveal.getSlides().find( ( slide ) => {
+			return regex.test( slide.innerText );
+		} );
+
+		if( slide ) {
+			return this.Reveal.getIndices( slide );
+		}
+		else {
+			return null;
 		}
 
 	}
@@ -84,6 +127,7 @@ export default class JumpToSlide {
 
 	confirm() {
 
+		this.jump();
 		this.hide();
 
 	}
@@ -113,7 +157,7 @@ export default class JumpToSlide {
 
 	onInput( event ) {
 
-		this.jump();
+		this.jumpAfter( 200 );
 
 	}
 
