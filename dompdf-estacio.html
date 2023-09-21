@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>DOMPDF</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+					Welcome!
+				</section>
+
+				<section>
+					<h1>Gerando PDF com PHP</h1>
+				</section>
+
+                <section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Bacharel em Sistemas de Informação</li>
+								<li class="fragment">Especialista em Eng. de Software</li>
+								<li class="fragment">Professor de códigos e outras computarias</li>
+                                <li class="fragment">Community Manager da PHP com Rapadura</li>
+								<li class="fragment">FullStack Developer</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+					
+				</section>
+
+                <section>
+                    <img src="img/other/why.gif" width="100%" alt="">
+                    <h3>Por motivos quais alguém quer gerar um PDF?</h3>
+                </section>
+
+                <section>
+                    <h1>DOMPDF</h1>
+
+                    <ul>
+                        <li class="fragment">PHP tá em mais de 70% da web</li>
+                        <li class="fragment">É de código aberto (tá lá no github)</li>
+                        <li class="fragment">É mantido</li>
+                        <li class="fragment">É fácil</li>
+                    </ul>
+
+                    <br><br>
+                    <a href="https://github.com/dompdf/dompdf" class="fragment">https://github.com/dompdf/dompdf</a>
+                </section>
+
+                <section>
+                    <h2>Quem aqui "programa" em HTML?</h2>
+                    <img width="80%" src="img/dompdf/html.gif" alt="">
+                </section>
+
+                <section>
+                    Passo a passo
+                    <ul>
+                        <li class="fragment">Preparar uma pequena aplicação PHP/Web</li>
+                        <li class="fragment">Criar uma tela para listar algumas coisa</li>
+                        <li class="fragment">Baixar o DOMPDF</li>
+                        <li class="fragment">Criar o código de renderização</li>
+                        <li class="fragment">Tá pronto o sorvetinho</li>
+                        <li class="fragment">conectar ao banco de dados (talvez)</li>
+                    </ul>
+                </section>
+
+
+				<section>
+					<img width="80%" src="img/other/typing_01.gif" alt="">
+				</section>
+
+                <section>
+                    <h3>Valeu o boi, valeu o vaqueiro!</h3>
+                    <br>
+                    <div class="fragment">@alessandro_feitoza</div>
+                </section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
