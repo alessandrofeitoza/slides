@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Backend Security</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Backend Security:</h2>
+					O inicio, o principio e o começo
+				</section>
+
+				<section>Quem sou eu?</section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Bacharel em Sistemas de Informação</li>
+								<li class="fragment">Especialista em Eng. de Software</li>
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Backend Developer (Objective/Ebanx)</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+					
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">O Inicio</li>
+                        <li class="fragment">O Principio</li>
+                        <li class="fragment">E o Começo</li>
+                    </ul>
+				</section>
+
+				<section>
+					<img width="60%" src="img/gifs/carinha.gif" alt="">
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+						<li class="fragment">Fundamentos</li>
+                        <li class="fragment">Senhas e criptografia</li>
+                        <li class="fragment">XSS</li>
+                        <li class="fragment">SQL Injection</li>
+                        <li class="fragment">upload de arquivos</li>
+                    </ul>
+				</section>
+
+
+
+				<section data-background="#333">
+					<p class="r-fit-text">Basicamente isso é o básico</p>
+				</section>
+
+				<section>
+					<h3>Introdução</h3>
+				</section>
+
+				<section data-background="#fff">
+					Ambiente Monolitico
+                    <img src="img/backend-security/monolitico.png" alt="">
+                </section>
+
+                <section data-background="#fff">
+					Ambiente com Frontend & Backend
+                    <img src="img/backend-security/req-res.png" alt="">
+                </section>
+
+				<section>Em outras palavras</section>
+
+
+                <section data-background="#fff">
+                    <img src="img/backend-security/arquiteturas.webp" width="100%" alt="">
+                </section>
+
+<!--
+				<section data-background="#990000">
+					<p style="font-size: 4rem;">Dados são o novo petroleo</p>
+				</section>
+			-->
+
+				<section>
+					<h2>E onde que entra a segurança?</h2>
+					<p class="fragment">Validações no frontend são usabilidade</p>
+					<p class="fragment">Validações no backend são segurança</p>
+				</section>
+
+				<section>
+					Mão na massa #1
+				</section>
+
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							Quando se fala em desenvolvimento de software temos isso:
+							<br><br>
+							<p class="fragment">E onde entra a segurança?</p>
+						</div>
+						<div>
+							<img width="140%" src="img/backend-security/bom-barato.gif" alt="">
+						</div>
+					</div>
+				</section>
+
+
+
+				<section>
+					<img width="50%" src="img/backend-security/piramide.png" alt="">
+					
+					<p class="fragment"><strong>Segurança</strong> não é produto, é processo, ela <strong>fornece qualidade</strong></p>
+				</section>
+
+
+
+				
+				<section data-background="#140536">
+					<p style="font-size: 3rem;">
+						Segurança e Velocidade de entrega são situações <span style="color: yellow;">completamentes diferentes</span>.
+						<br><br>
+						Enquanto velocidade é vísivel, segurança não...
+						<em class="fragment" style="font-weight: bold; color: red;">até que ela falhe</em> 
+					</p>
+				</section>
+
+
+				<section>
+					<p class="fragment">Custo para corrigir uma falha de segurança</p>
+
+					<img width="70%" src="img/backend-security/custos-falhas.gif" alt="">
+					
+					<p class="fragment" style="font-size: 1rem;">Retirado de relatório da IBM</p>
+				</section>
+				
+
+
+				<section>
+					<p class="">Vale ressaltar os pilares</p>
+
+					<img width="50%" src="img/backend-security/pilares.png" alt="">
+					
+				</section>
+				
+
+				<section data-background="#333">
+					<p>
+						Bora começar a festa
+					</p>	
+
+					<img width="50%" src="img/backend-security/rave.gif" alt="">
+				</section>
+
+				<section>
+					<h1>SENHAS</h1>
+				</section>
+
+
+				<section>
+					<h1>XSS</h1>
+				</section>
+
+
+				<section>
+					<h1>SQL INJECTION</h1>
+				</section>
+
+
+				<section>
+					Valeu o Boi, value o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					youtube.com/c/AlessandroFeitozaComputaria
+
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://speakerdeck.com/cviniciussdias/seguranca-com-php-o-minimo-que-todo-dev-deve-saber">
+								Vinicius Dias: O minimo que todo DEV deve saber
+							</a>
+						</li>
+
+						<li>
+							<a href="https://speakerdeck.com/evandromohr/devsecops-criando-uma-cultura-shift-left">
+								Evandro Mohr: Cultura DevSecOps
+							</a>
+						</li>
+						
+						<li>
+							<a href="https://speakerdeck.com/evandromohr/hacking-your-php-application">
+								Evandro Mohr: Hackeando sua aplicação PHP
+							</a>
+						</li>
+
+
+						<li>
+							<a href="https://anchisesbr.blogspot.com/2018/07/seguranca-custo-de-corrigir-os.html">
+								AnchisesLandia: Custo de corrigir bugs em produção
+							</a>
+						</li>
+						
+					</ul>
+				</section>
+
+
+				
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
