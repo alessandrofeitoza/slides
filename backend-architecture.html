@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Backend Architecture</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Backend Architecture:</h2>
+					Porque nem tudo é criar pastas
+				</section>
+
+				<section>Quem sou eu?</section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Bacharel em Sistemas de Informação</li>
+								<li class="fragment">Especialista em Eng. de Software</li>
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Backend Developer (Objective/Ebanx)</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+					
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+						<li class="fragment">Fundamentos</li>
+                        <li class="fragment">Engenharia</li>
+                        <li class="fragment">Design</li>
+                        <li class="fragment">Arquitetura</li>
+                        <li class="fragment">Mão na massa</li>
+                    </ul>
+				</section>
+
+                <!--
+                    - Engenharia VS Arquitetura
+                    - Design VS Arquitetura
+                    - Case 1: Precisamos criar um encurtador de URL
+                    - Anita: decide encurtar um link pra jogar no twitter
+                    - 
+                -->
+
+
+
+				<section data-background="#333">
+					<p class="r-fit-text">Basicamente isso é o básico</p>
+				</section>
+
+				<section>
+					<h3>Introdução</h3>
+				</section>
+
+				<section>
+					<h2>Engenharia</h2>
+
+					<img width="60%" src="img/backend-arch/pedreiro.gif" alt="">
+				</section>
+
+				<section>
+					<h2>O que faz um engenheiro?</h2>
+					<ul>
+						<li class="fragment">Projeta</li>
+						<li class="fragment">Desenvolve</li>
+						<li class="fragment">Implementa</li>
+						<li class="fragment">Constroi <span class="fragment">bugs</span> </li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Pedreiro de Software</h3>
+
+					<img src="img/backend-arch/pedreiro-soft.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<h3>E o que faz o Arquiteto?</h3>
+				</section>
+
+				<section>
+					<img src="img/backend-arch/arquiteto1.jpeg" alt="">
+				</section>
+
+
+				<section>
+					<img src="img/backend-arch/arquiteto2.jpg" alt="">
+				</section>
+
+
+				<section>
+					<img src="img/backend-arch/arquiteto3.jpeg" alt="">
+				</section>
+
+
+				<section>
+					<img width="35%" src="img/backend-arch/arquiteto4.jpeg" alt="">
+				</section>
+
+				<section>
+					<strong>Com isso descobrimos que o papel do arquiteto é?</strong>
+					<br><Br>
+
+					<ul>
+						<li class="fragment">Satisfazer as necessidades do cliente</li>
+						<li class="fragment">Fazer o bom uso das estruturas disponiveis</li>
+						<li class="fragment">Criar uma comunicação entre as diferentes partes da coisa toda</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Há diferença entre o arquiteto da construção civil e o arquiteto de software?</h2>
+				</section>
+
+				<section>
+					<p><em><strong>82%</strong> das moradias do país são feitas <strong>sem arquitetos ou engenheiros</strong></em></p>
+
+					<br>
+					<small class="fragment"><a href="https://caudf.gov.br/pesquisa-datafolha-82-das-moradias-do-pais-sao-feitas-sem-arquitetos-ou-engenheiros">Pesquisa Datafolha 2022</a></small>
+				</section>
+
+				<section>
+					<ul>
+						<li>SOLID</li>
+						<li>KISS</li>
+						<li>DRY</li>
+						<li>Clean Code</li>
+						<li>Object Calisthenics</li>
+						<li>DDD</li>
+					</ul>
+				</section>
+			
+				<section data-background="#140536">
+					<p style="font-size: 3rem;">
+						Essas coisas não são <span style="color: yellow; font-weight: bold;">Arquitetura</span>.
+						<br><br>
+						Isso tudo faz parte do...
+						<em class="fragment" style="font-weight: bold; color: red;">Design</em> 
+					</p>
+				</section>
+
+
+				<section data-background="#333">
+					<p class="r-fit-text">E o que é DESIGN?</p>
+				</section>
+
+				<section>
+					<img width="40%" src="img/backend-arch/design-patterns-book.jpg" alt="">
+				</section>
+
+				<section>
+					<img width="40%" src="img/backend-arch/clean-arch-book.jpg" alt="">
+				</section>
+
+				<section>
+					<img width="40%" src="img/backend-arch/ddd-book.jpg" alt="">
+				</section>
+
+				<section>
+					<h3>Domain Driven Design</h3>
+
+					<ul>
+						<li class="fragment">Dominio</li>
+						<li class="fragment">Linguagem Ubiqua/onipresente</li>
+						<li class="fragment">Bounded Context / contextos delimitados</li>
+						<li class="fragment">Context Map / mapeas os contextos</li>
+					</ul>
+				</section>
+
+				<section>
+					<p class="r-fit-text" style="color: red;">
+						Arquitetura não é Design
+					</p>
+				</section>
+
+				<section>
+					Complexidade <strong>Essencial</strong><br> X<br> Complexidade <strong>Acidental</strong>
+				</section>
+
+				<section>
+					<p>Arquitetura é sobre intenção, <strong>não sobre frameworks</strong></p>
+					<br>
+					<em>Uncle Bob</em>
+				</section>
+
+				<section>
+					<p>Arquitetura é sobre não jogar tudo nos peito da galera da infra</p>
+				</section>
+
+
+				<section>
+					<h2>Mão na massa #1</h2><hr>
+					<p>
+						Precisamos desenvolver um projetinho simples: <br><br>
+
+						<em class="fragment">Encurtador de links</em>
+					</p>
+				</section>
+
+				<section>
+					<h3>Problema #1</h3>
+					<hr>
+					<p class="fragment">
+						Design: Isolar a <strong>camada</strong> de acesso aos dados
+					</p>
+				</section>
+
+				<section>
+					<h3>Arquitetura de Camadas</h3>
+
+					<ul>
+						<li class="fragment">Hexagonal</li>
+						<li class="fragment">MVC</li>
+						<li class="fragment">MVP</li>
+						<li class="fragment">BCE</li>
+						<li class="fragment">Onion</li>
+						<li class="fragment">frank</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Problema #2</h3>
+					<hr>
+					<p class="fragment">
+						Precisamos criar um app com a mesma funcionalidade
+					</p>
+				</section>
+
+				<section>
+					<h3>Modelo Arquitetural</h3>
+
+					<ul>
+						<li class="fragment">Monolitico</li>
+						<li class="fragment">Microsserviços</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Monolitico</h3>
+					<hr>
+					<p class="fragment">Alguma coisa só estará disponivel se tudo estiver disponivel</p>
+				</section>
+
+
+				<section>
+					<h3>Microsserviços</h3>
+					<hr>
+					<p class="fragment">Alguma coisa poderá estar disponivel mesmo que tudo não esteja disponivel</p>
+				</section>
+
+
+				<section>
+					<h3>Tecnologias de API</h3>
+
+					<ul>
+						<li class="fragment">SOAP</li>
+						<li class="fragment">REST</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Problema #3</h3>
+					<hr>
+					<p class="fragment">
+						Estamos com problema de duplicidade, duas ou mais pessoas encurtando o mesmo link
+					</p>	
+				</section>
+
+				<section>
+					<p>Implementa o uso de filas</p>
+
+					<ul>
+						<li class="fragment">RabbitMQ</li>
+						<li class="fragment">Apache Kafka</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Problema #4</h3>
+					<hr>
+					<img src="img/backend-arch/anitta.gif" alt="" class="fragment">
+				</section>
+
+				<section>
+					<h3>Guarda na memoria pra evitar o consumo do banco</h3>
+					<ul>
+						<li>Redis</li>
+						<li>ElasticSearch</li>
+						<li>ScaleOut</li>
+					</ul>
+				</section>
+
+				<section>
+					E mais...
+				</section>
+				
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					youtube.com/c/AlessandroFeitozaComputaria
+
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://medium.com/sicreditech/arquitetura-de-software-estilos-e-padr%C3%B5es-de-design-50d62d684ef2">
+								Marcelo Gonçalves: Arquitetura de Soft. Estilos e Padrões de design
+							</a>
+						</li>
+
+						<li>
+							<a href="https://www.amazon.com.br/Domain-driven-design-atacando-complexidades-software/dp/8550800651">
+								Livro: Domain Driven Design (Eric Evans)
+							</a>
+						</li>
+						
+						<li>
+							<a href="https://www.amazon.com.br/Arquitetura-Limpa-Artes%C3%A3o-Estrutura-Software/dp/8550804606/ref=pd_bxgy_img_d_sccl_2/142-0219304-5480855?pd_rd_w=D6p6D&content-id=amzn1.sym.758f3509-df88-4265-806c-565a738dc05d&pf_rd_p=758f3509-df88-4265-806c-565a738dc05d&pf_rd_r=76H9DWAKMD2137P8310Q&pd_rd_wg=axAiL&pd_rd_r=024c71cf-1566-44ed-ae93-690867095c60&pd_rd_i=8550804606&psc=1">
+								Livro: Clean Architecture (Uncle Bob)
+							</a>
+						</li>
+
+
+						<li>
+							<a href="https://www.amazon.com.br/Padr%C3%B5es-Projetos-Solu%C3%A7%C3%B5es-Reutiliz%C3%A1veis-Orientados/dp/8573076100/ref=pd_sim_d_sccl_3_4/142-0219304-5480855?pd_rd_w=eRFWs&content-id=amzn1.sym.ce046315-1c04-4597-8eba-e706276d1412&pf_rd_p=ce046315-1c04-4597-8eba-e706276d1412&pf_rd_r=Y4X0KJVSDVZBZ3R99XGM&pd_rd_wg=a9VtG&pd_rd_r=d9f53450-34ba-4173-a55c-a43704948905&pd_rd_i=8573076100&psc=1">
+								Livro: Design Patterns (GoF)
+							</a>
+						</li>
+						
+					</ul>
+				</section>
+
+
+				
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
