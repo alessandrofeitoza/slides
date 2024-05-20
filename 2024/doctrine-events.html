@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Doctrine Events</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Doctrine Events</h1>
+					<p class="fragment" style="font-size: 4rem;"> Uma leve <strong>Introdução</strong></p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<!--
+				<section>
+					<div style="display: flex;">
+						<div>
+							<ul style="font-size: 2rem">
+								<li class="fragment">+12 anos como Dev</li>
+								<li class="fragment">+12 anos como professor de devs</li>
+								<li class="fragment">Já fui contratado, demitido, readimitido</li>
+								<li class="fragment">Já contratei, já desliguei pessoas</li>
+								<br>
+								<li class="fragment">E nenhuma dessas coisas eu fiz direito 🦆 </li>
+							</ul>
+						</div>
+						<div>
+							<img class="fragment" width="80%" src="../img/gifs/pato.gif" alt="">
+						</div>
+					</div>
+				</section>
+				-->
+
+				<section>
+					<h2>DOCTRINE</h2>
+
+					<ul>
+						<li class="fragment"><strong>DBAL</strong> - Abstraction Layer</li>
+						<li class="fragment"><strong>ORM</strong> - Object Relational Mapping</li>
+					</ul>
+
+					<br><br>
+
+					<a href="https://doctrine-project.com" class="fragment">Saiba mais</a>
+				</section>
+
+				<section>
+					<h3>Checklist</h3>
+
+					<ul>
+						<li class="fragment">Entity/Model</li>
+						<li class="fragment">Repository</li>
+						<li class="fragment">EntityManager (Connection)</li>
+						<li class="fragment">Persistencia</li>
+						<li class="fragment">EventListener</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h2>O que são os eventos?</h2>
+
+					<p class="fragment">
+						Praticamente "tudo" que acontece com uma entidade
+					</p>
+				</section>
+
+				<section>
+					<h2>Eventos mais comuns</h2>
+
+					<ul>
+						<li class="fragment">PostLoad</li>
+						<li class="fragment">PrePersist</li>
+						<li class="fragment">PostPersist</li>
+						<li class="fragment">...Update</li>
+						<li class="fragment">...Remove</li>
+						<li class="fragment">
+							<a href="https://www.doctrine-project.org/projects/doctrine-orm/en/3.1/reference/events.html#events-overview">Outros</a>
+						</li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<h1>Abordagem LifeCycle</h1>
+					<hr>
+					<p class="fragment">
+						Consiste em implementar disparos de eventos dentro da própria classe que representa a entidade
+					</p>
+				</section>
+
+				<section>
+					<img width="80%" src="img/doctrine-events/example_00.png" alt="">
+				</section>
+
+
+				<section>
+					<p>A grande desvantagem aqui é que precisariamos sempre chamar o <br> <em><code lang="php">$this->updatedAt = new DateTime();</code></em> <br> em todos os métodos set()</p>
+				</section>
+
+				<section data-background="#7f1734">
+					Conseguimos resolver isso facilmente com o <strong>PreUpdate</strong>
+				</section>
+
+				<section>
+					<img width="80%" src="img/doctrine-events/example_01.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<h1>Abordagem EventListener</h1>
+					<hr>
+					<p class="fragment">
+						Consiste em implementar um "ouvinte" de eventos, para escutar o que acontece em outras classes (tipo um Observer)
+					</p>
+				</section>
+
+
+				<section>
+					<img width="80%" src="img/doctrine-events/example_02.png" alt="">
+				</section>
+
+
+				<section>
+					<img width="80%" src="img/doctrine-events/example_03.png" alt="">
+				</section>
+
+
+
+				<section data-background="../img/gifs/isso_e_tudo_pessoal.gif"></section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
