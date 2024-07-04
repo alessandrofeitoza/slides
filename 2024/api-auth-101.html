@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Autenticação / Autorização de API</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Autenticação & Autorização</h2>
+                </section>
+
+                <section>
+					<p class="">Vale ressaltar os pilares</p>
+
+					<img width="50%" src="../img/pilares.jpeg" alt="">
+					
+				</section>
+
+                <section>
+					<p class="">Vale ressaltar os pilares</p>
+
+					<img width="50%" src="../img/backend-security/pilares.png" alt="">
+					
+				</section>
+
+                <section>
+					<img width="50%" src="../img/backend-security/piramide.png" alt="">
+					
+					<p class="fragment"><strong>Segurança</strong> não é produto, é processo, ela <strong>fornece qualidade</strong></p>
+				</section>
+
+
+                <section data-background="#333">
+                    <h1>Autenticação</h1>
+                    VS
+                    <h1>Autorização</h1>
+                </section>
+
+                <section>
+                    <strong>Autenticação</strong> confirma que o usuário é quem ele diz ser.
+                    
+                    <br><br>
+                    <p class="fragment">
+                        <strong>Autorização</strong> concede ao usuário "autenticado" as permissões para acessar determinadas coisas.
+                    </p>
+                </section>
+
+
+                <section data-background="#333">
+                    <h3>Quando se trata de uma API</h3>
+                    
+                    <p class="fragment"><strong>Autenticação</strong> é o processo de login</p>
+                    <p class="fragment"><strong>Autorização</strong> é um processo realizado a cada endpoint acessado </p>
+                </section>
+
+                <section>
+                    <h3>Ainda falando sobre API</h3>
+                    <table>
+                        <tr>
+                            <th>403</th>
+                            <td>Forbidden</td>
+                            <td class="fragment">O servidor não identificou o usuário</td>
+                        </tr>
+                        <tr>
+                            <th>401</th>
+                            <td>Unathourized</td>
+                            <td class="fragment">O usuário foi identificado, mas não pode acessar</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Bora botar a mão no código</h3>
+                    
+                </section>
+
+
+                
+				<section>
+					<p class="r-fit-text">DUVIDAS?</p>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
