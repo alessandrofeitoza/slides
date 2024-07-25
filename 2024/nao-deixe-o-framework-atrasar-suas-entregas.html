@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>
+            Não deixe o framework atrasar suas entregas
+        </title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<link rel="stylesheet" href="../css/custom.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <hr>
+					<h2>Não deixe o framework atrasar suas entregas</h2>
+                    <hr>
+					<p class="fragment" style="font-size: 4rem;">  
+                        Atrase-as <strong>você mesmo</strong> 
+                    </p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+                                <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
+                                <li class="fragment" style="color: #B45F06;">PHPeste</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">Parte 1</li>
+                        <li class="fragment">Parte 2</li>
+                        <li class="fragment">Parte 3</li>
+                        <li class="fragment">Parte 4</li>
+                    </ul>
+				</section>
+
+				<section>
+					<img src="../img/gifs/social-networks.webp" alt="">
+					<h3> <i class="fa-brands fa-instagram"></i> @alessandro_feitoza</h3>
+				</section>
+
+
+				<section>
+					<div style="display: flex; text-align: left;">
+						<div>
+							<h3>Essa talk não é um mandamento</h3>
+							<hr>
+							<ul>
+								<li class="fragment"><strong>Não</strong> estou negativando o uso de frameworks</li>
+								<li class="fragment">É uma visão minha <strong>baseada</strong>	na <strong>XP</strong> que eu acho que <strong>tenho</strong> </li>
+								<li class="fragment">E somada a interpretação literária e das ruas</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Por que isso é importante?</h3>
+							<hr>
+							<p class="fragment">A nova geração de devs quer aprender primeiro o <strong class="fragment highlight-red">framework antes da linguagem</strong></p>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Quais frameworks vocês conhecem/usam?</h3>
+
+					<img src="img/frameworks.jpeg" alt="">
+				</section>
+				
+				<section data-background="#6A93E5">
+					<h2 style="color: white; font-size: 3.5rem;">E o que diabé um <span style="font-size: 5rem;">framework</span>?</h2>
+				</section>
+				
+
+				
+				<section data-background="#e5bc6a">
+					<h2 style="color: #333; font-size: 3.5rem;">E uma <span style="font-size: 5rem;">Biblioteca/Library</span>?</h2>
+				</section>
+				
+				<section>
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Biblioteca/Library</h3>
+							<hr>
+							<ul>
+								<li class="fragment">Conjunto de códigos prontos com alguma(s) funcionalidade(s)</li>
+								<li class="fragment">É adicionada a aplicação para resolver um problema especifico</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#133337">
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Framework</h3>
+							<hr>
+							<ul>
+								<li class="fragment">Conjunto de códigos prontos com alguma(s) funcionalidade(s)</li>
+								<li class="fragment">Está na base da aplicação</li>
+								<li class="fragment">É decidido antes do projeto começar</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="../img/gifs/miranha.gif">
+					<h3 style="color: white;">Library VS Framework</h3>
+				</section>	
+
+				<section data-background="#333">
+					<h4>A diferença está na</h4>
+					<h2>Inversão de Controle</h2>
+				</section>
+
+				<section>
+					<p style="font-size: 3rem;">
+						Ao usar uma library:
+					</p>
+					<img src="img/frameworks/control-inversion-library.png" alt="">
+					<p class="fragment">
+						<strong>Você está no controle</strong> no fluxo da aplicação.
+					</p>
+				</section>
+
+				<section data-background="#333">
+					<img src="img/frameworks/library-01.png" alt="">
+
+					<img class="fragment" width="500px;" src="img/frameworks/library-02.png" alt="">
+				</section>
+
+				<section>
+					<p style="font-size: 3rem;">
+						Ao usar um framework:
+					</p>
+					<img src="img/frameworks/control-inversion-framework.png" alt="">
+					<p class="fragment">
+						Agora o seu código roda dentro da <strong>estrutura fornecida</strong> pelo framework.
+					</p>
+				</section>
+
+				<section data-background="#990000">
+					<p style="font-size: 3rem; text-align: left;">
+						Laravel:
+						<hr style="border-color: white;">
+					</p>
+					<img src="img/frameworks/laravel.png" alt="">
+				</section>
+
+				<section>
+					<p style="font-size: 3rem; text-align: left;">
+						Laravel:
+						<hr style="border-color: white;">
+					</p>
+					<img src="img/frameworks/framework-01.png" alt="">
+				</section>
+
+				
+
+				<section data-background="#0b5394">
+					<p style="font-size: 3rem; text-align: left;">
+						React <span class="fragment">(criando uma aplicação nova):</span>
+						<hr style="border-color: white;">
+					</p>
+					<img src="img/frameworks/react.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img width="80%" src="img/frameworks/framework-02.png" alt="">
+				</section>
+
+				<section>
+					<div style="display: flex; justify-content: space-around;">
+						<div style="width: 100%;">
+							<img width="500px" src="img/frameworks/control-inversion.png" alt="">
+						</div>
+						<div style="width: 80%;">
+							No mundo real <strong>o framework usar seu código para executar bibliotecas</strong> 
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<img width="70%;" src="img/frameworks/fw-library.png" alt="">
+				</section>
+
+				<section>
+					<h3 style="color: #333; font-size: 3.5rem;">Geramos então o <span style="font-size: 5rem;">Acoplamento</span></h3>
+				
+					<img class="fragment" width="60%;" src="../img/gifs/acoplamento.gif" alt="">
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Há quantos anos você faz código?</li>
+						<li class="fragment">Já precisou decidir qual framework ou biblioteca usar? </li>
+						<li class="fragment">Já cogitou começar um projeto do zero por causa da decisão de alguém?</li>
+					</ul>
+				</section>
+
+				<section data-background="img/frameworks/casal-framework-novo.png">
+
+				</section>
+
+				<section>
+					<p>Pontos <strong>Positivos</strong> de usar um framework</p>
+					<div style="display: flex;">
+						<div style="width: 100%; text-align: left;">
+
+							<img width="380px" src="../img/gifs/vantagens.webp" alt="">
+						</div>
+						<div style="width: 100%;">
+							<ul>
+								<li class="fragment">Ecossistema Coeso</li>
+								<li class="fragment">Já tem o óbvio (Rotas, conexão, etc)</li>
+								<li class="fragment">Estrutura de arquivos e diretórios padronizada</li>
+								<li class="fragment">Objetivo</li>
+								<li class="fragment">Seguro**</li>
+								<li class="fragment">Validado pela comunidade*</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<p>Pontos <strong>Negativos</strong> de usar um framework</p>
+					<div style="display: flex; justify-content: space-around;">
+						<div style="width: 80%;">
+							<ul>
+								<li class="fragment">Muito código (nem sempre precisamos)</li>
+								<li class="fragment">"Díficil" integração com um projeto legado</li>
+								<li class="fragment">Pouca flexibilidade</li>
+							</ul>
+						</div>
+						<div style="width: 100%; text-align: left;">
+
+							<img width="390px" src="../img/gifs/desvantagens.webp" alt="">
+						</div>
+						
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<p style="font-size: 3.5rem">A tal da <span style="font-weight: bold; font-size: 4rem;">Alta Coesão</span> e <span style="font-weight: bold; font-size: 4rem;">Baixo Acoplamento</span></p>
+				</section>
+
+				<section>
+					<h2>Cuidado com o Lobisomen</h2>
+					<img src="../img/gifs/lobisomem.gif" alt="">
+				</section>
+
+				<section>
+					<p>
+						<em>
+							<strong style="font-size: 3.4rem;">Aquilo que a gente conhece</strong> e confia pode se tornar 
+							<strong  style="font-size: 3.4rem;">nosso pior pesadelo</strong>
+						</em>
+					</p>
+					<div style="display: flex; justify-content: space-around;">
+						<div style="width: 100%;">
+							<img width="100%" src="../img/gifs/jacob.webp" alt="">
+						</div>
+						<div style="width: 100%; text-align: center;">
+	
+							<img width="200px" class="fragment" src="img/frameworks/livro-mitico_.jpg" alt="">
+						</div>
+					</div>
+				</section>
+				
+				<section data-background="#acacac">
+					<p class="r-fit-text">
+						05 passos <br>para o sucesso
+					</p>
+				</section>
+
+				<section data-background="#333">
+					<h3>01 - Antes de sair comparando frameworks</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Domine a linguagem, <strong>Aprenda o PHP/JS</strong> de verdade, puro, <strong>das ruas</strong> </li>
+						<li class="fragment">Aprenda paradigmas, <strong>Orientação a Objetos, Funcional, Estruturado</strong> e como os artefatos se relacionam </li>
+						<li class="fragment">Domine a linguagem, <strong>Entenda</strong> o funcionamento de pacotes <strong>(Composer/NPM/PIP)</strong> </li>
+						<li class="fragment">Estude arquiteturas: <strong>(Monolitico, Microservices, serverless)</strong> e design de código </li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<h3>02 - Antes de escolher um framework</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment"> <strong>Instale</strong> e <strong>teste</strong> vários outros, teste, <strong>crie protótipos (não só CRUDs)</strong>  </li>
+						<li class="fragment">A documentação deve se abrir com você <strong>Se ela for misteriosa, fuja!</strong> </li>
+						<li class="fragment"><strong>Veja o engajamento da comunidade:</strong> (issues, PRs, discussion) </li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<h3>03 - Antes de se decidir</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Olhe o reclame aqui <strong>(Stackoverflow)</strong> </li>
+						<li class="fragment">Perguntar para <strong>quem já usa</strong> (equipe, comunidades) </li>
+						<li class="fragment">Veja o número de downloads/forks <strong>(packagist/git)</strong> </li>
+						<li class="fragment"><strong>Procure conteúdo </strong> (Palestras, eventos, tutoriais, videos) </li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<h3>04 - Depois de decidir</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Monte a sua stack (<strong>não precisa usar tudo</strong> que o framework oferece </li>
+						<li class="fragment"><strong>Aprenda SQL</strong> (nem só de ORM viverá o dev) </li>
+						<li class="fragment">Cuidado com as coisas <strong>automágicas</strong> </li>
+						<li class="fragment"> Não queime na largada (o que é "ágil" no ínicio <strong>pode se tornar custoso</strong> durante o processo, <strong>e inviável no fim</strong>) </li>
+					</ul>
+				</section>
+
+
+				<section data-background="#333">
+					<h3>05 - Pronto, e agora?</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment"><strong>Documente</strong> sua experiência </li>
+						<li class="fragment"><strong>Não se prenda demais</strong> ao framework (veja maneiras de isolar suas regras) </li>
+						<li class="fragment">Adapte-se (<strong>entenda</strong> o framework e <strong>reescreva as regras</strong>) </li>
+						<li class="fragment"> <strong>Sugira</strong> melhorias, <strong>reporte</strong> bugs, <strong>contribua</strong> com o projeto </li>
+						<li class="fragment"> <strong>Multiplique</strong> conhecimento</li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<hr>
+					<h3>E é isso</h3>
+					<hr>
+				</section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://speakerdeck.com/raphaeldealmeida/pare-de-programar-orientado-a-framework">
+								Pare de programar orientado a framework - <small>Raphael Almeida (PHP RIO)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.freecodecamp.org/news/the-difference-between-a-framework-and-a-library-bd133054023f/">
+								The difference between a framework and a library
+							</a>
+						</li>
+						<li>
+							<a href="https://tiagoanacretto.wordpress.com/2013/12/05/acoplamento-e-coesao-afinal-o-que-e-isso/">
+								Acoplamento e Coesão: afinal, o que é isso?
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O mitico homem mês <span style="font-size: 1.2rem;">(Ensaios sobre a Eng. de Software), Frederick Brooks Jr - 1995</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O desenvolvedor limpo <span style="font-size: 1.2rem;">(Clean Coder), Uncle Bob - 2011</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
