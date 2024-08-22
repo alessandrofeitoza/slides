@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export loaded ua-phantomjs">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>
+            10 Mandamentos da carreira dev
+        </title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<meta name="description" content="Slides">
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <div class="slide-content">
+                        <hr>
+                        <h1>PHP</h1>
+                        <hr>  
+                        <h3 class="fragment">Tudo que você precisa saber para dizer que sabe</h3>
+                    </div>
+				</section>
+
+
+				<section>
+					<div class="slide-content">
+                        <h2>Quem sou eu?</h2>
+					</div>
+				</section>
+
+				<section>
+					<div style="display: flex; margin-top: 100px;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+                                <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
+                                <li class="fragment" style="color: #B45F06;"><strong>PHP</strong>este</li>
+							</ul>
+						</div>
+						<div>
+							<img width="50%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+                <section class="slide-content">
+                    <h1>Code Style</h1>
+                    <p class="fragment">PHP não é terra sem lei <small class="fragment">(mas se quiser pode)</small></p>
+                    <p class="fragment">Você não chega num lugar sem saber as regras de lá</p>
+                    <p class="fragment">Não é porque você tá aprendendo que não pode aprender do jeito certo</p>
+                </section>
+
+                <section  data-background="#333">
+                    <h2>Code Style</h2>
+                    <div><hr></div>
+                    <ul>
+                        <li class="fragment"><a href="https://www.php-fig.org/psr/psr-12/">PSR 12</a></li>
+                        <li class="fragment"><a href="https://github.com/piotrplenik/clean-code-php"> Clean Code </a></li>
+                        <li class="fragment"> PHP CS Fixer / PHP CodeSniffer </li>
+                    </ul>
+                </section>
+
+                <section class="slide-content">
+                    <h1>Debugging</h1>
+                    <p class="fragment">PHP é Interpretado</p>
+                    <p class="fragment">Não precisa <em>breakpoint</em> pré compilação (que nem no java)</p>
+                    <p class="fragment"> <em>Ninguém debuga no PHP</em> <span class="fragment">(Mito)</span> </p>
+                </section>
+
+                <section class="slide-content" data-background="#333">
+                    <h2>Debugging</h2>
+                    <hr>
+                    <ul>
+                        <li class="fragment">xDebug</li>
+                        <li class="fragment">var_dump, die, dd(), </li>
+                        <li class="fragment">Laravel/DebugBar</li>
+                        <li class="fragment">Symfony/debug</li>
+                    </ul>
+                </section>
+
+
+                <section class="slide-content">
+                    <h1> ORM / ODM</h1>
+                    <p class="fragment"><a href="https://alessandrofeitoza.github.io/slides/2024/database-patterns.html">Aprenda sobre Database Pattern</a></p>
+                    <p class="fragment"> Não deixe de aprender SQL puro (vc vai precisar) </p>
+                    <p class="fragment"> Não conte com o ORM pratudo, pra mapear é show de bola </p>
+                    <p class="fragment"> Se for mexer com banco NoSQL procure por ODMs </p>
+                </section>
+
+                <section class="slide-content" data-background="#333">
+                    <h2>ORM / ODM</h2>
+                    <hr>
+                    <ul>
+                        <li class="fragment">DoctrineORM </li>
+                        <li class="fragment">DoctrineODM (MongoDB)</li>
+                        <li class="fragment">Eloquent</li>
+                        <li class="fragment">Propel</li>
+                        <li class="fragment">CycleORM</li>
+                    </ul>
+                </section>
+
+
+                <section class="slide-content">
+                    <h1>Frameworks</h1>
+                    <p class="fragment"><a href="https://alessandrofeitoza.github.io/slides/2024/nao-deixe-o-framework-atrasar-suas-entregas.html">Não deixe o framwork atrapalhar suas entregas</a></p>
+                    <p class="fragment"><a href="https://alessandrofeitoza.github.io/slides/2024/database-patterns.html">Aprenda sobre Database Pattern</a></p>
+                    <p class="fragment"> Aprenda primeiro o PHP das Ruas </p>
+                    <p class="fragment"> Aprenda Orientação a Objetos </p>
+                    <p class="fragment"> <a href="https://github.com/alessandrofeitoza/crud-php-oo/">Faça um CRUD com PHP puro, do jeito certo</a> </p>
+                </section>
+
+                <section class="slide-content" data-background="#333">
+                    <h2>Frameworks</h2>
+                    <hr>
+                    <ul>
+                        <li class="fragment">Symfony</li>
+                        <li class="fragment">Laravel</li>
+                        <li class="fragment">Slim</li>
+                        <li class="fragment">Silex, CodeIgniter, Phalcon, Yii, etc</li>
+                    </ul>
+                </section>
+
+
+                <section class="slide-content">
+                    <h1>Stack / Ecossistema</h1>
+                    <p class="fragment">Defina o(s) banco(s) principal(is)</p>
+                    <p class="fragment"> Defina/Aprenda a arquitetura (monolitica, microservices, mvc, layers, SOA) </p>
+                    <p class="fragment"> Entenda o problema que quer resolver <em class="fragment">(e isole ele)</em> </p>
+                    <p class="fragment"> Dê uma olhada com os olhos em DDD </p>
+                </section>
+
+                <section class="slide-content" data-background="#333">
+                    <h2>Stack / Ecossistema</h2>
+                    <hr>
+                    <ul>
+                        <li class="fragment">Bancos: MySQL/MariaDB, PostGres, MongoDB e muitos outros </li>
+                        <li class="fragment">CMS: WordPress, Drupal, Magento, Joomla</li>
+                        <li class="fragment">LMS: Moodle, WordPress</li>
+                    </ul>
+                </section>
+
+                <section class="slide-content">
+                    <h1> Testes / Qualidade</h1>
+                    <p class="fragment"> Defina o que vale a pena testar (endpoints, regras de negócio, etc) </p>
+                    <p class="fragment"> Crie testes junto com os códigos (TDD ou algo assim) </p>
+                    <p class="fragment"> Testes unitários são rápidos mas não garantem muita coisa </p>
+                    <p class="fragment"> Lembre da Teoria das Janelas Quebradas </p>
+                </section>
+
+                <section class="slide-content" data-background="#333">
+                    <h2>Testes / Qualidade</h2>
+                    <hr>
+                    <ul>
+                        <li class="fragment">PHPunit </li>
+                        <li class="fragment">Behat</li>
+                        <li class="fragment">PHPSpec</li>
+                        <li class="fragment">Codeception</li>
+                        <li class="fragment">Pest</li>
+                    </ul>
+                </section>
+
+                <section class="slide-content" data-background="#333">
+                    
+                    <h1>Ambiente</h1>
+                    <hr>
+                    <ul>
+                        <li class="fragment"> <a href="https://github.com/alessandrofeitoza/setup-php-docker">Docker</a>  </li>
+                        <li class="fragment">Visual Studio Code / PHPStorm</li>
+                        <li class="fragment"> <strong>Terminal</strong> <a href="https://psysh.org/">Psysh</a> </li>
+                        <li class="fragment"> <strong>Terminal</strong> <a href="https://ohmyz.sh/">OhMyZSH</a> </li>
+
+                        <li class="fragment"> <strong>Cliente de banco</strong> <a href="https://dbeaver.io">DBeaver</a> </li>
+                    </ul>
+                </section>
+
+
+                <section class="slide-content">
+                    <h1>Outras coisas do PHP</h1>
+                    <hr>
+                    <ul>
+                        <li class="fragment"> <strong>Machine Learning: </strong> PHP-ML / <a href="https://github.com/alessandrofeitoza/setup-php-docker">Rubix-ML</a>  </li>
+                        <li class="fragment"> <strong>Event Driven: </strong> <a href="https://github.com/reactphp/reactphp"></a> ReactPHP </li>
+                        <li class="fragment"> <strong>ServerLess</strong> <a href="https://bref.sh/">Bref</a> </li>
+                        <li class="fragment"> <strong>Performance</strong> <a href="https://github.com/hyperf/hyperf">Hyperf</a> </li>
+
+                    </ul>
+                </section>
+
+                <section class="slide-content" data-background="#333">
+                    
+                    <h1>Outras coisas do PHP</h1>
+                    <hr>
+                    <ul>
+                        <li class="fragment"> <strong>Arrumar a bagunça: </strong> <a href="https://phpmd.org">PHP Mess Detector</a>  </li>
+                        <li class="fragment"> <strong>Encontrar bugs: </strong> <a href="https://phpstan.org"></a> PHP Stan </li>
+                        <li class="fragment"> <strong>Money/Currency</strong> <a href="https://moneyphp.org">MoneyPHP</a> </li>
+
+                    </ul>
+                </section>
+
+
+
+                <section class="slide-content">
+                    
+                    <h1>Cuidado</h1>
+                    <hr>
+                    <ul>
+                        <li class="fragment"> XSS  </li>
+                        <li class="fragment"> SQL Injection </li>
+                        <li class="fragment"> Encriptação de senhas </li>
+                        <li class="fragment"> Upload de arquivos </li>
+                    </ul>
+                </section>
+
+
+
+
+                <section class="slide-content" data-background="#333">
+                    
+                    <h1>Comunidades</h1>
+                    <hr>
+                    <ul>
+                        <li class="fragment"> <a href="https://t.me/phpbrasil">PHP Brasil</a>  </li>
+                        <li class="fragment"> <a href="https://t.me/phpcomrapadura"></a> PHP com Rapadura </li>
+                    </ul>
+                </section>
+
+				<section>
+					<p class="r-fit-text">PHP não faz tudo <br> mas faz um bocado de coisa </p>
+				</section>
+
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://phptherightway.com/">
+								PHP do Jeito Certo
+							</a>
+						</li>
+						<li>
+							<a href="https://symfony.com/">
+								Documentação do Symfony
+							</a>
+						</li>
+						<li>
+							<a href="https://laravel.com/">
+								Documentação do Laravel
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+
+
+		</div>		
+
+        <script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
