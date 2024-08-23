@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Trabalhando com filas</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Trabalhando com Filas</h1>
+					<p class="fragment" style="font-size: 4rem;"> Um sempre <strong>atrás</strong> do outro </p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<!--
+				<section>
+					<div style="display: flex;">
+						<div>
+							<ul style="font-size: 2rem">
+								<li class="fragment">+12 anos como Dev</li>
+								<li class="fragment">+12 anos como professor de devs</li>
+								<li class="fragment">Já fui contratado, demitido, readimitido</li>
+								<li class="fragment">Já contratei, já desliguei pessoas</li>
+								<br>
+								<li class="fragment">E nenhuma dessas coisas eu fiz direito 🦆 </li>
+							</ul>
+						</div>
+						<div>
+							<img class="fragment" width="80%" src="../img/gifs/pato.gif" alt="">
+						</div>
+					</div>
+				</section>
+				-->
+
+
+				<section>
+					<h1>Contexto</h1>
+                    <p class="fragment">Uma aplicação web, como qualquer outra</p>
+				</section>
+
+                <section>
+                    <img src="img/filas/request_01.png" alt="">
+                </section>
+
+                <section>
+                    <img src="img/filas/request_02.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 4rem;">
+                        Nesse cenário altamente comum, <strong>um processo depende do outro</strong>
+                    </p>
+                </section>
+
+                <section>
+                    <img src="img/filas/request_03.png" alt="">
+                    <p class="fragment">Isso aqui pode ser um problema?</p>
+                </section>
+
+                <section data-background="#333">
+                    <h3>A arquitetura em camadas não é um problema!</h3>
+                    <p class="fragment">O problema é a third party</p>
+                </section>
+                <section>
+                    <img src="img/filas/request_04.png" alt="">
+                </section>
+
+                <section>
+                    <img src="img/filas/request_05.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <p>Solução</p>
+                    <h3 class="fragment">Terceiriza</h3>
+                </section>
+
+                <section>
+                    <img src="../img/gifs/fila.webp" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <h2>PILHA </h2> VS <h2> FILA</h2>
+                </section>
+
+                <section>
+                    <img src="img/filas/pilha.png" alt="">
+                    <br>
+                    <p>
+                        Last In, First Out
+                    </p>
+                </section>
+
+                <section>
+                    <img src="img/filas/fila.png" alt="">
+                    <br>
+                    <p>
+                        First In, First Out
+                    </p>
+                </section>
+
+                <section data-background="#333">
+                    <h3>Como funciona isso no Laravel?</h3>
+                </section>
+
+                <section>
+                    <img src="img/filas/request_07.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <ul>
+                        <li class="fragment">Jobs</li>
+                        <li class="fragment">Job Batches</li>
+                        <li class="fragment">Failed Jobs</li>
+                    </ul>
+                </section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
