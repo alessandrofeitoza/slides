@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>
+            Arquitetura em camadas não é só papo para backend
+        </title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<link rel="stylesheet" href="../css/custom.css">
+
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <hr>
+					<h2>Arquitetura em camadas não é só papo para backend</h2>
+                    <hr>
+				</section>
+
+				<section data-background="#333"><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+                                <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
+                                <li class="fragment" style="color: #B45F06;">PHPeste</li>
+								<li class="fragment">
+									<span style="color: #0B5394;">
+										Obj(Ebanx)
+									</span>
+									/
+									<span style="color: #416d31;">
+										Ser<strong>tão</strong>Dev
+									</span>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">Por que isso é importante?</li>
+                        <li class="fragment">O problema: há um elefante na sala</li>
+                        <li class="fragment">O jeito errado VS O jeito menos errado</li>
+                        <li class="fragment">Exemplos Práticos</li>
+                    </ul>
+				</section>
+
+				<section data-background="#333">
+					<img src="../img/gifs/social-networks.webp" alt="">
+					<h3> <i class="fa-brands fa-instagram"></i> @alessandro_feitoza</h3>
+				</section>
+
+
+				<section>
+					<div style="display: flex; text-align: left;">
+						<div>
+							<h3>Essa talk não é um mandamento</h3>
+							<hr>
+							<ul>
+								<li class="fragment">Não estou trazendo uma <strong>bala de prata</strong></li>
+								<li class="fragment">Só quero que você <strong>abra sua mente</strong>	e seja mais crítico nas pequenas decisões </li>
+								<li class="fragment"><strong>Aproveite o que achar</strong> bom e descarte o restante</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>1 - Por que isso é importante?</h3>
+							<hr>
+							<p class="fragment">A nova geração de devs quer aprender primeiro o <strong class="fragment highlight-red">framework antes da linguagem</strong></p>
+						</div>
+					</div>
+				</section>
+
+                <section>
+                    <h2>Mas a culpa não é da nova geração!</h2>
+                    <img src="../img/gifs/pedreiros.gif" alt="">
+                </section>
+
+				<section data-background-size="80%" data-background="img/arquitetura-frontend/dogs.png">
+                    <p style="font-size: 5rem;"><em>"Ain, mas na minha época a gente tinha que se virar"</em></p>
+                    <br><br><br><br>
+				</section>
+				
+				<section data-background="#6A93E5">
+                    <p style="font-size: 3rem;">A gente da velha guarda se virou tanto que saiu <strong>rebolando JQuery</strong> em tudo que era lugar</p>
+                    <hr>
+					<p class="fragment" style="color: white; font-size: 3.5rem;">Mas é preciso entender o contexto <span style="font-size: 5rem;" class="fragment">Pra criticar de cumforça</span></p>
+                </section>
+
+                <section data-background="#333">
+                    <img style="width: 100%" src="img/arquitetura-frontend/js-01.png" alt="">
+                </section>
+
+                <section>
+                    <img style="width: 100%" src="img/arquitetura-frontend/js-02.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <img style="width: 100%" src="img/arquitetura-frontend/js-03.png" alt="">
+                </section>
+
+				<section data-background="#e5bc6a">
+					<h2 style="color: #333; font-size: 3.5rem;">Ah Feitozo, <br> <span style="font-size: 4rem;">então o JQuery era bom</span></h2>
+				</section>
+
+                <section>
+                    <img src="img/arquitetura-frontend/vanilla.png" alt="">
+
+                    <a href="http://vanilla-js.com/">http://vanilla-js.com/</a>
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 3.8rem;"><strong>Javascript puro:</strong> 12 137 211 ops/sec</p>
+                    <hr>
+                    <p style="font-size: 3.8rem;" class="fragment"><strong> 💀 o Finado JQuery:</strong> 350 557 ops/sec</p>
+                </section>
+
+                <section>
+                    <h1>Há um 🐘 elefante <br> na Sala</h1>
+                </section>
+
+                <section>
+                    <h1>Quase todo projeto começa bonito</h1>
+                    <h2 class="fragment">e termina feio</h2>
+                </section>
+
+				<section>
+					Mostrar Fluxogramas
+				</section>
+
+				<section>
+					mostrar a comunicação entre os componentes
+				</section>
+
+				<section>
+					Mostrar um exemplo de uma boa arquitetura
+				</section>
+
+				<section>
+					Detalhar o funcionamento
+				</section>
+				
+				<section data-background="#acacac">
+					<p class="r-fit-text">
+						05 passos <br>para dar o primeiro passo
+					</p>
+				</section>
+
+				<section>
+					1 - No fim tudo é HTML, CSS e Javascript
+				</section>
+
+				<section>
+					2 - Pareto: 80 20
+				</section>
+
+				<section>
+					3 - Não existe bala de prata
+				</section>
+
+				<section>
+					4 - Teoria das Janelas Quebradas
+				</section>
+
+				<section>
+					5 - Sopa de Pedras
+				</section>
+
+				<section data-background="#333">
+					<hr>
+					<h3>E é isso</h3>
+					<hr>
+				</section>
+
+				<section data-background="#333">
+					<p style="font-size: 3.5rem;">
+						Como dizia minha ex:  <br>
+						<span class="fragment" style="font-size: 5rem;">Terminamos</span>
+					</p>
+				</section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+                        <li>
+							<a href="https://www.amazon.com.br/Brevidade-inteligente-poder-poucas-palavras/dp/6555646659">
+								Livro: Brevidade Inteligente(Smart Brevity) <br><small>VandeHei, Allen e Schwartz - 2022</small>
+							</a>
+						</li>
+
+						<li>
+							<a href="https://docs.google.com/presentation/d/1nn7gFxcu8mS1XV_5LA5Orxh3c9yZ9pPWoTIcqP6qasw/edit#slide=id.g2ee26f1f22d_0_191">
+								Palestra: Estuturação de Projetos React <br><small>Cicero Viana (2024)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://media4.manhattan-institute.org/pdf/_atlantic_monthly-broken_windows.pdf">
+								Artigo: Teoria das Janelas Quebradas <br><small>J. Wilson, G. Kelling (2007)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.freecodecamp.org/news/the-difference-between-a-framework-and-a-library-bd133054023f/">
+								The difference between a framework and a library
+							</a>
+						</li>
+						<li>
+							<a href="https://tiagoanacretto.wordpress.com/2013/12/05/acoplamento-e-coesao-afinal-o-que-e-isso/">
+								Acoplamento e Coesão: afinal, o que é isso?
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O mitico homem mês <span style="font-size: 1.2rem;">(Ensaios sobre a Eng. de Software), Frederick Brooks Jr - 1995</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O desenvolvedor limpo <span style="font-size: 1.2rem;">(Clean Coder), Uncle Bob - 2011</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+
+                    <strong>slides.feitoza.tec.br</strong>
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
