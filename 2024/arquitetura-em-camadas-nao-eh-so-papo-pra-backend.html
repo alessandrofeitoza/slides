@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 		<link rel="stylesheet" href="../css/custom.css">
 
-
+		
 	</head>
 	<body>
 		<div class="reveal">
@@ -40,7 +40,7 @@
 								<li class="fragment">Professor de códigos e outras computarias</li>
 								<li class="fragment">Programador/Dev/Severino</li>
                                 <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
-                                <li class="fragment" style="color: #B45F06;">PHPeste</li>
+                                <li class="fragment" style="color: #B45F06;"><strong>PHP</strong>este</li>
 								<li class="fragment">
 									<span style="color: #0B5394;">
 										Obj(Ebanx)
@@ -116,15 +116,22 @@
                 </section>
 
                 <section data-background="#333">
-                    <img style="width: 100%" src="img/arquitetura-frontend/js-01.png" alt="">
+					<p>Acessar um valor</p>
+                    <img style="width: 60%" src="img/arquitetura-frontend/js-00-a.png" class="fragment" alt="">
+                    <img style="width: 70%" src="img/arquitetura-frontend/js-00-b.png" class="fragment" alt="">
                 </section>
 
                 <section>
-                    <img style="width: 100%" src="img/arquitetura-frontend/js-02.png" alt="">
+					<p>Add uma classe: JS x JQuery</p>
+                    <img style="width: 60%" src="img/arquitetura-frontend/js-01-a.png" class="fragment" alt="">
+                    <img style="width: 70%" src="img/arquitetura-frontend/js-01-b.png" class="fragment" alt="">
                 </section>
 
+
                 <section data-background="#333">
-                    <img style="width: 100%" src="img/arquitetura-frontend/js-03.png" alt="">
+					<p>Remover uma classe de varios inputs: JS x JQuery</p>
+                    <img style="width: 80%" src="img/arquitetura-frontend/js-02-a.png" class="fragment" alt="">
+                    <img style="width: 80%" src="img/arquitetura-frontend/js-02-b.png" class="fragment" alt="">
                 </section>
 
 				<section data-background="#e5bc6a">
@@ -153,57 +160,135 @@
                 </section>
 
 				<section>
-					Mostrar Fluxogramas
+					<img src="img/arquitetura-frontend/flow-01.png" alt="">
+				</section>
+
+				<section data-background="#2A303C">
+					<img src="img/arquitetura-frontend/flow-02.png" alt="">
+				</section>
+
+				<section data-background-size="48%" data-background="img/arquitetura-frontend/new_project.jpg"></section>
+
+				<section>
+					<p style="font-size: 3rem;">
+						<span style="font-size: 4.5rem;">Antes de falar de Componentes</span>, é preciso entender o que significa isso
+					</p>
+				</section>
+
+				<section data-background="#333">
+					<h2>Componente</h2>
+					<p class="fragment"><em> o que <span style="color: yellow; font-weight: bold;">compõe</span> ou ajuda na <span style="color: yellow; font-weight: bold;">composição</span> de algo;</em></p>
+					<p class="fragment"><em> o que é parte constituinte de um sistema maior;</em></p>
+				</section>
+
+				<section data-background="img/arquitetura-frontend/muro.webp">
+					<img src="img/arquitetura-frontend/pedreiro.png" class="fragment" alt="">
 				</section>
 
 				<section>
-					mostrar a comunicação entre os componentes
+					<h3>Por falar em pedreiro, bora botar a mão na massa</h3>
+				</section>
+
+				<section data-background="img/arquitetura-frontend/section-01-a.png">
 				</section>
 
 				<section>
-					Mostrar um exemplo de uma boa arquitetura
+					<img src="img/arquitetura-frontend/section-01-b.png" alt="">
 				</section>
 
 				<section>
-					Detalhar o funcionamento
+					<img src="img/arquitetura-frontend/section-01-c.png" alt="">
+				</section>
+
+				<section>
+					<img src="img/arquitetura-frontend/section-01-d.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<h1>e o REACT?</h1>
 				</section>
 				
-				<section data-background="#acacac">
+				<section>
+					<img src="img/arquitetura-frontend/section-01-react-01.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img src="img/arquitetura-frontend/section-01-react-02.png" alt="">
+				</section>
+
+				<section>
+					<img width="60%" src="img/arquitetura-frontend/section-01-react-03.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img src="img/arquitetura-frontend/section-01-react-04.png" alt="">
+				</section>
+
+				<section data-background="img/arquitetura-frontend/book-design-patterns.webp" data-background-size="40%">
+					<h2 class="fragment" style="background-color: #333; color: white;">Composite Pattern</h2>
+				</section>
+
+				<section>
+					<h1>Comece pelo começo</h1>
+				</section>
+
+				<section data-background="#333">
+					<img src="img/arquitetura-frontend/camadas-01.png" alt="">
+
+					<p>A página é <span style="color: yellow; font-weight: bold;">composta</span> por <span class="fragment hightlight-red" style="color: red; font-weight: bold;">componentes</span></p>
+				</section>
+
+				<section>
+					<p>E dentro da página?</p>
+					<img width="75%" src="img/arquitetura-frontend/page-arch.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<ul>
+						<li><strong style="color: yellow; font-size: 3rem;">Data: </strong>Consultas, DataTransformer, em geral os dados que serão usados pela aplicação</li>
+						<li class="fragment"><strong style="color: yellow; font-size: 3rem;">Shared: </strong>Camada independente, hooks, utilitários, coisas que serão "compartilhadas" entre os componentes em si</li>
+						<li class="fragment"><strong style="color: yellow; font-size: 3rem;">UI: </strong>Interfaces do Usuário, depende da camada de Data e Shared</li>
+					</ul>
+				</section>
+
+				
+				<section>
 					<p class="r-fit-text">
 						05 passos <br>para dar o primeiro passo
 					</p>
 				</section>
 
 				<section>
-					1 - No fim tudo é HTML, CSS e Javascript
+					<p class="r-fit-text">1 - No fim tudo é <br> HTML, CSS e Javascript</p>
 				</section>
 
-				<section>
-					2 - Pareto: 80 20
-				</section>
-
-				<section>
-					3 - Não existe bala de prata
-				</section>
-
-				<section>
-					4 - Teoria das Janelas Quebradas
-				</section>
-
-				<section>
-					5 - Sopa de Pedras
+				<section data-background="img/arquitetura-frontend/pareto.jpeg">
+					<p style="background-color: white; font-size: 5rem;">2 - Lei de Pareto</p>
+					<br><br><br><br><br><br><br><br><br><br>
 				</section>
 
 				<section data-background="#333">
+					<p class="r-fit-text">3 - Não existe <br> bala de prata</p>
+				</section>
+
+				<section>
+					<p class="r-fit-text">4 - Teoria das <br> Janelas Quebradas</p>
+				</section>
+
+				<section data-background="#333">
+					<p class="r-fit-text">5 - Faça uma <br> Sopa de Pedras</p>
+				</section>
+
+				<section >
 					<hr>
 					<h3>E é isso</h3>
 					<hr>
 				</section>
 
 				<section data-background="#333">
-					<p style="font-size: 3.5rem;">
+					<p style="font-size: 5rem;">
 						Como dizia minha ex:  <br>
-						<span class="fragment" style="font-size: 5rem;">Terminamos</span>
+						<span class="fragment" style="font-size: 8rem;">Terminamos</span>
 					</p>
 				</section>
 
@@ -231,23 +316,13 @@
 							</a>
 						</li>
 						<li>
-							<a href="https://www.freecodecamp.org/news/the-difference-between-a-framework-and-a-library-bd133054023f/">
-								The difference between a framework and a library
+							<a href="https://www.amazon.com.br/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">
+								Livro: Design Patterns <br><small> Erich Gamma e outros (1994)</small>
 							</a>
 						</li>
 						<li>
-							<a href="https://tiagoanacretto.wordpress.com/2013/12/05/acoplamento-e-coesao-afinal-o-que-e-isso/">
-								Acoplamento e Coesão: afinal, o que é isso?
-							</a>
-						</li>
-						<li>
-							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
-								O mitico homem mês <span style="font-size: 1.2rem;">(Ensaios sobre a Eng. de Software), Frederick Brooks Jr - 1995</span>
-							</a>
-						</li>
-						<li>
-							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
-								O desenvolvedor limpo <span style="font-size: 1.2rem;">(Clean Coder), Uncle Bob - 2011</span>
+							<a href="https://www.developerway.com/posts/react-project-structure">
+								Artigo: React project structure for scale
 							</a>
 						</li>
 					</ul>
