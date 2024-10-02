@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Doctrine Events</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Database Patterns</h1>
+					<p class="fragment" style="font-size: 4rem;"> O que se <strong>DEV</strong> saber para dizer que conhece </p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<!--
+				<section>
+					<div style="display: flex;">
+						<div>
+							<ul style="font-size: 2rem">
+								<li class="fragment">+12 anos como Dev</li>
+								<li class="fragment">+12 anos como professor de devs</li>
+								<li class="fragment">Já fui contratado, demitido, readimitido</li>
+								<li class="fragment">Já contratei, já desliguei pessoas</li>
+								<br>
+								<li class="fragment">E nenhuma dessas coisas eu fiz direito 🦆 </li>
+							</ul>
+						</div>
+						<div>
+							<img class="fragment" width="80%" src="../img/gifs/pato.gif" alt="">
+						</div>
+					</div>
+				</section>
+				-->
+
+
+				<section>
+					<h1>A questão é:</h1>
+					<h2 class="fragment">Fazer nosso código acessar o banco</h2>
+				</section>
+
+				<section>
+					<h2>Opções</h2>
+					<ul>
+						<li class="fragment">PHP Mundano</li>
+						<li class="fragment">Active Record</li>
+						<li class="fragment">Data Mapper</li>
+						<li class="fragment">Repository Pattern*</li>
+					</ul>
+				</section>
+
+
+				<section data-background="#333">
+					<h2>PHP Mundano</h2>
+
+					<ul>
+						<li class="fragment"><strong>Esquema do banco</strong> - Feito manualmente por fora da aplicação</li>
+						<li class="fragment"><strong>Performático*</strong> - Não existe nenhuma camada entre o seu código e o banco</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>MySQLi</h2>
+					<img src="img/database-patterns/mysqli.png" alt="">
+				</section>
+
+				<section>
+					<h2>PDO</h2>
+					<img src="img/database-patterns/pdo.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<h2>ACTIVE RECORD</h2>
+
+					<ul>
+						<li class="fragment"><strong>Model/Modelo</strong> - Uma classe que representa um registro em uma tabela</li>
+						<li class="fragment"><strong>Acoplamento Forte</strong> - Está diretamente ligado ao esquema</li>
+						<li class="fragment"><strong>Fácil/Rápido</strong> - Não é necessário criar os principais métodos</li>
+					</ul>
+				</section>
+
+				<section style="display: flex;">
+					<table>
+						<tr>
+							<td width="72%">
+								<h2>Active Record</h2>
+								<p><em><strong>Um objeto que envolve uma linha em uma tabela</strong> ou exibição de banco de dados, encapsula o acesso ao banco de dados e <strong>adiciona lógica de domínio a esses dados</strong>.</em></p>
+							</td>
+							<td>
+								<img width="800px" src="img/database-patterns/livro-patterns-fowler.png" alt="">
+							</td>
+						</tr>
+					</table>
+				</section>
+
+                <section>
+                    <img width="60%" src="img/database-patterns/active-record-02.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <img src="img/database-patterns/acitve-record-01.png" alt="">
+                </section>
+
+                <section>
+                    <img width="60%" src="img/database-patterns/active-record-03.png" alt="">
+                </section>
+
+
+				<section>
+					<h2>ELOQUENT (Active Record)</h2>
+
+					<ul>
+						<li class="fragment"><strong>PHP</strong> - O Laravel o traz por padrão</li>
+						<li class="fragment"><strong>ORM</strong> - Object Relational Mapper</li>
+						<li class="fragment"><strong>Bancos</strong> - MySQL, PostgreSQL, MS SQL Server, SQLite...</li>
+						<li class="fragment"><strong>Atributos/Colunas</strong> - São definidos em uma classe de modelo</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Eloquent</h2>
+					<img src="img/database-patterns/eloquent.png" alt="">
+				</section>
+
+
+				<section>
+					<p class="r-fit-text">DATA MAPPER</p>
+				</section>
+
+				<section data-background="#990000">
+					não confunda com Data Mapping
+				</section>
+
+				<section data-background="#333">
+					<h2>DATA MAPPER</h2>
+
+					<ul>
+						<li class="fragment"><strong>Entity/Entidade</strong> - Uma classe que apenas modela um registro em uma tabela</li>
+						<li class="fragment"><strong>Acoplamento Fraco</strong> - Há uma camada a parte para consumir o banco (SoC)</li>
+						<li class="fragment"><strong>Menos Fácil/Menos Rápido</strong> - fornece uma robustez maior, que pode ser entendido como barreira</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>DOCTRINE (Data Mapper)</h2>
+
+					<ul>
+						<li class="fragment"><strong>PHP</strong> - Doctrine (O Symfony* o usa por padrão)</li>
+						<li class="fragment"><strong>ORM</strong> - Object Relational Mapper</li>
+						<li class="fragment"><strong>DBAL</strong> - Database Abstraction Layer</li>
+						<li class="fragment"><strong>Bancos</strong> - MySQL, PostgreSQL, MS SQL Server, SQLite...</li>
+						<li class="fragment"><strong>Atributos/Colunas</strong> - São definidos em uma classe de modelo ou XML/YAML isolado*</li>
+					</ul>
+				</section>
+
+
+
+				<section>
+					<h2>Doctrine</h2>
+					<img src="img/database-patterns/doctrine.png" width="80%" alt="">
+				</section>
+
+
+
+				<section>
+					<h2>Doctrine (XML)</h2>
+					<img src="img/database-patterns/doctrine-xml.png" width="100%" alt="">
+				</section>
+
+				<section>
+					Alessandro, desenha pra mim
+				</section>
+
+
+				<section>
+					<h2>Active Record</h2>
+					<img src="img/database-patterns/active-record.png" width="100%" alt="">
+				</section>
+
+
+				<section>
+					<h2>Data Mapper</h2>
+					<img src="img/database-patterns/data-mapper.png" width="100%" alt="">
+				</section>
+
+
+
+				<section>
+					<h2>Data Mapper</h2>
+					<img src="img/database-patterns/data-mapper-2.png" width="100%" alt="">
+				</section>
+
+				<section data-background="../img/gifs/isso_e_tudo_pessoal.gif"></section>
+
+
+				<section>
+					<h2>Repository</h2>
+					<img src="img/database-patterns/repository.png" width="100%" alt="">
+				</section>
+
+
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://medium.com/@shiiyan/active-record-pattern-vs-repository-pattern-making-the-right-choice-f36d8deece94">
+								Active Record VS Repository Pattern
+							</a>
+						</li>
+						<li>
+							<a href="https://phproundtable.com/episode/orms-and-the-active-record-data-mapper-paradigms">
+								Podcast: An ORM Discussion
+							</a>
+						</li>
+
+						<li>
+							<a href="https://medium.com/@matheusflauzino/entenda-orm-active-record-e-data-mapper-9be60da0e799">
+								Entenda ORM: Active Record e Data Mapper
+							</a>
+						</li>
+						
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
