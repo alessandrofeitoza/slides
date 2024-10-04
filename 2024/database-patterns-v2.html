@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Doctrine Events</title>
+		<title>Database Patterns</title>
 
 		<link rel="stylesheet" href="../dist/reset.css">
 		<link rel="stylesheet" href="../dist/reveal.css">
@@ -31,10 +31,11 @@
 							<ul style="font-size: 2rem">
 								<li class="fragment">Professor de códigos e outras computarias</li>
 								<li class="fragment">Programador/Dev/Severino</li>
+								<li class="fragment"><strong>Wayne</strong> desde 04/2023</li>
 							</ul>
 						</div>
 						<div>
-							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+							<img width="60%" src="../img/AlessandroFeitoza-2025.jpg" alt="">
 						</div>
 					</div>
 				</section>
@@ -68,7 +69,7 @@
 				<section>
 					<h2>Opções</h2>
 					<ul>
-						<li class="fragment">PHP Mundano</li>
+						<li class="fragment">O jeito Mundano (PHP/JS das ruas)</li>
 						<li class="fragment">Active Record</li>
 						<li class="fragment">Data Mapper</li>
 						<li class="fragment">Repository Pattern*</li>
@@ -77,7 +78,7 @@
 
 
 				<section data-background="#333">
-					<h2>PHP Mundano</h2>
+					<h2>Jeito Mundano</h2>
 
 					<ul>
 						<li class="fragment"><strong>Esquema do banco</strong> - Feito manualmente por fora da aplicação</li>
@@ -85,15 +86,43 @@
 					</ul>
 				</section>
 
+
 				<section>
-					<h2>MySQLi</h2>
+					<h2>O esquema do banco</h2>
+					<img src="img/database-patterns/sql-1.png" alt="">
+				</section>
+
+				<section>
+					<h2>PHP com MySQLi</h2>
 					<img src="img/database-patterns/mysqli.png" alt="">
 				</section>
 
 				<section>
-					<h2>PDO</h2>
+					<h2>PHP com PDO</h2>
 					<img src="img/database-patterns/pdo.png" alt="">
 				</section>
+
+				<section>
+					<h2>NodeJS com mysql2</h2>
+					<img src="img/database-patterns/mysql2-1.png" alt="">
+				</section>
+
+				<section>
+					<h2>NodeJS com mysql2</h2>
+					<img src="img/database-patterns/mysql2-2.png" alt="">
+				</section>
+
+				<section>
+					<div class="mermaid">
+					  <pre>
+						%%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						flowchart LR
+						    codigo(Nosso código) <--> db[(Banco de Dados)]
+						  
+					  </pre>
+					</div>
+				</section>
+
 
 				<section data-background="#333">
 					<h2>ACTIVE RECORD</h2>
@@ -101,22 +130,20 @@
 					<ul>
 						<li class="fragment"><strong>Model/Modelo</strong> - Uma classe que representa um registro em uma tabela</li>
 						<li class="fragment"><strong>Acoplamento Forte</strong> - Está diretamente ligado ao esquema</li>
-						<li class="fragment"><strong>Fácil/Rápido</strong> - Não é necessário criar os principais métodos</li>
+						<li class="fragment"><strong>Fácil de usar</strong> - Não é necessário criar os principais métodos</li>
 					</ul>
 				</section>
 
-				<section style="display: flex;">
-					<table>
-						<tr>
-							<td width="72%">
-								<h2>Active Record</h2>
-								<p><em><strong>Um objeto que envolve uma linha em uma tabela</strong> ou exibição de banco de dados, encapsula o acesso ao banco de dados e <strong>adiciona lógica de domínio a esses dados</strong>.</em></p>
-							</td>
-							<td>
-								<img width="800px" src="img/database-patterns/livro-patterns-fowler.png" alt="">
-							</td>
-						</tr>
-					</table>
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h2>Active Record</h2>
+							<p><em><strong class="fragment highlight-red">Um objeto que envolve uma linha em uma tabela</strong> ou exibição de banco de dados, encapsula o acesso ao banco de dados e <strong>adiciona lógica de domínio a esses dados</strong>.</em></p>
+						</div>
+						<div>
+							<img width="1400px" src="img/database-patterns/livro-patterns-fowler.png" alt="">
+						</div>
+					</div>
 				</section>
 
                 <section>
@@ -131,6 +158,10 @@
                     <img width="60%" src="img/database-patterns/active-record-03.png" alt="">
                 </section>
 
+                <section>
+					<p>E no Javascripto?</p>
+                    <img class="fragment" width="60%" src="img/database-patterns/mysql2-3.png" alt="">
+                </section>
 
 				<section>
 					<h2>ELOQUENT (Active Record)</h2>
@@ -144,17 +175,37 @@
 				</section>
 
 				<section>
-					<h2>Eloquent</h2>
+					<h2>PHP: Eloquent</h2>
 					<img src="img/database-patterns/eloquent.png" alt="">
 				</section>
 
+				<section>
+					<h2>JS: Sequelize</h2>
+					<img src="img/database-patterns/sequelize-1.png" alt="">
+				</section>
+
+				<section>
+					<h2>JS: Prisma</h2>
+					<img src="img/database-patterns/prisma-1.png" alt="">
+				</section>
+
+				<section>
+					<div class="mermaid">
+					  <pre>
+						%%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						flowchart LR
+						    codigo(Nosso código) <--> m[Model] <--> db[(Banco de Dados)]
+						  
+					  </pre>
+					</div>
+				</section>
 
 				<section>
 					<p class="r-fit-text">DATA MAPPER</p>
 				</section>
 
 				<section data-background="#990000">
-					não confunda com Data Mapping
+					não confunda com <strong>Data Mapping</strong>
 				</section>
 
 				<section data-background="#333">
@@ -163,12 +214,12 @@
 					<ul>
 						<li class="fragment"><strong>Entity/Entidade</strong> - Uma classe que apenas modela um registro em uma tabela</li>
 						<li class="fragment"><strong>Acoplamento Fraco</strong> - Há uma camada a parte para consumir o banco (SoC)</li>
-						<li class="fragment"><strong>Menos Fácil/Menos Rápido</strong> - fornece uma robustez maior, que pode ser entendido como barreira</li>
+						<li class="fragment"><strong>Menos Fácil de implementar</strong> - fornece uma robustez maior, que pode ser entendido como barreira</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>DOCTRINE (Data Mapper)</h2>
+					<h2>PHP: DOCTRINE (Data Mapper)</h2>
 
 					<ul>
 						<li class="fragment"><strong>PHP</strong> - Doctrine (O Symfony* o usa por padrão)</li>
@@ -179,52 +230,104 @@
 					</ul>
 				</section>
 
-
-
 				<section>
-					<h2>Doctrine</h2>
+					<h2>PHP: Doctrine</h2>
 					<img src="img/database-patterns/doctrine.png" width="80%" alt="">
 				</section>
 
-
-
 				<section>
-					<h2>Doctrine (XML)</h2>
+					<h2>PHP: Doctrine (XML)</h2>
 					<img src="img/database-patterns/doctrine-xml.png" width="100%" alt="">
 				</section>
 
 				<section>
-					Alessandro, desenha pra mim
+					<h2>PHP: Doctrine</h2>
+					<img src="img/database-patterns/doctrine.png" width="80%" alt="">
 				</section>
 
-
-				<section>
-					<h2>Active Record</h2>
-					<img src="img/database-patterns/active-record.png" width="100%" alt="">
+				<section data-background="#333">
+					E no submundo das trocentas bibliotecas do javascript, tem algo?
 				</section>
 
-
 				<section>
-					<h2>Data Mapper</h2>
-					<img src="img/database-patterns/data-mapper.png" width="100%" alt="">
+					<h2>JS: TypeORM*</h2>
+					<img src="img/database-patterns/typeorm-1.png" width="80%" alt="">
 				</section>
 
-
+				<section>
+					Feitozo, desenha pra mim
+				</section>
 
 				<section>
-					<h2>Data Mapper</h2>
-					<img src="img/database-patterns/data-mapper-2.png" width="100%" alt="">
+					<h2>Jeito mundano</h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  codigo(Nosso código) <--> db[(Banco de Dados)]
+							
+						</pre>
+					  </div>
+				</section>
+
+				<section data-background="#777">
+					<h2 style="color: white">Active Record</h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  codigo(Nosso código) <--> m[Model] <--> db[(Banco de Dados)]
+							
+						</pre>
+					  </div>
+				</section>
+
+				<section data-background="">
+					<h2 style="color: #333">Data Mapper </h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  subgraph flow
+							  codigo(Nosso código) <-->  D[DataMapper] <--> db[(Banco de Dados)]
+							  end
+							  D <--- |Consulta para saber qual esquema| e(((Entity)))
+						</pre>
+					  </div>
 				</section>
 
 				<section data-background="../img/gifs/isso_e_tudo_pessoal.gif"></section>
 
-
-				<section>
-					<h2>Repository</h2>
-					<img src="img/database-patterns/repository.png" width="100%" alt="">
+				<section data-background="">
+					<h2 style="color: #333">Repository Pattern</h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  subgraph nosso codigo
+								codigo(Service/Controller/Action) <--> R[Repository]
+							  end
+							  subgraph ORM
+							  	R <-->  D[DataMapper] <--> db[(Banco de Dados)]
+							  end
+							  D <--- |Consulta para saber qual esquema| e(((Entity)))
+							  codigo <--- |instanciar| e
+						</pre>
+					  </div>
 				</section>
 
+				<section >
+					<hr>
+					<h3>E é isso</h3>
+					<hr>
+				</section>
 
+				<section data-background="#333">
+					<p style="font-size: 5rem;">
+						Como dizia minha ex:  <br>
+						<span class="fragment" style="font-size: 8rem;">Terminamos</span>
+					</p>
+				</section>
 
 				<section>
 					<p class="r-fit-text">DÚVIDAS?</p>
@@ -239,7 +342,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="https://phproundtable.com/episode/orms-and-the-active-record-data-mapper-paradigms">
+							<a href="https://phproundtable.com/show/orms-and-the-active-record-data-mapper-paradigms">
 								Podcast: An ORM Discussion
 							</a>
 						</li>
@@ -264,8 +367,8 @@
 					https://linkedin.com/in/AlessandroFeitoza
 
                     <br>
-                    https://alessandrofeitoza.github.io/slides
 
+                    <strong>slides.feitoza.tec.br</strong>
 				</section>
 			</div>
 		</div>
@@ -274,10 +377,17 @@
 		<script src="../plugin/notes/notes.js"></script>
 		<script src="../plugin/markdown/markdown.js"></script>
 		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/zoom/zoom.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.3.0/plugin/mermaid/mermaid.js"></script>
 		<script>
 			Reveal.initialize({
 				hash: true,
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				mermaid: {
+					// flowchart: {
+						//   curve: 'linear',
+						// },
+				},
+				plugins: [ RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes, RevealMermaid ],
 			});
 		</script>
 	</body>
