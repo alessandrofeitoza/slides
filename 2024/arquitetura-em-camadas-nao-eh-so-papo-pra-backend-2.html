@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>
+            Arquitetura em camadas não é só papo para backend
+        </title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+		
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<link rel="stylesheet" href="../css/custom.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <hr>
+					<h2>Arquitetura em camadas não é só papo para backend</h2>
+                    <hr>
+                    <br>
+                    <small>2024-12-07 08:00</small>
+				</section>
+
+				<section data-background="#333"><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment"><strong>Professor de</strong>  códigos e outras <strong>computarias</strong></li>
+								<li class="fragment">Programador/Dev/Severino since 2012</li>
+                                <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
+								<li class="fragment">
+									<span style="color: #416d31;">
+										<strong>Ser</strong>tão<strong>Dev</strong>
+									</span>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">Por que isso é importante?</li>
+                        <li class="fragment">O problema: há um elefante na sala</li>
+                        <li class="fragment">O jeito errado VS O jeito menos errado</li>
+                        <li class="fragment">Exemplos Práticos</li>
+                    </ul>
+				</section>
+
+				<section data-background="#333">
+					<img src="../img/gifs/social-networks.webp" alt="">
+					<h3> <i class="fa-brands fa-instagram"></i> @alessandro_feitoza</h3>
+				</section>
+
+
+				<section>
+					<div style="display: flex; text-align: left;">
+						<div>
+							<h3>Essa talk não é um mandamento</h3>
+							<hr>
+							<ul>
+								<li class="fragment">Não estou trazendo uma <strong>bala de prata</strong></li>
+								<li class="fragment">Só quero que você <strong>abra sua mente</strong>	e seja mais crítico nas pequenas decisões </li>
+								<li class="fragment"><strong>Aproveite o que achar</strong> bom e descarte o restante</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>1 - Por que isso é importante?</h3>
+							<hr>
+							<p class="fragment">A nova geração de devs quer aprender primeiro o <strong class="fragment highlight-red">framework antes da linguagem</strong></p>
+						</div>
+					</div>
+				</section>
+
+                <section>
+                    <h2>Mas a culpa não é da nova geração!</h2>
+                    <img src="../img/gifs/pedreiros.gif" alt="">
+                </section>
+
+				<section data-background-size="80%" data-background="img/arquitetura-frontend/dogs.png">
+                    <p style="font-size: 5rem;"><em>"Ain, mas na minha época a gente tinha que se virar"</em></p>
+                    <br><br><br><br>
+				</section>
+				
+				<section data-background="#6A93E5">
+                    <p style="font-size: 3rem;">A gente da velha guarda se virou tanto que saiu <strong>rebolando JQuery</strong> em tudo que era lugar</p>
+                    <hr>
+					<p class="fragment" style="color: white; font-size: 3.5rem;">Mas é preciso entender o contexto <span style="font-size: 5rem;" class="fragment">Pra criticar de cumforça</span></p>
+                </section>
+
+                <section data-background="#333">
+					<p>Acessar um valor</p>
+                    <img style="width: 60%" src="img/arquitetura-frontend/js-00-a.png" class="fragment" alt="">
+                    <img style="width: 70%" src="img/arquitetura-frontend/js-00-b.png" class="fragment" alt="">
+                </section>
+
+                <section>
+					<p>Add uma classe: JS x JQuery</p>
+                    <img style="width: 60%" src="img/arquitetura-frontend/js-01-a.png" class="fragment" alt="">
+                    <img style="width: 70%" src="img/arquitetura-frontend/js-01-b.png" class="fragment" alt="">
+                </section>
+
+
+                <section data-background="#333">
+					<p>Remover uma classe de varios inputs: JS x JQuery</p>
+                    <img style="width: 80%" src="img/arquitetura-frontend/js-02-a.png" class="fragment" alt="">
+                    <img style="width: 80%" src="img/arquitetura-frontend/js-02-b.png" class="fragment" alt="">
+                </section>
+
+				<section data-background="#e5bc6a">
+					<h2 style="color: #333; font-size: 3.5rem;">Ah Feitozo, <br> <span style="font-size: 4rem;">então o JQuery era bom</span></h2>
+				</section>
+
+                <section>
+                    <img src="img/arquitetura-frontend/vanilla.png" alt="">
+
+                    <a href="http://vanilla-js.com/">http://vanilla-js.com/</a>
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 3.8rem;"><strong>Javascript puro:</strong> 12 137 211 ops/sec</p>
+                    <hr>
+                    <p style="font-size: 3.8rem;" class="fragment"><strong> 💀 o Finado JQuery:</strong> 350 557 ops/sec</p>
+                </section>
+
+                <section>
+                    <h1>Há um 🐘 elefante <br> na Sala</h1>
+                </section>
+
+                <section>
+                    <h1>Quase todo projeto começa bonito</h1>
+                    <h2 class="fragment">e termina feio</h2>
+                </section>
+
+				<section>
+					<img src="img/arquitetura-frontend/flow-01https://www.developerway.com/posts/react-project-structure.png" alt="">
+				</section>
+
+				<section data-background="#2A303C">
+					<img src="img/arquitetura-frontend/flow-02.png" alt="">
+				</section>
+
+				<section data-background-size="48%" data-background="img/arquitetura-frontend/new_project.jpg"></section>
+
+				<section>
+					<p style="font-size: 3rem;">
+						<span style="font-size: 4.5rem;">Antes de falar de Componentes</span>, é preciso entender o que significa isso
+					</p>
+				</section>
+
+				<section data-background="#333">
+					<h2>Componente</h2>
+					<p class="fragment"><em> o que <span style="color: yellow; font-weight: bold;">compõe</span> ou ajuda na <span style="color: yellow; font-weight: bold;">composição</span> de algo;</em></p>
+					<p class="fragment"><em> o que é parte constituinte de um sistema maior;</em></p>
+				</section>
+
+				<section data-background="img/arquitetura-frontend/muro.webp">
+					<img src="img/arquitetura-frontend/pedreiro.png" class="fragment" alt="">
+				</section>
+
+				<section>
+					<h3>Por falar em pedreiro, bora botar a mão na massa</h3>
+				</section>
+
+				<section data-background="img/arquitetura-frontend/section-01-a.png">
+				</section>
+
+				<section>
+					<img src="img/arquitetura-frontend/section-01-b.png" alt="">
+				</section>
+
+				<section>
+					<img src="img/arquitetura-frontend/section-01-c.png" alt="">
+				</section>
+
+				<section>
+					<img src="img/arquitetura-frontend/section-01-d.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<h1>e o REACT?</h1>
+				</section>
+				
+				<section>
+					<img src="img/arquitetura-frontend/section-01-react-01.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img src="img/arquitetura-frontend/section-01-react-02.png" alt="">
+				</section>
+
+				<section>
+					<img width="60%" src="img/arquitetura-frontend/section-01-react-03.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img src="img/arquitetura-frontend/section-01-react-04.png" alt="">
+				</section>
+
+				<section data-background="img/arquitetura-frontend/book-design-patterns.webp" data-background-size="40%">
+					<h2 class="fragment" style="background-color: #333; color: white;">Composite Pattern</h2>
+				</section>
+
+				<section>
+					<h1>Comece pelo começo</h1>
+				</section>
+
+                <section data-background="img/arquitetura-frontend/flow-03.png" data-background-size="35%">
+                    Modelo Integrado
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                </section>
+
+				<section data-background="#333">
+					<img src="img/arquitetura-frontend/camadas-01.png" alt="">
+
+					<p class="fragment">A página é <span style="color: yellow; font-weight: bold;">composta</span> por <span class="fragment hightlight-red" style="color: red; font-weight: bold;">componentes</span></p>
+				</section>
+
+                <section data-background="img/arquitetura-frontend/camadas-02.png" data-background-size="35%">
+				</section>
+
+                <section>
+                    <p>Tá Feitozo, mas nem tudo é só site</p>
+                    <img src="img/arquitetura-frontend/mulher-aviao.webp" alt="">
+                </section>
+
+
+                <section data-background="img/arquitetura-frontend/flow-04.png" data-background-size="90%">
+                    Modelo Distribuido
+                    <br><br><br><br><br><br><br><br><br><br><br><br>
+                </section>
+
+				<section>
+					<p>Proposta de fluxo</p>
+					<img width="75%" src="img/arquitetura-frontend/page-arch.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<ul>
+						<li><strong style="color: yellow; font-size: 3rem;">Data: </strong>Consultas, DataTransformer, em geral os dados que serão usados pela aplicação</li>
+						<li class="fragment"><strong style="color: yellow; font-size: 3rem;">Shared: </strong>Camada independente, hooks, utilitários, coisas que serão "compartilhadas" entre os componentes em si</li>
+						<li class="fragment"><strong style="color: yellow; font-size: 3rem;">UI: </strong>Interfaces do Usuário, depende da camada de Data e Shared</li>
+					</ul>
+				</section>
+
+                <section data-background="img/arquitetura-frontend/camadas-03.png" data-background-size="35%">
+				</section>
+				
+				<section>
+					<p class="r-fit-text">
+						06 passos <br>para dar o primeiro passo
+					</p>
+				</section>
+
+				<section>
+					<p class="r-fit-text">1 - No fim tudo é <br> HTML, CSS e Javascript</p>
+				</section>
+
+				<section data-background="img/arquitetura-frontend/pacotes.jpeg">
+					<p style="background-color: white; font-size: 4rem;">2 - Estude a estrutura de pacotes</p>
+				</section>
+
+				<section data-background="#333">
+					<p class="r-fit-text">3 - Não existe <br> bala de prata</p>
+                    <p class="fragment">Veja sobre mutations, queries, "sub-layers"</p>
+				</section>
+
+				<section>
+					<p class="r-fit-text">4 - Teoria das <br> Janelas Quebradas</p>
+				</section>
+
+				<section data-background="#333">
+					<p class="r-fit-text">5 - Faça uma <br> Sopa de Pedras</p>
+                    <p class="fragment">O simples, porém bem feito</p>
+				</section>
+
+				<section data-background="#333">
+					<p class="r-fit-text">6 - <span style="color: yellow;">Arquitetura</span> não é sobre pastas <br> <span style="color: yellow; font-size: 6rem;"> É sobre intenção</span></p>
+				</section>
+
+				<section >
+					<hr>
+					<h3>E é isso</h3>
+					<hr>
+				</section>
+
+				<section data-background="#333">
+					<p style="font-size: 5rem;">
+						Como dizia minha ex:  <br>
+						<span class="fragment" style="font-size: 8rem;">Terminamos</span>
+					</p>
+				</section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+                        <li>
+							<a href="https://www.amazon.com.br/Brevidade-inteligente-poder-poucas-palavras/dp/6555646659">
+								Livro: Brevidade Inteligente(Smart Brevity) <br><small>VandeHei, Allen e Schwartz - 2022</small>
+							</a>
+						</li>
+
+						<li>
+							<a href="https://docs.google.com/presentation/d/1nn7gFxcu8mS1XV_5LA5Orxh3c9yZ9pPWoTIcqP6qasw/edit#slide=id.g2ee26f1f22d_0_191">
+								Palestra: Estuturação de Projetos React <br><small>Cicero Viana (2024)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://media4.manhattan-institute.org/pdf/_atlantic_monthly-broken_windows.pdf">
+								Artigo: Teoria das Janelas Quebradas <br><small>J. Wilson, G. Kelling (2007)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com.br/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">
+								Livro: Design Patterns <br><small> Erich Gamma e outros (1994)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.developerway.com/posts/react-project-structure">
+								Artigo: React project structure for scale
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+
+                    <strong>slides.feitoza.tec.br</strong>
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
