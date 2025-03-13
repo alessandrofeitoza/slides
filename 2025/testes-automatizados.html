@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introdução a Testes Automatizados com PHPUnit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Testes Automatizados</h1>
+                <p>Tão natural quanto a luz do poste 💡</p>
+            </section>
+
+            <section>
+                <div style="display: flex;">
+                    <div>
+                        <h3>Alessandro Feitoza</h3>
+
+                        <ul style="font-size: 2rem">
+                            <li class="fragment">Professor de códigos e outras computarias</li>
+                            <li class="fragment">Programador/Dev/Severino</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Por que testar?</h2>
+                <ul>
+                    <li class="fragment">🐛 Evita bugs em produção</li>
+                    <li class="fragment">💻 Facilita manutenção e refatoração</li>
+                </ul>
+            </section>
+
+            <section data-background="#DDD">
+                <h2>Tipos de teste</h2>
+                <ul>
+                    <li class="fragment"> Unitário </li>
+                    <li class="fragment"> Integração </li>
+                    <li class="fragment"> Funcionais </li>
+                    <li class="fragment"> E2E </li>
+
+                </ul>
+            </section>
+
+            <section data-background="#FFF">
+                <img src="img/tests/piramide.webp" alt="">
+            </section>
+
+            <section>
+                <h2>Teste Unitário</h2>
+
+                <ul>
+                    <li class="fragment">Testam unidades isoladas do código (funções, métodos ou classes). </li>
+                    <li class="fragment">Não dependem de bancos de dados, APIs ou outras partes externas. </li>
+                    <li class="fragment">Rápidos e fáceis de rodar. </li>
+                    <li class="fragment">Exemplo: Testar se uma função <code>soma(a, b)</code> retorna o valor correto. </li>
+                </ul>
+            </section>
+
+            <section data-background="#DDD">
+                <h2>Teste de Integração</h2>
+
+                <ul>
+                    <li class="fragment">Verificam a interação entre diferentes módulos do sistema.</li>
+                    <li class="fragment">Podem envolver chamadas ao banco de dados, APIs e serviços externos.</li>
+                    <li class="fragment">Mais lentos que os testes unitários.</li>
+                    <li class="fragment">Exemplo: Testar se um método de uma classe consegue buscar e processar dados corretamente de um banco.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Teste Funcional</h2>
+
+                <ul>
+                    <li class="fragment">Validam se um fluxo específico do sistema está funcionando conforme esperado.</li>
+                    <li class="fragment">São mais próximos do uso real do software.</li>
+                    <li class="fragment">Exemplo: Testar se um endpoint consegue fazer login com credenciais corretas.</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h2>Teste E2E</h2>
+
+                <ul>
+                    <li class="fragment">Simulam a experiência real do usuário no sistema completo.</li>
+                    <li class="fragment">Usam ferramentas como Cypress, Selenium ou Playwright.</li>
+                    <li class="fragment">São os mais lentos, pois testam todo o fluxo de ponta a ponta.</li>
+                    <li class="fragment">Exemplo: Testar se um usuário consegue se registrar, fazer login e concluir uma compra.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>O que é PHPUnit?</h2>
+                <p>Framework de testes para PHP</p>
+                <pre><code data-trim>
+composer require --dev phpunit/phpunit
+                </code></pre>
+            </section>
+            
+            <section>
+                <h2>Nosso primeiro teste</h2>
+                <pre><code class="php" data-trim>
+use PHPUnit\Framework\TestCase;
+
+class MathTest extends TestCase {
+    public function testSoma() {
+        $this->assertEquals(4, 2 + 2);
+    }
+}
+                </code></pre>
+                <p>Executando os testes:</p>
+                <pre><code data-trim>
+vendor/bin/phpunit tests
+                </code></pre>
+            </section>
+            
+            <section>
+                <h2>Testando uma classe real</h2>
+                <pre><code class="php" data-trim>
+class Calculadora {
+    public function soma($a, $b) {
+        return $a + $b;
+    }
+}
+                </code></pre>
+            </section>
+            
+            <section>
+                <h2>Testando a Calculadora</h2>
+                <pre><code class="php" data-trim>
+use PHPUnit\Framework\TestCase;
+
+class CalculadoraTest extends TestCase {
+    public function testSoma() {
+        $calc = new Calculadora();
+        $this->assertEquals(5, $calc->soma(2, 3));
+    }
+}
+                </code></pre>
+            </section>
+            
+            <section>
+                <h2>Boas práticas</h2>
+                <ul>
+                    <li>Testes devem ser independentes</li>
+                    <li>Nome dos testes deve ser claro</li>
+                    <li>Utilize <code>setUp()</code> para preparar o ambiente</li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>Exercício prático</h2>
+                <p>Implemente uma classe <code>ConversorTemperatura</code> com os métodos:</p>
+                <ul>
+                    <li><code>celsiusParaFahrenheit()</code></li>
+                    <li><code>fahrenheitParaCelsius()</code></li>
+                </ul>
+                <p>Escreva testes para verificar o funcionamento.</p>
+            </section>
+
+
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true
+        });
+    </script>
+</body>
+</html>

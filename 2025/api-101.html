@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>API 101</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>API 101</h1>
+					<p class="fragment" style="font-size: 4rem;"> Apenas um<strong> introdução inicial</strong> pra começar </p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<!-- Slide 1: Título -->
+				<section data-background="#333">
+					<h2>AGENDA</h2>
+
+					<ul>
+						<li class="fragment">O básico</li>
+						<li class="fragment">Anatomia de uma URL</li>
+						<li class="fragment">Comunicação</li>
+						<li class="fragment">Request</li>
+						<li class="fragment">Response</li>
+						<li class="fragment">Anatomia da Request/Response</li>
+						<li class="fragment">Tipos de Status Code</li>
+						<li class="fragment">Tipos de HTTP Verbos</li>
+					</ul>
+				</section>
+				
+
+				<section data-background-size="60%" data-background="../img/client-server.jpeg">
+
+				</section>
+
+
+				<section data-background-size="60%" data-background="../img/req-res.png">
+
+				</section>
+
+				<!-- Slide 2: Anatomia de uma URL -->
+				<section>
+					<h2>Anatomia de uma URL</h2>
+					<p class="fragment">Exemplo: <br><code style="color: blue">https://api.exemplo.com/v1/users?id=123</code></p>
+					<ul>
+					<li class="fragment"><strong>Protocol(o):</strong> https</li>
+					<li class="fragment"><strong>Domínio/Domain:</strong> api.exemplo.com</li>
+					<li class="fragment"><strong>Caminho/Path/Endpoint:</strong> /v1/users</li>
+					<li class="fragment"><strong>Query String/Parameters:</strong> ?id=123</li>
+					</ul>
+				</section>
+
+				<!-- Slide 3: O que é Request? -->
+				<section>
+					<h2>O que é Request?</h2>
+					<p class="fragment">É a requisição enviada pelo cliente para o servidor.</p>
+					<pre class="fragment"><code class="javascript">fetch('https://api.exemplo.com/v1/users')
+				.then(response => response.json())
+				.then(data => console.log(data));
+					</code></pre>
+				</section>
+
+
+
+				<!-- Slide 4: O que é Response? -->
+				<section>
+					<h2>O que é Response?</h2>
+					<p class="fragment">É a resposta enviada pelo servidor para o cliente.</p>
+					<pre class="fragment"><code class="javascript">
+{
+	"id": 123,
+	"name": "Filomena",
+	"age": 30
+}
+					</code></pre>
+				</section>
+
+				<!-- Slide 5: Conteúdo da Request/Response -->
+				<section data-background="#333">
+					<h2>Conteúdo da Request/Response</h2>
+					<ul>
+					<li class="fragment"><strong>Body:</strong> Dados enviados ou recebidos.</li>
+					<li class="fragment"><strong>Header:</strong> Metadados da comunicação (Content-Type, Authorization, etc).</li>
+					<li class="fragment"><strong>Status:</strong> Código da resposta (200, 404, 500, etc).</li>
+					<li class="fragment"><strong>Content-Type:</strong> Tipo de conteúdo (JSON, HTML, etc).</li>
+					<li class="fragment"><strong>Size:</strong> Tamanho do payload.</li>
+					<li class="fragment"><strong>Time:</strong> Tempo de resposta.</li>
+					</ul>
+				</section>
+
+				<!-- Slide 6: Tipos de Status Code -->
+				<section>
+					<h2>Tipos de Status Code</h2>
+					<ul>
+					<li class="fragment"><strong>1xx:</strong> Informativo</li>
+					<li class="fragment"><strong>2xx:</strong> Sucesso (ex: 200 OK)</li>
+					<li class="fragment"><strong>3xx:</strong> Redirecionamento (ex: 301 Moved Permanently)</li>
+					<li class="fragment"><strong>4xx:</strong> Erro do Cliente (ex: 404 Not Found)</li>
+					<li class="fragment"><strong>5xx:</strong> Erro do Servidor (ex: 500 Internal Server Error)</li>
+					</ul>
+				</section>
+
+				      <!-- Slide 12: Exemplos de Status Code - Sucesso -->
+					  <section  data-background="#333">
+						<h2>Status Codes - Sucesso (2xx)</h2>
+						<p>Indicam que a requisição foi bem-sucedida.</p>
+						<ul>
+						  <li><strong>200 OK:</strong> Requisição bem-sucedida (ex: fetch GET).</li>
+						  <li><strong>201 Created:</strong> Recurso criado com sucesso (ex: fetch POST).</li>
+						  <li><strong>204 No Content:</strong> Requisição bem-sucedida, mas sem conteúdo retornado (ex: DELETE).</li>
+						</ul>
+						</section>
+						<section>
+						<pre><code class="javascript">
+fetch('https://api.exemplo.com/v1/users')
+	.then(response => {
+		if (response.ok) {
+			return response.json();
+		}
+		throw new Error('Erro na requisição');
+	})
+	.then(data => console.log(data))
+	.catch(error => console.error(error));
+						</code></pre>
+					  </section>
+				
+					  <!-- Slide 13: Exemplos de Status Code - Erros do Cliente -->
+					  <section>
+						<h2>Status Codes - Erros do Cliente (4xx)</h2>
+						<p>Indicam que houve um problema com a requisição feita pelo cliente.</p>
+						<ul>
+						  <li><strong>400 Bad Request:</strong> A requisição está incorreta ou malformada.</li>
+						  <li><strong>401 Unauthorized:</strong> Necessário autenticação para acessar o recurso.</li>
+						  <li><strong>404 Not Found:</strong> O recurso solicitado não foi encontrado.</li>
+						</ul>
+						</section>
+						<section>
+						<pre><code class="javascript">
+fetch('https://api.exemplo.com/v1/users/999')
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`Erro ${response.status}: Recurso não encontrado`);
+		}
+		return response.json();
+	})
+	.then(data => console.log(data))
+	.catch(error => console.error(error));
+						</code></pre>
+					  </section>
+				
+					  <!-- Slide 14: Exemplos de Status Code - Erros do Servidor -->
+					  <section  data-background="#333">
+						<h2>Status Codes - Erros do Servidor (5xx)</h2>
+						<p>Indicam que houve um problema no servidor ao processar a requisição.</p>
+						<ul>
+						  <li><strong>500 Internal Server Error:</strong> Ocorreu um erro inesperado no servidor.</li>
+						  <li><strong>502 Bad Gateway:</strong> O servidor recebeu uma resposta inválida.</li>
+						  <li><strong>503 Service Unavailable:</strong> O servidor está temporariamente indisponível.</li>
+						</ul>
+						</section>
+						<section>
+						<pre><code class="javascript">
+fetch('https://api.exemplo.com/v1/users')
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`Erro ${response.status}: Problema no servidor`);
+		}
+		return response.json();
+	})
+	.then(data => console.log(data))
+	.catch(error => console.error(error));
+						</code></pre>
+					  </section>
+				
+
+				<!-- Slide 7: Tipos de Verbos -->
+				<section data-background="#333">
+					<h2>Tipos de Verbos HTTP</h2>
+					<ul>
+					<li class="fragment"><strong>GET:</strong> Busca dados (ex: fetch())</li>
+					<li class="fragment"><strong>POST:</strong> Envia dados (ex: fetch() com body)</li>
+					<li class="fragment"><strong>PUT:</strong> Atualiza dados completos</li>
+					<li class="fragment"><strong>PATCH:</strong> Atualiza dados parciais</li>
+					<li class="fragment"><strong>DELETE:</strong> Remove dados</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h2>Exemplo Dinâmico - GET</h2>
+					<pre><code class="javascript">
+const userId = 123;
+
+fetch(`https://api.exemplo.com/v1/users?id=${userId}`)
+	.then(response => response.json())
+	.then(data => console.log(data));
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Exemplo Prático - POST</h2>
+					<pre><code class="javascript">fetch('https://api.exemplo.com/v1/users', {
+			  method: 'POST',
+			  headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer seu_token_aqui'
+			  },
+			  body: JSON.stringify({ name: 'Jessica', age: 30 })
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Erro:', error));
+					</code></pre>
+				</section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
