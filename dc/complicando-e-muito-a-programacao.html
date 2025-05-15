@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Complicando (e muito) a Programação</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css" id="theme">
+  <style>
+    section[data-background="#fff"] {
+      color: #111;
+    }
+    section[data-background="#333"] {
+      color: #fff;
+    }
+    table {
+      width: 100%;
+    }
+    th, td {
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section data-background="#333">
+        <h2>Complicando (e muito) a Programação</h2>
+        <p>Como o mercado transforma simplicidade em caos</p>
+        <small>Alessandro Feitoza – Digital College</small>
+      </section>
+
+      <section data-background="#fff">
+        <h3>Introdução ao Tema</h3>
+        <ul>
+          <li class="fragment">Na faculdade, tudo é simples.</li>
+          <li class="fragment">No mercado, tudo tem contexto, pressão e consequência.</li>
+          <li class="fragment">Vamos simular problemas reais.</li>
+          <li class="fragment">Objetivo: Pensar como profissionais.</li>
+        </ul>
+      </section>
+
+      <section data-background="#333">
+        <h3>O Código Não É o Problema…</h3>
+        <p>...o contexto é.</p>
+        <ul>
+          <li class="fragment">Clientes mudam requisitos</li>
+          <li class="fragment">O deploy quebrou e o tempo é curto</li>
+          <li class="fragment">Falta comunicação na equipe</li>
+          <li class="fragment">"Funciona na minha máquina"</li>
+        </ul>
+      </section>
+
+      <section data-background="#fff">
+        <h3>Problemas que Aparecem com o Tempo</h3>
+        <ul>
+          <li class="fragment">🔄 Refatoração negligenciada</li>
+          <li class="fragment">🐢 Performance decaindo</li>
+          <li class="fragment">🔓 Falta de segurança</li>
+          <li class="fragment">♿ Acessibilidade ignorada</li>
+          <li class="fragment">🧪 Ausência de testes</li>
+          <li class="fragment">🤝 Equipe desorganizada</li>
+          <li class="fragment">🧩 Código sem padrão</li>
+          <li class="fragment">📦 Deploy mal planejado</li>
+        </ul>
+      </section>
+
+      <section data-background="#333">
+        <h3>Arquitetura da Aplicação</h3>
+        <ul>
+          <li class="fragment">Roteamento simples (index.php)</li>
+          <li class="fragment">Views renderizadas diretamente</li>
+          <li class="fragment">View com acesso direto ao banco</li>
+          <li class="fragment">Sem autenticação ou separação de camadas</li>
+        </ul>
+      </section>
+
+      <section data-background="#fff">
+        <h3>Fluxo da Arquitetura</h3>
+        <pre><code>
+[Cliente]
+   ↓
+[Router (index.php)]
+   ↓
+[View.php] ---> [MySQL]
+        </code></pre>
+      </section>
+
+      <section data-background="#333">
+        <h3>Tecnologias Utilizadas</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Tecnologia</th>
+              <th>Prós</th>
+              <th>Contras</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="fragment">
+              <td>🐘 PHP Puro</td>
+              <td>Simples, sem frameworks</td>
+              <td>Difícil escalar e manter</td>
+            </tr>
+            <tr class="fragment">
+              <td>🐳 Docker</td>
+              <td>Ambiente padronizado</td>
+              <td>Curva de aprendizado</td>
+            </tr>
+            <tr class="fragment">
+              <td>🐬 MySQL</td>
+              <td>Estável, amplamente usado</td>
+              <td>JOINs caros, pouca flexibilidade</td>
+            </tr>
+            <tr class="fragment">
+              <td>🎨 Bootstrap</td>
+              <td>Responsivo e rápido</td>
+              <td>Visual genérico, pesado</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section data-background="#fff">
+        <h3>O Que os Grupos Vão Enfrentar</h3>
+        <ul>
+          <li class="fragment">Problemas reais e comuns no mercado</li>
+          <li class="fragment">Necessidade de análise rápida e técnica</li>
+          <li class="fragment">Propostas baseadas em realidade</li>
+          <li class="fragment">Defesa das decisões</li>
+        </ul>
+      </section>
+
+      <section data-background="#333">
+        <h2>O Jogo é de Gente Grande</h2>
+        <p class="fragment">Vamos sair do tutorial. Bem-vindos à vida real.</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize();
+  </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <title>Introdução ao Desenvolvimento Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <style>
+      pre code { 
+        font-size: 1.5em; 
+        line-height: 2.6rem;
+      }
+      .reveal section img { max-height: 400px; }
+      .highlight { color: #ffcc00; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Introdução ao Desenvolvimento Web</h1>
+          <p>HTML, CSS, JavaScript e Lógica de Programação</p>
+          <p class="highlight">Prof. Alessandro Feitoza</p>
+        </section>
+
+        <section>
+          <h2>O que é Desenvolvimento Web?</h2>
+          <ul>
+            <li class="fragment">Criação de sites e aplicações para a web</li>
+            <li class="fragment">Front-end (HTML, CSS, JS)</li>
+            <li class="fragment">Back-end (PHP, Node.js, etc)</li>
+            <li class="fragment">Responsividade e acessibilidade</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>HTML - Estrutura</h2>
+          <pre><code lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Meu site&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Olá, mundo!&lt;/h1&gt;
+    &lt;p&gt;Esse é meu primeiro site&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Tags Principais</h2>
+          <ul>
+            <li class="fragment"><code>&lt;h1&gt;...&lt;/h1&gt;</code> - Título</li>
+            <li class="fragment"><code>&lt;p&gt;...&lt;/p&gt;</code> - Parágrafo</li>
+            <li class="fragment"><code>&lt;a href&gt;...&lt;/a&gt;</code> - Link</li>
+            <li class="fragment"><code>&lt;img src&gt;</code> - Imagem</li>
+            <li class="fragment"><code>&lt;ul&gt;&lt;li&gt;</code> - Lista</li>
+            <li class="fragment"><code>&lt;section&gt;&lt;div&gt;</code> - Seções de conteúdo</li>
+
+          </ul>
+        </section>
+
+        <section>
+          <h2>CSS - Estilização</h2>
+          <pre><code>body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}
+h1 {
+  color: blue;
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>Seletores CSS</h2>
+          <ul>
+            <li class="fragment">Por tag: <code>p { ... }</code></li>
+            <li class="fragment">Por classe: <code>.destaque { ... }</code></li>
+            <li class="fragment">Por id: <code>#principal { ... }</code></li>
+          </ul>
+        </section>
+
+        <section data-background-size="80%" data-background="img/html/css-1.png">
+          
+        </section>
+
+        <section>
+          <h2>Bootstrap - Componentes</h2>
+          <pre><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"&gt;
+
+&lt;button class="btn btn-primary"&gt;Clique aqui&lt;/button&gt;</code></pre>
+          <p>Rápido, responsivo e moderno</p>
+        </section>
+
+        <section>
+          <h2>JavaScript Básico</h2>
+          <pre><code>console.log("Olá mundo!");
+
+let nome = "Alessandro";
+alert("Bem-vindo, " + nome);</code></pre>
+        </section>
+
+        <section>
+          <h2>Lógica de Programação</h2>
+          <ul>
+            <li class="fragment">Variáveis e Constantes</li>
+            <li class="fragment">Sequência</li>
+            <li class="fragment">Decisão (<code>if</code>)</li>
+            <li class="fragment">Repetição (<code>for</code>, <code>while</code>)</li>
+            <li class="fragment">Arrays</li>
+          </ul>
+        </section>
+
+        <section data-background="img/html/js-1.png" data-background-size="70%">
+
+        </section>
+
+
+        <section data-background="img/html/js-2.png" data-background-size="70%">
+
+        </section>
+
+        <section>
+          <h2>Exemplo: Estrutura de Decisão</h2>
+          <pre><code>let idade = 18;
+if (idade &gt;= 18) {
+  console.log("Maior de idade");
+} else {
+  console.log("Menor de idade");
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>Exemplo: Repetição</h2>
+          <pre><code>for (let i = 0; i &lt; 5; i++) {
+  console.log("Número: " + i);
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>Arrays</h2>
+          <pre><code>let frutas = ["maçã", "banana", "laranja"];
+for (let fruta of frutas) {
+  console.log(fruta);
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Funções em JavaScript</h2>
+            <p>Funções são blocos de código que podem ser reutilizados.</p>
+            <pre><code>function saudacao() {
+    console.log("Olá, mundo!");
+}
+saudacao();</code></pre>
+          </section>
+  
+          <section>
+            <h2>Função com Parâmetro</h2>
+            <pre><code>
+function saudacao(nome) {
+    console.log("Olá, " + nome + "!");
+}
+saudacao("Alessandro");
+</code></pre>
+          </section>
+  
+          <section>
+            <h2>Função com Retorno</h2>
+            <pre><code>
+function somar(a, b) {
+    return a + b;
+}
+let resultado = somar(3, 4);
+console.log(resultado);</code></pre>
+          </section>
+  
+          <section>
+            <h2>Função sem Retorno</h2>
+            <pre><code>function mostrarMensagem(mensagem) {
+    alert(mensagem);
+}
+mostrarMensagem("Bem-vindo!");</code></pre>
+          </section>
+  
+          <section>
+            <h2>Função Anônima e Arrow Function</h2>
+            <pre><code>// Função anônima
+let dobro = function(x) {
+return x * 2;
+};
+  
+// Arrow function
+let triplo = x => x * 3;
+  
+console.log(dobro(4));
+console.log(triplo(4));</code></pre>
+          </section>
+
+        <section>
+          <h2>Exemplo Prático: Interação com DOM</h2>
+          <pre><code>&lt;button onclick="mudarTexto()"&gt;Clique aqui&lt;/button&gt;
+&lt;p id="paragrafo"&gt;Texto original&lt;/p&gt;
+
+&lt;script&gt;
+function mudarTexto() {
+  document.getElementById("paragrafo").innerText = "Texto alterado!";
+}
+&lt;/script&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Exemplo: Eventos e Input</h2>
+          <pre><code>&lt;input type="text" id="nome" placeholder="Digite seu nome"&gt;
+&lt;button onclick="saudar()"&gt;Saudar&lt;/button&gt;
+
+&lt;script&gt;
+function saudar() {
+  let nome = document.getElementById("nome").value;
+  alert("Olá, " + nome + "!");
+}
+&lt;/script&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Exemplo: Contador com DOM</h2>
+          <pre><code>&lt;button onclick="incrementar()"&gt;+1&lt;/button&gt;
+&lt;p id="contador"&gt;0&lt;/p&gt;
+
+&lt;script&gt;
+let count = 0;
+function incrementar() {
+  count++;
+  document.getElementById("contador").innerText = count;
+}
+&lt;/script&gt;</code></pre>
+        </section>
+
+        <section>
+            <h1>Dúvidas?</h1>
+
+            <p class="fragment">Boa sorte!  </p>
+        </section>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+  </body>
+</html>
