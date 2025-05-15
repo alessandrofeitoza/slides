@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>React Hooks e JSX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/solarized.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/monokai.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown>
+        <textarea data-template>
+            ---
+layout: reveal
+theme: solarized
+transition: slide
+---
+
+<!-- Slide 1: Título -->
+# **Hooks e JSX no React**
+### Uma imersão com Alessandro Feitoza
+
+---
+<!-- Slide 2: Frase de efeito -->
+> "Com React, você não só cria interfaces. Você desenha experiências."
+
+---
+<!-- Slide 3: Revisão - JSX -->
+## O que é JSX?
+- Uma **sintaxe parecida com HTML** no JavaScript
+- Transforma código mais declarativo e intuitivo
+- **Babel** converte JSX para `React.createElement`
+
+```jsx
+const element = <h1>Hello, world!</h1>;
+```
+
+---
+<!-- Slide 4: JSX - Expressões e Condicionais -->
+## Expressões e Condicionais em JSX
+
+```jsx
+const isLoggedIn = true;
+const element = (
+  <div>
+    {isLoggedIn ? <p>Bem-vindo!</p> : <p>Faça login.</p>}
+  </div>
+);
+```
+
+- Operadores ternários são muito usados
+- Nada de `if` fora de função ou bloco normal
+
+---
+<!-- Slide 5: Variáveis no JSX -->
+## Renderizando Variáveis
+
+```jsx
+const name = "Alessandro";
+const idade = 29;
+const element = <h1>{name} tem {idade} anos.</h1>;
+```
+
+- Pode renderizar strings, números, até funções
+
+```jsx
+const saudacao = () => "Boa noite!";
+<h2>{saudacao()}</h2>
+```
+
+---
+<!-- Slide 6: map no JSX com array simples -->
+## Iterando com `map()`
+
+```jsx
+const alunos = ["Ana", "Bruno", "Carlos"];
+<ul>
+  {alunos.map((aluno) => <li key={aluno}>{aluno}</li>)}
+</ul>
+```
+
+- `map` renderiza listas dinamicamente
+- Sempre use `key`
+
+---
+<!-- Slide 7: map com objetos -->
+## Iterando com Objetos
+
+```jsx
+const produtos = [
+  { id: 1, nome: "Mouse", preco: 99 },
+  { id: 2, nome: "Teclado", preco: 150 },
+];
+
+<ul>
+  {produtos.map((item) => (
+    <li key={item.id}>{item.nome} - R${item.preco}</li>
+  ))}
+</ul>
+```
+
+- Ideal para tabelas, listas de cards, etc.
+
+---
+<!-- Slide 8: Componentização básica -->
+## Componentização
+- Divida sua interface em partes reutilizáveis
+
+```jsx
+function BoasVindas(props) {
+  return <h1>Olá, {props.nome}</h1>;
+}
+```
+
+```jsx
+function App() {
+  return <BoasVindas nome="Alessandro" />;
+}
+```
+
+---
+<!-- Slide 9: Componentes mais complexos -->
+## Componente com props e lógica
+
+```jsx
+function Produto({ nome, preco }) {
+  return (
+    <div>
+      <h3>{nome}</h3>
+      <p>Preço: R${preco}</p>
+    </div>
+  );
+}
+
+function ListaProdutos() {
+  const produtos = [
+    { id: 1, nome: "Câmera", preco: 900 },
+    { id: 2, nome: "Tripé", preco: 200 },
+  ];
+
+  return (
+    <div>
+      {produtos.map(p => <Produto key={p.id} {...p} />)}
+    </div>
+  );
+}
+```
+
+---
+<!-- Slide 10: Frase de efeito -->
+> "Componentes são como peças de LEGO: pequenos, reutilizáveis, poderosos."
+
+---
+<!-- Slide 11: Introdução aos Hooks -->
+## O que são Hooks?
+- Funções que permitem **usar estado e ciclo de vida** em componentes funcionais
+- Introduzidos no **React 16.8**
+
+---
+<!-- Slide 12: Principais Hooks -->
+## Hooks mais usados
+- `useState`
+- `useEffect`
+- `useContext`
+- `useRef`
+- `useMemo`, `useCallback`
+
+---
+<!-- Slide 13: Destaque - useState -->
+<section data-background-color="#002b36" style="color: white;">
+  <h2>useState: O coração do estado</h2>
+  <pre><code class="language-jsx">
+const [count, setCount] = useState(0);
+
+return (
+  <div>
+    <p>Você clicou {count} vezes</p>
+    <button onClick={() => setCount(count + 1)}>Clique</button>
+  </div>
+);
+  </code></pre>
+</section>
+
+---
+<!-- Slide 14: useState com objetos -->
+## useState com objetos
+```jsx
+const [usuario, setUsuario] = useState({ nome: "Ana", idade: 25 });
+
+setUsuario(prev => ({ ...prev, idade: 26 }));
+```
+- Sempre use spread para atualizar parcialmente
+
+---
+<!-- Slide 15: useState explicado -->
+## Como funciona o useState
+- `useState(valorInicial)` retorna **[valor, setValor]**
+- `setValor` atualiza o estado e **re-renderiza** o componente
+
+📌 Estado é **imutável**: você nunca deve modificá-lo diretamente!
+
+---
+<!-- Slide 16: Frase de efeito + gif -->
+<section data-background-color="#073642" style="color: white;">
+  <h2>"Gerenciar estado é como cuidar de um Tamagotchi 🐣"</h2>
+  <img src="https://media.giphy.com/media/XreQmk7ETCak0/giphy.gif" height="300">
+</section>
+
+---
+<!-- Slide 17: useEffect (breve) -->
+## useEffect
+- Executa efeitos colaterais: fetch, subscrições, etc
+
+```jsx
+useEffect(() => {
+  console.log("Componente montado ou atualizado");
+}, [dependencias]);
+```
+
+---
+<!-- Slide 18: Exemplo com useState + useEffect -->
+## Contador com título
+```jsx
+useEffect(() => {
+  document.title = `Você clicou ${count} vezes`;
+}, [count]);
+```
+
+---
+<!-- Slide 19: Dica prática -->
+## Dica: useEffect com cleanup
+```jsx
+useEffect(() => {
+  const id = setInterval(() => console.log("tick"), 1000);
+  return () => clearInterval(id);
+}, []);
+```
+- Ideal para timers, WebSockets, listeners
+
+---
+<!-- Slide 20: Finalização -->
+## Recapitulando...
+- JSX é declarativo
+- Variáveis e `map` são essenciais no render
+- Componentização traz organização
+- **Hooks trazem poder ao componente funcional**
+- **`useState` é o ponto de partida**
+
+---
+<!-- Slide 21: Perguntas? -->
+# Dúvidas?
+### Bora trocar uma ideia ✌️
+
+<img src="https://media.giphy.com/media/fnKy4iPZxa0UE/giphy.gif" height="300">
+
+        </textarea>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      plugins: [ RevealMarkdown, RevealHighlight ]
+    });
+  </script>
+</body>
+</html>
