@@ -33,12 +33,82 @@
             </section>
             
             <section>
-                <h2>Por que testar?</h2>
+                <h2>Por que investir em testes?</h2>
                 <ul>
                     <li class="fragment">🐛 Evita bugs em produção</li>
                     <li class="fragment">💻 Facilita manutenção e refatoração</li>
+                
+                    <li class="fragment">📈 Reduz custos a longo prazo</li>
+                    <li class="fragment">🧠 Documenta o comportamento esperado do sistema</li>
+                    <li class="fragment">👥 Facilita o trabalho em equipe e onboarding</li>
+                    <li class="fragment">🔄 Torna refatorações mais seguras</li>
+                    <li class="fragment">🚨 Detecta falhas rapidamente</li>
                 </ul>
             </section>
+
+            <section data-background="../2025/img/sprint.png">
+
+            </section>
+        
+            <section data-background="../2025/img/sprint-2.png">
+        
+            </section>
+        
+            <section data-background-size="80%" data-background="../2025/img/sprint-3.png">
+        
+            </section>
+
+            <section>
+                <h2>Testes Automatizados vs QA</h2>
+                <ul>
+                    <li class="fragment">
+                        <strong>Testes Automatizados:</strong> escritos por devs, focam no comportamento do código.
+                    </li>
+                    <li class="fragment">
+                        <strong>Testes de QA:</strong> realizados por profissionais de qualidade (analistas/testers), muitas vezes de forma manual.
+                    </li>
+                </ul>
+            </section>
+            
+            <section data-background="#EEE">
+                <h2>Diferenças principais</h2>
+                <ul>
+                    <li class="fragment">QA analisa usabilidade, experiência, acessibilidade e casos não previstos</li>
+                    <li class="fragment">Automatizados cobrem o que foi previsto e codificado</li>
+                    <li class="fragment">Ambos são complementares</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Teste Caixa Preta vs Caixa Branca</h2>
+                <ul>
+                    <li class="fragment"><strong>Caixa Preta:</strong> testa o sistema sem conhecer o código</li>
+                    <li class="fragment"><strong>Caixa Branca:</strong> testa com conhecimento da lógica interna</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h2>Exemplos práticos</h2>
+                <ul>
+                    <li class="fragment">
+                        ✅ Caixa Preta: Verifica se <code>login()</code> retorna erro com senha inválida
+                    </li>
+                    <li class="fragment">
+                        ✅ Caixa Branca: Verifica se todos os ramos do <code>if</code> dentro de <code>login()</code> são cobertos
+                    </li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>Exemplo prático</h2>
+                <ul>
+                    <li class="fragment">🧑‍💻 Dev escreve teste automatizado que garante que a função <code>login()</code> funciona</li>
+                    <li class="fragment">🧪 QA testa login em diferentes navegadores, dispositivos e situações fora do esperado</li>
+                </ul>
+            </section>
+
+            
+            
 
             <section data-background="#DDD">
                 <h2>Tipos de teste</h2>
@@ -108,45 +178,96 @@ composer require --dev phpunit/phpunit
             
             <section>
                 <h2>Nosso primeiro teste</h2>
-                <pre><code class="php" data-trim>
-use PHPUnit\Framework\TestCase;
-
-class MathTest extends TestCase {
-    public function testSoma() {
-        $this->assertEquals(4, 2 + 2);
-    }
-}
+                <pre><code class="javascript" data-trim>
+            test('soma 2 + 2 deve retornar 4', () => {
+                expect(2 + 2).toBe(4);
+            });
                 </code></pre>
                 <p>Executando os testes:</p>
                 <pre><code data-trim>
-vendor/bin/phpunit tests
+            npx jest
                 </code></pre>
             </section>
+            
             
             <section>
                 <h2>Testando uma classe real</h2>
-                <pre><code class="php" data-trim>
-class Calculadora {
-    public function soma($a, $b) {
-        return $a + $b;
-    }
-}
+                <pre><code class="javascript" data-trim>
+            class Calculadora {
+                soma(a, b) {
+                    return a + b;
+                }
+            }
                 </code></pre>
             </section>
             
+            
             <section>
                 <h2>Testando a Calculadora</h2>
-                <pre><code class="php" data-trim>
-use PHPUnit\Framework\TestCase;
-
-class CalculadoraTest extends TestCase {
-    public function testSoma() {
-        $calc = new Calculadora();
-        $this->assertEquals(5, $calc->soma(2, 3));
-    }
-}
+                <pre><code class="javascript" data-trim>
+            test('Calculadora.soma deve retornar 5 para 2 + 3', () => {
+                const calc = new Calculadora();
+                expect(calc.soma(2, 3)).toBe(5);
+            });
                 </code></pre>
             </section>
+
+            <section data-background="#333">
+                <h2>Testes Funcionais</h2>
+                <p>Validação de funcionalidades específicas do sistema</p>
+            </section>
+            
+            <section>
+                <h3>Prós dos Testes Funcionais</h3>
+                <ul>
+                    <li class="fragment">Cobrem cenários reais de uso</li>
+                    <li class="fragment">Ajudam a detectar bugs em fluxos importantes</li>
+                    <li class="fragment">Podem ser automatizados e integrados no CI</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h3>Contras dos Testes Funcionais</h3>
+                <ul>
+                    <li class="fragment">Mais lentos que testes unitários</li>
+                    <li class="fragment">Podem ser instáveis se o ambiente mudar</li>
+                    <li class="fragment">Difíceis de manter em sistemas grandes</li>
+                </ul>
+            </section>
+
+            <section data-background="#333">
+                <h2>Testes End-to-End (E2E)</h2>
+                <p>Simulam o comportamento do usuário do início ao fim</p>
+            </section>
+            
+            <section>
+                <h3>Ferramentas comuns</h3>
+                <ul>
+                    <li class="fragment">🔧 <strong>Cypress</strong> (JavaScript)</li>
+                    <li class="fragment">🔧 <strong>Playwright</strong></li>
+                    <li class="fragment">🔧 <strong>Selenium</strong></li>
+                </ul>
+            </section>
+            
+            <section>
+                <h3>Prós dos Testes E2E</h3>
+                <ul>
+                    <li class="fragment">Cobre todo o sistema: frontend + backend</li>
+                    <li class="fragment">Simula o comportamento do usuário final</li>
+                    <li class="fragment">Evita regressões em funcionalidades críticas</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h3>Contras dos Testes E2E</h3>
+                <ul>
+                    <li class="fragment">👎 Lentos (envolvem múltiplas camadas)</li>
+                    <li class="fragment">⚠️ Suscetíveis a falhas por instabilidade do ambiente</li>
+                    <li class="fragment">💸 Requerem mais infraestrutura (ex: servidores, CI robusto)</li>
+                    <li class="fragment">📉 Mais difíceis de depurar quando falham</li>
+                </ul>
+            </section>
+            
             
             <section>
                 <h2>Boas práticas</h2>

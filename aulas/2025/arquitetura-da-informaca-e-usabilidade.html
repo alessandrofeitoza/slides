@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>
+            Arquitetura da Informação e Usabilidade UX
+        </title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+		
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<link rel="stylesheet" href="../../css/custom.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <hr>
+					<h2>Fundamentos da Engenharia de Software / pt2</h2>
+	                <hr>
+					<img src="../../img/backend-arch/pedreiro-soft.png" width="30%" alt="">
+				</section>
+
+                <section data-background="#333">
+                    <h3>Relembrando...</h3>
+                    <ul>
+                        <li class="fragment">Engenharia de Software: foco em processo </li>
+                        <li class="fragment">Profissões: QA, Devs, Arquitetos, POs...</li>
+                        <li class="fragment">Qualidade: Normas ISO: 9126, 25010...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Engenharia de Software → UX</h2>
+                    <p class="fragment">Conectando qualidade técnica à qualidade percebida</p>
+                </section>
+        
+                <section data-background="#333">
+                    <h3>Mas... Qualidade segundo quem?</h3>
+                    <blockquote class="fragment">
+                        Uma aplicação pode estar tecnicamente impecável, e ainda assim falhar com o usuário.
+                    </blockquote>
+                    <p class="fragment">→ Isso é uma falha de experiência.</p>
+                </section>
+        
+                <section>
+                    <h3>Exemplos comuns</h3>
+                    <ul>
+                        <li class="fragment">Sistemas governamentais: seguros, mas difíceis de usar</li>
+                        <li class="fragment">Aplicativos antigos: funcionam, mas são lentos e confusos</li>
+                    </ul>
+                    <p class="fragment"><strong>Qualidade percebida importa.</strong></p>
+                </section>
+
+                <section data-background="../img/aurora-mcm.png">
+                    <h2 style="background-color: #FFF"> Product Discovery </h2>
+                </section>
+        
+                <section data-background="#333">
+                    <h2>Arquitetura da Informação</h2>
+                    <ul>
+                        <li class="fragment">Organização de conteúdos e funcionalidades</li>
+                        <li class="fragment">Hierarquia, navegação, fluxos</li>
+                        <li class="fragment">Fundação para a experiência do usuário</li>
+                    </ul>
+                </section>
+
+
+
+                <section>
+                <h2>O que são UI, UX e IHC?</h2>
+                <ul>
+                <li class="fragment"><strong>UI (User Interface):</strong> é a camada visual e interativa com a qual o usuário interage.</li>
+                <li class="fragment"><strong>UX (User Experience):</strong> é a experiência completa do usuário ao usar um sistema ou produto digital.</li>
+                <li class="fragment"><strong>IHC (Interação Humano-Computador):</strong> é o campo acadêmico que estuda como humanos interagem com sistemas computacionais.</li>
+                </ul>
+                </section>
+
+                <section data-background="#333">
+                <h2>Diferenças e Interseções</h2>
+                <ul>
+                <li class="fragment"><strong>UX</strong> é mais amplo: envolve sentimentos, contexto, usabilidade e satisfação.</li>
+                <li class="fragment"><strong>UI</strong> é parte da UX: trata da aparência e comportamento da interface.</li>
+                <li class="fragment"><strong>IHC</strong> fornece as bases teóricas e técnicas que sustentam UI e UX.</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Profissionais envolvidos (complemento)</h2>
+                <ul>
+                <li class="fragment"><strong>Pesquisador de IHC:</strong> investiga padrões de interação, modelos mentais e tecnologias emergentes.</li>
+                <li class="fragment"><strong>UX Researcher:</strong> conduz estudos com usuários para orientar decisões de design.</li>
+                <li class="fragment"><strong>Todos esses papéis se sobrepõem e colaboram.</strong></li>
+                </ul>
+                </section>
+
+                <section data-background="#333">
+                <h2>Evolução dos conceitos</h2>
+                <ul>
+                <li class="fragment"><strong>1970s – IHC:</strong> surge como campo acadêmico na computação, influenciado pela psicologia cognitiva.</li>
+                <li class="fragment"><strong>1980s – UI:</strong> popularização com interfaces gráficas (GUI) como Macintosh e Windows.</li>
+                <li class="fragment"><strong>1990s – UX:</strong> termo cunhado por Don Norman na Apple para pensar além da interface.</li>
+                <li class="fragment"><strong>2000s+:</strong> consolidação de times de UX e UI nas empresas e foco no design centrado no usuário.</li>
+                </ul>
+                </section>
+        
+                <section>
+                    <h2>User Experience (UX)</h2>
+                    <ul>
+                        <li class="fragment">Foco em usabilidade, acessibilidade, eficiência</li>
+                        <li class="fragment">Testes com usuários, protótipos, validações</li>
+                        <li class="fragment">Qualidade funcional + emocional</li>
+                    </ul>
+                </section>
+        
+                <section data-background="#333">
+                    <h3>UX nas normas ISO</h3>
+                    <ul>
+                        <li class="fragment"><strong>Usabilidade</strong>: facilidade de uso</li>
+                        <li class="fragment"><strong>Acessibilidade</strong>: para todos os públicos</li>
+                        <li class="fragment"><strong>Satisfação do usuário</strong>: experiência positiva</li>
+                    </ul>
+                    <p class="fragment">UX <strong>é</strong> qualidade prevista em norma.</p>
+                </section>
+        
+                <section>
+                    <h2>Design Centrado no Usuário</h2>
+                    <ul>
+                        <li class="fragment">Envolve empatia, escuta ativa e iteração constante</li>
+                        <li class="fragment">Requisitos emergem da realidade do usuário</li>
+                        <li class="fragment">Fases: pesquisa, definição, ideação, prototipação, teste</li>
+                    </ul>
+                </section>
+        
+                <section>
+                    <h2>Personas e Jornadas</h2>
+                    <ul>
+                        <li class="fragment"><strong>Personas:</strong> arquétipos de usuários reais</li>
+                        <li class="fragment"><strong>Jornada do Usuário:</strong> mapa da experiência e emoções</li>
+                        <li class="fragment">Essenciais para tomar decisões de design e arquitetura</li>
+                    </ul>
+                </section>
+        
+                <section data-background="#333">
+                    <h2>UX Writing e Microinterações</h2>
+                    <ul>
+                        <li class="fragment">Texto também é interface</li>
+                        <li class="fragment">Feedbacks, mensagens, botões: tudo comunica</li>
+                        <li class="fragment">Pequenas interações constroem grandes experiências</li>
+                    </ul>
+                </section>
+        
+                <section>
+                    <h2>User Interface (UI)</h2>
+                    <ul>
+                        <li class="fragment">Interface é a camada visível da experiência</li>
+                        <li class="fragment">Design visual, cores, tipografia, espaçamentos</li>
+                        <li class="fragment">Consistência visual aumenta confiança</li>
+                    </ul>
+                </section>
+        
+                <section data-background="#333">
+                    <h2>Princípios de uma boa UI</h2>
+                    <ul>
+                        <li class="fragment">Clareza: o que pode ser feito?</li>
+                        <li class="fragment">Foco: destaque no que importa</li>
+                        <li class="fragment">Consistência: padrões de comportamento</li>
+                        <li class="fragment">Feedback: reações visíveis a ações</li>
+                    </ul>
+                </section>
+        
+                <section>
+                    <h1>Heuristicas de Nielsen</h1>
+                </section>
+
+                <section>
+                    <h2>Quem é Jakob Nielsen?</h2>
+                    <ul>
+                      <li class="fragment">Pesquisador dinamarquês, referência global em usabilidade</li>
+                      <li class="fragment">PhD em Interação Humano-Computador pela Universidade Técnica da Dinamarca</li>
+                      <li class="fragment">Trabalhou na <strong>Sun Microsystems</strong> e fundou a <strong>Nielsen Norman Group</strong> com Don Norman (ex-Apple)</li>
+                      <li class="fragment">Apelidado de “Guru da Usabilidade” pelo New York Times</li>
+                    </ul>
+                  </section>
+
+                  <section data-background="#333">
+                    <h2>Origem das Heurísticas de Nielsen</h2>
+                    <ul>
+                      <li class="fragment">Criadas em 1990 com Rolf Molich</li>
+                      <li class="fragment">Baseadas em estudos práticos de usabilidade</li>
+                      <li class="fragment">Heurísticas = princípios gerais para avaliar interfaces</li>
+                      <li class="fragment">Popularizaram a técnica de <strong>avaliação heurística</strong></li>
+                      <li class="fragment">Aplicadas até hoje em UX moderno, desde startups a governos</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <div style="text-align: left;">
+                        <h3><em>Heuristica</em></h3>
+                        <hr>
+                        <p class="fragment">
+                            do Grego, <em style="color: red;">Heurisko</em>
+                        </p>
+                        <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                            que significa <strong>"encontrar"</strong>, <strong></strong>"descobrir"</strong> ou <strong></strong>"inventar"</strong>
+
+                            ciência que tem por objeto a <strong><em> descoberta dos fatos.</em></strong> <br>
+                        </p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Heurísticas de Nielsen</h2>
+                    <ul>
+                        <li class="fragment">1. Visibilidade do status do sistema</li>
+                        <li class="fragment">2. Correspondência entre sistema e mundo real</li>
+                        <li class="fragment">3. Controle e liberdade do usuário</li>
+                        <li class="fragment">4. Consistência e padrões</li>
+                        <li class="fragment">5. Prevenção de erros</li>
+                    </ul>
+                </section>
+        
+                <section data-background="#333">
+                    <h2>Heurísticas de Nielsen (continuação)</h2>
+                    <ul>
+                        <li class="fragment">6. Reconhecimento em vez de memorização</li>
+                        <li class="fragment">7. Flexibilidade e eficiência de uso</li>
+                        <li class="fragment">8. Design estético e minimalista</li>
+                        <li class="fragment">9. Ajudar usuários a reconhecer, diagnosticar e corrigir erros</li>
+                        <li class="fragment">10. Ajuda e documentação</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>1. Visibilidade do status do sistema</h2>
+                    <ul>
+                      <li class="fragment">O sistema deve manter o usuário informado sobre o que está acontecendo.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Barra de progresso em uploads do Google Drive.</li>
+                    </ul>
+                  </section>
+                  
+                  <section data-background="#333">
+                    <h2>2. Correspondência com o mundo real</h2>
+                    <ul>
+                      <li class="fragment">Usar linguagem e símbolos familiares ao usuário.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Ícone de lixeira para excluir arquivos.</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h2>3. Controle e liberdade do usuário</h2>
+                    <ul>
+                      <li class="fragment">Permitir desfazer ou cancelar ações facilmente.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Botão “Desfazer” ao arquivar e-mails no Gmail.</li>
+                    </ul>
+                  </section>
+                  
+                  <section data-background="#333">
+                    <h2>4. Consistência e padrões</h2>
+                    <ul>
+                      <li class="fragment">Usuários não devem se perguntar se diferentes palavras, situações ou ações significam a mesma coisa.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Botões de “Salvar” no mesmo lugar em toda a suíte do Microsoft Office.</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h2>5. Prevenção de erros</h2>
+                    <ul>
+                      <li class="fragment">Melhor prevenir o erro do que exibir uma mensagem de erro.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Desabilitar o botão "Enviar" até que todos os campos obrigatórios estejam preenchidos.</li>
+                    </ul>
+                  </section>
+                  
+                  <section data-background="#333">
+                    <h2>6. Reconhecimento em vez de memorização</h2>
+                    <ul>
+                      <li class="fragment">Reduzir a carga de memória do usuário.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Sugestões automáticas de busca no YouTube e Google.</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h2>7. Flexibilidade e eficiência de uso</h2>
+                    <ul>
+                      <li class="fragment">Interfaces devem atender usuários iniciantes e experientes.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Atalhos de teclado no VS Code, mas com menus visuais para iniciantes.</li>
+                    </ul>
+                  </section>
+                  
+                  <section data-background="#333">
+                    <h2>8. Design estético e minimalista</h2>
+                    <ul>
+                      <li class="fragment">Interfaces não devem conter informações irrelevantes.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> Interface limpa do Google.com com apenas o necessário.</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h2>9. Ajudar no diagnóstico e correção de erros</h2>
+                    <ul>
+                      <li class="fragment">Mensagens de erro devem ser claras e sugerir soluções.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> “Senha fraca — use pelo menos 8 caracteres e uma letra maiúscula.”</li>
+                    </ul>
+                  </section>
+                  
+                  <section data-background="#333">
+                    <h2>10. Ajuda e documentação</h2>
+                    <ul>
+                      <li class="fragment">Mesmo que o sistema seja fácil, pode haver necessidade de ajuda.</li>
+                      <li class="fragment"><strong>Exemplo:</strong> FAQs e tutoriais integrados no Notion e no Figma.</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h2>Falhas de UX no mundo real</h2>
+                    <ul>
+                      <li class="fragment"><strong>Caixa.gov.br:</strong> Sistema lento, fluxo confuso de agendamento de auxílio emergencial.</li>
+                      <li class="fragment"><strong>Urnas eletrônicas antigas:</strong> Pouco intuitivas para eleitores idosos.</li>
+                      <li class="fragment"><strong>Aplicativos bancários antigos:</strong> Erros genéricos e navegação truncada.</li>
+                    </ul>
+                    <p>→ Bons sistemas podem fracassar por má experiência.</p>
+                  </section>
+                  
+                  <section data-background="#333">
+                    <h2>Como testar a experiência?</h2>
+                    <ul>
+                      <li class="fragment"><strong>Testes de usabilidade:</strong> Observe pessoas reais usando seu sistema.</li>
+                      <li class="fragment"><strong>Métricas:</strong> tempo de tarefa, taxa de sucesso, erros cometidos.</li>
+                      <li class="fragment"><strong>Ferramentas:</strong> Maze, Hotjar, UserTesting, TestFlight</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h2>UX no ciclo ágil</h2>
+                    <ul>
+                      <li class="fragment">Pesquisas e protótipos antes do sprint</li>
+                      <li class="fragment">Testes e ajustes durante o desenvolvimento</li>
+                      <li class="fragment"><strong>UX é parte da Definition of Done</strong></li>
+                    </ul>
+                    <p>→ Qualidade de entrega ≠ só passar no teste automatizado</p>
+                  </section>
+                  
+                  <section data-background="#333">
+                    <h2>Dinâmica prática (grupos)</h2>
+                    <p><strong>Objetivo:</strong> identificar problemas de usabilidade</p>
+                    <ul>
+                      <li class="fragment">Acesse um site/app conhecido (gov.br, e-mail, redes sociais)</li>
+                      <li class="fragment">Aplique as heurísticas de Nielsen</li>
+                      <li class="fragment">Identifique ao menos 3 problemas com sugestões de melhoria</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h2>Ferramentas que ajudam no processo</h2>
+                    <ul>
+                      <li class="fragment"><strong>Figma:</strong> prototipação visual e colaboração</li>
+                      <li class="fragment"><strong>Notion:</strong> documentação de jornadas e decisões</li>
+                      <li class="fragment"><strong>Hotjar:</strong> mapas de calor e gravações de uso real</li>
+                      <li class="fragment"><strong>Google Analytics:</strong> entender comportamento</li>
+                      <li class="fragment"><strong>CyPress:</strong> Criar um cenários de testes E2E</li>
+                    </ul>
+                  </section>
+                  
+                  
+        
+                <section>
+                    <h2>Atividade Rápida</h2>
+                    <p class="fragment">→ Como sua função (Dev, QA, PO...) impacta na experiência final do usuário?</p>
+                    <p class="fragment">→ Seu projeto considera estrutura de menus, feedbacks e navegação?</p>
+                </section>
+
+                <section data-background="#333">
+                    <h1>RETROSPECTIVA</h1>
+                </section>
+        
+
+                <section>
+                    <h2>De onde viemos?</h2>
+                    <ul>
+                      <li class="fragment"><strong>Fundamentos da Engenharia de Software</strong></li>
+                      <li class="fragment">Qualidade como processo: normas ISO, papéis, engenharia</li>
+                      <li class="fragment">Times diversos: devs, QAs, POs, arquitetos, analistas</li>
+                      <li class="fragment">qualidade interna <strong>e estrutural</strong></li>
+                    </ul>
+                  </section>
+
+                  <section data-background="#333">
+                    <h2>Onde estavamos hoje?</h2>
+                    <ul>
+                      <li class="fragment"><strong>UX, UI e IHC</strong> como extensão da qualidade</li>
+                      <li class="fragment">Do código para o usuário: <strong>qualidade percebida</strong></li>
+                      <li class="fragment">Normas ISO também abordam usabilidade e acessibilidade</li>
+                      <li class="fragment">Integração entre engenharia e design = produto de sucesso</li>
+                    </ul>
+                  </section>
+                			
+                  <section>
+                    <h2>Para onde irão?</h2>
+                    <ul>
+                      <li class="fragment"><strong>Modelagem e projeto de dados:</strong> base para sistemas úteis</li>
+                      <li class="fragment"><strong>Métricas:</strong> medir tanto qualidade técnica quanto uso real</li>
+                      <li class="fragment"><strong>Gestão estratégica de TI:</strong> valor do software além do código</li>
+                      <li class="fragment"><strong>Modelos de maturidade:</strong> evolução contínua de equipes e processos</li>
+                    </ul>
+                  </section>
+
+                  <section data-background="#333">
+                    <h2>Qualidade em todos os níveis</h2>
+                    <ul>
+                      <li class="fragment"><strong>Engenharia:</strong> processo e implementação</li>
+                      <li class="fragment"><strong>Experiência:</strong> percepção e uso</li>
+                      <li class="fragment"><strong>Dados:</strong> suporte e estrutura</li>
+                      <li class="fragment"><strong>Gestão:</strong> visão estratégica e entrega de valor</li>
+                    </ul>
+                    <p>→ Um bom software é sólido, útil, usado, e evolui com o tempo.</p>
+                  </section>
+
+                  <section>
+                    <h2>Como ter sucesso na pós?</h2>
+                    <ul>
+                      <li class="fragment">💡 Traga a teoria para o seu contexto profissional</li>
+                      <li class="fragment">📘 Estude com intenção de aplicar, não só de passar</li>
+                      <li class="fragment">🤝 Construa pontes com colegas e professores</li>
+                      <li class="fragment">🔍 Observe além do código: pessoas e processos contam</li>
+                    </ul>
+                  </section>
+                  <section data-background="#333">
+                    <h2>Torne-se referência</h2>
+                    <ul>
+                      <li class="fragment">📊 Use métricas para propor melhorias no seu time</li>
+                      <li class="fragment">📣 Aprenda a comunicar valor técnico e de negócio</li>
+                      <li class="fragment">👣 Dê pequenos passos que te aproximem da liderança</li>
+                      <li class="fragment">🏁 A pós-graduação é um trampolim, não o destino final</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h2>O ciclo da qualidade</h2>
+                    <ul>
+                      <li class="fragment"><strong>Aprender</strong>: fundamentos, ferramentas e normas</li>
+                      <li class="fragment"><strong>Aplicar</strong>: no código, nos dados e na gestão</li>
+                      <li class="fragment"><strong>Avaliar</strong>: com métricas e feedback</li>
+                      <li class="fragment"><strong>Evoluir</strong>: como profissional e como equipe</li>
+                    </ul>
+                    <p><em>Vamos crescer juntos, com técnica e propósito.</em></p>
+                  </section>
+
+                  <section data-background="#333">
+                        <strong>  E por ultimo: </strong>
+
+                        <h3 class="fragment">Junte-se às comunidades</h3>
+
+                  </section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li class="fragment">
+							<a href="https://speakerdeck.com/raphaeldealmeida/pare-de-programar-orientado-a-framework">
+								Pare de programar orientado a framework - <small>Raphael Almeida (PHP RIO)</small>
+							</a>
+						</li>
+						<li class="fragment">
+							<a href="https://www.freecodecamp.org/news/the-difference-between-a-framework-and-a-library-bd133054023f/">
+								The difference between a framework and a library
+							</a>
+						</li>
+						<li class="fragment">
+							<a href="https://tiagoanacretto.wordpress.com/2013/12/05/acoplamento-e-coesao-afinal-o-que-e-isso/">
+								Acoplamento e Coesão: afinal, o que é isso?
+							</a>
+						</li>
+						<li class="fragment">
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O mitico homem mês <span style="font-size: 1.2rem;">(Ensaios sobre a Eng. de Software), Frederick Brooks Jr - 1995</span>
+							</a>
+						</li>
+						<li class="fragment">
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O desenvolvedor limpo <span style="font-size: 1.2rem;">(Clean Coder), Uncle Bob - 2011</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
