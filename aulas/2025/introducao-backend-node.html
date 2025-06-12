@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Introdução ao Backend com Node.js</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.4.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.4.0/dist/theme/black.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h2>Introdução ao Backend com Node.js e Cypress</h2>
+          <p>Alessandro Feitoza</p>
+        </section>
+
+        <section>
+          <h2>O que é Backend?</h2>
+          <ul>
+            <li class="fragment">Responsável por regras de negócio, acesso a dados e segurança</li>
+            <li class="fragment">Executado no servidor</li>
+            <li class="fragment">Diferente do frontend (navegador)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Tipos de Desenvolvimento</h2>
+          <ul>
+            <li class="fragment">Frontend</li>
+            <li class="fragment">Backend</li>
+            <li class="fragment">Mobile</li>
+            <li class="fragment">Full Stack</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Comunicação Cliente x Servidor</h2>
+          <ul>
+            <li class="fragment">Requisições HTTP (GET, POST, PUT, DELETE)</li>
+            <li class="fragment">Cliente envia requisição → servidor responde</li>
+            <li class="fragment">Baseado em protocolos</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>O que é JSON?</h2>
+          <ul>
+            <li class="fragment">JavaScript Object Notation</li>
+            <li class="fragment">Formato leve de troca de dados</li>
+            <li class="fragment">Base para comunicação entre front e back</li>
+          </ul>
+          <pre><code>{
+  "nome": "Alessandro",
+  "idade": 29
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>O que é uma API?</h2>
+          <ul>
+            <li class="fragment">Application Programming Interface</li>
+            <li class="fragment">Permite que sistemas diferentes se comuniquem</li>
+            <li class="fragment">Backends modernos expõem APIs REST ou GraphQL</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Banco de Dados (Breve Introdução)</h2>
+          <ul>
+            <li class="fragment">Estrutura para armazenar dados</li>
+            <li class="fragment">Relacionais (MySQL, PostgreSQL)</li>
+            <li class="fragment">Não relacionais (MongoDB, Redis)</li>
+            <li class="fragment">Conectado ao backend por bibliotecas/ORMs</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Comparativo: Node.js vs outros backends</h2>
+          <ul>
+            <li class="fragment">PHP (Laravel)</li>
+            <li class="fragment">Java (Spring Boot)</li>
+            <li class="fragment">Python (Django, Flask)</li>
+            <li class="fragment">Ruby (Rails)</li>
+            <li class="fragment">Node.js: rápido, não bloqueante, JS no back</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Por que Node.js?</h2>
+          <ul>
+            <li class="fragment">Mesma linguagem no front e no back</li>
+            <li class="fragment">Rápido e leve</li>
+            <li class="fragment">Grande ecossistema (npm)</li>
+            <li class="fragment">Ideal para aplicações modernas e APIs</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Cypress: onde entra?</h2>
+          <ul>
+            <li class="fragment">Ferramenta de testes end-to-end</li>
+            <li class="fragment">Simula ações de usuário no navegador</li>
+            <li class="fragment">Usado para testar comunicação com backend</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Mão na Massa: Node.js</h2>
+          <ul>
+            <li class="fragment">Criar projeto com <code>npm init</code></li>
+            <li class="fragment">Instalar <code>express</code></li>
+            <li class="fragment">Criar primeira rota: <code>GET /</code></li>
+            <li class="fragment">Testar com Postman ou curl</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.4.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize();
+    </script>
+  </body>
+</html>

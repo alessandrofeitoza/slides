@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Palestra Tech: O que preciso saber para dar uma</title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+
+            <div class="slides">
+                <section>
+                    <h2>Introdução ao Doctrine ORM</h2>
+                    <p>Usando Doctrine em uma aplicação PHP pura</p>
+                  </section>
+
+                  <section data-background="#333">
+                    <p class="r-fit-text">
+                      DBAL / 
+                      ORM
+                    </p>
+                  </section>
+
+                  <section>
+                    <h1>DBAL</h1>
+                    <hr>
+                    <p>
+                      Database Abstraction Layer
+                    </p>
+
+                    <ul>
+                      <li class="fragment">Serviços básicos: Insert, Select, Update, Delete</li>
+                      <li class="fragment">Transactions</li>
+                      <li class="fragment">É praticamente um PDO muito melhorado.</li>
+                    </ul>
+                  </section>
+
+
+                  <section>
+                    <h1>ORM</h1>
+                    <hr>
+                    <p>
+                      Object Relational Mapper
+                    </p>
+                    <ul>
+                      <li class="fragment">Mapeamento de Entidades</li>
+                      <li class="fragment">DQL</li>
+                      <li class="fragment">Chega de criar o banco de dados no PHPmyAdmin</li>
+                    </ul>
+                  </section>
+
+                  <section data-background-size="50%" data-background="https://media.slid.es/uploads/402795/images/2640393/vidadecao.gif">
+
+                  </section>
+          
+                  <section>
+                    <h2>O que é o Doctrine?</h2>
+                    <ul>
+                      <li class="fragment">ORM (Object-Relational Mapper) para PHP</li>
+                      <li class="fragment">Permite mapear classes PHP para tabelas do banco</li>
+                      <li class="fragment">Popular no ecossistema Symfony, mas pode ser usado isoladamente</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h2>Instalação com Composer</h2>
+                    <pre><code class="hljs bash">composer require doctrine/orm</code></pre>
+                    <ul>
+                      <li class="fragment">Requer também `doctrine/annotations`, `symfony/cache`, `psr/cache`, etc.</li>
+                      <li class="fragment">Sugestão: usar Doctrine DBAL para controle de conexões</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h2>Configuração básica</h2>
+                    <pre><code class="hljs php">
+          use Doctrine\ORM\Tools\Setup;
+          use Doctrine\ORM\EntityManager;
+          
+          $config = Setup::createAnnotationMetadataConfiguration(
+            [__DIR__."/src"],
+            true
+          );
+          
+          $conn = [
+            'dbname' => 'meubanco',
+            'user' => 'root',
+            'password' => '',
+            'host' => 'localhost',
+            'driver' => 'pdo_mysql',
+          ];
+          
+          $entityManager = EntityManager::create($conn, $config);
+                    </code></pre>
+                  </section>
+          
+                  <section>
+                    <h2>Entidades</h2>
+                    <pre><code class="hljs php">
+          /** @Entity @Table(name="produtos") */
+          class Produto {
+            /** @Id @Column(type="integer") #GeneratedValue */
+            private $id;
+          
+            /** @Column(type="string") */
+            private $nome;
+          
+            // getters e setters
+          }
+                    </code></pre>
+                    <ul>
+                      <li class="fragment">As anotações definem o mapeamento da classe</li>
+                      <li class="fragment">Cada entidade representa uma tabela</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h2>Entidades</h2>
+                    <pre><code class="hljs php">
+          #[Entity @Table(name="produtos")]
+          class Produto {
+            #[Id] #[Column(type="integer")] #[GeneratedValue]
+            private $id;
+          
+            #[Column(type="string")]
+            private $nome;
+          
+            // getters e setters
+          }
+                    </code></pre>
+                    <ul>
+                      <li class="fragment">As anotações definem o mapeamento da classe</li>
+                      <li class="fragment">Cada entidade representa uma tabela</li>
+                    </ul>
+                  </section>
+          
+          
+                  <section>
+                    <h2>Persistência de dados</h2>
+                    <pre><code class="hljs php">
+          $produto = new Produto();
+          $produto->setNome("Café");
+          
+          $entityManager->persist($produto);
+          $entityManager->flush();
+                    </code></pre>
+                    <ul>
+                      <li class="fragment">`persist` marca o objeto para inserção</li>
+                      <li class="fragment">`flush` executa no banco</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h2>Repositórios</h2>
+                    <pre><code class="hljs php">
+          $repo = $entityManager->getRepository(Produto::class);
+          $produto = $repo->find(1);
+          $produtos = $repo->findAll();
+                    </code></pre>
+                    <ul>
+                      <li class="fragment">Buscas simples direto do repositório</li>
+                      <li class="fragment">Pode criar repositórios customizados</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h2>Migrations com Doctrine</h2>
+                    <ul>
+                      <li class="fragment">Permite versionar alterações no schema</li>
+                      <li class="fragment">Instalação: <code>composer require doctrine/migrations</code></li>
+                      <li class="fragment">Geração: <code>vendor/bin/doctrine-migrations diff</code></li>
+                      <li class="fragment">Execução: <code>vendor/bin/doctrine-migrations migrate</code></li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h2>Relacionamentos</h2>
+                    <ul>
+                      <li class="fragment"><strong>OneToMany / ManyToOne:</strong> Um cliente tem vários pedidos</li>
+                      <li class="fragment"><strong>OneToOne:</strong> Um usuário tem um perfil</li>
+                      <li class="fragment"><strong>ManyToMany:</strong> Produtos e Categorias</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h2>Exemplo: OneToMany</h2>
+                    <pre><code class="hljs php">
+          /** @Entity */
+          class Cliente {
+            /** @OneToMany(targetEntity="Pedido", mappedBy="cliente") */
+            private $pedidos;
+          }
+          
+          /** @Entity */
+          class Pedido {
+            /** @ManyToOne(targetEntity="Cliente", inversedBy="pedidos") */
+            private $cliente;
+          }
+                    </code></pre>
+                  </section>
+          
+                  <section>
+                    <h2>Exemplo: OneToOne</h2>
+                    <pre><code class="hljs php">
+          /** @Entity */
+          class Usuario {
+            /** @OneToOne(targetEntity="Perfil") @JoinColumn(name="perfil_id", referencedColumnName="id") */
+            private $perfil;
+          }
+          
+          /** @Entity */
+          class Perfil {
+            // ...
+          }
+                    </code></pre>
+                  </section>
+          
+                  <section>
+                    <h2>Exemplo: ManyToMany</h2>
+                    <pre><code class="hljs php">
+          /** @Entity */
+          class Produto {
+            /** @ManyToMany(targetEntity="Categoria") */
+            private $categorias;
+          }
+          
+          /** @Entity */
+          class Categoria {
+            /** @ManyToMany(targetEntity="Produto", mappedBy="categorias") */
+            private $produtos;
+          }
+                    </code></pre>
+                  </section>
+          
+                  <section>
+                    <h2>Dicas práticas</h2>
+                    <ul>
+                      <li class="fragment">Use namespaces e PSR-4 para organização</li>
+                      <li class="fragment">Utilize o CLI do Doctrine para debug</li>
+                      <li class="fragment">Prefira anotação ou XML/JSON conforme o contexto do projeto</li>
+                      <li class="fragment">Faça commit dos arquivos de migrations no Git</li>
+                    </ul>
+                  </section>
+            </div>
+
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script src="../../plugin/zoom/zoom.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.3.0/plugin/mermaid/mermaid.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				mermaid: {
+					// flowchart: {
+						//   curve: 'linear',
+						// },
+				},
+				plugins: [ RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes, RevealMermaid ],
+			});
+		</script>
+	</body>
+</html>
