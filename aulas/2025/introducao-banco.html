@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Introdução a Banco de Dados</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+      <section data-background="black">
+        <h2>Introdução a Banco de Dados</h2>
+        <p class="fragment">Conceitos básicos e primeiros passos</p>
+      </section>
+      
+      <section data-background="white">
+        <h3>Por que precisamos de um Banco de Dados?</h3>
+        <ul>
+          <li class="fragment">Armazenar informações de forma organizada</li>
+          <li class="fragment">Facilidade de acesso e busca</li>
+          <li class="fragment">Segurança e integridade dos dados</li>
+          <li class="fragment">Compartilhamento de informações</li>
+        </ul>
+      </section>
+
+      <section data-background="white">
+        <h3>Profissões</h3>
+        <hr>
+        <ul>
+            <li class="fragment">DBA - DataBase Administrator</li>
+            <li class="fragment">Data Analytics</li>
+            <li class="fragment">Cientista de Dados</li>
+            <li class="fragment">Devs Backend</li>
+        </ul>
+      </section>
+      
+      <section data-background="#003366">
+        <h3>O que é um Banco de Dados?</h3>
+        <p class="fragment">Conjunto organizado de dados, geralmente armazenados e acessados eletronicamente a partir de um sistema de computador.</p>
+      </section>
+      
+      <section data-background="white">
+        <h3>Conceitos Fundamentais</h3>
+        <ul>
+          <li class="fragment">Tabelas (Tables)</li>
+          <li class="fragment">Colunas (Columns)</li>
+          <li class="fragment">Registros (Rows)</li>
+          <li class="fragment">Índices (Indexes)</li>
+          <li class="fragment">Relacionamentos (Relationships)</li>
+        </ul>
+      </section>
+      
+      <section data-background="#333">
+        <h3>Exemplo de Tabela</h3>
+        <pre class="fragment">
++----+----------+-----------+
+| ID | Nome     | Email     |
++----+----------+-----------+
+|  1 | João     | joao@x.com|
+|  2 | Maria    | maria@x.com|
++----+----------+-----------+
+        </pre>
+      </section>
+      
+      <section data-background="white">
+        <h3>Principais Bancos de Dados</h3>
+        <ul>
+          <li class="fragment">MySQL</li>
+          <li class="fragment">PostgreSQL</li>
+          <li class="fragment">SQL Server</li>
+          <li class="fragment">Oracle</li>
+          <li class="fragment">MongoDB (NoSQL)</li>
+          <li class="fragment">Redis (NoSQL)</li>
+        </ul>
+      </section>
+      
+      <section data-background="#004d00">
+        <h3>Banco Relacional vs NoSQL</h3>
+        <ul>
+          <li class="fragment">Relacional: Estrutura em tabelas, SQL (Ex: MySQL, PostgreSQL)</li>
+          <li class="fragment">NoSQL: Estrutura flexível (documentos, chave-valor, etc) (Ex: MongoDB, Redis)</li>
+        </ul>
+      </section>
+      
+      <section data-background="white">
+        <h3>Principais Comandos SQL</h3>
+        <ul>
+          <li class="fragment">DDL - Data Definition Language (CREATE, ALTER, DROP)</li>
+          <li class="fragment">DML - Data Manipulation Language (INSERT, UPDATE, DELETE)</li>
+          <li class="fragment">DQL - Data Query Language (SELECT)</li>
+          <li class="fragment">DCL - Data Control Language (GRANT, REVOKE)</li>
+        </ul>
+      </section>
+      
+      <section data-background="#333">
+        <h3>DDL - Comandos de Estrutura</h3>
+        <pre class="fragment">CREATE TABLE usuarios (id INT, nome VARCHAR(100));</pre>
+        <pre class="fragment">ALTER TABLE usuarios ADD email VARCHAR(100);</pre>
+        <pre class="fragment">DROP TABLE usuarios;</pre>
+      </section>
+      
+      <section data-background="white">
+        <h3>DML & DQL - Manipulando e Consultando Dados</h3>
+        <pre class="fragment">INSERT INTO usuarios (id, nome) VALUES (1, 'João');</pre>
+        <pre class="fragment">UPDATE usuarios SET nome = 'Maria' WHERE id = 1;</pre>
+        <pre class="fragment">DELETE FROM usuarios WHERE id = 1;</pre>
+        <pre class="fragment">SELECT * FROM usuarios;</pre>
+      </section>
+      
+      <section data-background="#001a33">
+        <h3>Exercícios</h3>
+        <ul>
+          <li class="fragment">Crie uma tabela chamada <code>clientes</code> com os campos <code>id</code> e <code>nome</code></li>
+          <li class="fragment">Adicione um campo <code>email</code> à tabela <code>clientes</code></li>
+          <li class="fragment">Insira 3 registros fictícios</li>
+          <li class="fragment">Faça uma consulta que mostre todos os registros</li>
+        </ul>
+      </section>
+      
+      <section data-background="black">
+        <h3>Dúvidas?</h3>
+        <p class="fragment">Obrigado!</p>
+      </section>
+      
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true
+    });
+  </script>
+</body>
+</html>
