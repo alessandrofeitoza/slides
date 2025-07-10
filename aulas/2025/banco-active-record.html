@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Banco de Dados, Active Record e JavaScript</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Parte 1: Banco de Dados e Normalização -->
+      <!-- Parte 1: Banco de Dados e Normalização -->
+<section>
+    <h2>Banco de Dados</h2>
+    <h3>Entendendo a Normalização</h3>
+    <ul>
+      <li class="fragment">Reduz redundância</li>
+      <li class="fragment">Evita anomalias de atualização</li>
+      <li class="fragment">Organiza dados de forma lógica</li>
+    </ul>
+  </section>
+  
+  <section>
+    <h3>Exemplo prático: não normalizado</h3>
+    <pre><code class="sql" data-trim>
+  CREATE TABLE pedidos (
+    id INT,
+    cliente_nome VARCHAR(100),
+    produto1 VARCHAR(100),
+    produto2 VARCHAR(100),
+    produto3 VARCHAR(100)
+  );
+    </code></pre>
+    <p class="fragment">→ Difícil de consultar e manter</p>
+  </section>
+  
+  <section>
+    <h3>Normalizando</h3>
+    <pre><code class="sql" data-trim>
+  CREATE TABLE clientes (
+    id INT PRIMARY KEY,
+    nome VARCHAR(100)
+  );
+  
+  CREATE TABLE pedidos (
+    id INT PRIMARY KEY,
+    cliente_id INT,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+  );
+  
+  CREATE TABLE itens_pedido (
+    id INT PRIMARY KEY,
+    pedido_id INT,
+    produto VARCHAR(100),
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
+  );
+    </code></pre>
+    <p class="fragment">→ Flexível, escalável e sem duplicação</p>
+  </section>
+  
+  <!-- Forma Normal 1 -->
+  <section>
+    <h3>1ª Forma Normal (1NF)</h3>
+    <ul>
+      <li class="fragment">Sem grupos repetitivos</li>
+      <li class="fragment">Cada campo deve conter apenas um valor atômico</li>
+    </ul>
+    <pre class="fragment"><code class="sql" data-trim>
+  -- ❌ Violando 1NF
+  produto1 | produto2 | produto3
+  
+  -- ✅ Corrigido
+  produto (1 por linha)
+    </code></pre>
+  </section>
+  
+  <!-- Forma Normal 2 -->
+  <section>
+    <h3>2ª Forma Normal (2NF)</h3>
+    <ul>
+      <li class="fragment">Satisfaz 1NF</li>
+      <li class="fragment">Remove dependências parciais da chave primária</li>
+    </ul>
+    <pre class="fragment"><code class="sql" data-trim>
+  -- ❌ Cliente_nome depende só de parte da chave (pedido_id)
+  pedido_id, produto → cliente_nome
+  
+  -- ✅ Corrigido
+  cliente_id movido para outra tabela
+    </code></pre>
+  </section>
+  
+  <!-- Forma Normal 3 -->
+  <section>
+    <h3>3ª Forma Normal (3NF)</h3>
+    <ul>
+      <li class="fragment">Satisfaz 2NF</li>
+      <li class="fragment">Remove dependências transitivas</li>
+    </ul>
+    <pre class="fragment"><code class="sql" data-trim>
+  -- ❌ Tabela pedido tem cliente_nome, que depende de cliente_id
+  pedido → cliente_id → cliente_nome
+  
+  -- ✅ Corrigido
+  cliente_nome vai para a tabela de clientes
+    </code></pre>
+  </section>
+  
+  <!-- Forma Normal 4 -->
+  <section>
+    <h3>4ª Forma Normal (4NF)</h3>
+    <ul>
+      <li class="fragment">Satisfaz 3NF</li>
+      <li class="fragment">Evita dependências multivaloradas</li>
+    </ul>
+    <pre class="fragment"><code class="sql" data-trim>
+  -- ❌ Cliente pode ter vários telefones e vários e-mails
+  cliente_id | telefone | email
+  
+  -- ✅ Corrigido
+  Tabelas separadas:
+  telefones(cliente_id, telefone)
+  emails(cliente_id, email)
+    </code></pre>
+  </section>
+  
+
+      <!-- Parte 2: Active Record -->
+      <section>
+        <h2>Active Record</h2>
+        <h3>O que é?</h3>
+        <ul>
+          <li class="fragment">Cada classe representa uma tabela</li>
+          <li class="fragment">Cada instância representa um registro</li>
+          <li class="fragment">Métodos da própria classe manipulam os dados</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Exemplo Active Record em Laravel</h3>
+        <pre><code class="php" data-trim>
+$cliente = new Cliente();
+$cliente->nome = 'Maria';
+$cliente->save();
+
+$pedido = new Pedido();
+$pedido->cliente_id = $cliente->id;
+$pedido->save();
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Prós e Contras</h3>
+        <ul>
+          <li class="fragment"><strong>👍 Simples de usar</strong> com menos SQL direto</li>
+          <li class="fragment"><strong>👎 Difícil escalar lógica complexa</strong></li>
+          <li class="fragment">Forte acoplamento entre dados e lógica</li>
+        </ul>
+      </section>
+
+      <!-- Parte 3: Integrando com JavaScript -->
+      <section>
+        <h2>Integrando tudo com JavaScript</h2>
+        <h3>Express + Sequelize</h3>
+        <ul>
+          <li class="fragment">Express para rotas HTTP</li>
+          <li class="fragment">Sequelize como Active Record</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Exemplo: Modelos com Sequelize</h3>
+        <pre><code class="javascript" data-trim>
+const Cliente = sequelize.define('Cliente', {
+  nome: DataTypes.STRING,
+});
+
+const Pedido = sequelize.define('Pedido', {
+  clienteId: DataTypes.INTEGER,
+});
+
+Cliente.hasMany(Pedido);
+Pedido.belongsTo(Cliente);
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Rota Express com integração</h3>
+        <pre><code class="javascript" data-trim>
+app.post('/clientes', async (req, res) => {
+  const cliente = await Cliente.create({ nome: req.body.nome });
+  res.json(cliente);
+});
+        </code></pre>
+        <p class="fragment">→ CRUD simples usando Active Record</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.min.js"></script>
+  <script>
+    Reveal.initialize();
+  </script>
+</body>
+</html>
