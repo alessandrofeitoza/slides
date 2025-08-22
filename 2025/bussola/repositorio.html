@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Bússola Social</title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Financeiro</h1>
+					<p class="fragment" style="font-size: 4rem;"> Propostas de melhorias <strong> no repositório</strong> para começar </p>
+				</section>
+
+				<!-- Slide 1: Título -->
+				<section>
+					<h2>Pontos Principais</h2>
+
+					<ul>
+						<li class="fragment">README.md</li>
+                        <ul>
+                            <li class="fragment">Instalação</li>
+                            <li class="fragment">Documentação</li>
+                        </ul>
+						<li class="fragment">Branch principal</li>
+						<li class="fragment">Github Actions</li>
+						    <ul>
+                                <li class="fragment">Estilo de Código</li>
+                                <li class="fragment">Testes</li>
+                                <li class="fragment">Cobertura</li>
+                            </ul>
+						<li class="fragment">Migrations</li>
+					</ul>
+				</section>
+				
+                <section data-background="#333">
+                    <p class="r-fit-text">README</p>
+                </section>
+                
+                <section>
+                    <div style="text-align: left">
+                        <h3>README</h3>
+                        <hr>
+                        <ul>
+                            <li class="fragment">Adicionar uma <strong>documentação inicial</strong></li>
+                            <li class="fragment">Argumentar as <strong>decisões técnicas</strong></li>
+                            <li class="fragment">Criar um Makefile para ajudar a subir/usar o projeto</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <a href="https://github.com/bussola-social/Financeiro/tree/FT-36-github-actions">PR 10 (draft)</a>
+                </section>
+
+                <section data-background="#333">
+                    <p class="r-fit-text">BRANCH PRINCIPAL</p>
+                </section>
+                
+                <section>
+                    <div style="text-align: left">
+                        <h3>Branch Principal - proteção</h3>
+                        <hr>
+                        <p class="fragment">Proteger de commits diretos</p>
+                        <img src="img/branch-main.png" alt="" class="fragment">
+                    </div>
+                </section>
+
+                <section>
+                    <img src="img/branch-main-2.png" alt="">
+                </section>
+
+
+                <section>
+                    <div style="text-align: left">
+                        <h3>Branch Principal - nome</h3>
+                        <hr>
+                        <p  class="fragment">Renomear de <strong>master</strong> para <strong>main</strong>
+                            </p>
+                            Referência: <a href="https://github.com/github/renaming">https://github.com/github/renaming</a>
+                    </div>
+                </section>
+
+                <section>
+                    <div style="text-align: left">
+                        <h3>Branch Principal - codeowners</h3>
+                        <hr>
+                        <p  class="fragment">Proteger alguns arquivos para que não hajam alterações em lugares críticos </p>                    </div>
+                </section>
+
+                <section data-background-size="70%" data-background="img/codeowners.png"></section>
+
+                <section data-background="#333">
+                    <p class="r-fit-text">GITHUB ACTIONS</p>
+                </section>
+                
+                <section>
+                    <div style="text-align: left">
+                        <h3>Github Actions</h3>
+                        <hr>
+                        <ul>
+                            <li class="fragment">Ajuda a automatizar <strong>code review</strong></li>
+                            <li class="fragment">Garante qualidade <strong>ao executar sempre os testes</strong></li>
+                            <li class="fragment">Força manter uma boa cobertura de testes automatizados</li>
+                        </ul>
+                    </div>
+                </section>
+
+
+
+
+                <section data-background="#CCC">
+                    <div style="text-align: left">
+                        <h3>Code Style - PSR 12 e afins</h3>
+                        <hr>
+
+                        <img class="fragment" src="img/branch-main-3.png" alt="">
+                    </div>
+                </section>
+
+                <section>
+                    <img width="80%" src="img/cs-fixer-1.png" alt="">
+                </section>
+
+
+                <section>
+                    <img src="img/cs-fixer-2.png" alt="">
+                </section>
+
+                <section data-background="#fff">
+                    <div style="text-align: left">
+                        <h3>Cobertura</h3>
+                        <hr>
+
+                        <img class="fragment" src="img/coverage.png" alt="">
+                    </div>
+                </section>
+
+                <section>
+                    <a href="https://github.com/bussola-social/Financeiro/tree/FT-36-github-actions">PR 10 (draft)</a>
+                </section>
+
+				
+                <section data-background="#333">
+                    <p class="r-fit-text">MIGRATIONS</p>
+                </section>
+                
+                <section>
+                    <div style="text-align: left">
+                        <h3>Migrations</h3>
+                        <hr>
+                        <ul>
+                            <li class="fragment">Precisamos garantir que haja como desfazer as modificações <strong>up/down</strong></li>
+                            <li class="fragment">Toda alteração no banco deve ter um plano de contenção e backup</li>
+                            <li class="fragment">Garantir que toda migration tenha UP e DOWN</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-size="70%" data-background="img/migrations.png">
+
+                </section>
+
+                <section data-background="#333">
+                    <p class="r-fit-text">EXTRAS</p>
+                </section>
+                
+                <section>
+                    <div style="text-align: left">
+                        <h3>Extras</h3>
+                        <hr>
+                        <ul>
+                            <li class="fragment">Canal de comunicação só para devs <strong>com notificações do github</strong></li>
+                            <li class="fragment">Mudar toda a codebase para inglês</li>
+                        </ul>
+                    </div>
+                </section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
