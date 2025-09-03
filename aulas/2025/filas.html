@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Trabalhando com filas</title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Trabalhando com Filas</h1>
+					<p class="fragment" style="font-size: 4rem;"> Um sempre <strong>atrás</strong> do outro </p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<!--
+				<section>
+					<div style="display: flex;">
+						<div>
+							<ul style="font-size: 2rem">
+								<li class="fragment">+12 anos como Dev</li>
+								<li class="fragment">+12 anos como professor de devs</li>
+								<li class="fragment">Já fui contratado, demitido, readimitido</li>
+								<li class="fragment">Já contratei, já desliguei pessoas</li>
+								<br>
+								<li class="fragment">E nenhuma dessas coisas eu fiz direito 🦆 </li>
+							</ul>
+						</div>
+						<div>
+							<img class="fragment" width="80%" src="../../img/gifs/pato.gif" alt="">
+						</div>
+					</div>
+				</section>
+				-->
+
+
+				<section>
+					<h1>Contexto</h1>
+                    <p class="fragment">Uma aplicação web, como qualquer outra</p>
+				</section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_01.png" alt="">
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_02.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 4rem;">
+                        Nesse cenário altamente comum, <strong>um processo depende do outro</strong>
+                    </p>
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_03.png" alt="">
+                    <p class="fragment">Isso aqui pode ser um problema?</p>
+                </section>
+
+                <section data-background="#333">
+                    <h3>A arquitetura em camadas não é um problema!</h3>
+                    <p class="fragment">O problema é a third party</p>
+                </section>
+                <section>
+                    <img src="../../2024/img/filas/request_04.png" alt="">
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_05.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <p>Solução</p>
+                    <h3 class="fragment">Terceiriza</h3>
+                </section>
+
+                <section>
+                    <img src="../../img/gifs/fila.webp" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <h2>PILHA </h2> VS <h2> FILA</h2>
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/pilha.png" alt="">
+                    <br>
+                    <p>
+                        Last In, First Out
+                    </p>
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/fila.png" alt="">
+                    <br>
+                    <p>
+                        First In, First Out
+                    </p>
+                </section>
+
+                <section data-background="#333">
+                    <h3>Como funciona isso no Laravel?</h3>
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_07.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <ul>
+                        <li class="fragment">Jobs</li>
+                        <li class="fragment">Job Batches</li>
+                        <li class="fragment">Failed Jobs</li>
+                    </ul>
+                </section>
+
+				<section>
+                    <h2>Ferramentas do Ecossistema Laravel</h2>
+                    <p>Jobs, Queues, Notifications, Eventos e Task Scheduling</p>
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Por que usar?</h3>
+                    <ul>
+                    <li class="fragment">Escalabilidade</li>
+                    <li class="fragment">Organização de responsabilidades</li>
+                    <li class="fragment">Melhor experiência do usuário</li>
+                    </ul>
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Jobs & Queues</h3>
+                    <p class="fragment">Processos pesados em background</p>
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Criando um Job</h3>
+                    <pre><code data-trim data-noescape>
+                    php artisan make:job ProcessarPedido
+                    </code></pre>
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Exemplo de Job</h3>
+                    <pre><code data-trim data-noescape>
+                    class ProcessarPedido implements ShouldQueue {
+                        public function handle() {
+                            // Lógica de processamento
+                        }
+                    }
+                    </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>Disparando o Job</h3>
+                        <pre><code data-trim data-noescape>
+                        ProcessarPedido::dispatch($pedido);
+                        </code></pre>
+                        </section>
+                        
+                        
+                        <section>
+                        <h3>Configuração da Queue</h3>
+                        <ul>
+                        <li class="fragment">database</li>
+                        <li class="fragment">redis</li>
+                        <li class="fragment">sqs</li>
+                        </ul>
+                        </section>
+                        
+                        
+                        <section>
+                        <h3>Rodando o worker</h3>
+                        <pre><code data-trim data-noescape>
+                        php artisan queue:work
+                        </code></pre>
+                        </section>
+                        
+                        
+                        <section>
+                        <h3>Notifications</h3>
+                        <p class="fragment">Comunicação rápida e multi-canal</p>
+                        </section>
+
+                        <section>
+                            <h3>Criando uma Notification</h3>
+                            <pre><code data-trim data-noescape>
+                            php artisan make:notification PedidoEnviado
+                            </code></pre>
+                            </section>
+                
+                
+                <section>
+                <h3>Exemplo de Notification</h3>
+                <pre><code data-trim data-noescape>
+                class PedidoEnviado extends Notification {
+                    public function via($notifiable) {
+                        return ['mail'];
+                    }
+                    
+                    
+                    public function toMail($notifiable) {
+                        return (new MailMessage)
+                            ->subject('Seu pedido foi enviado!')
+                            ->line('Confira os detalhes no sistema.');
+                    }
+                }
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Disparando Notification</h3>
+                <pre><code data-trim data-noescape>
+                $user->notify(new PedidoEnviado());
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Eventos & Listeners</h3>
+                <p class="fragment">Desacoplamento de ações</p>
+                </section>
+                
+                
+                <section>
+                <h3>Criando Evento</h3>
+                <pre><code data-trim data-noescape>
+                php artisan make:event PedidoCriado
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Criando Listener</h3>
+                <pre><code data-trim data-noescape>
+                php artisan make:listener EnviarEmailConfirmacao
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Exemplo Listener</h3>
+                <pre><code data-trim data-noescape>
+                class EnviarEmailConfirmacao {
+                    public function handle(PedidoCriado $event) {
+                        Mail::to($event->user)->send(...);
+                    }
+                }
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Task Scheduling</h3>
+                <p class="fragment">Tarefas automáticas no cron</p>
+                </section>
+                
+                
+                <section>
+                <h3>Definindo Schedule</h3>
+                <pre><code data-trim data-noescape>
+                protected function schedule(Schedule $schedule) {
+                    $schedule->command('pedidos:limpar')->daily();
+                }
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Rodando o Scheduler</h3>
+                <pre><code data-trim data-noescape>
+                * * * * * php /app/artisan schedule:run >> /dev/null 2>&1
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h2>Boas Práticas</h2>
+                <ul>
+                <li class="fragment">Não sobrecarregar Controllers</li>
+                <li class="fragment">Usar Services e Listeners</li>
+                <li class="fragment">Testar Jobs isoladamente</li>
+                </ul>
+                </section>
+                
+                
+                <section>
+                <h2>Conclusão</h2>
+                <p>Jobs, Queues, Notifications, Eventos e Scheduler tornam sua aplicação robusta e escalável.</p>
+                </section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
