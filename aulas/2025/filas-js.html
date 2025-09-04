@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Trabalhando com filas</title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Trabalhando com Filas</h1>
+					<p class="fragment" style="font-size: 4rem;"> Um sempre <strong>atrás</strong> do outro </p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<!--
+				<section>
+					<div style="display: flex;">
+						<div>
+							<ul style="font-size: 2rem">
+								<li class="fragment">+12 anos como Dev</li>
+								<li class="fragment">+12 anos como professor de devs</li>
+								<li class="fragment">Já fui contratado, demitido, readimitido</li>
+								<li class="fragment">Já contratei, já desliguei pessoas</li>
+								<br>
+								<li class="fragment">E nenhuma dessas coisas eu fiz direito 🦆 </li>
+							</ul>
+						</div>
+						<div>
+							<img class="fragment" width="80%" src="../../img/gifs/pato.gif" alt="">
+						</div>
+					</div>
+				</section>
+				-->
+
+
+				<section>
+					<h1>Contexto</h1>
+                    <p class="fragment">Uma aplicação web, como qualquer outra</p>
+				</section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_01.png" alt="">
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_02.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 4rem;">
+                        Nesse cenário altamente comum, <strong>um processo depende do outro</strong>
+                    </p>
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_03.png" alt="">
+                    <p class="fragment">Isso aqui pode ser um problema?</p>
+                </section>
+
+                <section data-background="#333">
+                    <h3>A arquitetura em camadas não é um problema!</h3>
+                    <p class="fragment">O problema é a third party</p>
+                </section>
+                <section>
+                    <img src="../../2024/img/filas/request_04.png" alt="">
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/request_05.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <p>Solução</p>
+                    <h3 class="fragment">Terceiriza</h3>
+                </section>
+
+                <section>
+                    <img src="../../img/gifs/fila.webp" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <h2>PILHA </h2> VS <h2> FILA</h2>
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/pilha.png" alt="">
+                    <br>
+                    <p>
+                        Last In, First Out
+                    </p>
+                </section>
+
+                <section>
+                    <img src="../../2024/img/filas/fila.png" alt="">
+                    <br>
+                    <p>
+                        First In, First Out
+                    </p>
+                </section>
+
+                <section>
+                    <h3>O que são filas?</h3>
+                    <ul>
+                      <li class="fragment">Mecanismo para processar tarefas em background</li>
+                      <li class="fragment">Evita sobrecarga no fluxo principal da API</li>
+                      <li class="fragment">Permite escalabilidade horizontal</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h3>Por que usar filas em Node.js?</h3>
+                    <ul>
+                      <li class="fragment">Desacoplar tarefas pesadas</li>
+                      <li class="fragment">Melhorar tempo de resposta</li>
+                      <li class="fragment">Garantir retries em caso de falha</li>
+                      <li class="fragment">Processar tarefas de forma paralela</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h3>Principais bibliotecas</h3>
+                    <ul>
+                      <li class="fragment"><b>Bull / BullMQ</b> (baseado em Redis, mais popular)</li>
+                      <li class="fragment"><b>Agenda</b> (baseado em MongoDB)</li>
+                      <li class="fragment"><b>Bee-Queue</b> (leve e rápido, também usa Redis)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Exemplo prático (BullMQ)</h3>
+                    <pre><code class="language-js">
+          // fila.js
+          import { Queue } from "bullmq"
+          const filaEmail = new Queue("emails", { connection: { host: "localhost", port: 6379 } })
+          await filaEmail.add("enviarEmail", { para: "teste@email.com" })
+          
+          // worker.js
+          import { Worker } from "bullmq"
+          new Worker("emails", async job => {
+            console.log("Enviando email para:", job.data.para)
+          })
+                    </code></pre>
+                  </section>
+          
+                  <section>
+                    <h3>Exemplos de uso</h3>
+                    <ul>
+                      <li class="fragment">Envio de e-mails e notificações</li>
+                      <li class="fragment">Processamento de uploads (imagens, vídeos)</li>
+                      <li class="fragment">Geração de relatórios pesados</li>
+                      <li class="fragment">Integrações com APIs externas</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h3>Prós</h3>
+                    <ul>
+                      <li class="fragment">Escalabilidade</li>
+                      <li class="fragment">Resiliência a falhas</li>
+                      <li class="fragment">Melhor UX (resposta rápida)</li>
+                      <li class="fragment">Retries automáticos</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h3>Contras</h3>
+                    <ul>
+                      <li class="fragment">Mais complexidade na arquitetura</li>
+                      <li class="fragment">Necessidade de serviços adicionais (Redis)</li>
+                      <li class="fragment">Monitoramento e observabilidade mais difíceis</li>
+                      <li class="fragment">Custo extra de infraestrutura</li>
+                    </ul>
+                  </section>
+          
+                  <section>
+                    <h3>Pontos para discussão</h3>
+                    <ul>
+                      <li class="fragment">Quando usar filas e quando é overengineering?</li>
+                      <li class="fragment">Redis ou outro backend (SQS, RabbitMQ, Kafka)?</li>
+                      <li class="fragment">Fila interna x serviços externos</li>
+                      <li class="fragment">Escalabilidade de workers</li>
+                    </ul>
+                  </section>
+          
+
+                <section>
+                    <img src="../../2024/img/filas/request_07.png" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <ul>
+                        <li class="fragment">Jobs</li>
+                        <li class="fragment">Job Batches</li>
+                        <li class="fragment">Failed Jobs</li>
+                    </ul>
+                </section>
+
+
+
+				<section>
+                    <h2>Ferramentas e Nomenclaturas</h2>
+                    <p>Jobs, Queues, Notifications, Eventos e Task Scheduling</p>
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Por que usar?</h3>
+                    <ul>
+                    <li class="fragment">Escalabilidade</li>
+                    <li class="fragment">Organização de responsabilidades</li>
+                    <li class="fragment">Melhor experiência do usuário</li>
+                    </ul>
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Jobs & Workers & Queues</h3>
+                    <p class="fragment">Processos pesados em background</p>
+                    </section>
+
+                    <section>
+                        <img src="img/filas.png" alt="">
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Criando um Job</h3>
+                    </section>
+                    
+                    
+                    <section>
+                    <h3>Exemplo de Job</h3>
+                    <pre><code data-trim data-noescape>
+                    class ProcessarPedido {
+                         function handle() {
+                            // Lógica de processamento
+                        }
+                    }
+                    </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>Disparando o Job</h3>
+                        <pre><code data-trim data-noescape>
+                        ProcessarPedido.dispatch(pedido);
+                        </code></pre>
+                        </section>
+                        
+                        
+                        <section>
+                        <h3>Configuração da Queue</h3>
+                        <ul>
+                        <li class="fragment">database</li>
+                        <li class="fragment">redis</li>
+                        <li class="fragment">sqs</li>
+                        </ul>
+                        </section>
+                        
+                        
+                        <section>
+                        <h3>Rodando o worker</h3>
+                        </section>
+                        
+                        
+                        <section>
+                        <h3>Notifications</h3>
+                        <p class="fragment">Comunicação rápida e multi-canal</p>
+                        </section>
+
+                        <section>
+                            <h3>Criando uma Notification</h3>
+                            </section>
+                
+                
+                <section>
+                <h3>Exemplo de Notification</h3>
+                <pre><code data-trim data-noescape>
+                class PedidoEnviado {    
+                    public function toMail() {
+                        return (new MailMessage)
+                            .subject('Seu pedido foi enviado!')
+                            .line('Confira os detalhes no sistema.');
+                    }
+                }
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Disparando Notification</h3>
+                <pre><code data-trim data-noescape>
+                user.notify(new PedidoEnviado());
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Eventos & Listeners</h3>
+                <p class="fragment">Desacoplamento de ações</p>
+                </section>
+                
+                
+                <section>
+                <h3>Criando Evento</h3>
+                </section>
+                
+                
+                <section>
+                <h3>Criando Listener</h3>
+                </section>
+                
+                
+                <section>
+                <h3>Exemplo Listener</h3>
+                <pre><code data-trim data-noescape>
+                class EnviarEmailConfirmacao {
+                    function handle(event) {
+                        Mail.to(event.user).send(...);
+                    }
+                }
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Task Scheduling</h3>
+                <p class="fragment">Tarefas automáticas no cron</p>
+                </section>
+                
+                
+                <section>
+                <h3>Definindo Schedule</h3>
+                <pre><code data-trim data-noescape>
+                function schedule(schedule) {
+                    schedule.command('pedidos:limpar').daily();
+                }
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h3>Rodando o Scheduler</h3>
+                <pre><code data-trim data-noescape>
+                * * * * * npx schedules.js schedule:run >> /dev/null 2>&1
+                </code></pre>
+                </section>
+                
+                
+                <section>
+                <h2>Boas Práticas</h2>
+                <ul>
+                <li class="fragment">Não sobrecarregar Controllers</li>
+                <li class="fragment">Usar Services e Listeners</li>
+                <li class="fragment">Testar Jobs isoladamente</li>
+                </ul>
+                </section>
+                
+                <section>
+                    <h3>Comparando com outras linguagens</h3>
+                    <ul>
+                      <li class="fragment"><b>Node.js (Express)</b> – Excelente em I/O, rápido para enfileirar, workers podem escalar horizontalmente, dependente de Redis/Kafka/etc.</li>
+                      <li class="fragment"><b>PHP (Laravel)</b> – Integração simples, abstração nativa, mas cada job depende do ciclo do PHP (precisa de supervisor para manter workers ativos).</li>
+                      <li class="fragment"><b>Python (Django + Celery)</b> – Muito robusto, suporta diversos backends (Redis, RabbitMQ), ótimo para tarefas complexas, mas maior overhead.</li>
+                      <li class="fragment"><b>Java (Spring Boot)</b> – Altamente escalável e confiável, forte em sistemas corporativos, porém maior consumo de memória e configuração complexa.</li>
+                    </ul>
+                  </section>
+                  
+                  <section>
+                    <h3>Pontos de comparação</h3>
+                    <ul>
+                      <li class="fragment"><b>Velocidade</b>: Node.js e Go se destacam em filas leves e alto throughput.</li>
+                      <li class="fragment"><b>Facilidade</b>: Laravel abstrai bem, Node.js com BullMQ é simples, Celery em Python exige mais setup.</li>
+                      <li class="fragment"><b>Escalabilidade</b>: Java/Spring e Node.js são fortes em sistemas distribuídos.</li>
+                      <li class="fragment"><b>Ecossistema</b>: Python tem Celery, Node tem Bull/BullMQ, PHP/Laravel tem Queues nativas.</li>
+                    </ul>
+                  </section>
+                  
+                <section>
+                <h2>Conclusão</h2>
+                <p>Jobs, Queues, Notifications, Eventos e Scheduler tornam sua aplicação robusta e escalável.</p>
+                </section>
+
+                
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
