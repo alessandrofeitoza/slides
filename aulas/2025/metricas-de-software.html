@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>
+            Métricas de Software
+        </title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+		
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<link rel="stylesheet" href="../../css/custom.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background="../../img/gifs/trena.gif">
+                    <hr>
+					<h2 style="background-color: #FFF">Métricas de Software</h2>
+	                 <hr>
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">Fundamentos</li>
+                        <li class="fragment">Classificação</li>
+                        <li class="fragment">Métricas orientadas a Código e Arquitetura</li>
+                        <li class="fragment">Coleta e Análise</li>
+                    </ul>
+				</section>
+
+				<section data-background="#333" style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda (de verdade)</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">Porque?</li>
+                        <li class="fragment">Como era no inicio?</li>
+                        <li class="fragment">Como é hoje?</li>
+                        <li class="fragment">Como deveria ser</li>
+                    </ul>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Por que metrificar?</h2>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Por que metrificar?</h2>
+					<div data-id="role1" style="font-size:2em; color:#006a00; margin-top:40px;">TechLead</div>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Por que metrificar?</h2>
+					<div data-id="role1" style="font-size:2em; color:#006a00; margin-top:20px;">TechLead</div>
+					<div data-id="role2" style="font-size:2em; color:magenta; margin-top:20px;">PO / PM</div>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Por que metrificar?</h2>
+					<div data-id="role1" style="font-size:2em; color:#006a00; margin-top:10px;">TechLead</div>
+					<div data-id="role2" style="font-size:2em; color:magenta; margin-top:10px;">PO / PM</div>
+					<div data-id="role3" style="font-size:2em; color:#cb4b16; margin-top:10px;">CTO / CEO</div>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Por que metrificar?</h2>
+					<div data-id="role1" style="font-size:2em; color:#006a00; margin-top:10px;">TechLead</div>
+					<div data-id="role2" style="font-size:2em; color:magenta; margin-top:10px;">PO / PM</div>
+					<div data-id="role3" style="font-size:2em; color:#cb4b16; margin-top:10px;">CTO / CEO</div>
+					<div data-id="role4" style="font-size:2em; color:#ffc200; margin-top:10px;">Cliente</div>
+				</section>
+
+				<section data-auto-animate>
+					<div class="r-stack" style="margin-top:60px;">
+						<div data-id="role1" style="background:#006a00; color: #FFF; padding:15px; border-radius:10px; position:absolute; top:-100px; left:380px;">TechLead</div>
+						<div data-id="role2" style="background:magenta; padding:15px; border-radius:10px; position:absolute; top:-50px; left:200px;">PO / PM</div>
+						<div data-id="role3" style="background:#cb4b16; padding:15px; border-radius:10px; position:absolute; top:-50px; left:600px;">CTO / CEO</div>
+						<div data-id="role4" style="background:#ffc200; padding:15px; border-radius:10px; position:absolute; top:30px; left:400px;">Cliente</div>
+						<hr>
+						<div data-id="dev" style="background:#333; color:#fff; padding:0; border-radius:50%; position:absolute; top:120px; left:400px; width: 300px; height: 300px;">
+							<img class="fragment" style="border-radius: 50%" src="../../img/backend-arch/pedreiro-soft.png" width="90%" alt="">
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Motivos</h3>
+							<hr>
+							<ul class="fragment">
+								<li class="fragment"><strong>Gerenciar</strong> o que tá sendo feito</li>
+								<li class="fragment"><strong>Visualizar e Interpretar</strong> o tempo que as coisas levaram</li>
+								<li class="fragment"><strong>Acompanhar</strong> a cadência de entrega</li>
+								<li class="fragment"><strong>Avaliar</strong> a saúde do processo</li>
+								<li class="fragment"><strong>Prever</strong> as próximas entregas</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="../../img/gifs/padeiro.gif">
+					<p style="background-color: white"><em>Se um padeiro assa 60 pães em 30 minutos, quantos pães ele assa em 2 horas?</em></p>
+					<p class="fragment" style="background-color: #333; color: white"><strong>X * 30min = 60</strong> <span class="fragment">logo, <strong>x = 60/30</strong></span> </p>
+
+					<p style="background-color: white" class="fragment">120min * x = Y</p>
+				</section>
+
+				<section>
+					<h2>Mas a vida no desenvolvimento não é assim</h2>
+				</section>
+
+				<section data-background="../../img/rendeira.jpg">
+					<h2 class="fragment" style="background-color: #FFF">somos Artesã(o)s</h2>
+					<p style="background-color: #333; color: white;" class="fragment">
+						Precisamos ir melhorando as métricas (formulas) conforme o projeto vai avançando
+					</p>
+				</section>
+
+				<section data-background="#333">
+					<h3>Métricas de Processo</h3>
+					<ul>
+						<li class="fragment">Coletadas em todos os projetos e ao longo do tempo</li>
+						<li class="fragment">Geram indicadores para melhoria contínua</li>
+						<li class="fragment">Foco estratégico, visão de longo prazo</li>
+					</ul>
+				</section>
+
+				<section>
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Exemplos de Métricas de Processo</h3>
+							<hr>
+							<ul>
+								<li class="fragment"><strong>🥖 Cycle Time:</strong> Quanto tempo uma tarefa leva do inicio ao fim</li>
+								<li class="fragment"><strong>Lead Time:</strong> Tempo desde a solicitação até a entrega ao cliente</li>
+								<li class="fragment"><strong>Taxa de Retrabalho:</strong> Tempo gasto refazendo atividades</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background-size="80%" data-background="../../img/cycletime.png">
+
+				</section>
+
+				<section data-background="#333">
+					<h3>Métricas de Projeto</h3>
+					<ul>
+						<li class="fragment">Avaliar estado do projeto e riscos</li>
+						<li class="fragment">Identificar áreas problemáticas cedo</li>
+						<li class="fragment">Ajustar fluxo de trabalho e tarefas</li>
+						<li class="fragment">Controlar qualidade dos artefatos*</li>
+						<li class="fragment">Foco tático: suporte ao gerente e equipe</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Exemplos de Métricas de Projeto</h3>
+							<hr>
+							<ul>
+								<li class="fragment"><strong>Burn-down chart:</strong> velocidade com que esgota a lista "a fazer"</li>
+								<li class="fragment"><strong>Velocity:</strong> Velocidade de entrega por periodo</li>
+								<li class="fragment"><strong>Progresso VS Cronograma:</strong> % de coisas entregues comparado ao que foi planejado</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background-size="80%" data-background="../../img/scrum-velocity.jpg">
+
+				</section>
+
+				<section data-background="#333">
+					<h3>Métricas de Tecnologia</h3>
+					<ul>
+						<li class="fragment">Cobertura de Testes %</li>
+						<li class="fragment">Taxa de Bugs reportados</li>
+						<li class="fragment">% de uso por mobile ou desktop</li>
+						<li class="fragment">Tempo de Build/Deploy</li>
+					</ul>
+				</section>
+
+				<section data-background-size="80%" data-background="../../img/coverage.png">
+
+				</section>
+
+
+
+
+				<section data-background="#333">
+					<h2>Até aqui é lindo, mas...</h2>
+
+					<img src="../../img/the_office.gif" alt="" class="fragment">
+					<p class="fragment">como metrificar pessoas?</p>
+				</section>
+
+				<section data-background="#333">
+					<h3>Métricas de Pessoas</h3>
+					<ul>
+						<li class="fragment">Produtividade Individual</li>
+						<li class="fragment">Engajamento</li>
+						<li class="fragment">Qualidade das Entregas</li>
+						<li class="fragment">Colaboração*</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Fatores que Influenciam a Qualidade</h3>
+					<ul>
+						<li class="fragment">Processo (base para métricas e melhoria)</li>
+						<li class="fragment">Pessoas (habilidade e motivação)</li>
+						<li class="fragment">Produto (complexidade)</li>
+						<li class="fragment">Tecnologia (métodos e ferramentas)</li>
+					</ul>
+				</section>
+
+				<section data-background-size="50%" data-background="../../img/triangulo.png">
+
+				</section>
+
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://speakerdeck.com/raphaeldealmeida/pare-de-programar-orientado-a-framework">
+								Livro: Engenharia de Software - <small>Pressman, Maxim - 2021</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.casadocodigo.com.br/products/livro-metricas-ageis">
+								Livro: Métricas Agéis - <small>Raphael Albino - 2017</small>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
