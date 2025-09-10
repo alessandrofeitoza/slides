@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <title>GraphQL vs REST e API Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+    <style>
+      .svg-diagram text { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Segoe UI Emoji', sans-serif; font-size: 16px; fill: #111; }
+      .dark .svg-diagram text { fill: #f5f5f5; }
+      .box { rx: 10; ry: 10; }
+      .arrow { marker-end: url(#arrowhead); }
+      .dark .stroke { stroke: #bbb; }
+      .light .stroke { stroke: #333; }
+      .dark .fill { fill: #444; }
+      .light .fill { fill: #e9ecef; }
+      .chip { rx: 8; ry: 8; }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- COVER -->
+        <section data-background-color="#ffffff" class="light">
+          <h2>API Design & Arquiteturas</h2>
+        </section>
+
+        <section>
+            <h3>Design</h3>   
+            <hr>
+            <p class="fragment">• API-First</p>
+            <p class="fragment">• Design-First </p>
+            <p class="fragment">• Mobile-First </p>
+        </section>
+
+        <section>
+            <h3>Arquiteturas</h3>
+            <hr>
+
+            <p class="fragment">• REST </p>
+            <p class="fragment">• GraphQL </p> 
+            <p class="fragment">• gRPC </p>
+        </section>
+
+        <!-- API-FIRST -->
+        <section data-background-color="#333" class="dark">
+          <h2>API-First</h2>
+          <ul>
+            <li class="fragment">A API e seus contratos vêm <b>antes</b> das implementações</li>
+            <li class="fragment">Define <i>schemas</i> (OpenAPI/GraphQL) e permite mocks/SDKs cedo</li>
+            <li class="fragment">Desacopla front/back e acelera o paralelismo</li>
+          </ul>
+          
+        </section>
+
+        <section data-background-color="#FFF">
+            <svg class="svg-diagram" viewBox="0 0 820 220" width="820" height="220">
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" />
+                  </marker>
+                </defs>
+                <g class="stroke" stroke-width="2" fill="none" color="#8ac4ff">
+                  <rect class="fill chip" x="40" y="40" width="200" height="60" rx="8" ry="8"/>
+                  <text x="140" y="78" text-anchor="middle">Contrato (OpenAPI/SDL)</text>
+                  <line class="arrow" x1="240" y1="70" x2="370" y2="70"/>
+                  <rect class="fill chip" x="370" y="40" width="200" height="60"/>
+                  <text x="470" y="78" text-anchor="middle">Mocks & SDKs</text>
+                  <line class="arrow" x1="470" y1="100" x2="470" y2="160"/>
+                  <rect class="fill chip" x="300" y="160" width="140" height="50"/>
+                  <text x="370" y="192" text-anchor="middle">Frontend</text>
+                  <rect class="fill chip" x="500" y="160" width="140" height="50"/>
+                  <text x="570" y="192" text-anchor="middle">Backend</text>
+                </g>
+            </svg>
+        </section>
+
+        <!-- DESIGN-FIRST -->
+        <section data-background-color="#ffffff" class="light">
+          <h2>Design-First</h2>
+          <ul>
+            <li class="fragment">Processo colaborativo de <b>modelagem</b> e documentação da API</li>
+            <li class="fragment">Ferramentas: SwaggerHub, Stoplight, Insomnia Designer</li>
+            <li class="fragment">Evita retrabalho; promove governança e consistência</li>
+          </ul>
+          
+        </section>
+
+        <section>
+            <svg class="svg-diagram" viewBox="0 0 820 220" width="820" height="220">
+                <defs>
+                  <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                  </marker>
+                </defs>
+                <g class="stroke light" stroke="#333" stroke-width="2" fill="none">
+                  <rect class="fill box" x="60" y="30" width="220" height="60" />
+                  <text x="170" y="68" text-anchor="middle">Workshop de Design</text>
+                  <line class="arrow" marker-end="url(#arrowhead2)" x1="280" y1="60" x2="380" y2="60"/>
+                  <rect class="fill box" x="380" y="30" width="180" height="60" />
+                  <text x="470" y="68" text-anchor="middle">Especificação</text>
+                  <line class="arrow" marker-end="url(#arrowhead2)" x1="470" y1="90" x2="470" y2="150"/>
+                  <rect class="fill box" x="280" y="150" width="150" height="50" />
+                  <text x="355" y="182" text-anchor="middle">Mock</text>
+                  <rect class="fill box" x="460" y="150" width="150" height="50" />
+                  <text x="535" y="182" text-anchor="middle">Docs</text>
+                </g>
+              </svg>
+        </section>
+
+        <!-- MOBILE-FIRST -->
+        <section data-background-color="#333" class="dark">
+          <h2>Mobile-First</h2>
+          <ul>
+            <li class="fragment">Planeje payloads enxutos, paginação e latência baixa</li>
+            <li class="fragment">Priorização de casos de uso mobile e intermitência de rede</li>
+            <li class="fragment">Backends for Frontends (BFF) e compressão</li>
+          </ul>
+          
+        </section>
+
+        <section data-background="../../img/bff.webp">
+            
+        </section>
+
+
+
+        <!-- DIFERENÇAS -->
+        <section data-background-color="#ffffff" class="light">
+          <h2>Diferenças Principais</h2>
+          <ul>
+            <li class="fragment">API-First: contrato antes do código</li>
+            <li class="fragment">Design-First: colaboração & governança do design</li>
+            <li class="fragment">Mobile-First: otimização para consumo móvel</li>
+          </ul>
+        </section>
+
+        <!-- O QUE É GRAPHQL -->
+        <section data-background-color="#333" class="dark">
+          <h2>O que é GraphQL?</h2>
+          <ul>
+            <li class="fragment">Linguagem de consulta + runtime no servidor</li>
+            <li class="fragment">Cliente pede exatamente os campos necessários</li>
+            <li class="fragment">Schema tipado (SDL) centraliza contrato</li>
+          </ul>
+          
+        </section>
+
+        <section>
+            <svg class="svg-diagram" viewBox="0 0 820 220" width="820" height="220">
+                <defs>
+                  <marker id="arrowhead4" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#ddd" />
+                  </marker>
+                </defs>
+                <g class="stroke" stroke="#bbb" stroke-width="2" fill="none">
+                  <rect class="fill chip" x="60" y="40" width="170" height="60" />
+                  <text x="145" y="75" text-anchor="middle">Cliente</text>
+                  <line class="arrow" marker-end="url(#arrowhead4)" x1="230" y1="70" x2="360" y2="70"/>
+                  <rect class="fill chip" x="360" y="30" width="200" height="80" />
+                  <text x="460" y="70" text-anchor="middle">Servidor GraphQL</text>
+                  <line class="arrow" marker-end="url(#arrowhead4)" x1="460" y1="110" x2="460" y2="170"/>
+                  <rect class="fill chip" x="380" y="170" width="80" height="40" />
+                  <text x="420" y="195" text-anchor="middle">DB</text>
+                  <rect class="fill chip" x="470" y="170" width="120" height="40" />
+                  <text x="530" y="195" text-anchor="middle">Serviços</text>
+                </g>
+              </svg>
+        </section>
+
+        <!-- RESTFUL -->
+        <section data-background-color="#ffffff" class="light">
+          <h2>API RESTful</h2>
+          <ul>
+            <li class="fragment">Recursos por endpoint; métodos HTTP</li>
+            <li class="fragment">Padronização ampla; cachê HTTP facilitado</li>
+            <li class="fragment">Risco de over/underfetching</li>
+          </ul>
+          
+        </section>
+
+
+        <!-- DIFERENÇAS: REST x GRAPHQL -->
+        <section data-background-color="#333" class="dark">
+          <h2>REST x GraphQL</h2>
+          <ul>
+            <li class="fragment">REST: múltiplas viagens para múltiplos recursos</li>
+            <li class="fragment">GraphQL: 1 chamada, múltiplos recursos/relacionamentos</li>
+            <li class="fragment">Cache: HTTP (REST) vs por operação/campo (GraphQL)</li>
+          </ul>
+          
+        </section>
+
+        <section data-background="../../img/graphql.png"></section>
+
+        <!-- API PLATFORM -->
+        <section data-background-color="#ffffff" class="light">
+          <h2>API Platform (Symfony/PHP)</h2>
+          <ul>
+            <li class="fragment">Gera REST, GraphQL, HAL, JSON:API com anotações</li>
+            <li class="fragment">Integra Doctrine, Validation, Security, Mercure</li>
+            <li class="fragment">OpenAPI & Playground automáticos</li>
+          </ul>
+          
+        </section>
+
+        <section data-background="../../img/api-platform.png"></section>
+
+        <!-- EXEMPLO CÓDIGO API PLATFORM -->
+        <section data-background-color="#333" class="dark">
+          <h2>Exemplo (API Platform)</h2>
+          <pre><code class="php">
+#[ApiResource]
+class Produto
+{
+    #[Id, GeneratedValue, Column]
+    private ?int $id = null;
+
+    #[Column]
+    private string $nome;
+
+    #[Column]
+    private float $preco;
+}
+          </code></pre>
+          <ul>
+            <li class="fragment">Gera endpoints REST automaticamente</li>
+            <li class="fragment">Habilite GraphQL com um pacote oficial</li>
+          </ul>
+        </section>
+
+        <!-- QUERY GRAPHQL -->
+        <section data-background-color="#ffffff" class="light">
+          <h2>Consulta GraphQL</h2>
+          <pre><code class="graphql">
+query {
+  produtos(first: 10) {
+    edges { node { id nome preco } }
+  }
+}
+          </code></pre>
+          <svg class="svg-diagram" viewBox="0 0 820 140" width="820" height="140">
+            <defs>
+              <marker id="arrowhead8" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+              </marker>
+            </defs>
+            <g class="stroke light" stroke="#333" stroke-width="2" fill="none">
+              <rect class="fill chip" x="60" y="40" width="200" height="50" />
+              <text x="160" y="70" text-anchor="middle">Operação (query)</text>
+              <line class="arrow" marker-end="url(#arrowhead8)" x1="260" y1="65" x2="420" y2="65"/>
+              <rect class="fill chip" x="420" y="40" width="280" height="50" />
+              <text x="560" y="70" text-anchor="middle">Resolver → ORM/Serviços</text>
+            </g>
+          </svg>
+        </section>
+
+        <!-- CONCLUSÃO -->
+        <section data-background-color="#333" class="dark">
+          <h2>Conclusão</h2>
+          <ul>
+            <li class="fragment">REST: simplicidade & cache HTTP</li>
+            <li class="fragment">GraphQL: flexibilidade e composição</li>
+            <li class="fragment">API Platform entrega ambos com rapidez</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true
+      });
+    </script>
+  </body>
+</html>
