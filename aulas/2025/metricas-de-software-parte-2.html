@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Métricas de Software Modernas</title>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/theme/black.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-background-color="#222">
+        <h1>Métricas de Software Modernas</h1>
+        <p>Como tipos de task, tamanho, prioridade, tempo e escopo influenciam nas métricas — e critérios de definição de pronto</p>
+      </section>
+
+      <section>
+        <h2>Agenda</h2>
+        <ul>
+          <li class="fragment">Tipos de task e impacto</li>
+          <li class="fragment">Etapas do desenvolvimento</li>
+          <li class="fragment">Prioridade e peso (poker planning)</li>
+          <li class="fragment">Métricas sugeridas e como medir</li>
+          <li class="fragment">Critérios de pronto (Definition of Done)</li>
+        </ul>
+      </section>
+
+      <section data-background-color="#333">
+        <h2>Tipos de Task</h2>
+        <ul>
+          <li class="fragment"><strong>Feature:</strong> novas funcionalidades</li>
+          <li class="fragment"><strong>Bug:</strong> correções que impactam a execução</li>
+          <li class="fragment"><strong>Adjust:</strong> pequenas mudanças visuais ou comportamentais</li>
+          <li class="fragment"><strong>Improvement:</strong> melhorias significativas em funcionalidades existentes</li>
+          <li class="fragment"><strong>Quality:</strong> qualidade do código / refatoração</li>
+          <li class="fragment"><strong>Discovery:</strong> investigação, pouco ou nenhum código</li>
+          <li class="fragment"><strong>Docs:</strong> documentação</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Como o tipo de task influencia métricas</h2>
+        <ul>
+          <li class="fragment">Feature: normalmente aumenta o tamanho médio de PRs, maior esforço de QA e maior lead time</li>
+          <li class="fragment">Bug: tende a reduzir tempo para entrega (prioridade alta), impacto em MTTR e número de defects escapados</li>
+          <li class="fragment">Adjust: baixa complexidade, alta throughput quando bem categorizado</li>
+          <li class="fragment">Improvement: pode aumentar code churn e exigir métricas de qualidade (cobertura, lint)</li>
+          
+        </ul>
+      </section>
+
+	  <section>
+        <h2>Como o tipo de task influencia métricas</h2>
+        <ul>
+          <li class="fragment">Quality: foca em métricas de manutenção: technical debt, complexidade ciclomática</li>
+          <li class="fragment">Discovery: medir tempo de investigação e decisões geradas (risks mitigated)</li>
+          <li class="fragment">Docs: medir cobertura de documentação e tempo de onboarding reduzido</li>
+        </ul>
+      </section>
+
+      <section data-background-color="#222">
+        <h2>Etapas do desenvolvimento (workflow)</h2>
+        <ol>
+          <li class="fragment">Idea → Product Backlog</li>
+          <li class="fragment">Product Backlog → Sprint Backlog</li>
+          <li class="fragment">ToDo → InProgress → Review → Test → Done → Closed</li>
+          <li class="fragment">Cada transição deve registrar timestamp para calcular <em>cycle time</em> e <em>lead time</em></li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Prioridade</h2>
+        <ul>
+          <li class="fragment"><strong>Very High</strong> — prioridade máxima (crítico)</li>
+          <li class="fragment"><strong>High</strong> — impacto alto</li>
+          <li class="fragment"><strong>Medium</strong> — padrão</li>
+          <li class="fragment"><strong>Low</strong> — menor urgência</li>
+          <li class="fragment"><strong>Very Low</strong> — backlog de baixo valor</li>
+        </ul>
+      </section>
+
+      <section data-background-color="#333">
+        <h2>Peso (Weight) — Poker Planning</h2>
+        <p>Sequência Fibonacci utilizada para estimativas</p>
+        <table>
+          <tr><td class="fragment">1</td><td class="fragment">Tarefa muito simples</td></tr>
+          <tr><td class="fragment">2</td><td class="fragment">Tarefa simples</td></tr>
+          <tr><td class="fragment">3</td><td class="fragment">Tarefa mediana</td></tr>
+          <tr><td class="fragment">5</td><td class="fragment">Tarefa muito complexa</td></tr>
+        </table>
+        <p class="fragment">Regra: se uma task receber tamanho 8, deve ser quebrada em duas ou mais tarefas.</p>
+      </section>
+
+      <section>
+        <h2>Métricas sugeridas</h2>
+        <ul>
+          <li class="fragment"><strong>Lead time:</strong> tempo desde criação até entrega (todas as etapas)</li>
+          <li class="fragment"><strong>Cycle time:</strong> tempo desde InProgress até Done</li>
+          <li class="fragment"><strong>Throughput:</strong> número de entregas por período</li>
+          <li class="fragment"><strong>PR size:</strong> linhas alteradas / arquivos modificados</li>
+          <li class="fragment"><strong>Code churn:</strong> proporção de código reescrito</li>
+          <li class="fragment"><strong>Escaped defects:</strong> bugs em produção por release</li>
+          <li class="fragment"><strong>MTTR:</strong> tempo médio para recuperação de falhas</li>
+          <li class="fragment"><strong>Test coverage & quality gates</strong></li>
+        </ul>
+      </section>
+
+      <section data-background-color="#222">
+        <h2>Como medir por tipo de task</h2>
+        <ul>
+          <li class="fragment">Features: monitorar PR size, review time, QA time e lead time</li>
+          <li class="fragment">Bugs: priorizar MTTR, taxa de reabertura e tempo até patch</li>
+          <li class="fragment">Adjust: medir throughput e tempo médio (deve ser baixo)</li>
+          <li class="fragment">Improvement & Quality: acompanhar code churn, cobertura de testes e technical debt</li>
+          <li class="fragment">Discovery: medir tempo gasto e número de decisões/trove de valor gerado</li>
+          <li class="fragment">Docs: tempo para criar/atualizar + impacto em onboarding</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Critérios de definição de pronto (Definition of Done)</h2>
+        <ul>
+          <li class="fragment">Código implementado e compilando sem erros</li>
+          <li class="fragment">Testes unitários/integração existentes e passando</li>
+          <li class="fragment">Revisão de código aprovada (mínimo 1 revisor)</li>
+          <li class="fragment">Testes manuais em homologação realizados e aprovados</li>
+          <li class="fragment">Documentação mínima atualizada (se aplicável)</li>
+          <li class="fragment">Tickets vinculados, changelog e release notes atualizados (se aplicável)</li>
+          <li class="fragment">Feature flag (quando aplicável) configurada</li>
+        </ul>
+      </section>
+
+      <section data-background-color="#333">
+        <h2>Exemplos práticos</h2>
+        <ul>
+          <li class="fragment">Task: Feature (peso 5) — dividir em sub-tasks de 3 + 2 se exceder PR size</li>
+          <li class="fragment">Task: Bug (priority Very High) — fluxo: ToDo → InProgress → Review → Done (deploy hotfix)</li>
+          <li class="fragment">Task: Discovery (peso 1 ou 2) — medir tempo e decisão tomada</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Boas práticas</h2>
+        <ul>
+          <li class="fragment">Registrar timestamps nas transições do fluxo</li>
+          <li class="fragment">Criar SLAs internos por tipo/prioridade</li>
+          <li class="fragment">Monitorar PR size e bloquear merges acima de um limite sem aprovações extras</li>
+          <li class="fragment">Usar etiquetas para facilmente segmentar métricas (type, priority, weight, area: front/back)</li>
+        </ul>
+      </section>
+
+      <section data-background-color="#222">
+        <h2>Dashboard sugerido</h2>
+        <ul>
+          <li class="fragment">Visão por tipo: throughput, cycle time, média de weight</li>
+          <li class="fragment">Visão por prioridade: MTTR, defects por release</li>
+          <li class="fragment">Visão por equipe/área: PR size médio, cobertura de testes</li>
+          <li class="fragment">Alertas: spikes de lead time, PR size acima do limiar, aumento de escaped defects</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Conclusão</h2>
+        <ul>
+          <li class="fragment">Categorias claras + regras de estimativa tornam métricas acionáveis</li>
+          <li class="fragment">Quebre tasks grandes (8+) para previsibilidade</li>
+          <li class="fragment">Combine métricas de fluxo (lead/cycle) com métricas de qualidade</li>
+        </ul>
+      </section>
+
+      <section data-background-color="#111">
+        <h2>Próximos passos</h2>
+        <ul>
+          <li class="fragment">Ajustar thresholds por time</li>
+          <li class="fragment">Integrar dados do Jira/Git/GitHub para dashboard</li>
+          <li class="fragment">Definir SLAs por prioridade</li>
+        </ul>
+        <p class="fragment">Obrigado.</p>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script>
+    const deck = new Reveal({
+      hash: true,
+      slideNumber: true,
+      plugins: []
+    });
+    deck.initialize();
+  </script>
+</body>
+</html>
