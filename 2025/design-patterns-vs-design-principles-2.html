@@ -61,7 +61,7 @@
                                 </li>
 								<li class="fragment">
 									<span>
-										<small style="vertical-align: unset;">Backend Developer</small> <strong style="color: #0b5394;">Soft</strong>Expert
+										<small style="vertical-align: unset;">TechLead/Dev</small> <strong style="color: #38761d;">Bússola</strong>Social
 									</span>
 								</li>
 							</ul>
@@ -104,18 +104,157 @@
                         </div>
 					</div>
 				</section>
+                <section>
+                    <h2>Jornada do Frontend</h2>
+                    <svg width="1100" height="250" style="margin-top:20px;">
+                        <!-- Figma -->
+                        <rect x="20" y="80" width="180" height="80" rx="15" ry="15" fill="#a259ff" class="fragment" />
+                        <text x="110" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                            Figma / Layout
+                        </text>
 
-				<section data-background="#333">
-					<div style="display: flex;text-align: left;">
-						<div>
-							<h3>1 - Por que isso é importante?</h3>
-							<hr>
-							<p class="fragment">Algumas pessoas que fazem código, acham melhor <strong class="fragment highlight-red">entregar rápido do que entregar bem</strong></p>
-						</div>
+                        <!-- Seta 1 -->
+                        <line x1="200" y1="120" x2="300" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+                        <!-- Código -->
+                        <rect x="300" y="80" width="180" height="80" rx="15" ry="15" fill="#f24e1e" class="fragment" />
+                        <text x="390" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                            HTML / CSS / JS
+                        </text>
+
+                        <!-- Seta 2 -->
+                        <line x1="480" y1="120" x2="580" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+                        <!-- API -->
+                        <rect x="580" y="80" width="180" height="80" rx="15" ry="15" fill="#00c4cc" class="fragment" />
+                        <text x="670" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                            Consumo de API
+                        </text>
+
+                        <!-- Seta 3 -->
+                        <line x1="760" y1="120" x2="860" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+                        <!-- Performance & Estado -->
+                        <rect x="860" y="80" width="220" height="80" rx="15" ry="15" fill="#ffb700" class="fragment" />
+                        <text x="970" y="115" font-size="18" fill="black" text-anchor="middle" class="fragment">
+                            Performance
+                        </text>
+                        <text x="970" y="145" font-size="18" fill="black" text-anchor="middle" class="fragment">
+                            & Estado
+                        </text>
+
+                        <!-- Definição da seta -->
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="black" />
+                            </marker>
+                        </defs>
+                    </svg>
+
+
+                </section>
+
+
+                <section data-background="img/design-principles/caminhos.jpeg">
+                    <div style="display: flex; justify-content: space-between">
+
+                        <div style="text-align: left;">
+                            <h4 style="background-color: white;" class="fragment">Transformar layout em código</h4>
+                            <ul>
+                                <li style="background-color: white;" class="fragment">HTML, CSS, responsividade</li>
+                                <li style="background-color: white;" class="fragment">Acessibilidade e usabilidade</li>
+                                <li style="background-color: white;" class="fragment">Pixel-perfect</li>
+                            </ul>
+                        </div>
+                        <div style="text-align: right">
+                            <h4 style="background-color: black; color: white;" class="fragment">Consumir APIs e <br> lidar com a lógica</h4>
+                            <ul>
+                                <li style="text-align: right; color: white; background-color: black;" class="fragment">Integração com backend</li>
+                                <li style="text-align: right; color: white; background-color: black;" class="fragment">Gerenciamento de estado</li>
+                                <li style="text-align: right; color: white; background-color: black;" class="fragment">Performance (debounce, caching, lazy loading)</li>
+                                <li style="text-align: right; color: white; background-color: black;" class="fragment">Escalabilidade e manutenção</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-background="../img/gifs/quem-somos.gif">
+                    <h2 style="background-color: #FFF; color: #333;">Quem somos nozes 🌳 ?</h2>
+                    <br><br><br><br><br><br>
+                </section>
+
+                <section data-background="#333">
+                    <div style="display: flex;text-align: left;">
+                        <div>
+                            <h3>1 - Por que essa talk é importante?</h3>
+                            <hr>
+                            <p class="fragment">Algumas pessoas que fazem código, acham melhor <strong class="fragment highlight-red">entregar rápido do que entregar bem</strong></p>
+                        </div>
                         <div>
                         </div>
-					</div>
-				</section>
+                    </div>
+                </section>
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code style="max-height: 600px;"  class="hljs css" data-trim data-line-numbers>
+.header {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.navbar {
+  background: #3498db;
+  border-bottom: 2px solid #3498db;
+}
+
+.button-primary {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.footer {
+  background: #3498db;
+  color: #ffffff;
+}
+  </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code style="max-height: 600px;" class="hljs css" data-trim data-line-numbers="|1-4|7,11,16,21">
+:root {
+  --primary-color: #3498db;
+  --text-light: #ffffff;
+}
+
+.header {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.navbar {
+  background: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.button-primary {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.footer {
+  background: var(--primary-color);
+  color: var(--text-light);
+}
+  </code></pre>
+                </section>
+
+
+                <section data-background="../img/gifs/wow.gif">
+                    <p style="background-color: white">Acabamos de aplicar o DRY</p>
+                    <em style="background-color: white; color: red" class="fragment">Um Design Principle</em>
+                </section>
+
+
 
                 <section data-background="../2024/img/design-patterns-principles/pedreiro2.gif" data-background-size="70%" alt="">
                     <span style="font-size: 4rem; background-color: white;" class="fragment">A gente esquece que não é pedreire, <Br> e sim <strong>Engenheire de Software</strong></span>
