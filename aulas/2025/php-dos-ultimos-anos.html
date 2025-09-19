@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHP 8.0 → 8.5 — Recursos Modernos (Exemplos: Sistema de Classificados)</title>
+  
+  
+
+  <link rel="stylesheet" href="../../dist/reset.css">
+
+  <link rel="stylesheet" href="../../dist/reveal.css">
+  <link rel="stylesheet" href="../../dist/theme/white.css">
+  
+  <link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/custom.css">
+  <style>
+    code.php { font-family: Menlo, Monaco, monospace; }
+    pre { background: rgba(0,0,0,0.03); padding: 12px; border-radius: 6px; overflow:auto }
+    .dark-slide { background: #333; color: #eee }
+    .muted { opacity: 0.85 }
+    .small { font-size: 0.9rem }
+    .center { text-align: center }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Intro -->
+      <section>
+        <h1>PHP 8.0 → 8.5</h1>
+        <!--<h3 class="fragment">Recursos modernos aplicados a um sistema de classificados (estilo OLX)</h3>
+        <p class="muted">Deck focado em motivos e exemplos práticos — cada recurso tem 2 slides: contexto e exemplo.</p>-->
+      </section>
+
+      <!-- PHP 8.0 Named Arguments -->
+      <section>
+        <h2>PHP 8.0 — Named Arguments (Motivo)</h2>
+        <p class="fragment">Problema: funções com muitos parâmetros opcionais ficam difíceis de ler e fragilizam a ordem posicional.</p>
+        <p class="fragment">Benefício: mais legibilidade e menos acoplamento à ordem dos parâmetros — ideal em API interna para criação de anúncios.</p>
+      </section>
+      <section>
+        <h3>Named Arguments — Exemplo prático (Criar anúncio)</h3>
+        <pre><code class="php">function criarAnuncio(string $titulo, float $preco, string $descricao = '', bool $destaque = false, ?int $categoriaId = null) {
+    return compact('titulo','preco','descricao','destaque','categoriaId');
+}
+
+$anuncio = criarAnuncio(
+    titulo: 'Bicicleta Aro 29',
+    preco: 500.0,
+    destaque: true
+);
+
+print_r($anuncio);</code></pre>
+      </section>
+
+      <!-- PHP 8.0 Union Types -->
+      <section>
+        <h2>PHP 8.0 — Union Types (Motivo)</h2>
+        <p class="fragment">Problema: antes era comum usar phpdoc para declarar múltiplos tipos; isso não era verificado pelo interpretador.</p>
+        <p class="fragment">Benefício: declarações nativas que aumentam segurança e documentação real de tipos, ex.: id que pode ser string ou int (UUID/string).</p>
+      </section>
+      <section>
+        <h3>Union Types — Exemplo (IDs híbridos)</h3>
+        <pre><code class="php">class AnuncioRepository {
+    public function findById(int|string $id): ?array {
+        // consulta ao banco que aceita integer id ou uuid string
+        // retorna null se não encontrar
+        return null;
+    }
+}
+
+$repo = new AnuncioRepository();
+$repo->findById('c3f0-...-uuid');
+$repo->findById(123);</code></pre>
+      </section>
+
+      <!-- PHP 8.0 Match Expression -->
+      <section>
+        <h2>PHP 8.0 — Match Expression (Motivo)</h2>
+        <p class="fragment">Problema: cadeias longas de switch/if-else com retorno de valores. Verbosidade e risco de esquecer break.</p>
+        <p class="fragment">Benefício: expressão concisa que retorna valores, sem fall-through, recomendada para mapeamento de estados.</p>
+      </section>
+      <section>
+        <h3>Match — Exemplo (Status do anúncio)</h3>
+        <pre><code class="php">$status = 'paused';
+$label = match($status) {
+    'active' => 'Ativo',
+    'paused' => 'Pausado',
+    'sold' => 'Vendido',
+    default => 'Desconhecido',
+};
+
+echo $label; // Pausado</code></pre>
+      </section>
+
+      <!-- PHP 8.0 Nullsafe Operator -->
+      <section>
+        <h2>PHP 8.0 — Nullsafe Operator (Motivo)</h2>
+        <p class="fragment">Problema: encadeamentos com checks de null ocupam muito espaço e poluem lógica.</p>
+        <p class="fragment">Benefício: operador <code>?-></code> reduz boilerplate ao navegar por propriedades/objetos que podem ser null.</p>
+      </section>
+      <section>
+        <h3>Nullsafe — Exemplo (Proprietário opcional)</h3>
+        <pre><code class="php">// $anuncio pode não ter dono (guest-post)
+$proprietarioEmail = $anuncio?->owner?->contact?->email ?? 'sem-email@exemplo.com';
+
+echo $proprietarioEmail;</code></pre>
+      </section>
+
+      <!-- PHP 8.0 Constructor Property Promotion -->
+      <section>
+        <h2>PHP 8.0 — Constructor Property Promotion (Motivo)</h2>
+        <p class="fragment">Problema: declaração repetitiva de propriedades simples em DTOs/Entities.</p>
+        <p class="fragment">Benefício: reduzir boilerplate na declaração de classes que representam recursos como Anúncio ou Usuário.</p>
+      </section>
+      <section>
+        <h3>Constructor Promotion — Exemplo (DTO Anúncio)</h3>
+        <pre><code class="php">class AnuncioDTO {
+    public function __construct(
+        public string $titulo,
+        public float $preco,
+        public ?string $descricao = null,
+        public bool $destaque = false
+    ) {}
+}
+
+$dto = new AnuncioDTO('Sofá', 299.99, destaque: true);
+var_dump($dto);</code></pre>
+      </section>
+
+      <!-- PHP 8.1 Enums -->
+      <section>
+        <h2>PHP 8.1 — Enums (Motivo)</h2>
+        <p class="fragment">Problema: uso massivo de constantes e strings para representar estados/categorias causa erros silenciosos.</p>
+        <p class="fragment">Benefício: enums fornecem tipos seguros e legíveis — ideais para categorias, status e tipos de anúncio.</p>
+      </section>
+      <section>
+        <h3>Enums — Exemplo (Categorias de anúncio)</h3>
+        <pre><code class="php">enum Categoria: string {
+    case CARROS = 'carros';
+    case IMOVEIS = 'imoveis';
+    case ELETRONICOS = 'eletronicos';
+}
+
+function listarPorCategoria(Categoria $cat) {
+    return "Listando anúncios em: {$cat->value}";
+}
+
+echo listarPorCategoria(Categoria::IMOVEIS);</code></pre>
+      </section>
+
+      <!-- PHP 8.1 Readonly Properties -->
+      <section>
+        <h2>PHP 8.1 — Readonly Properties (Motivo)</h2>
+        <p class="fragment">Problema: entidades que deveriam ser imutáveis sofriam alterações acidentais após construção.</p>
+        <p class="fragment">Benefício: propriedades marcadas como <code>readonly</code> garantem imutabilidade após inicialização.</p>
+      </section>
+      <section>
+        <h3>Readonly — Exemplo (ID do anúncio)</h3>
+        <pre><code class="php">class Anuncio {
+    public readonly string $id;
+    public function __construct(string $id) {
+        $this->id = $id;
+    }
+}
+
+$a = new Anuncio('uuid-123');
+// $a->id = 'outra'; // Fatal error: Cannot modify readonly property</code></pre>
+      </section>
+
+      <!-- PHP 8.1 Fibers -->
+      <section>
+        <h2>PHP 8.1 — Fibers (Motivo)</h2>
+        <p class="fragment">Problema: I/O bloqueante em scripts que fazem upload de múltiplas imagens ou chamadas externas encadeadas.</p>
+        <p class="fragment">Benefício: Fibers permitem escrever código assíncrono cooperativo sem grandes mudanças de estilo (callbacks/promises).</p>
+      </section>
+      <section>
+        <h3>Fibers — Exemplo (Uploads concorrentes de imagens)</h3>
+        <pre><code class="php">function uploadImage(string $path) {
+    // simulação de upload bloqueante
+    sleep(1);
+    return "ok:{$path}";
+}
+
+$f1 = new Fiber(fn() => uploadImage('img1.jpg'));
+$f2 = new Fiber(fn() => uploadImage('img2.jpg'));
+
+$f1->start();
+$f2->start();
+
+// Depois, ler resultados (exemplo simplificado)
+</code></pre>
+        <p class="small">(Nota: em produção use libs/loop como Amp ou ReactPHP para I/O real)</p>
+      </section>
+
+      <!-- PHP 8.2 Readonly Classes & DNF Types introduction -->
+      <section>
+        <h2>PHP 8.2 — Readonly Classes (Motivo)</h2>
+        <p class="fragment">Problema: marcar repetidamente todas as propriedades como readonly é verboso.</p>
+        <p class="fragment">Benefício: declarar a classe inteira como readonly garante imutabilidade completa da instância.</p>
+      </section>
+      <section>
+        <h3>Readonly Class — Exemplo (Value Object Endereço)</h3>
+        <pre><code class="php">readonly class Endereco {
+    public function __construct(public string $rua, public string $cidade, public string $uf) {}
+}
+
+$e = new Endereco('Rua A', 'Fortaleza', 'CE');
+// $e->rua = 'Outra'; // erro</code></pre>
+      </section>
+
+      <section>
+        <h2>PHP 8.2 — DNF (Disjunctive Normal Form) Types (Motivo)</h2>
+        <p class="fragment">Problema: tipos compostos complexos (ex.: (A&amp;B) | (C&amp;D)) não eram expressáveis antes.</p>
+        <p class="fragment">Benefício: permite descrever tipos complexos de parâmetros e retornos, útil em filtros de busca avançada.</p>
+      </section>
+      <section>
+        <h3>DNF Types — Exemplo (Filtro de busca)</h3>
+        <pre><code class="php">// Exemplo ilustrativo; declaração sintética
+// function buscar((Int & HasRange) | (String & HasPattern) $filtro) { ... }
+
+// No contexto de classificados, tipos compostos ajudam a garantir formas válidas de filtros complexos.</code></pre>
+      </section>
+
+      <!-- PHP 8.3 Typed Class Constants and json_validate -->
+      <section>
+        <h2>PHP 8.3 — Typed Class Constants (Motivo)</h2>
+        <p class="fragment">Problema: constantes de classe não tinham tipos explícitos, o que dificultava verificações estáticas.</p>
+        <p class="fragment">Benefício: permite declarar o tipo da constante, ajudando static analysers e documentação.</p>
+      </section>
+      <section>
+        <h3>Typed Class Constants — Exemplo (Config de Anúncios)</h3>
+        <pre><code class="php">class Config {
+    public const int MAX_IMAGES = 10;
+    public const string DEFAULT_COUNTRY = 'BR';
+}
+
+echo Config::MAX_IMAGES;</code></pre>
+      </section>
+
+      <section>
+        <h2>PHP 8.3 — json_validate (Motivo)</h2>
+        <p class="fragment">Problema: validar payload JSON contra schema era responsabilidade de libs externas.</p>
+        <p class="fragment">Benefício: função nativa que ajuda a validar JSON antes de decodificar — útil em APIs que recebem dados de anúncios.</p>
+      </section>
+      <section>
+        <h3>json_validate — Exemplo (Payload do anúncio)</h3>
+        <pre><code class="php">$json = '{"titulo":"Sofa","preco":299.9}';
+$schema = '{"type":"object","required":["titulo","preco"]}';
+$ok = json_validate($json, $schema);
+if (!$ok) {
+    throw new \InvalidArgumentException('Payload inválido');
+}
+$data = json_decode($json, true);
+</code></pre>
+      </section>
+
+      <!-- PHP 8.4 — Improvements (closure this etc) -->
+      <section>
+        <h2>PHP 8.4 — Closure $this e pequenas melhorias (Motivo)</h2>
+        <p class="fragment">Problema: closures antes não capturavam $this em todos os contextos de forma previsível.</p>
+        <p class="fragment">Benefício: facilitar uso de closures ligadas à instância, além de outras melhorias de ergonomia e performance.</p>
+      </section>
+      <section>
+        <h3>Closure $this — Exemplo (Callback no Anúncio)</h3>
+        <pre><code class="php">class Notifier {
+    public function onAnuncioCreated(callable $cb) {
+        // salva callback
+    }
+
+    public function trigger() {
+        // chama callback
+    }
+}
+
+$notifier = new Notifier();
+$notifier->onAnuncioCreated(function() use ($notifier) {
+    // agora closures podem acessar $this quando apropriado
+});</code></pre>
+      </section>
+
+      <!-- PHP 8.4 Standalone null/false types example -->
+      <section>
+        <h2>PHP 8.4 — Tipos explícitos null / false (Motivo)</h2>
+        <p class="fragment">Problema: retornar null ou false em funções podia ser ambíguo.</p>
+        <p class="fragment">Benefício: tipos mais explícitos ajudam ferramentas estáticas a entender intenções da função.</p>
+      </section>
+      <section>
+        <h3>Null / False — Exemplo (Busca por ID)</h3>
+        <pre><code class="php">function buscarPorId(int $id): ?array { // retorna null se não existir
+    return null;
+}
+
+function tentarComprar(int $anuncioId): false|array { // false em caso de falha de validação
+    return false;
+}
+</code></pre>
+      </section>
+
+      <!-- PHP 8.5 — Novidades esperadas -->
+      <section>
+        <h2>PHP 8.5 — Novidades esperadas (introdução)</h2>
+        <p class="fragment">Observação: previsões baseadas em propostas e discussões da comunidade até 2025/2026. Verificar roadmap oficial para confirmar.</p>
+      </section>
+      <section>
+        <h3>8.5 — Sealed Classes (possível)</h3>
+        <p class="fragment">Motivo: controlar hierarquias de herança em domínios críticos.</p>
+        <pre><code class="php">// Sintaxe ilustrativa hypothética
+sealed class PaymentMethod permits CreditCard, Pix {}
+
+final class CreditCard extends PaymentMethod {}
+</code></pre>
+      </section>
+      <section>
+        <h3>8.5 — Async / Scheduler Improvements (possível)</h3>
+        <p class="fragment">Motivo: tornar async mais first-class sem depender só de extensions.</p>
+        <pre><code class="php">// Exemplo conceitual: upload concorrente de imagens via API nativa async
+$results = async_map(['i1.jpg','i2.jpg'], fn($p) => uploadAsync($p));</code></pre>
+      </section>
+
+      <!-- Timeline SVG -->
+      <section>
+        <h2>Cronograma de Lançamentos (8.0 → 8.5)</h2>
+        <div class="center">
+          <!-- Simples SVG embutido -->
+          <svg width="90%" height="140" viewBox="0 0 1200 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="1200" height="140" fill="#f8f9fa" />
+            <line x1="50" y1="100" x2="1150" y2="100" stroke="#444" stroke-width="2" />
+            <g font-family="sans-serif" font-size="13">
+              <circle cx="120" cy="100" r="8" fill="#2b6cb0" /><text x="100" y="80">PHP 8.0 — 26/11/2020</text>
+              <circle cx="320" cy="100" r="8" fill="#2b6cb0" /><text x="300" y="80">PHP 8.1 — 25/11/2021</text>
+              <circle cx="520" cy="100" r="8" fill="#2b6cb0" /><text x="500" y="80">PHP 8.2 — 08/12/2022</text>
+              <circle cx="720" cy="100" r="8" fill="#2b6cb0" /><text x="700" y="80">PHP 8.3 — 23/11/2023</text>
+              <circle cx="920" cy="100" r="8" fill="#2b6cb0" /><text x="900" y="80">PHP 8.4 — 2024 (data dependente)</text>
+              <circle cx="1080" cy="100" r="8" fill="#999" /><text x="1048" y="80">PHP 8.5 — Previsto (2025/2026)</text>
+            </g>
+          </svg>
+        </div>
+        <p class="small muted">Nota: datas exatas das versões menores podem variar — consulte o site oficial do PHP para datas de patch e EOL.</p>
+      </section>
+
+      <!-- Conclusão e próximos passos -->
+      <section>
+        <h2>Conclusão</h2>
+        <ul>
+          <li>Adote tipagem e enums para reduzir bugs em domínios ricos como classificados.</li>
+          <li>Use readonly e value objects para segurança de dados.</li>
+          <li>Experimente Fibers/async para operações I/O intensivas (uploads, integrações).</li>
+          <li>Integre static analysis (Psalm/PHPStan) para tirar proveito das novas features.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  
+  <script src="../../dist/reveal.js"></script>
+  <script src="../../plugin/notes/notes.js"></script>
+  <script src="../../plugin/markdown/markdown.js"></script>
+  <script src="../../plugin/highlight/highlight.js"></script>
+  <script>
+      Reveal.initialize({
+          hash: true,
+          plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+  </script>
+</body>
+</html>

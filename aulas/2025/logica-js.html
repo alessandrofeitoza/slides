@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roteiro — JavaScript & Lógica de Programação (Reveal.js)</title>
+
+  <link rel="stylesheet" href="../../dist/reset.css">
+
+  <link rel="stylesheet" href="../../dist/reveal.css">
+  <link rel="stylesheet" href="../../dist/theme/white.css">
+  
+  <link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/custom.css">
+  <style>
+    /* Small customizations */
+    pre code { font-size: 0.95rem; }
+    .flow { width: 80%; height: auto; margin: 0.5rem auto; display:block }
+    .big-code { font-size:0.9rem }
+    .center { text-align:center }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Title -->
+      <section>
+        <h1>JavaScript & Lógica de Programação</h1>
+      </section>
+
+      <!-- Módulo 1 -->
+      <section>
+        <h2>Módulo 1 — Fundamentos de Lógica</h2>
+
+      </section>
+        <section>
+          <h3>Introdução à Lógica de Programação</h3>
+          <ul>
+            <li class="fragment">O que é lógica</li>
+            <li class="fragment">Algoritmos e pseudocódigo</li>
+            <li class="fragment">Fluxos de execução</li>
+          </ul>
+
+          
+        </section>
+
+        <section data-background="img/logica/logica-01.png" data-background-size="90%">
+
+          
+        </section>
+
+        <section>
+          <div style="text-align: left;">
+              <h3><em>Lógica</em></h3>
+              <hr>
+              <p class="fragment">
+                  do Grego, <em style="color: red;">Logos</em>
+              </p>
+              <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                  <strong><em> pensamento</em></strong>, ideia, argumento <br>
+                  
+                  <strong><em> Filosofia</em></strong> que estuda o fluxo do pensamento humano
+              </p>
+          </div>
+      </section>
+
+      <section data-background="img/logica/aristoteles.webp" data-background-size="100%">
+        <p style="color:white; text-align: right">
+          A lógica foi criada por <br>  <strong>Aristóteles</strong> no século 
+          <br> IV a.C.
+        </p>
+          
+      </section>
+
+      <section>
+        <ul>
+          <li>Lógica Clássica</li>
+          <li class="fragment">Lógica Proposicional</li>
+          <li class="fragment">Lógica Matemática</li>
+          <li class="fragment">Lógica de Programação</li>
+        </ul>
+      </section>
+
+      <section data-background="#333">
+        <h3>Estabelecer uma squencia de passos lógicos para chegar a um resultado</h3>
+        <p class="fragment">Trocar uma lampada</p>
+      </section>
+
+      <section>
+        <h1>Al-Khwārizmī</h1>
+        <p class="fragment">Al Garismi</p>
+        <p class="fragment">Algarismo -> <span class="fragment">Algoritmo</span></p>
+      </section>
+
+        <section>
+          <h1>ETL</h1>
+          <!-- Fluxograma simples (SVG) -->
+          <div class="fragment">
+            <svg class="flow" viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="260" y="10" width="280" height="40" rx="6" fill="#f7f7f7" stroke="#333"/>
+              <text x="400" y="36" font-size="14" text-anchor="middle">Início</text>
+
+              <rect x="200" y="70" width="400" height="50" rx="6" fill="#fff" stroke="#333"/>
+              <text x="400" y="100" font-size="13" text-anchor="middle">Ler entrada / dados</text>
+
+              <polygon points="395,120 405,120 400,140" fill="#333"/>
+
+              <rect x="150" y="150" width="500" height="50" rx="6" fill="#fff" stroke="#333"/>
+              <text x="400" y="180" font-size="13" text-anchor="middle">Processar (condições / cálculos)</text>
+
+              <line x1="400" y1="50" x2="400" y2="70" stroke="#333" stroke-width="2"/>
+              <line x1="400" y1="120" x2="400" y2="150" stroke="#333" stroke-width="2"/>
+
+              <rect x="300" y="210" width="200" height="40" rx="6" fill="#f7f7f7" stroke="#333"/>
+              <text x="400" y="236" font-size="13" text-anchor="middle">Fim / Saída</text>
+
+              <line x1="400" y1="200" x2="400" y2="210" stroke="#333" stroke-width="2"/>
+            </svg>
+          </div>
+        </section>
+        
+
+        <section>
+          <h3>Lógica de Programação</h3>
+          <ul>
+            <li>Estruturas de Dados</li>
+            <li>Estruturas de Controle/Fluxo</li>
+          </ul>
+        </section>
+
+        <section data-background="#333">
+          <h2>Estrutura de Dados</h2>
+          <hr>
+          <ul class="fragment">
+            <li>Simples</li>
+            <li>Composta</li>
+            <li>Mutável ou Imutável</li>
+            <li>Operadores</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Tipos de Dados e Operadores</h3>
+          <ul>
+            <li class="fragment">Números, Strings, Booleanos</li>
+            <li class="fragment">Operadores aritméticos, relacionais e lógicos</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">// exemplos básicos
+const a = 10;
+const b = 3.5;
+const nome = 'Alessandro';
+const ok = true;
+
+// operadores
+const soma = a + b;
+const maior = a > b; // true
+const e = ok && (a === 10);
+console.log(soma, maior, e);
+</code></pre>
+        </section>
+
+        <section data-background="#333">
+          <h2>Estrutura de Controle</h2>
+          <hr>
+          <ul class="fragment">
+            <li>Sequencial</li>
+            <li>Decisão</li>
+            <li>Repetição</li>
+            <li>Declaração</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Estruturas Sequencial</h3>
+
+          <pre class="fragment"><code class="language-js">
+            alert('oi sumido');
+            let nome = prompt('tudo bem, qual seu nome?');
+
+            alert('Muito prazer ' + nome);
+</code></pre>
+</section>
+
+        <section>
+          <h3>Estruturas de Decisão</h3>
+          <ul>
+            <li class="fragment">if / else</li>
+            <li class="fragment">switch / case</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">// if / else
+  let nota = 10;
+
+  if (nota >= 7) {
+    return 'Aprovado';
+  } else {
+    return 'Reprovado';
+  }
+
+// switch
+  let n = 1;
+
+  switch (n) {
+    case 1: return 'Domingo';
+    case 2: return 'Segunda';
+    default: return 'Outro dia';
+  }
+</code></pre>
+</section>
+<section>
+
+          <!-- Fluxograma decisão -->
+          <svg class="flow fragment" viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg">
+            <rect x="300" y="10" width="100" height="40" rx="6" fill="#fff" stroke="#333"/>
+            <text x="350" y="36" font-size="13" text-anchor="middle">Inicio</text>
+
+            <polygon points="350,60 440,120 350,180 260,120" fill="#fff" stroke="#333"/>
+            <text x="350" y="125" font-size="13" text-anchor="middle">x &gt; 10 ?</text>
+
+            <line x1="350" y1="50" x2="350" y2="60" stroke="#333"/>
+            <rect x="450" y="100" width="140" height="40" rx="6" fill="#fff" stroke="#333"/>
+            <text x="520" y="126" font-size="13" text-anchor="middle">Sim -> Processar A</text>
+
+            <rect x="60" y="100" width="140" height="40" rx="6" fill="#fff" stroke="#333"/>
+            <text x="130" y="126" font-size="13" text-anchor="middle">Não -> Processar B</text>
+
+            <line x1="400" y1="120" x2="450" y2="120" stroke="#333"/>
+            <line x1="300" y1="120" x2="200" y2="120" stroke="#333"/>
+          </svg>
+        </section>
+
+        <section>
+          <h3>Estruturas de Repetição</h3>
+          <ul>
+            <li class="fragment">for, while, do...while</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">// for
+for (let i = 0; i &lt; 10; i++) {
+  console.log(i);
+}
+
+// while
+let n = 5;
+while (n &gt; 0) {
+  console.log(n--);
+}
+
+// do..while
+let k = 0;
+do {
+  console.log(k);
+  k++;
+} while (k &lt; 3);
+</code></pre>
+
+        </section>
+      </section>
+
+      <!-- Módulo 2 -->
+      <section>
+        <h2>Módulo 2 — Introdução ao JavaScript</h2>
+
+        <section>
+          <h3>Primeiros Passos com JavaScript</h3>
+          <ul>
+            <li class="fragment">Como rodar JS no navegador</li>
+            <li class="fragment">let, const, var</li>
+            <li class="fragment">console.log, prompt, alert</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">// Executar no console do navegador
+let idade = 29;
+const nome = 'Alessandro';
+alert(`Olá, ${nome}. Você tem ${idade} anos.`);
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Funções</h3>
+          <ul>
+            <li class="fragment">Declaração, parâmetros, retorno</li>
+            <li class="fragment">Arrow functions</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">// função tradicional
+function soma(a, b) {
+  return a + b;
+}
+
+// arrow function
+const mult = (a, b) =&gt; a * b;
+
+console.log(soma(2,3));
+console.log(mult(2,3));
+</code></pre>
+
+          <!-- Fluxograma função simples -->
+          <svg class="flow fragment" viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg">
+            <rect x="310" y="10" width="100" height="40" rx="6" fill="#fff" stroke="#333"/>
+            <text x="360" y="36" font-size="13" text-anchor="middle">Início</text>
+            <rect x="200" y="70" width="320" height="50" rx="6" fill="#fff" stroke="#333"/>
+            <text x="360" y="100" font-size="13" text-anchor="middle">Chamar função(x,y) -> retorna z</text>
+            <rect x="300" y="150" width="120" height="40" rx="6" fill="#fff" stroke="#333"/>
+            <text x="360" y="176" font-size="13" text-anchor="middle">Fim</text>
+            <line x1="360" y1="50" x2="360" y2="70" stroke="#333"/>
+            <line x1="360" y1="120" x2="360" y2="150" stroke="#333"/>
+          </svg>
+        </section>
+
+        <section>
+          <h3>Arrays e Objetos</h3>
+          <ul>
+            <li class="fragment">Manipulação de arrays</li>
+            <li class="fragment">map, filter, reduce</li>
+            <li class="fragment">Objetos simples</li>
+          </ul>
+
+          <pre class="fragment big-code"><code class="language-js">const nums = [1,2,3,4,5];
+
+const dobrados = nums.map(n =&gt; n * 2);
+const pares = nums.filter(n =&gt; n % 2 === 0);
+const soma = nums.reduce((acc,cur) =&gt; acc + cur, 0);
+
+const pessoa = { nome: 'Ana', idade: 30 };
+console.log(dobrados, pares, soma, pessoa.nome);
+</code></pre>
+        </section>
+      </section>
+
+      <!-- Módulo 3 -->
+      <section>
+        <h2>Módulo 3 — Lógica com JS na Prática</h2>
+
+        <section>
+          <h3>Strings e Manipulação</h3>
+          <ul>
+            <li class="fragment">Métodos comuns de string</li>
+            <li class="fragment">Exercícios: inverter palavra, contar vogais</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">function inverter(str) {
+  return str.split('').reverse().join('');
+}
+
+function contarVogais(str) {
+  return (str.match(/[aeiou]/gi) || []).length;
+}
+
+console.log(inverter('javascript'));
+console.log(contarVogais('javascript'));
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Eventos e Interatividade</h3>
+          <ul>
+            <li class="fragment">DOM básico</li>
+            <li class="fragment">addEventListener</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">// Exemplo simples: botão que incrementa contador
+// HTML: &lt;button id="btn">+&lt;/button&gt; &lt;span id="val">0&lt;/span&gt;
+const btn = document.getElementById('btn');
+const val = document.getElementById('val');
+let count = 0;
+btn.addEventListener('click', () =&gt; {
+  count++;
+  val.textContent = count;
+});
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Projetinho 1 — Calculadora</h3>
+          <p class="fragment">Fluxograma + código</p>
+
+          <!-- Fluxograma da calculadora -->
+          <svg class="flow fragment" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+            <rect x="310" y="10" width="100" height="40" rx="6" fill="#fff" stroke="#333"/>
+            <text x="360" y="36" font-size="13" text-anchor="middle">Início</text>
+            <rect x="140" y="70" width="440" height="50" rx="6" fill="#fff" stroke="#333"/>
+            <text x="360" y="100" font-size="13" text-anchor="middle">Ler operador e operandos</text>
+            <rect x="220" y="150" width="280" height="60" rx="6" fill="#fff" stroke="#333"/>
+            <text x="360" y="180" font-size="13" text-anchor="middle">Calcular + Mostrar Resultado</text>
+            <rect x="310" y="230" width="100" height="40" rx="6" fill="#fff" stroke="#333"/>
+            <text x="360" y="256" font-size="13" text-anchor="middle">Fim</text>
+          </svg>
+
+          <pre class="fragment"><code class="language-js">// calculadora simples no prompt
+const a = Number(prompt('a:'));
+const b = Number(prompt('b:'));
+const op = prompt('Operador (+ - * /):');
+let res;
+switch(op) {
+  case '+': res = a + b; break;
+  case '-': res = a - b; break;
+  case '*': res = a * b; break;
+  case '/': res = a / b; break;
+  default: res = 'Operador inválido';
+}
+alert(`Resultado: ${res}`);
+</code></pre>
+        </section>
+      </section>
+
+      <!-- Módulo 4 -->
+      <section>
+        <h2>Módulo 4 — Conceitos Intermediários</h2>
+
+        <section>
+          <h3>Escopo e Hoisting</h3>
+          <ul>
+            <li class="fragment">var vs let vs const</li>
+            <li class="fragment">Escopo local / global</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">// hoisting e escopo
+function teste() {
+  console.log(x); // undefined (hoisting var)
+  var x = 5;
+}
+
+function testeLet() {
+  // console.log(y); // ReferenceError (temporal dead zone)
+  let y = 3;
+}
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Tratamento de Erros</h3>
+          <ul>
+            <li class="fragment">try / catch / finally</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">try {
+  JSON.parse('texto invalido');
+} catch (err) {
+  console.error('Erro ao parsear:', err.message);
+} finally {
+  console.log('Sempre executa');
+}
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Iterações Avançadas</h3>
+          <ul>
+            <li class="fragment">for...of, for...in</li>
+            <li class="fragment">Desempenho básico</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">const arr = ['a','b','c'];
+for (const v of arr) console.log(v);
+
+const obj = { x:1, y:2 };
+for (const k in obj) console.log(k, obj[k]);
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Funções Avançadas</h3>
+          <ul>
+            <li class="fragment">Callbacks</li>
+            <li class="fragment">setTimeout / setInterval</li>
+          </ul>
+
+          <pre class="fragment"><code class="language-js">function doAfter(ms, cb) {
+  setTimeout(() =&gt; cb('done'), ms);
+}
+
+doAfter(500, console.log);
+</code></pre>
+        </section>
+      </section>
+
+      <!-- Módulo 5 -->
+      <section>
+        <h2>Módulo 5 — Consolidando</h2>
+
+        <section>
+          <h3>Projetinho 2 — Jogo de Adivinhação</h3>
+          <p class="fragment">Fluxograma + código</p>
+
+          <pre class="fragment"><code class="language-js">// jogo simples no prompt
+const secreto = Math.floor(Math.random() * 100) + 1;
+let tentativa = 0;
+let achou = false;
+
+while(!achou) {
+  const palpite = Number(prompt('Tente um número (1-100):'));
+  tentativa++;
+  if (palpite === secreto) { alert(`Acertou em ${tentativa} tentativas!`); achou = true; }
+  else if (palpite &gt; secreto) alert('Menor');
+  else alert('Maior');
+}
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Projetinho 3 — To-Do List</h3>
+          <p class="fragment">Estrutura e código principal</p>
+
+          <pre class="fragment"><code class="language-js">// Esqueleto: criar, remover, marcar
+class TodoApp {
+  constructor() {
+    this.todos = JSON.parse(localStorage.getItem('todos') || '[]');
+  }
+  add(text) { this.todos.push({text, done:false}); this.save(); }
+  toggle(i) { this.todos[i].done = !this.todos[i].done; this.save(); }
+  remove(i) { this.todos.splice(i,1); this.save(); }
+  save() { localStorage.setItem('todos', JSON.stringify(this.todos)); }
+}
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Revisão & Projeto Final</h3>
+          <ul>
+            <li class="fragment">Exercícios combinados</li>
+            <li class="fragment">Projeto final sugerido: Quiz, Conversor, App de Gastos</li>
+          </ul>
+
+          <p class="fragment">Dica: dividir o projeto final em histórias pequenas (features) e testar cada parte isoladamente.</p>
+        </section>
+      </section>
+
+      <!-- Fim -->
+      <section>
+        <h3>Recursos & Próximos Passos</h3>
+        <ul>
+          <li class="fragment">Praticar desafios (ex.: Codewars, HackerRank)</li>
+          <li class="fragment">Introdução a ES6+ e ferramentas (bundlers, modules)</li>
+          <li class="fragment">Se o senhor quiser, adapto o arquivo para temas, ou gero um PDF</li>
+        </ul>
+        <p class="fragment">Boa aula, meu senhor 👑</p>
+      </section>
+
+    </div>
+  </div>
+
+    
+  <script src="../../dist/reveal.js"></script>
+  <script src="../../plugin/notes/notes.js"></script>
+  <script src="../../plugin/markdown/markdown.js"></script>
+  <script src="../../plugin/highlight/highlight.js"></script>
+  <script>
+      Reveal.initialize({
+          hash: true,
+          plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+  </script>
+  </script>
+</body>
+</html>
