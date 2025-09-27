@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+<section>
+  <a href="https://revealjs.com">
+    <img src="https://static.slid.es/reveal/logo-v1/reveal-white-text.svg" alt="logo reveal.js" style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+  </a>
+  <h3>A biblioteca de fazer slides em HTML</h3>
+  <p>
+    <small>Criado por <a href="http://hakim.se">Hakim El Hattab</a> e <a href="https://github.com/hakimel/reveal.js/graphs/contributors">contribuidores</a></small>
+  </p>
+</section>
+
+<section>
+  <h2>Como funciona?</h2>
+  <p class="fragment">
+    O reveal.js permite criar apresentações interativas e bonitas usando HTML.  
+  </p>
+</section>
+
+<section>
+	<h3>Primeiro passo</h3>
+	<p>Criar o arquivo HTML</p>
+</section>
+
+<section data-background="#333">
+<pre data-id="code-animation">
+	<code class="hljs javascript" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="|3-4|13-16|7,8|9,10">
+	&lt;html>
+		&lt;head>
+			&lt;link rel="stylesheet" href="dist/reveal.css" />
+			&lt;link rel="stylesheet" href="dist/theme/white.css" />
+		&lt;/head>
+		&lt;body>
+			&lt;div class="reveal">
+				&lt;div class="slides">
+					&lt;section>Slide 1&lt;/section>
+					&lt;section>Slide 2&lt;/section>
+				&lt;/div>
+			&lt;/div>
+			&lt;script src="dist/reveal.js"></script>
+			&lt;script>
+				Reveal.initialize();
+			&lt;/script>
+		&lt;/body>
+	&lt;/html>
+</code>
+</pre>
+</section>
+
+<section>
+	<a href="https://revealjs.com/installation/#basic-setup">Como "instalar"?</a>
+</section>
+
+<section>
+  <section>
+    <h2>Slides Verticais</h2>
+    <p>Slides podem ser aninhados dentro uns dos outros.</p>
+    <p>Use a tecla <em>Espaço</em> para navegar por todos os slides.</p>
+  </section>
+  <section>
+    <h2>Nível Subterrâneo 1</h2>
+    <p>Slides aninhados são úteis para adicionar mais detalhes sob um slide horizontal de alto nível.</p>
+  </section>
+  <section>
+    <h2>Nível Subterrâneo 2</h2>
+    <p>É isso, hora de voltar para cima.</p>
+  </section>
+</section>
+
+
+<section data-auto-animate data-background="#333">
+	<pre data-id="code-animation">
+		<code class="hljs javascript" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="|4-6">
+		
+		&lt;div class="slides">
+			&lt;section>Slide 1&lt;/section>
+			&lt;section>Slide 2&lt;/section>
+			&lt;section>
+				Slide 3
+			&lt;/section>
+		&lt;/div>
+				
+	</code>
+	</pre>
+</section>
+
+<section data-auto-animate data-background="#333">
+	<pre data-id="code-animation">
+		<code class="hljs javascript" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="|5-7|8-10|11-13">
+		
+		&lt;div class="slides">
+			&lt;section>Slide 1&lt;/section>
+			&lt;section>Slide 2&lt;/section>
+			&lt;section>
+				&lt;section>
+					Slide sub 1
+				&lt;/section>
+				&lt;section>
+					Slide sub 2
+				&lt;/section>
+				&lt;section>
+					Slide sub 3
+				&lt;/section>
+			&lt;/section>
+		&lt;/div>
+				
+	</code>
+	</pre>
+</section>
+
+<section data-background="#3300FF">
+	Olha os fundos
+</section>
+
+<section data-auto-animate data-background="#333">
+	<pre data-id="code-animation">
+		<code class="hljs javascript" style="max-height: 800px; font-size: 1.5rem;">
+		
+		&lt;section data-background="#3300FF">
+			Slide
+		&lt;/section>
+				
+	</code>
+	</pre>
+</section>
+
+<section data-background="img/gifs/wow.gif">
+	<h1 class="fragment" style="background-color: #FFF; color: black">e gifs</h1>
+</section>
+
+<section data-auto-animate data-background="#333">
+	<pre data-id="code-animation">
+		<code class="hljs html" style="max-height: 800px; font-size: 1.5rem;">
+		
+		&lt;section data-background="img/meu-nud3.gif">
+			Slide
+		&lt;/section>
+				
+	</code>
+	</pre>
+</section>
+
+<section>
+	<p>Ibagens</p>
+
+	<img src="img/gifs/carinha.gif" alt="">
+</section>
+
+<section data-auto-animate data-background="#333">
+	<pre data-id="code-animation">
+		<code class="hljs html" style="max-height: 800px; font-size: 1.5rem;">
+		
+		&lt;section>
+			&lt;img src="outro-nud3.png">
+		&lt;/section>
+				
+	</code>
+	</pre>
+</section>
+
+<section>
+
+	<h2 data-id="code-title">Animações</h2>
+	<hr>
+	<ul>
+		<li class="fragment">Fragmento 1</li>
+		<li class="fragment">Fragmento 2</li>
+		<li class="fragment">Fragmento 3</li>
+	</ul>
+  
+</section>
+
+<section data-auto-animate data-background="#FFF">
+	<pre data-id="code-animation">
+		<code class="hljs html" style="max-height: 800px; font-size: 1.5rem;">
+		
+		&lt;section>
+			&lt;img class="fragment" src="outro-nud3.png">
+
+			&lt;ul>
+				&lt;li class="fragment">Item 1</li>
+				&lt;li class="fragment">Item 1</li>
+				&lt;li class="fragment">Item 1</li>
+			&lt;/ul>
+		&lt;/section>
+				
+	</code>
+	</pre>
+</section>
+
+
+<section data-auto-animate>
+  <h2 data-id="code-title">Código Bonito</h2>
+  <p>Sintaxe colorida cortesia de <a href="https://highlightjs.org/usage/">highlight.js</a>.</p>
+</section>
+
+<section data-auto-animate data-background="#FFF">
+	<pre data-id="code-animation">
+		<code class="hljs" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="|2|3|4-8">
+		
+		&lt;section>
+			&lt;pre data-id="code-animation">
+				&lt;code class="hljs php" data-line-numbers="|1-2|8-10">
+					&lt;?php
+						for ($i = 0; $i <= 10; $i++) {
+							echo "Carro Pancadão Hey &lt;br>";
+						}
+					?&gt;
+				&lt;/code>
+			&lt;/pre>
+		&lt;/section>
+				
+	</code>
+	</pre>
+</section>
+
+
+<section>
+  <h2>Outros Fragmentos</h2>
+  <p>Existem diferentes tipos de fragmentos, como:</p>
+  <p class="fragment grow">crescer</p>
+  <p class="fragment shrink">encolher</p>
+  <p class="fragment fade-out">desaparecer</p>
+  <p class="fragment fade-in-then-out">aparecer e depois sumir</p>
+  <p class="fragment fade-in-then-semi-out">aparecer e depois semi-sumir</p>
+  <p>Destaque <span class="fragment highlight-red">vermelho</span> <span class="fragment highlight-blue">azul</span> <span class="fragment highlight-green">verde</span></p>
+</section>
+
+<section id="transitions">
+  <h2>Estilos de Transição</h2>
+  <p>É possível escolher entre diferentes transições: Nenhuma, Fade, Slide, Convexa, Côncava, Zoom.</p>
+</section>
+
+<section id="themes">
+  <h2>Temas</h2>
+  <p>
+    O reveal.js vem com alguns temas prontos, como Preto, Branco, League, Sky, Bege, Simples, Serif, Sangue, Noite, Lua, Solarizado.
+  </p>
+</section>
+
+<section>
+  <h2>Planilhas Tabulares</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Valor</th>
+        <th>Quantidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Maçãs</td><td>R$1</td><td>7</td></tr>
+      <tr><td>Limonada</td><td>R$2</td><td>18</td></tr>
+      <tr><td>Pão</td><td>R$3</td><td>2</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Visão do Apresentador</h2>
+  <p>Existe um <a href="https://revealjs.com/speaker-view/">modo do apresentador</a>, com cronômetro, pré-visualização e notas.</p>
+  <p>Pressione a tecla <em>S</em> para ativar.</p>
+</section>
+
+<section>
+  <h2>Exportar para PDF</h2>
+  <p>As apresentações podem ser <a href="https://revealjs.com/pdf-export/">exportadas para PDF</a>.</p>
+</section>
+
+<section>
+  <h2>Muito Mais</h2>
+  <ul>
+    <li>Suporte a escrita da direita para a esquerda</li>
+    <li><a href="https://revealjs.com/api/">API JavaScript extensa</a></li>
+    <li><a href="https://revealjs.com/auto-slide/">Progressão automática</a></li>
+    <li><a href="https://revealjs.com/backgrounds/#parallax-background">Fundos com parallax</a></li>
+    <li><a href="https://revealjs.com/keyboard/">Atalhos de teclado customizados</a></li>
+  </ul>
+</section>
+
+<section style="text-align: left;">
+  <h1>FIM</h1>
+  <p>
+    - <a href="https://slides.com">Experimente o editor online</a> <br>
+    - <a href="https://github.com/hakimel/reveal.js">Código fonte &amp; documentação</a>
+  </p>
+</section>
+
+<section>
+	<h1>REVEAL JS</h1>
+</section>
+
+
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+	</body>
+</html>
