@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Processos Ágeis e Tomada de Decisão</title>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/theme/white.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-background-color="#222">
+        <h1>Processos Ágeis</h1>
+        <p>E tomada de decisão</p>
+      </section>
+
+
+        <section>
+            <div style="display: flex;">
+                <div style="width: 60%">
+                    <h3>Alessandro Feitoza</h3>
+
+                    <ul style="font-size: 2rem">
+                        <li class="fragment" style="color: #741b47;">Especialista em <strong>Engenharia de Software</strong></li>
+                        <li class="fragment">MBA em Gestão em Projetos de Inovação</li>
+                        <li class="fragment"><strong>Professor de</strong>  códigos e outras <strong>computarias</strong> <small style="vertical-align: unset; font-size: 0.7rem;">( ͡° ͜ʖ ͡°)</small></li>
+                        
+                        <li class="fragment">
+                            <span>
+                                <small style="vertical-align: unset;">TechLead/Software Engineer</small> <strong style="color: #0b5394;">Soft</strong>Expert
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div style="width: 40%">
+                    <img width="70%" src="../img/alessandro-2025.png" alt="">
+                </div>
+            </div>
+        </section>
+
+
+      <section>
+        <h2>Agenda</h2>
+        <ul>
+          <li class="fragment">Definições</li>
+          <li class="fragment">Métricas e como medir</li>
+          <li class="fragment">Definição de Pronto (Definition of Done)</li>
+          <li class="fragment">Exemplos práticos</li>
+        </ul>
+      </section>
+      
+      <section data-background="#333">
+        <hr>
+        <h1>DEFINIÇÕES</h1>
+        <hr>
+      </section>
+
+      <section>
+        <p>Gerenciamento do <strong>Processo</strong></p>
+        VS
+        <p>Gerenciamento do <strong>Produto/Projeto</strong></p>
+      </section>
+
+      <section data-background-size="80%" data-background="img/agilidade/bpm.png">
+
+    </section>
+    
+
+      <section data-background-size="80%" data-background="img/agilidade/fordismo.jpg">
+        <h2>Fordismo</h2>
+        <br><br><br><br><br><br><br><br>
+        <p class="fragment" style="background-color: white">Linha de montagem padronizada
+            <br><em class="fragment">Produção empurrada</em>
+        </p>
+      </section>
+    
+      <section data-background-size="50%" data-background="img/agilidade/toyotismo.webp">
+        <h2>Toyotismo</h2>
+        <br><br><br><br><br><br><br><br>
+        <p class="fragment" style="background-color: white">Produção sob demanda
+            <br><em class="fragment">Produção puxada</em>
+        </p>
+      </section>
+
+      <section>
+        Mas o que tudo isso tem a ver?
+<br>
+        <img width="60%" src="../../img/gifs/nazaré.gif" alt="">
+      </section>
+
+      <section>
+        <h2>Engenharias</h2>
+        <svg width="1100" height="250" style="margin-top:20px;">
+            <!-- Figma -->
+            <rect x="20" y="80" width="180" height="80" rx="15" ry="15" fill="#a259ff" class="fragment" />
+            <text x="110" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                Civil  (+5k anos)
+            </text>
+
+            <!-- Seta 1 -->
+            <line x1="200" y1="120" x2="300" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+            <!-- Código -->
+            <rect x="300" y="80" width="180" height="80" rx="15" ry="15" fill="#f24e1e" class="fragment" />
+            <text x="390" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                Mecânica (sec XVIII)
+            </text>
+
+            <!-- Seta 2 -->
+            <line x1="480" y1="120" x2="580" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+            <!-- API -->
+            <rect x="580" y="80" width="180" height="80" rx="15" ry="15" fill="#00c4cc" class="fragment" />
+            <text x="670" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                Software (1960)
+            </text>
+
+        </svg>
+
+        <p class="fragment">Idade pós contemporanea</p>
+
+
+    </section>
+
+
+    <section data-background-size="50%" data-background="img/agilidade/cascata.jpg">
+        <h2>CASCATA</h2>
+        <br><br><br><br><br><br><br><br>
+        <p class="fragment" style="background-color: white">Desenvolvimento de Software WaterFall
+        </p>
+      </section>
+
+      <section data-background-size="50%" data-background="img/agilidade/cientifica.png">
+        <h2>Metodologia Cientifica</h2>
+        <br><br><br><br><br><br><br><br><br><br>
+      </section>
+
+      <section data-background-size="70%" data-background="img/agilidade/tree.jpg">
+        <br><br><br><br><br><br><br><br><br><br>
+      </section>
+
+      <section data-background-size="50%" data-background="img/agilidade/agile.png">
+        <h2>ÁGIL <small class="fragment">2001</small> </h2>
+        <br><br><br><br><br><br><br><br>
+        <p class="fragment" style="background-color: white">Ciclos de Entrega</p>
+      </section>
+
+      <section>
+        <hr>
+        E foi aqui que tudo mudou
+        <hr>
+      </section>
+
+      <section data-background-size="80%" data-background="img/agilidade/afile.webp">
+
+      </section>
+
+      <section>
+        <h2>Processo Ágil</h2>
+        <ul>
+            <li class="fragment">Ciclos curtos (Sprints <span class="fragment">🏃🏿‍♀️‍➡️</span> )</li>
+            <li class="fragment">Entregas Frequentes</li>
+            <li class="fragment">Feedback continuo</li>
+            <li class="fragment">Colaboração e Autonomia</li>
+            <li class="fragment">Adaptabilidade</li>
+        </ul>
+      </section>
+      <section data-background-size="80%" data-background="img/agilidade/cascagil.webp">
+
+    </section>
+
+      <section data-background="#333">
+        <hr>
+        <h1>MÉTRICAS</h1>
+        <hr>
+      </section>
+
+      <section data-auto-animate>
+        <h2>Por que metrificar?</h2>
+    </section>
+
+    <section data-auto-animate>
+        <h2>Por que metrificar?</h2>
+        <div data-id="role1" style="font-size:2em; color:#006a00; margin-top:40px;">TechLead</div>
+    </section>
+
+    <section data-auto-animate>
+        <h2>Por que metrificar?</h2>
+        <div data-id="role1" style="font-size:2em; color:#006a00; margin-top:20px;">TechLead</div>
+        <div data-id="role2" style="font-size:2em; color:magenta; margin-top:20px;">PO / PM</div>
+    </section>
+
+    <section data-auto-animate>
+        <h2>Por que metrificar?</h2>
+        <div data-id="role1" style="font-size:2em; color:#006a00; margin-top:10px;">TechLead</div>
+        <div data-id="role2" style="font-size:2em; color:magenta; margin-top:10px;">PO / PM</div>
+        <div data-id="role3" style="font-size:2em; color:#cb4b16; margin-top:10px;">CTO / CEO</div>
+    </section>
+
+    <section data-auto-animate>
+        <h2>Por que metrificar?</h2>
+        <div data-id="role1" style="font-size:2em; color:#006a00; margin-top:10px;">TechLead</div>
+        <div data-id="role2" style="font-size:2em; color:magenta; margin-top:10px;">PO / PM</div>
+        <div data-id="role3" style="font-size:2em; color:#cb4b16; margin-top:10px;">CTO / CEO</div>
+        <div data-id="role4" style="font-size:2em; color:#ffc200; margin-top:10px;">Cliente</div>
+    </section>
+
+    <section data-auto-animate>
+        <div class="r-stack" style="margin-top:60px;">
+            <div data-id="role1" style="background:#006a00; color: #FFF; padding:15px; border-radius:10px; position:absolute; top:-100px; left:380px;">TechLead</div>
+            <div data-id="role2" style="background:magenta; padding:15px; border-radius:10px; position:absolute; top:-50px; left:200px;">PO / PM</div>
+            <div data-id="role3" style="background:#cb4b16; padding:15px; border-radius:10px; position:absolute; top:-50px; left:600px;">CTO / CEO</div>
+            <div data-id="role4" style="background:#ffc200; padding:15px; border-radius:10px; position:absolute; top:30px; left:400px;">Cliente</div>
+            <hr>
+            <div data-id="dev" style="background:#333; color:#fff; padding:0; border-radius:50%; position:absolute; top:120px; left:400px; width: 300px; height: 300px;">
+                <img class="fragment" style="border-radius: 50%" src="../../img/backend-arch/pedreiro-soft.png" width="90%" alt="">
+            </div>
+        </div>
+    </section>
+
+    <section data-background="#333">
+        <p class="fragment">Qual o capacity do teu time?</p>
+        <p class="fragment">Qual a velocity?</p>
+        <p class="fragment">Qual a taxa de churn?</p>
+        <p class="fragment">Qual o LEAD time?</p>
+    </section>
+
+    <section>
+        <p><em>"Eu tenho um grupo de pesquisa"</em></p>
+
+        <p class="fragment" style="background-color: #333; color: white">
+            Meu grupo de pesquisa <strong style="color: yellow">produz 4 artigos por semana</strong>, <strong style="color: green">atende 12 pessoas em 3 projetos diferentes</strong>, <br>
+             e 70% dessas pessoas são de <strong style="color: red">baixa renda
+</strong> 
+<br><br>
+            <span class="fragment">isso tudo com 4 pessoas no time, contando comigo.</span> <br><br>
+            <span class="fragment">Nossa velocidade é <strong>3 pacientes / turno</strong>, com duas pessoas na preceptoria</span>
+        </p>
+    </section>
+
+    <section>
+        <div style="display: flex;text-align: left;">
+            <div>
+                <h3>Motivos</h3>
+                <hr>
+                <ul class="fragment">
+                    <li class="fragment"><strong>Gerenciar</strong> o que tá sendo feito</li>
+                    <li class="fragment"><strong>Visualizar e Interpretar</strong> o tempo que as coisas levaram</li>
+                    <li class="fragment"><strong>Acompanhar</strong> a cadência de entrega</li>
+                    <li class="fragment"><strong>Avaliar</strong> a saúde do processo</li>
+                    <li class="fragment"><strong>Prever</strong> as próximas entregas</li>
+                </ul>
+
+                <p class="fragment" style="color:red;">Tudo isso pra <strong>Tomar decisões</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section data-background="../../img/gifs/padeiro.gif">
+        <p style="background-color: white"><em>Se um padeiro assa 60 pães em 30 minutos, quantos pães ele assa em 2 horas?</em></p>
+        <p class="fragment" style="background-color: #333; color: white"><strong>X * 30min = 60</strong> <span class="fragment">logo, <strong>x = 60/30</strong></span> </p>
+
+        <p style="background-color: white" class="fragment">120min * x = Y</p>
+
+        <p style="background-color: white" class="fragment">120min * 2 = 240</p>
+    </section>
+
+    <section>
+        <h2>Mas a vida no desenvolvimento não é assim</h2>
+    </section>
+
+    <section data-background="../../img/rendeira.jpg">
+        <h2 class="fragment" style="background-color: #FFF">somos Artesã(o)s</h2>
+        <p style="background-color: #333; color: white;" class="fragment">
+            Precisamos ir melhorando as métricas (formulas) conforme o projeto vai avançando
+        </p>
+    </section>
+
+    <section data-background="#333">
+        <h3>Métricas de Processo</h3>
+        <ul>
+            <li class="fragment">Coletadas em todos os projetos e ao longo do tempo</li>
+            <li class="fragment">Geram indicadores para melhoria contínua</li>
+            <li class="fragment">Foco estratégico, visão de longo prazo</li>
+        </ul>
+    </section>
+
+    <section>
+        <div style="display: flex;text-align: left;">
+            <div>
+                <h3>Exemplos de Métricas de Processo</h3>
+                <hr>
+                <ul>
+                    <li class="fragment"><strong>🥖 Cycle Time:</strong> Quanto tempo uma tarefa leva do inicio ao fim</li>
+                    <li class="fragment"><strong>Lead Time:</strong> Tempo desde a solicitação até a entrega ao cliente</li>
+                    <li class="fragment"><strong>Taxa de Retrabalho:</strong> Tempo gasto refazendo atividades</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section data-background-size="80%" data-background="../../img/cycletime.png">
+
+    </section>
+
+    <section data-background="#333">
+        <h3>Métricas de Projeto</h3>
+        <ul>
+            <li class="fragment">Avaliar estado do projeto e riscos</li>
+            <li class="fragment">Identificar áreas problemáticas cedo</li>
+            <li class="fragment">Ajustar fluxo de trabalho e tarefas</li>
+            <li class="fragment">Controlar qualidade dos artefatos*</li>
+            <li class="fragment">Foco tático: suporte ao gerente e equipe</li>
+        </ul>
+    </section>
+
+
+    <section>
+        <div style="display: flex;text-align: left;">
+            <div>
+                <h3>Exemplos de Métricas de Projeto</h3>
+                <hr>
+                <ul>
+                    <li class="fragment"><strong>Burn-down chart:</strong> velocidade com que esgota a lista "a fazer"</li>
+                    <li class="fragment"><strong>Velocity:</strong> Velocidade de entrega por periodo</li>
+                    <li class="fragment"><strong>Progresso VS Cronograma:</strong> % de coisas entregues comparado ao que foi planejado</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <section data-background-size="80%" data-background="../../img/scrum-velocity.jpg">
+
+    </section>
+
+
+    <section data-background="gray">
+        E como?
+    </section>
+
+    <section data-background="#333">
+        <hr>
+        <h1>DoD</h1>
+        <p>Definição de Pronto</p>
+        <hr>
+    </section>
+
+    <section>
+        O primeiro passo é saber o que quer.
+
+        <hr>
+
+        <p class="fragment" style="color: red">"Definir um objetivo claro"</p>
+
+        <p class="fragment" style="color: red">"Definir resultados chave <span class="fragment">e possiveis</span> "</p>
+    </section>
+
+
+    <section data-background-size="40%" data-background="img/agilidade/piramide.png">
+
+    </section>
+
+    <section data-background="../../img/kanban.png" data-background-size="80%">
+        <h2>KANBAN</h2>
+        <br><br><br><br><br><br><br><br><br><br>
+    </section>
+
+    <section data-background="../../img/kanban2.webp" data-background-size="70%">
+        <h2>KANBAM</h2>
+        <br><br><br><br><br><br><br><br><br><br>
+    </section>
+
+
+
+    <section data-background="../../img/scrum.jpg" data-background-size="70%">
+
+    </section>
+
+    <section data-background="#333">
+        <h3>Aqui a gente ganha maturidade</h3>
+    </section>
+
+    <section data-background="#FFF">
+        <h3>ferramentas</h3>
+        <hr>
+        <ul>
+            <li class="fragment">Trello</li>
+            <li class="fragment">Wekan</li>
+            <li class="fragment">Github Projects</li>
+            <li class="fragment">Monday</li>
+            <li class="fragment">Asana</li>
+            <li class="fragment">etc</li>
+        </ul>
+    </section>
+
+    <section data-background="../../img/gifs/pedreiros/pedreiros-03.gif">
+        <p class="fragment" style="background-color: #FFF">Mas isso é sobre <strong>processo</strong> e não sobre ferramentas</p>
+    </section>
+
+
+    
+
+    <section>
+        <h2>Referências</h2>
+        <ul>
+            <li>
+                <a href="https://www.amazon.com.br/Engenharia-software-Roger-S-Pressman/dp/6558040107/ref=asc_df_6558040107?mcid=45eb4abcacd83c6d8a18b796cdcf9ca2&tag=googleshopp00-20&linkCode=df0&hvadid=709884550309&hvpos=&hvnetw=g&hvrand=8885662749041990680&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9221636&hvtargid=pla-1395356741021&psc=1&language=pt_BR&gad_source=1">
+                    Livro: Engenharia de Software - <small>Pressman, Maxim - 2021</small>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.casadocodigo.com.br/products/livro-metricas-ageis">
+                    Livro: Métricas Agéis - <small>Raphael Albino - 2017</small>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+                    O mitico homem mês <span style="font-size: 1.2rem;">(Ensaios sobre a Eng. de Software), Frederick Brooks Jr - 1995</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        Valeu o Boi, valeu o Vaqueiro
+
+        <br><br><br>
+
+        @alessandro_feitoza
+        <br>
+
+        https://linkedin.com/in/AlessandroFeitoza
+
+        <br>
+        https://alessandrofeitoza.github.io/slides
+
+    </section>
+
+      
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script>
+    const deck = new Reveal({
+      hash: true,
+      slideNumber: true,
+      plugins: []
+    });
+    deck.initialize();
+  </script>
+</body>
+</html>
