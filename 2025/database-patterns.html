@@ -224,8 +224,15 @@
                 <section data-background-size="100%" data-background="img/database-patterns/codigo-ar-02.png">
                 </section>
 
+
+
+                <section data-background-size="100%" data-background="img/database-patterns/codigo-ar-03.png">
+                </section>
+
+				
+
 				<section>
-                    <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.9rem;"  class="hljs php" data-trim data-line-numbers="|2|5,6,7,8|10">
+                    <pre data-id="code-animation"><code style="max-height: 600px; font-size: 3rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|2|5,6,7,8|10">
 						// buscar todos
 						Produto::all(); // array de objetos Produto
 						
@@ -239,9 +246,23 @@
   </code></pre>
                 </section>
 
+				<section data-background="img/database-patterns/javascripto.png" data-background-size="80%">
+					<span style="background-color: white;">E no javascripto?</span>
+				</section>
+
+				<section data-background="../2024/img/database-patterns/mysql2-3.png" data-background-size="80%">
+</section>
+
                 <section>
-					<p>E no Javascripto?</p>
-                    <img class="fragment" width="60%" src="../2024/img/database-patterns/mysql2-3.png" alt="">
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2.5rem; line-height: 3rem;"  class="hljs javascript" data-trim data-line-numbers="|2|5,6,7,8|10">
+						let p = new Product(
+							"Ypioca (sem metanol)"
+						);
+						p.valor = 19.89;
+						
+						p.save();
+  </code></pre>
+
                 </section>
 
 				<section>
@@ -255,19 +276,18 @@
 					</ul>
 				</section>
 
-				<section>
+				<section data-background="../2024/img/database-patterns/eloquent.png" data-background-size="90%">
 					<h2>PHP: Eloquent</h2>
-					<img src="../2024/img/database-patterns/eloquent.png" alt="">
 				</section>
 
-				<section>
+				<section data-background="../2024/img/database-patterns/sequelize-1.png" data-background-size="90%">
 					<h2>JS: Sequelize</h2>
-					<img src="../2024/img/database-patterns/sequelize-1.png" alt="">
+					<br><br><br><br><br><br>
 				</section>
 
-				<section>
+				<section data-background="../2024/img/database-patterns/prisma-1.png" data-background-size="70%">
 					<h2>JS: Prisma</h2>
-					<img src="../2024/img/database-patterns/prisma-1.png" alt="">
+					<br><br><br><br><br><br><br><br><br><br><br>
 				</section>
 
 				<section data-background="img/database-patterns/access02.png">
@@ -306,13 +326,61 @@
 				</section>
 
 				<section>
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|1|6,9,13,16|4,5,8">
+#[ORM\Entity)]
+class City extends AbstractEntity
+{
+    #[ORM\Id]
+    #[ORM\Column(type: UuidType::NAME)]
+    private Uuid $id;
+
+    #[ORM\Column(length: 100)]
+    private readonly string $name;
+
+    #[ORM\ManyToOne(targetEntity: State::class)]
+    #[ORM\JoinColumn(name: 'state_id', referencedColumnName: 'id')]
+    private readonly State $state;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private readonly ?int $cityCode;
+  </code></pre>
+
+                </section>
+
+				<section data-background="img/database-patterns/codigo-el-01.png" data-background-size="90%">
+					
+				</section>
+
+				<section>
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|2|5|6">
+$repository = $connection->getRepository(
+	City::class
+);
+
+$repository->findAll(); //SELECT * FROM
+$repository->find(42); //WHERE id=42
+  </code></pre>
+
+                </section>
+
+				<section>
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|1,2|4|5">
+$city = new City('Parnaiba');
+$city->setState($piaui);
+
+$connection->getEntityManager()
+	->persist($city);
+  </code></pre>
+
+                </section>
+				<section>
 					<h2>PHP: Doctrine</h2>
 					<img src="../2024/img/database-patterns/doctrine.png" width="80%" alt="">
 				</section>
 
-				<section>
+				<section data-background="../2024/img/database-patterns/doctrine-xml.png" data-background-size="90%">
 					<h2>PHP: Doctrine (XML)</h2>
-					<img src="../2024/img/database-patterns/doctrine-xml.png" width="100%" alt="">
+					<Br><Br><Br><Br><Br><Br><Br><Br><Br><Br>
 				</section>
 
 				<section>
