@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="../dist/reset.css">
 		<link rel="stylesheet" href="../dist/reveal.css">
-		<link rel="stylesheet" href="../dist/theme/black.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
 
 		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
 	</head>
@@ -72,9 +72,9 @@
 
 				<section>
 					<h1>A questão é:</h1>
-					<h2 class="fragment">Fazer nosso código acessar o banco</h2>
+					<h2 class="fragment">Fazer nosso código acessar</h2>
+					<img src="img/database-patterns/banco-de-dados.gif">
 				</section>
-
 
 				<section>
 					<div style="display: flex; text-align: left;">
@@ -92,7 +92,39 @@
 					</div>
 				</section>
 
-				<section>
+
+				<section data-background="#333">
+					<h1>DEFINIÇÕES</h1>
+				</section>
+
+				<section data-background-size="100%" data-background="img/database-patterns/database.webp">
+					<h2 style="background-color: #333; color: #FFF;">SQL</h2>
+                    <br><br><br><br><br><br><br><br><br>
+				</section>
+
+
+				<section data-background-size="60%" data-background="img/database-patterns/nosql.webp">
+
+				</section>
+
+				
+				<section data-background-size="50%" data-background="../img/gifs/coelho_medonho_sentese_aqui_jovem.gif">
+					<h2 class="fragment" style="background-color: white;">Falaremos apenas de SQL</h2>
+				</section>
+
+				<section data-background-size="100%" data-background="img/database-patterns/figura5j.jpg">
+
+				</section>
+
+				<section data-background-size="80%" data-background="img/database-patterns/sql.png">
+
+				</section>
+
+
+
+		
+
+				<section data-background="#333">
 					<h1>Arquitetura</h1>
 				</section>
 
@@ -105,7 +137,7 @@
 
 				</section>
 
-				<section>
+				<section data-background="#333">
 					<h1>Código</h1>
 				</section>
 
@@ -120,8 +152,8 @@
 				</section>
 
 
-				<section data-background="#333">
-					<h2>Jeito Mundano</h2>
+				<section>
+					<h2>DAS RUAS (jeito mundano)</h2>
 
 					<ul>
 						<li class="fragment"><strong>Esquema do banco</strong> - Feito manualmente por fora da aplicação</li>
@@ -144,19 +176,20 @@
                     <br><br><br><br><br><br><br><br><br>
 				</section>
 
-				<section>
+				<section data-background="../2024/img/database-patterns/pdo.png" data-background-size="100%"> 
 					<h2>PHP com PDO</h2>
-					<img src="../2024/img/database-patterns/pdo.png" width="110%" alt="">
+					<br><br><br><br><br><br><br> <br><br>
 				</section>
 
-				<section>
+				<section data-background="../2024/img/database-patterns/mysql2-1.png" data-background-size="90%">
 					<h2>NodeJS com mysql2</h2>
-					<img src="../2024/img/database-patterns/mysql2-1.png" alt="">
+					<br><br><br><br><br><br><br> <br><br>
+
 				</section>
 
-				<section>
+				<section data-background="../2024/img/database-patterns/mysql2-2.png" data-background-size="90%">
 					<h2>NodeJS com mysql2</h2>
-					<img src="../2024/img/database-patterns/mysql2-2.png" alt="">
+					<br><br><br><br><br><br><br><br>
 				</section>
 
 				<section data-background-image="img/database-patterns/access01.png"  data-background-color="#333">
@@ -184,16 +217,26 @@
 					</div>
 				</section>
 
-                <section>
-                    <img width="60%" src="../2024/img/database-patterns/active-record-02.png" alt="">
+                <section data-background-size="90%" data-background="img/database-patterns/codigo-ar-01.png">
                 </section>
 
-                <section data-background="#333">
-                    <img src="../2024/img/database-patterns/acitve-record-01.png" alt="">
+
+                <section data-background-size="100%" data-background="img/database-patterns/codigo-ar-02.png">
                 </section>
 
-                <section>
-                    <img width="60%" src="../2024/img/database-patterns/active-record-03.png" alt="">
+				<section>
+                    <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.9rem;"  class="hljs php" data-trim data-line-numbers="|2|5,6,7,8|10">
+						// buscar todos
+						Produto::all(); // array de objetos Produto
+						
+						// criar um novo
+						$p = new Produto();
+						$p->nome = 'Ypioca';
+						$p->quantidade = 10;
+						$p->valor = 15.99;
+						
+						$p->save();
+  </code></pre>
                 </section>
 
                 <section>
