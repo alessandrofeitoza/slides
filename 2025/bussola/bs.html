@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Design Patterns Vue: Adapter & Bridge</title>
+  		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Título -->
+      <section>
+        <h1>Vuetify VS Abstração</h1>
+      </section>
+
+      <section>
+        <h2>Contras</h2>
+        
+        <ul>
+            <li class="fragment">Integridade</li>
+            <li class="fragment">Pouco customizável</li>
+            <li class="fragment">Acoplamento Forte</li>
+        </ul>
+      </section>
+      
+      <section data-background="#333">
+        <h3>Integridade</h3>
+        <p>Não temos controle sobre o que vai quebrar a cada nova versão</p>
+      </section>
+
+      <section data-background-size="50%" data-background="img/midas-1.png">
+
+      </section>
+
+      <section data-background-size="50%" data-background="img/midas-1-1.png">
+
+      </section>
+
+
+      <section data-background="#333">
+        <h3>Customização</h3>
+        <p>Em alguns momentos perdemos o controle do que dava pra fazer</p>
+      </section>
+
+      <section data-background-size="50%" data-background="img/midas-2.png">
+
+      </section>
+
+    <section data-background-size="50%" data-background="img/midas-1-1.png">
+
+      </section>
+
+      <section data-background="#333">
+        <h3>Acoplamento Forte</h3>
+        <p>O projeto está amarrado ao UI</p>
+      </section>
+
+    <section>
+        <h2>Como é hoje</h2>
+        <svg width="1100" height="250" style="margin-top:20px;">
+            <!-- Figma -->
+            <rect x="20" y="80" width="180" height="80" rx="15" ry="15" fill="#a259ff" class="fragment" />
+            <text x="110" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                Design System
+            </text>
+
+            <!-- Seta 1 -->
+            <line x1="200" y1="120" x2="300" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+            <!-- Código -->
+            <rect x="300" y="80" width="180" height="80" rx="15" ry="15" fill="#f24e1e" class="fragment" />
+            <text x="390" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                NPM INSTALL
+            </text>
+
+            <!-- Seta 2 -->
+            <line x1="480" y1="120" x2="580" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+            <!-- API -->
+            <rect x="580" y="80" width="180" height="80" rx="15" ry="15" fill="#00c4cc" class="fragment" />
+            <text x="670" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                Implementação
+            </text>
+
+
+            <!-- Definição da seta -->
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="black" />
+                </marker>
+            </defs>
+        </svg>
+
+
+    </section>
+
+
+      <!-- Introdução -->
+      <section>
+        <h2>Objetivo</h2>
+        <ul>
+          <li class="fragment">Permitir trocar a implementação de UI sem alterar o projeto</li>
+          <li class="fragment">Usar tanto Vuetify quanto abstração customizada</li>
+          <li class="fragment">Reduzir acoplamento e facilitar manutenção</li>
+        </ul>
+      </section>
+
+      <section data-background-size="30%" data-background="../../2024/img/design-patterns-principles/livro-design-patterns.jpg">
+        
+      </section>
+
+      <!-- Adapter Pattern -->
+      <section>
+        <h2>Adapter Pattern</h2>
+        <ul>
+          <li class="fragment">Define uma interface genérica</li>
+          <li class="fragment">Cria adapters que traduzem chamadas para Vuetify ou abstração</li>
+          <li class="fragment">Projeto só interage com a interface</li>
+        </ul>
+      </section>
+
+      <section data-background-size="80%" data-background="img/adapter.jpg">
+
+      </section>
+
+      <!-- Adapter Pattern: Código -->
+      <section>
+        <h2>Adapter Pattern: Exemplo</h2>
+<pre><code class="language-ts">
+// Interface genérica
+interface IButton {
+  render(): void;
+}
+
+// Adapter Vuetify
+class VuetifyButton implements IButton {
+  render() {
+    return `<v-btn color="primary">Clique</v-btn>`;
+  }
+}
+
+// Adapter Abstração
+class CustomButton implements IButton {
+  render() {
+    return `<BsButton variant="outlined">Clique</BsButton>`;
+  }
+}
+
+// Uso
+function renderButton(button: IButton) {
+  document.body.innerHTML += button.render();
+}
+
+renderButton(new VuetifyButton());
+renderButton(new CustomButton());
+</code></pre>
+      </section>
+
+      <!-- Bridge Pattern -->
+      <section>
+        <h2>Bridge Pattern</h2>
+        <ul>
+          <li class="fragment">Separa abstração da implementação concreta</li>
+          <li class="fragment">Permite trocar implementação dinamicamente</li>
+          <li class="fragment">Boa para projetos que mudam a UI em runtime</li>
+        </ul>
+      </section>
+
+      <!-- Bridge Pattern: Código -->
+      <section>
+        <h2>Bridge Pattern: Exemplo</h2>
+<pre><code class="language-ts">
+// Implementações concretas
+class VuetifyImpl {
+  renderButton() { return `<v-btn>Clique</v-btn>`; }
+}
+
+class CustomImpl {
+  renderButton() { return `<BsButton>Clique</BsButton>`; }
+}
+
+// Bridge
+interface Button {
+  render(): string;
+}
+
+class ButtonBridge implements Button {
+  constructor(private impl: { renderButton: () => string }) {}
+  render() {
+    return this.impl.renderButton();
+  }
+}
+
+// Uso
+const vuetifyButton = new ButtonBridge(new VuetifyImpl());
+const customButton = new ButtonBridge(new CustomImpl());
+
+document.body.innerHTML += vuetifyButton.render();
+document.body.innerHTML += customButton.render();
+</code></pre>
+      </section>
+
+
+            <section>
+        <h2>Bridge Pattern: de forma Sucinta</h2>
+<pre><code class="language-ts" data-trim data-line-numbers="|1-3|5,6,7">
+// BsCol.vue
+&lt;template&gt;
+    &lt;v-col v-bind="$attrs"&gt;
+        &lt;slot /&gt;
+    &lt;/v-col&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+&lt;/script&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>Bridge Pattern: de forma Sucinta</h2>
+<pre><code class="language-ts" data-trim data-line-numbers="|1-3|5,6,7">
+import BsButton from '@/components/_bs/BsButton.vue'
+import BsForm from '@/components/_bs/BsForm.vue'
+import BsTextField from '@/components/_bs/BsTextField.vue'
+
+app.component('BsButton', BsButton)
+app.component('BsForm', BsForm)
+app.component('BsTextField', BsTextField)
+</code></pre>
+      </section>
+
+            <section>
+        <h2>Bridge Pattern: implementação</h2>
+<pre><code class="language-ts" data-trim data-line-numbers="|1,8|2,4|3,6">
+&lt;BsRow class="justify-between"&gt;
+    &lt;BsCol&gt;
+        &lt;div style="font-weight: bold;"&gt;Seu resumo financeiro&lt;/div&gt;
+    &lt;/BsCol&gt;
+    &lt;BsCol class="text-end"&gt;
+        Semana
+    &lt;/BsCol&gt;
+&lt;/BsRow&gt;
+</code></pre>
+      </section>
+
+      <section>
+        <h2>Como ficaria</h2>
+        <svg width="1100" height="250" style="margin-top:20px;">
+            <!-- Figma -->
+            <rect x="20" y="80" width="180" height="80" rx="15" ry="15" fill="#a259ff" class="fragment" />
+            <text x="110" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                Design System
+            </text>
+
+            <!-- Seta 1 -->
+            <line x1="200" y1="120" x2="300" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+            <!-- Código -->
+            <rect x="300" y="80" width="180" height="80" rx="15" ry="15" fill="#f24e1e" class="fragment" />
+            <text x="390" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                NPM INSTALL
+            </text>
+
+            <!-- Seta 2 -->
+            <line x1="480" y1="120" x2="580" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+            <!-- API -->
+            <rect x="580" y="80" width="180" height="80" rx="15" ry="15" fill="#00c4cc" class="fragment" />
+            <text x="670" y="130" font-size="18" fill="white" text-anchor="middle" class="fragment">
+                Abstração interna
+            </text>
+
+
+            <!-- Seta 3 -->
+            <line x1="760" y1="120" x2="860" y2="120" stroke="black" stroke-width="2" marker-end="url(#arrow)" class="fragment"/>
+
+            <!-- Performance & Estado -->
+            <rect x="860" y="80" width="220" height="80" rx="15" ry="15" fill="#ffb700" class="fragment" />
+            <text x="970" y="115" font-size="18" fill="black" text-anchor="middle" class="fragment">
+                Implementação
+            </text>
+            <text x="970" y="145" font-size="18" fill="black" text-anchor="middle" class="fragment">
+                & Customização
+                        </text>
+
+            <!-- Definição da seta -->
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="black" />
+                </marker>
+            </defs>
+        </svg>
+
+
+    </section>
+
+
+      <section data-background-size="50%" data-background="img/adapter-2.png">
+
+      </section>
+
+      <!-- Conclusão -->
+      <section>
+        <h2>Conclusão</h2>
+        <ul>
+          <li class="fragment">Adapter: bom para compatibilizar APIs diferentes</li>
+          <li class="fragment">Bridge: bom para trocar implementação dinamicamente</li>
+          <li class="fragment">Ambos ajudam a desacoplar UI do projeto</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+<script src="../../dist/reveal.js"></script>
+<script src="../../plugin/notes/notes.js"></script>
+<script src="../../plugin/markdown/markdown.js"></script>
+<script src="../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

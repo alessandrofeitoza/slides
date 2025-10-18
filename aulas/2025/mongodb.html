@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>DevOps - O inicio, o principio e o começo</title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+
+			<div class="slides">
+			
+                <section>
+                    <h2>NodeJS + MongoDB</h2>
+                    <p><em>o Caminho das Pedras</em></p>
+                </section>
+
+                <section>
+					<div style="display: flex;">
+						<div style="width: 60%">
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+                                <li class="fragment" style="color: #741b47;">Fortaleza, <strong>Ceará</strong></li>
+								<li class="fragment"><strong>Professor de</strong>  códigos e outras <strong>computarias</strong> <small style="vertical-align: unset; font-size: 0.7rem;">( ͡° ͜ʖ ͡°)</small></li>
+								<li class="fragment">Programador/Dev/Severino</li>
+                                <li class="fragment">
+                                    <span style="color: #007cba;">
+                                        <strong>PHP</strong> com <strong>Rapadura</strong>
+                                    </span> |
+                                    <span style="color: #B45F06;"><strong>PHP</strong>este</span> 
+                                </li>
+								<li class="fragment">
+									<span>
+										<small style="vertical-align: unset;">Backend Developer</small> <strong style="color: #0b5394;">Bussola</strong>Social
+									</span>
+								</li>
+							</ul>
+						</div>
+						<div style="width: 40%">
+							<img width="70%" src="../../img/AlessandroFeitoza-2026.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+                <section data-background="#333">
+					<h1>DEFINIÇÕES</h1>
+				</section>
+
+				<section data-background-size="100%" data-background="../../2025/img/database-patterns/database.webp">
+					<h2 style="background-color: #333; color: #FFF;">SQL</h2>
+                    <br><br><br><br><br><br><br><br><br>
+				</section>
+
+
+				<section data-background-size="60%" data-background="../../2025/img/database-patterns/nosql.webp">
+
+				</section>
+
+				
+				<section data-background-size="50%" data-background="../img/gifs/coelho_medonho_sentese_aqui_jovem.gif">
+					<h2 class="fragment" style="background-color: white;">Falaremos apenas de SQL</h2>
+				</section>
+
+				<section data-background-size="100%" data-background="../../2025/img/database-patterns/figura5j.jpg">
+
+				</section>
+
+				<section data-background-size="80%" data-background="../../2025/img/database-patterns/sql.png">
+
+				</section>
+
+
+
+		
+
+				<section data-background="#333">
+					<h1>Arquitetura</h1>
+				</section>
+
+				<section data-background-size="50%" data-background="../../2025/img/database-patterns/single-tenant.png">
+
+				</section>
+
+
+				<section data-background-size="50%" data-background="../../2025/img/database-patterns/multi-tenant.png">
+
+				</section>
+
+
+  <!-- Hardware -->
+  <section>
+    <h2>Hardware</h2>
+    <ul>
+      <li class="fragment">Servidores físicos ou virtuais</li>
+      <li class="fragment">Computadores e dispositivos de rede</li>
+      <li class="fragment">Armazenamento (HDs, SSDs, Storage em nuvem)</li>
+    </ul>
+  </section>
+  
+  <!-- Software -->
+  <section>
+    <h2>Software</h2>
+    <ul>
+      <li class="fragment">Sistemas operacionais (Linux, Windows Server)</li>
+      <li class="fragment">Ferramentas de automação e monitoramento</li>
+      <li class="fragment">Aplicações e serviços</li>
+    </ul>
+  </section>
+  
+  <!-- Redes -->
+  <section>
+    <h2>Redes</h2>
+    <ul>
+      <li class="fragment">Protocolos (TCP/IP, HTTP, HTTPS)</li>
+      <li class="fragment">Segurança de rede (firewalls, VPNs)</li>
+      <li class="fragment">Configuração de ambientes distribuídos</li>
+    </ul>
+  </section>
+  
+  <!-- Git -->
+  <section>
+    <h2>Git</h2>
+    <ul>
+      <li class="fragment">Controle de versão</li>
+      <li class="fragment">Colaboração em equipe</li>
+      <li class="fragment">Histórico de alterações</li>
+    </ul>
+  </section>
+  
+
+
+<section data-background="#fff">
+    Uma outra forma de ver com os olhos
+    <img src="../../img/backend-security/req-res.png" alt="">
+</section>
+
+  <section data-background-size="60%" data-background="../../img/client-server.jpeg">
+
+</section>
+
+
+<section data-background-size="60%" data-background="../../img/req-res.png">
+
+</section>
+
+<!-- Slide 2: Anatomia de uma URL -->
+<section>
+    <h2>Anatomia de uma URL</h2>
+    <p class="fragment">Exemplo: <br><code style="color: blue">https://api.exemplo.com/v1/users?id=123</code></p>
+    <ul>
+    <li class="fragment"><strong>Protocol(o):</strong> https</li>
+    <li class="fragment"><strong>Domínio/Domain:</strong> api.exemplo.com</li>
+    <li class="fragment"><strong>Caminho/Path/Endpoint:</strong> /v1/users</li>
+    <li class="fragment"><strong>Query String/Parameters:</strong> ?id=123</li>
+    </ul>
+</section>
+
+<!-- Slide 3: O que é Request? -->
+<section>
+    <h2>O que é Request?</h2>
+    <p class="fragment">É a requisição enviada pelo cliente para o servidor.</p>
+    <pre class="fragment"><code class="javascript">fetch('https://api.exemplo.com/v1/users')
+.then(response => response.json())
+.then(data => console.log(data));
+    </code></pre>
+</section>
+
+
+
+<!-- Slide 4: O que é Response? -->
+<section>
+    <h2>O que é Response?</h2>
+    <p class="fragment">É a resposta enviada pelo servidor para o cliente.</p>
+    <pre class="fragment"><code class="javascript">
+{
+"id": 123,
+"name": "Filomena",
+"age": 30
+}
+    </code></pre>
+</section>
+
+  <section data-background="#333">
+<h1>BigData</h1>
+<h3>O que é? Onde vivem? Do que se alimentam?</h3>
+<p>Apresentação adaptada de uma Prezi</p>
+</section>
+
+
+<section>
+<h2>O que é Big Data?</h2>
+<ul>
+<li class="fragment">Conjunto de dados tão grandes ou complexos que ferramentas tradicionais não conseguem processar eficientemente</li>
+<li class="fragment">Envolve captura, armazenamento, processamento e análise</li>
+<li class="fragment">Objetivo: extrair valor e insights acionáveis</li>
+</ul>
+</section>
+
+
+<section data-background="#333">
+<h2>As 5 Vs do Big Data</h2>
+<ul>
+<li class="fragment">Volume — quantidade massiva de dados</li>
+<li class="fragment">Velocidade — dados gerados e processados em alta velocidade</li>
+<li class="fragment">Variedade — formatos distintos: estruturado, semiestruturado, não estruturado</li>
+<li class="fragment">Veracidade — qualidade e confiança dos dados</li>
+<li class="fragment">Valor — utilidade dos dados para o negócio</li>
+</ul>
+</section>
+
+
+<section>
+<h2>Onde "vivem" os dados?</h2>
+<ul>
+<li class="fragment">Servidores e Data Centers</li>
+<li class="fragment">Armazenamento em nuvem (S3, Blob Storage)</li>
+<li class="fragment">Bancos NoSQL (Cassandra, MongoDB)</li>
+<li class="fragment">Lagos de dados e Data Lakes</li>
+<li class="fragment">Streams e filas (Kafka, Kinesis)</li>
+</ul>
+</section>
+
+<section data-background="img/mongodb/bytes.png" data-background-size="100%"></section>
+<section data-background="img/mongodb/bytes2.png" data-background-size="100%"></section>
+<section data-background="img/mongodb/bytes3.png" data-background-size="100%"></section>
+<section data-background="img/mongodb/bytes4.png" data-background-size="100%"></section>
+<section data-background="img/mongodb/bytes5.png" data-background-size="100%"></section>
+<section data-background="img/mongodb/bytes6.png" data-background-size="100%"></section>
+<section data-background="img/mongodb/bytes7.png" data-background-size="100%"></section>
+<section data-background="img/mongodb/bytes8.png" data-background-size="80%"></section>
+
+
+<section data-background="#333">
+<h2>Do que se alimentam?</h2>
+<ul>
+<li class="fragment">Logs de aplicações</li>
+<li class="fragment">Eventos de dispositivos (IoT)</li>
+<li class="fragment">Redes sociais e cliques</li>
+<li class="fragment">Transações financeiras e registros corporativos</li>
+<li class="fragment">Imagens, áudio e vídeo</li>
+</ul>
+</section>
+
+
+<section>
+<h2>Arquitetura típica</h2>
+<ol>
+<li class="fragment">Ingestão (ETL/ELT, streaming)</li>
+<li class="fragment">Armazenamento (data lake, warehouse)</li>
+<li class="fragment">Processamento (batch e streaming)</li>
+<li class="fragment">Serviços de consulta e BI</li>
+<li class="fragment">Modelos de ML / Data Products</li>
+</ol>
+</section>
+
+
+<section data-background="#333">
+<h2>Ferramentas e Tecnologias</h2>
+<ul>
+<li class="fragment">Hadoop / HDFS</li>
+<li class="fragment">Apache Spark</li>
+<li class="fragment">Kafka</li>
+<li class="fragment">NoSQL (Cassandra, MongoDB)</li>
+<li class="fragment">Data Warehouses (Redshift, BigQuery)</li>
+</ul>
+</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script src="../../plugin/zoom/zoom.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.3.0/plugin/mermaid/mermaid.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				mermaid: {
+					// flowchart: {
+						//   curve: 'linear',
+						// },
+				},
+				plugins: [ RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes, RevealMermaid ],
+			});
+		</script>
+	</body>
+</html>
