@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Desenvolvimento Seguro</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background="../img/cadeado.jpeg">
+					<h2 style="background-color: white;">Desenvolvimento Web Seguro:</h2>
+					<p style="background-color: #333; color: white;">O inicio, o principio e o começo</p>
+                    <br><br><br><br><br>
+
+                    <small style="color: white;">2025-10-21 23:15</small>
+				</section>
+
+				<section>
+					<div style="display: flex;">
+						<div style="width: 60%">
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+                                <li class="fragment" style="color: #741b47;">Fortaleza, <strong>Ceará</strong></li>
+								<li class="fragment"><strong>Professor de</strong>  códigos e outras <strong>computarias</strong> <small style="vertical-align: unset; font-size: 0.7rem;">( ͡° ͜ʖ ͡°)</small></li>
+								<li class="fragment">Programador/Dev/Severino</li>
+                                <li class="fragment">
+                                    <span style="color: #007cba;">
+                                        <strong>PHP</strong> com <strong>Rapadura</strong>
+                                    </span> |
+                                    <span style="color: #B45F06;"><strong>PHP</strong>este</span> 
+                                </li>
+								<li class="fragment">
+									<span>
+										<small style="vertical-align: unset;">TechLead / Backend Developer</small> <strong style="color: #0b5394;">Bussola</strong>Social
+									</span>
+								</li>
+							</ul>
+						</div>
+						<div style="width: 40%">
+							<img width="70%" src="../img/AlessandroFeitoza-2026.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">1. Introdução à segurança web</li>
+                        <li class="fragment">2. Autenticação e Autorização</li>
+                        <li class="fragment">3. Validação e Saneamento de Dados</li>
+						<li class="fragment">4. Segurança em APIs</li>
+						<li class="fragment">5. Armazenamento seguro</li>
+						<li class="fragment">6. Segurança no Frontend</li>
+						<li class="fragment">7. Infraestrutura e DevOps</li>
+						<li class="fragment">8. Simulações e análises</li>
+                    </ul>
+				</section>
+
+				<section>
+					<div style="display: flex; text-align: left;">
+						<div>
+							<h3>⚠️ EU não sou especialista</h3>
+							<hr>
+							<ul>
+								<li class="fragment">Sou desenvolvedor <strong>curioso e preocupado</strong> com a segurança das aplicações que faço</li>
+								
+							</ul>
+						</div>
+                        <div>
+                        </div>
+					</div>
+				</section>
+
+				<section data-background="#333" style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">O minimo:</h3>
+					<hr>
+					<ul>
+						<li class="fragment">Fundamentos</li>
+                        <li class="fragment">Senhas e criptografia</li>
+                        <li class="fragment">XSS</li>
+                        <li class="fragment">SQL Injection</li>
+                        <li class="fragment">upload de arquivos</li>
+                    </ul>
+				</section>
+
+				<section>
+					<h3>Arquiteturas da Web</h3>
+				</section>
+
+				<section data-background="#fff">
+                    <img src="../img/backend-security/arquiteturas.webp" width="100%" alt="">
+                </section>
+
+                <section data-background="#fff">
+					Uma outra forma de ver com os olhos
+                    <img src="../img/backend-security/req-res.png" alt="">
+                </section>
+
+				<section data-background="#333">
+					Validação VS Segurança
+					<hr>
+
+				</section>
+
+				<section>
+                    <div style="text-align: left;">
+                        <h3><em>Validar</em></h3>
+                        <hr>
+                        <p class="fragment">
+                            do Latim, <em style="color: red;">validare</em>
+                        </p>
+                        <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                            Tornar<strong> <em> Válido</em></strong> <br>
+                            
+                            Dar<strong> <em> Validade</em></strong><br> 
+                        </p>
+                    </div>
+                </section>
+
+				<section data-background-size="50%" data-background="img/security/form-validation.gif">
+
+				</section>
+
+				<section data-background-size="70%" data-background="img/security/codigo-01.png">
+
+				</section>
+
+				<section>
+					<h3>Onde precisamos validar?</h3>
+					<p class="fragment">Validações no frontend são <strong>usabilidade</strong></p>
+					<p class="fragment">Validações no backend são <strong>segurança</strong></p>
+				</section>
+
+				<section data-background-size="100%" data-background="../img/gifs/cadeado.gif">
+                    <h2 style="background-color: white;" class="fragment">Validação não é Segurança!</h2>
+                    <br><br><br><br>
+                </section>
+
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							Quando se fala em desenvolvimento de software temos isso:
+							<br><br>
+							<p class="fragment">E onde entra a segurança?</p>
+						</div>
+						<div>
+							<img width="140%" src="../img/backend-security/bom-barato.gif" alt="">
+						</div>
+					</div>
+				</section>
+
+
+
+				<section>
+					<img width="50%" src="../img/backend-security/piramide.png" alt="">
+					
+					<p class="fragment"><strong>Segurança</strong> não é produto, <span class="fragment">é processo</span><span class="fragment">, ela <strong>fornece qualidade</strong></span></p>
+				</section>
+
+
+
+				
+				<section data-background="#140536">
+					<p style="font-size: 3rem;">
+						<strong>Segurança e Velocidade</strong> de entrega são situações <span style="color: yellow;">completamentes diferentes</span>.
+						<br><br>
+						<span class="fragment">Enquanto <strong>velocidade é vísivel</strong>, segurança não...</span>
+						<em class="fragment" style="font-weight: bold; color: red;">até que ela falhe</em> 
+					</p>
+				</section>
+
+
+				<section>
+					<p>Custo para corrigir uma falha de segurança</p>
+
+					<img width="70%" src="../img/backend-security/custos-falhas.gif" alt="">
+					
+					<p class="fragment" style="font-size: 1rem;">Retirado de relatório da IBM</p>
+				</section>
+				
+
+
+				<section>
+					<p class="">Vale ressaltar os pilares</p>
+
+					<img width="50%" src="../img/backend-security/pilares.png" alt="">
+					
+				</section>
+
+				<section data-background-color="#4e342e">
+					<ul>
+						<li class="fragment"><strong>Confidencialidade:</strong> apenas quem deve pode acessar</li>
+						<li class="fragment"><strong>Integridade:</strong> dados não podem ser alterados indevidamente</li>
+						<li class="fragment"><strong>Disponibilidade:</strong> sistemas devem estar acessíveis quando necessário</li>
+					</ul>
+				</section>
+				
+
+				<section data-background-color="#1b5e20">
+					<h3>O que é Segurança da Informação?</h3>
+                    <hr>
+					<ul>
+						<li class="fragment">Conjunto de práticas para proteger dados e sistemas</li>
+						<li class="fragment">Garante Confidencialidade, Integridade e Disponibilidade (CID)</li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<p class="r-fit-text">EXEMPLOS CONHECIDOS</p>
+				</section>
+
+                <section data-background="img/security/man-in-the-middle.webp"></section>
+
+				<section data-background-color="">
+					<h3>Man in the Middle (MITM)</h3>
+					<ul>
+						<li class="fragment">O atacante intercepta a comunicação entre duas partes</li>
+						<li class="fragment">Pode capturar senhas, tokens ou dados sensíveis</li>
+						<li class="fragment">Muito comum em redes Wi-Fi públicas</li>
+					</ul>
+					<pre class="fragment"><code class="plaintext">
+Exemplo: Você acessa o banco em um Wi-Fi público
+O invasor intercepta os dados antes que cheguem ao banco
+					</code></pre>
+				</section>
+
+                <section data-background="../img/gifs/mitm.gif">
+
+                </section>
+
+				<section>
+                    <h3>Outros...</h3>
+					<ul>
+						<li>Phishing</li>
+						<li>Malware/Ransonware</li>
+						<li>Engenharia Social</li>
+						<li>PenDrive*</li>
+					</ul>
+				</section>
+				
+				<section data-background="../img/gifs/pablo-escobar.gif">
+					<h3 style="background-color: #FFF">Mas Não vamos focar nisso</h3>
+				</section>
+
+				<section data-background="#333">
+					<p class="r-fit-text">OWASP</p>
+				</section>
+
+				<section data-background-color="#0d47a1">
+					<h2>OWASP Top 10</h2>
+					<p>As 10 principais vulnerabilidades de segurança em aplicações web</p>
+				</section>
+
+				<section>
+                    <div style="text-align: left;">
+                        <h3><em>Vulnerabilidade</em></h3>
+                        <hr>
+                        <p class="fragment">
+                            do Latim, <em style="color: red;">vulnerabilis</em>
+                        </p>
+                        <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                            aquele que <strong><em> pode ser</em></strong>ferido <br>
+                            
+                            Suscetivel a <strong> <em> Ferimentos</em></strong><br> 
+                        </p>
+                    </div>
+                </section>
+
+				<section data-background="img/security/camadas.png" data-background-size="30%">
+                </section>
+
+				<section data-background-color="#1b5e20">
+					<h3>1. Quebra de Controle de Acesso</h3>
+					<ul>
+						<li class="fragment">Acesso a recursos sem a devida permissão</li>
+						<li class="fragment">Exposição ou modificação de dados indevidamente</li>
+					</ul>
+				</section>
+
+                <section data-background-color="#1b5e20">
+					<pre class="fragment"><code class="hljs php">
+				//php		
+				if (!$user->canAccess('admin_area')) {
+					abort(403);
+				}
+					</code></pre>
+					<pre class="fragment"><code class="hljs javascript">
+				//js		
+				if (!user.permissions.includes('admin_area')) {
+					alert('Acesso negado');
+					window.location = '/';
+				}
+					</code></pre>
+				</section>
+
+                <section>
+                    <h3>1. Quebra de Controle de Acesso</h3>
+					<ul>
+						<li class="fragment">Valide permissões no backend</li>
+						<li class="fragment">Nunca confie apenas no frontend</li>
+					</ul>
+
+                    <div class="fragment">
+                        <br><br><br>
+                        <a href="https://laravel.com/docs/12.x/authorization">https://laravel.com/docs/12.x/authorization</a>
+                        <br><br>
+                        <a href="https://expressjs.com/en/guide/using-middleware.html">https://expressjs.com/en/guide/using-middleware.html</a>
+                    </div>
+                </section>
+
+				
+				<section data-background-color="#4e342e">
+					<h3>2. Falhas Críticas de Criptografia</h3>
+					<ul>
+						<li class="fragment">Uso de algoritmos ou protocolos inseguros</li>
+						<li class="fragment">Dados sensíveis expostos ou mal protegidos</li>
+					</ul>
+				</section>
+
+
+                <section>
+                    <h1 class="fragment">_ _ _ </h1>
+
+                    <p><small class="fragment">0-9</small></p>
+
+                    <p class="fragment"> 10 * 10 * 10 = <strong class="fragment">1.000 possibilidades</strong></p>
+
+                    <img src="img/security/cadeado.webp" alt="">
+                </section>
+
+                <section data-background-size="80%" data-background="img/security/senhas.png"></section>
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code class="hljs python"  data-trim data-line-numbers="|3|7">
+$nome = $_POST['nome'];
+$email = $_POST['email'];
+$senha = $_POST['senha'];
+
+$sql = "
+    INSERT INTO tb_users (nome, email, senha)
+    VALUES ('{$nome}', '{$email}', '{$senha}');
+";
+					</code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code class="hljs python"  data-trim data-line-numbers="|3,4,5,6">
+$nome = $_POST['nome'];
+$email = $_POST['email'];
+$senha = password_hash(
+    $_POST['senha'], 
+    PASSWORD_DEFAULT
+);
+
+$sql = "
+    INSERT INTO tb_users (nome, email, senha)
+    VALUES ('{$nome}', '{$email}', '{$senha}');
+";
+					</code></pre>
+                </section>
+
+
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code class="hljs python"  data-trim data-line-numbers="|5|7">
+//login
+$email = $_POST['email'];
+$senha = $_POST['senha'];
+
+$sql = "SELECT * FROM tb_users WHERE email='{$email}';";
+
+if (password_hash($senha, $senhaQueTaNoBanco)) {
+    // pode entrar...
+}
+
+					</code></pre>
+                </section>
+
+                <section data-background-size="80%" data-background="img/security/senhas2.png"></section>
+
+
+				<section data-background-color="#4e342e">
+					<h3>2. Falhas Críticas de Criptografia</h3>
+					<ul>
+						<li class="fragment">Use algoritmos modernos e seguros</li>
+						<li class="fragment">Nunca armazene senhas em texto puro</li>
+					</ul>
+					<pre class="fragment"><code class="javascript">
+    //javascripto
+    const bcrypt = require("bcrypt");
+    const hash = bcrypt.hash('123456');
+
+    if (bcyrpt.compare('123456', hash)) {}
+					</code></pre>
+				</section>
+				
+				
+				<section data-background-color="#6a1b9a">
+					<h3>3. SQL INJECTION</h3>
+					<ul>
+						<li class="fragment">Injeção de SQL ou NoSQL</li>
+						<li class="fragment">Possibilidade de execução de comandos maliciosos</li>
+					</ul>
+				</section>
+
+                                <section data-auto-animate>
+                    <pre data-id="code-animation"><code class="hljs python"  data-trim data-line-numbers="|1,2|5">
+$email = $_POST['email'];
+$senha = $_POST['senha'];
+
+$sql = "
+    SELECT * FROM tb_users WHERE email='{$email}' LIMIT 1
+";
+					</code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code class="hljs php"  data-trim data-line-numbers="|1">
+$email = $_POST['email']; // ' OR 1=1; --
+$senha = $_POST['senha'];
+
+$sql = "
+    SELECT * FROM tb_users WHERE email='{$email}' LIMIT 1
+";
+					</code></pre>
+                </section>
+
+                                <section data-auto-animate>
+                    <pre data-id="code-animation"><code class="hljs php"  data-trim data-line-numbers="|5">
+$email = $_POST['email']; // ' OR 1=1; --
+$senha = $_POST['senha'];
+
+$sql = "
+    SELECT * FROM tb_users WHERE email='' OR 1=1 -- LIMIT 1'
+";
+					</code></pre>
+                </section>
+
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code class="hljs python"  data-trim data-line-numbers="|5|6|9,10,11">
+//solução
+$email = $_POST['email'];
+$senha = $_POST['senha'];
+
+$pdo->prepare(
+    "SELECT * FROM tb_users WHERE email=:email"
+);
+
+$pdo->bindParams([
+    ':email' => $email,
+]);
+
+					</code></pre>
+                </section>
+
+
+                <section data-background-color="#6a1b9a">
+					<h3>3. SQL INJECTION</h3>
+					<ul>
+						<li class="fragment">Sempre use <strong>prepared statements</strong> no backend</li>
+						<li class="fragment">Escape dados exibidos no frontend</li>
+					</ul>
+				</section>
+
+
+				
+				<section data-background-color="#bf360c">
+					<h3>4. "Design" Inseguro</h3>
+					<ul>
+						<li class="fragment">Ausência de segurança já na fase de projeto</li>
+						<li class="fragment">Arquitetura ou fluxos vulneráveis por concepção</li>
+					</ul>
+				</section>
+
+                                <section data-background-size="80%" data-background="img/security/top4.png"></section>
+
+				
+				<section data-background-color="#01579b">
+					<h3>4. Design Inseguro</h3>
+					<ul>
+						<li class="fragment">Inclua segurança no processo de projeto</li>
+						<li class="fragment">Pense em cenários de ataque desde o início</li>
+					</ul>
+				</section>
+				
+				
+				<section data-background-color="#01579b">
+					<h3>5. Problemas de Configuração de Segurança</h3>
+					<ul>
+						<li class="fragment">Configurações padrão inseguras</li>
+						<li class="fragment">Serviços desnecessários expostos</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#33691e">
+					<h3>6. Componentes Vulneráveis e Desatualizados</h3>
+					<ul>
+						<li class="fragment">Uso de bibliotecas e pacotes com falhas conhecidas</li>
+						<li class="fragment">Falta de atualização ou monitoramento de dependências</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#3e2723">
+					<h3>7. Falhas de Identificação e Autenticação</h3>
+					<ul>
+						<li class="fragment">Gestão inadequada de credenciais</li>
+						<li class="fragment">Quebra na autenticação ou sessões</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#4a148c">
+					<h3>8. Falhas de Integridade de Software e Dados</h3>
+					<ul>
+						<li class="fragment">Atualizações ou pacotes comprometidos</li>
+						<li class="fragment">Manipulação maliciosa de dados ou software</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#d84315">
+					<h3>9. Falhas de Monitoramento e Logging</h3>
+					<ul>
+						<li class="fragment">Ausência de logs de segurança</li>
+						<li class="fragment">Falhas não detectadas a tempo</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#006064">
+					<h3>10. SSRF - Server Side Request Forgery</h3>
+					<ul>
+						<li class="fragment">Servidor faz requisições manipuladas externamente</li>
+						<li class="fragment">Pode acessar redes internas ou serviços privados</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#0d47a1">
+					<h2>Conclusão</h2>
+					<p>Segurança deve estar presente em todas as fases do desenvolvimento!</p>
+				</section>
+
+				<section data-background-color="#263238">
+					<h2>Como se Proteger das Vulnerabilidades</h2>
+					<p>Boas práticas e exemplos em PHP e JavaScript</p>
+				</section>
+            
+				
+				<section data-background-color="#33691e">
+					<h3>5. Problemas de Configuração de Segurança</h3>
+					<ul>
+						<li class="fragment">Desative serviços e portas não usados</li>
+						<li class="fragment">Revise as configurações de produção</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+				// Exemplo de .env seguro
+				APP_DEBUG=false
+				APP_ENV=production
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#3e2723">
+					<h3>6. Componentes Vulneráveis e Desatualizados</h3>
+					<ul>
+						<li class="fragment">Mantenha dependências sempre atualizadas</li>
+						<li class="fragment">Use ferramentas como Composer Audit e NPM Audit</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#4a148c">
+					<h3>7. Falhas de Identificação e Autenticação</h3>
+					<ul>
+						<li class="fragment">Use autenticação forte e tokens seguros</li>
+						<li class="fragment">Implemente timeouts de sessão</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+				session_set_cookie_params(['httponly' => true, 'secure' => true]);
+				session_start();
+					</code></pre>
+					<pre class="fragment"><code class="javascript">
+				// Exemplo simples de timeout de sessão no frontend
+				setTimeout(() => {
+					alert('Sessão expirada');
+					window.location = '/login';
+				}, 1800000); // 30 minutos
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#d84315">
+					<h3>8. Falhas de Integridade de Software e Dados</h3>
+					<ul>
+						<li class="fragment">Verifique integridade de pacotes e uploads</li>
+						<li class="fragment">Use assinaturas digitais se possível</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#006064">
+					<h3>9. Falhas de Monitoramento e Logging</h3>
+					<ul>
+						<li class="fragment">Implemente logs de segurança no backend</li>
+						<li class="fragment">Monitore eventos suspeitos</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+				Log::warning('Tentativa de acesso não autorizado', ['user' => $user->id]);
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#0d47a1">
+					<h3>10. SSRF - Server Side Request Forgery</h3>
+					<ul>
+						<li class="fragment">Valide e limite URLs recebidas pelo servidor</li>
+						<li class="fragment">Evite requisições diretas a redes internas</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+				if (!filter_var($url, FILTER_VALIDATE_URL) || !str_starts_with($url, 'https://')) {
+					throw new Exception('URL inválida');
+				}
+					</code></pre>
+				</section>
+				
+
+				
+
+				<section data-background="#333">
+					<p>
+						Bora começar a festa
+					</p>	
+
+					<img width="50%" src="../img/backend-security/rave.gif" alt="">
+				</section>
+
+
+				<section data-background-color="#263238">
+					<h2>Bibliotecas Úteis para Segurança</h2>
+					<p>Ferramentas para proteger suas aplicações PHP e JavaScript</p>
+				</section>
+				
+				<section data-background-color="#1b5e20">
+					<h3>Criptografia e Hash de Senha</h3>
+					<ul>
+						<li class="fragment">PHP: <strong>password_hash</strong> (nativo e seguro)</li>
+						<li class="fragment">PHP: <strong>defuse/php-encryption</strong> para criptografia simétrica</li>
+						<li class="fragment">JavaScript: <strong>bcryptjs</strong> ou <strong>crypto</strong> (Node)</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+$hash = password_hash('senhaSegura', PASSWORD_DEFAULT);
+					</code></pre>
+					<pre class="fragment"><code class="javascript">
+const bcrypt = require('bcryptjs');
+const hash = bcrypt.hashSync('senhaSegura', 10);
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#4e342e">
+					<h3>CSRF Token</h3>
+					<ul>
+						<li class="fragment">PHP: Laravel já gera CSRF automaticamente</li>
+						<li class="fragment">JS: Enviar o token nos cabeçalhos AJAX</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+// Blade no Laravel
+@csrf
+					</code></pre>
+					<pre class="fragment"><code class="javascript">
+// Axios exemplo
+axios.post('/rota', dados, {
+	headers: { 'X-CSRF-TOKEN': token }
+});
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#6a1b9a">
+					<h3>Validação de Dados</h3>
+					<ul>
+						<li class="fragment">PHP: <strong>Respect/Validation</strong></li>
+						<li class="fragment">Laravel: <strong>Validator</strong> nativo</li>
+						<li class="fragment">JS: <strong>Yup</strong> ou <strong>Validator.js</strong></li>
+					</ul>
+					<pre class="fragment"><code class="php">
+use Respect\Validation\Validator as v;
+if (!v::email()->validate($email)) {
+	throw new Exception('E-mail inválido');
+}
+					</code></pre>
+					<pre class="fragment"><code class="javascript">
+import * as yup from 'yup';
+const schema = yup.string().email().required();
+schema.validate('exemplo@teste.com');
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#01579b">
+					<h3>Prevenção de SQL Injection</h3>
+					<ul>
+						<li class="fragment">PHP: Sempre use Prepared Statements (PDO, Eloquent, Doctrine)</li>
+						<li class="fragment">JS: Bibliotecas como <strong>sequelize</strong> ou <strong>knex</strong></li>
+					</ul>
+					<pre class="fragment"><code class="php">
+$stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+$stmt->execute(['email' => $email]);
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#33691e">
+					<h3>Prevenção de XSS</h3>
+					<ul>
+						<li class="fragment">PHP: <strong>htmlspecialchars</strong> ou <strong>twig autoescape</strong></li>
+						<li class="fragment">JS: <strong>DOMPurify</strong> para sanitizar entradas</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+echo htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+					</code></pre>
+					<pre class="fragment"><code class="javascript">
+const clean = DOMPurify.sanitize(userInput);
+document.getElementById('output').innerHTML = clean;
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#3e2723">
+					<h3>Controle de Acesso e Permissões</h3>
+					<ul>
+						<li class="fragment">PHP: <strong>Symfony Voters</strong>, Laravel Gates/Policies</li>
+						<li class="fragment">JS: Gerenciamento de permissões no frontend, mas validação final no backend</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+// Exemplo Laravel Policy
+public function update(User $user, Post $post)
+{
+	return $user->id === $post->user_id;
+}
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#4a148c">
+					<h3>Gerenciamento Seguro de Uploads (PHP)</h3>
+					<ul>
+						<li class="fragment">Valide o <strong>MIME Type</strong> e extensão</li>
+						<li class="fragment">Armazene arquivos fora da pasta pública se possível</li>
+					</ul>
+					<pre class="fragment"><code class="php">
+$allowedTypes = ['image/jpeg', 'image/png'];
+if (!in_array($_FILES['file']['type'], $allowedTypes)) {
+	throw new Exception('Tipo de arquivo não permitido');
+}
+move_uploaded_file($_FILES['file']['tmp_name'], '/safe_path/' . basename($_FILES['file']['name']));
+					</code></pre>
+				</section>
+				
+				<section data-background-color="#d84315">
+					<h3>Outras Bibliotecas Relevantes</h3>
+					<ul>
+						<li class="fragment">PHP: <strong>ParagonIE/RandomCompat</strong> - Geração segura de números aleatórios</li>
+						<li class="fragment">PHP: <strong>symfony/security-csrf</strong> - Proteção CSRF se não usar framework</li>
+						<li class="fragment">JS: <strong>helmet</strong> (Node) - Cabeçalhos de segurança HTTP</li>
+						<li class="fragment">JS: <strong>crypto</strong> - Criptografia nativa no Node.js</li>
+					</ul>
+				</section>
+				
+				<section data-background-color="#0d47a1">
+					<h3>Resumo</h3>
+					<p>o Mundão tá aí pra ensinar!</p>
+				</section>
+				
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					youtube.com/c/AlessandroFeitozaComputaria
+
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://speakerdeck.com/cviniciussdias/seguranca-com-php-o-minimo-que-todo-dev-deve-saber">
+								Vinicius Dias: O minimo que todo DEV deve saber
+							</a>
+						</li>
+
+						<li>
+							<a href="https://speakerdeck.com/evandromohr/devsecops-criando-uma-cultura-shift-left">
+								Evandro Mohr: Cultura DevSecOps
+							</a>
+						</li>
+						
+						<li>
+							<a href="https://speakerdeck.com/evandromohr/hacking-your-php-application">
+								Evandro Mohr: Hackeando sua aplicação PHP
+							</a>
+						</li>
+
+
+						<li>
+							<a href="https://anchisesbr.blogspot.com/2018/07/seguranca-custo-de-corrigir-os.html">
+								AnchisesLandia: Custo de corrigir bugs em produção
+							</a>
+						</li>
+
+                        <li>
+                            <a href="https://dev.to/gabogaldino/explicando-o-top-4-da-owasp-design-inseguro-para-desenvolvedores-4lf0">
+                                Entendendo o Top 4 da OWASP
+                            </a>
+                        </li>
+						
+					</ul>
+				</section>
+
+
+				
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
