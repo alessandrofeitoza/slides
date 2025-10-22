@@ -504,58 +504,8 @@ $pdo->bindParams([
 						<li class="fragment">Serviços desnecessários expostos</li>
 					</ul>
 				</section>
-				
-				<section data-background-color="#33691e">
-					<h3>6. Componentes Vulneráveis e Desatualizados</h3>
-					<ul>
-						<li class="fragment">Uso de bibliotecas e pacotes com falhas conhecidas</li>
-						<li class="fragment">Falta de atualização ou monitoramento de dependências</li>
-					</ul>
-				</section>
-				
-				<section data-background-color="#3e2723">
-					<h3>7. Falhas de Identificação e Autenticação</h3>
-					<ul>
-						<li class="fragment">Gestão inadequada de credenciais</li>
-						<li class="fragment">Quebra na autenticação ou sessões</li>
-					</ul>
-				</section>
-				
-				<section data-background-color="#4a148c">
-					<h3>8. Falhas de Integridade de Software e Dados</h3>
-					<ul>
-						<li class="fragment">Atualizações ou pacotes comprometidos</li>
-						<li class="fragment">Manipulação maliciosa de dados ou software</li>
-					</ul>
-				</section>
-				
-				<section data-background-color="#d84315">
-					<h3>9. Falhas de Monitoramento e Logging</h3>
-					<ul>
-						<li class="fragment">Ausência de logs de segurança</li>
-						<li class="fragment">Falhas não detectadas a tempo</li>
-					</ul>
-				</section>
-				
-				<section data-background-color="#006064">
-					<h3>10. SSRF - Server Side Request Forgery</h3>
-					<ul>
-						<li class="fragment">Servidor faz requisições manipuladas externamente</li>
-						<li class="fragment">Pode acessar redes internas ou serviços privados</li>
-					</ul>
-				</section>
-				
-				<section data-background-color="#0d47a1">
-					<h2>Conclusão</h2>
-					<p>Segurança deve estar presente em todas as fases do desenvolvimento!</p>
-				</section>
 
-				<section data-background-color="#263238">
-					<h2>Como se Proteger das Vulnerabilidades</h2>
-					<p>Boas práticas e exemplos em PHP e JavaScript</p>
-				</section>
-            
-				
+
 				<section data-background-color="#33691e">
 					<h3>5. Problemas de Configuração de Segurança</h3>
 					<ul>
@@ -569,6 +519,16 @@ $pdo->bindParams([
 					</code></pre>
 				</section>
 				
+				<section data-background-color="#33691e">
+					<h3>6. Componentes Vulneráveis e Desatualizados</h3>
+					<ul>
+						<li class="fragment">Uso de bibliotecas e pacotes com falhas conhecidas</li>
+						<li class="fragment">Falta de atualização ou monitoramento de dependências</li>
+					</ul>
+				</section>
+				
+
+				
 				<section data-background-color="#3e2723">
 					<h3>6. Componentes Vulneráveis e Desatualizados</h3>
 					<ul>
@@ -576,7 +536,15 @@ $pdo->bindParams([
 						<li class="fragment">Use ferramentas como Composer Audit e NPM Audit</li>
 					</ul>
 				</section>
-				
+
+				<section data-background-color="#3e2723">
+					<h3>7. Falhas de Identificação e Autenticação</h3>
+					<ul>
+						<li class="fragment">Gestão inadequada de credenciais</li>
+						<li class="fragment">Quebra na autenticação ou sessões</li>
+					</ul>
+				</section>
+
 				<section data-background-color="#4a148c">
 					<h3>7. Falhas de Identificação e Autenticação</h3>
 					<ul>
@@ -596,6 +564,15 @@ $pdo->bindParams([
 					</code></pre>
 				</section>
 				
+				<section data-background-color="#4a148c">
+					<h3>8. Falhas de Integridade de Software e Dados</h3>
+					<ul>
+						<li class="fragment">Atualizações ou pacotes comprometidos</li>
+						<li class="fragment">Manipulação maliciosa de dados ou software</li>
+					</ul>
+				</section>
+
+
 				<section data-background-color="#d84315">
 					<h3>8. Falhas de Integridade de Software e Dados</h3>
 					<ul>
@@ -603,6 +580,16 @@ $pdo->bindParams([
 						<li class="fragment">Use assinaturas digitais se possível</li>
 					</ul>
 				</section>
+				
+				<section data-background-color="#d84315">
+					<h3>9. Falhas de Monitoramento e Logging</h3>
+					<ul>
+						<li class="fragment">Ausência de logs de segurança</li>
+						<li class="fragment">Falhas não detectadas a tempo</li>
+					</ul>
+				</section>
+
+
 				
 				<section data-background-color="#006064">
 					<h3>9. Falhas de Monitoramento e Logging</h3>
@@ -614,6 +601,17 @@ $pdo->bindParams([
 				Log::warning('Tentativa de acesso não autorizado', ['user' => $user->id]);
 					</code></pre>
 				</section>
+				
+				
+				<section data-background-color="#006064">
+					<h3>10. SSRF - Server Side Request Forgery</h3>
+					<ul>
+						<li class="fragment">Servidor faz requisições manipuladas externamente</li>
+						<li class="fragment">Pode acessar redes internas ou serviços privados</li>
+					</ul>
+				</section>
+
+
 				
 				<section data-background-color="#0d47a1">
 					<h3>10. SSRF - Server Side Request Forgery</h3>
@@ -627,6 +625,20 @@ $pdo->bindParams([
 				}
 					</code></pre>
 				</section>
+				
+				<section data-background-color="#0d47a1">
+					<h2>Conclusão</h2>
+					<p>Segurança deve estar presente em todas as fases do desenvolvimento!</p>
+				</section>
+
+				<!--<section data-background-color="#263238">
+					<h2>Como se Proteger das Vulnerabilidades</h2>
+					<p>Boas práticas e exemplos em PHP e JavaScript</p>
+				</section>
+            
+				
+				
+				
 				
 
 				
@@ -764,12 +776,28 @@ move_uploaded_file($_FILES['file']['tmp_name'], '/safe_path/' . basename($_FILES
 						<li class="fragment">JS: <strong>helmet</strong> (Node) - Cabeçalhos de segurança HTTP</li>
 						<li class="fragment">JS: <strong>crypto</strong> - Criptografia nativa no Node.js</li>
 					</ul>
+				</section>-->
+
+				<section data-background="img/security/php.png">
+					<h3 style="color: white;">Mas por que</h3>
+					<br><br><br><br><br><br>
 				</section>
+
+				<section data-background-size="80%" data-background="img/security/php-w3techs.png"></section>
+				<section data-background-size="80%" data-background="img/security/wp-w3techs.png"></section>
+
 				
 				<section data-background-color="#0d47a1">
 					<h3>Resumo</h3>
 					<p>o Mundão tá aí pra ensinar!</p>
 				</section>
+
+
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
 				
 
 				<section>
