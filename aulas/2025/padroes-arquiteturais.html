@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>
+            Padrões Arquiteturais
+        </title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/white.css">
+		
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<link rel="stylesheet" href="../../css/custom.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <h1>Padrões Arquiteturais</h1>
+                </section>
+
+                <section data-background="#333">
+                    <h2>Objetivos da Disciplina</h2>
+                </section>
+
+                <section>
+                    <p style="font-size: 4rem;">Compreender o papel da <Strong>arquitetura de software</Strong> nas decisões estratégicas de um sistema.</p>
+                </section>
+                <section data-background-size="60%" data-background="img/padroes/ciclo-software.webp"></section>
+                <section data-background-size="80%" data-background="img/padroes/arquitetura.jpg"></section>
+
+                <section>
+                    <p style="font-size: 4rem;">Conhecer padrões arquiteturais clássicos e modernos.</p>
+                </section>
+                <section data-background-size="80%" data-background="img/padroes/padroes.webp"></section>
+
+
+                <section>
+                    <p style="font-size: 4rem;">Analisar trade-offs e contextos de aplicação de cada padrão.</p>
+                </section>
+                
+                <section>
+                    <p style="font-size: 4rem;">Discutir casos reais de empresas e arquiteturas escaláveis.</p>
+                </section>
+                <section data-background-size="80%" data-background="img/padroes/spotify.jpeg"></section>
+
+
+                <section>
+                    <h2>O que é Arquitetura de Software?</h2>
+                    <ul>
+                    <li class="fragment">Conjunto de decisões que definem estrutura, componentes e interações de um sistema.</li>
+                    <li class="fragment">Foco em <strong>decisões de longo prazo</strong> — não apenas código.</li>
+                    <li class="fragment">Equilíbrio entre requisitos funcionais e atributos de qualidade: performance, segurança, manutenibilidade, escalabilidade.</li>
+                    </ul>
+                    <p class="fragment"><em>"Arquitetura é o que permanece quando você remove os detalhes de implementação."</em> — Grady Booch</p>
+                </section>
+
+                <section>
+                    <h2>Padrões Arquiteturais Clássicos</h2>
+                    <ul>
+                    <li class="fragment"><strong>Microkernel (Plugin-based):</strong> núcleo com extensões (ex: VSCode, sistemas ERP modulares).</li>
+                    <li class="fragment"><strong>Pipes and Filters:</strong> fluxo de dados processado em etapas (ex: Unix, ETL, stream processing).</li>
+                    </ul>
+                </section>
+
+                
+
+                <section data-background-size="80%" data-background="img/padroes/mvc.webp"></section>
+
+                <section>
+                    <h2>Padrões Arquiteturais Clássicos</h2>
+                    <ul>
+                    <li class="fragment"><strong>Monólito:</strong> aplicação única e coesa. Simples de desenvolver, mas difícil de escalar e manter.</li>
+                    <li class="fragment"><strong>Camadas (Layered):</strong> separação de responsabilidades (UI, aplicação, domínio, dados). Base de muitos frameworks (ex: Laravel, Spring).</li>
+                    </ul>
+                </section>
+                <section data-background-size="80%" data-background="img/padroes/arquiteturas.jpeg"></section>
+
+
+                <section>
+                    <h3>Exemplo prático – Arquitetura em Camadas</h3>
+                    <pre><code>Controller → Service → Repository → Database</code></pre>
+                    <ul>
+                    <li class="fragment">Separação clara de responsabilidades facilita manutenção e testes.</li>
+                    <li class="fragment">Base do MVC usado em frameworks como Laravel, Django, Spring.</li>
+                    <li class="fragment">Mercado valoriza esse padrão por sua previsibilidade e organização.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Arquiteturas Modernas</h2>
+                    <ul>
+                    <li class="fragment"><strong>Microservices:</strong> serviços independentes comunicando-se via APIs. Alta escalabilidade e autonomia, mas maior complexidade operacional.</li>
+                    <li class="fragment"><strong>Event-Driven Architecture:</strong> componentes reagem a eventos (Kafka, RabbitMQ). Usado em sistemas de alta concorrência.</li>
+                    <li class="fragment"><strong>Serverless:</strong> execução sob demanda (AWS Lambda, GCP Functions). Ideal para workloads imprevisíveis.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Exemplo prático – Microservices</h3>
+                    <ul>
+                    <li class="fragment">Netflix: divide funcionalidades (catálogo, billing, streaming) em centenas de serviços.</li>
+                    <li class="fragment">Nubank: microserviços em Clojure e Kafka para garantir resiliência e independência de deploy.</li>
+                    <li class="fragment">Trade-off: mais autonomia, mas exige observabilidade e infraestrutura madura (DevOps, CI/CD).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Arquiteturas Orientadas a Domínio</h2>
+                    <ul>
+                    <li class="fragment"><strong>DDD + Hexagonal:</strong> separa regras de negócio da infraestrutura. Adaptações entram por “portas” e “adaptadores”.</li>
+                    <li class="fragment"><strong>Clean Architecture:</strong> proposta de Robert C. Martin. Domínio no centro, dependências invertidas.</li>
+                    <li class="fragment"><strong>Onion Architecture:</strong> conceito semelhante ao Clean, enfatizando isolamento de camadas.</li>
+                    <li class="fragment"><strong>CQRS + Event Sourcing:</strong> separa comandos e consultas, útil para auditoria e sistemas reativos.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Exemplo prático – Clean Architecture</h3>
+                    <pre><code>usecase → domain → interface → infrastructure</code></pre>
+                    <ul>
+                    <li class="fragment">Laravel + DDD: Services e UseCases desacoplados de controllers.</li>
+                    <li class="fragment">NestJS + Clean: módulos independentes, injeção de dependências.</li>
+                    <li class="fragment">Mercado busca arquiteturas limpas para facilitar onboarding e testes.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Trade-offs e Decisões Arquiteturais</h2>
+                    <ul>
+                    <li class="fragment">Não existe arquitetura perfeita — cada escolha implica custo e benefício.</li>
+                    <li class="fragment">Importante documentar decisões (ADR - Architectural Decision Records).</li>
+                    <li class="fragment">Pensar em evolução: como o sistema crescerá?</li>
+                    <li class="fragment">Pense sempre em custo de mudança, não apenas em custo de implementação.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Documentação e Modelagem</h2>
+                    <ul>
+                    <li class="fragment"><strong>Modelo C4:</strong> Contexto → Containers → Componentes → Código.</li>
+                    <li class="fragment">Facilita comunicação entre devs, gestores e stakeholders.</li>
+                    <li class="fragment">Ferramentas: Structurizr, Miro, PlantUML.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Estudo de Caso – Plataforma de Cursos</h2>
+                    <ul>
+                    <li class="fragment">Requisitos: escalável, segura e fácil de manter.</li>
+                    <li class="fragment">Soluções possíveis:</li>
+                    <li class="fragment">→ Arquitetura monolítica modular (rápida no início)</li>
+                    <li class="fragment">→ Evoluir para microservices (pagamentos, catálogo, usuários)</li>
+                    <li class="fragment">→ Uso de eventos para matrícula e emissão de certificados</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Conclusão</h2>
+                    <ul>
+                    <li class="fragment">Arquitetura é sobre <strong>decisões conscientes</strong> e <strong>trade-offs bem documentados</strong>.</li>
+                    <li class="fragment">Padrões clássicos ainda têm valor — a escolha depende do contexto.</li>
+                    <li class="fragment">Arquiteturas modernas demandam maturidade técnica e cultural.</li>
+                    <li class="fragment">A melhor arquitetura é aquela que equilibra qualidade, custo e agilidade.</li>
+                    </ul>
+                </section>
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+                                <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
+                                <li class="fragment" style="color: #B45F06;"><strong>PHP</strong>este</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../../img/slide-dev-jornada/ale.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<section style="align-items: flex-start; margin-top: 0;">
+					<h3 style="text-align: left;">Agenda</h3>
+					<hr>
+					<ul>
+                        <li class="fragment">Parte 1</li>
+                        <li class="fragment">Parte 2</li>
+                        <li class="fragment">Parte 3</li>
+                        <li class="fragment">Parte 4</li>
+                    </ul>
+				</section>
+
+				<section>
+					<img src="../../img/gifs/social-networks.webp" alt="">
+					<h3> <i class="fa-brands fa-instagram"></i> @alessandro_feitoza</h3>
+				</section>
+
+
+				<section>
+					<div style="display: flex; text-align: left;">
+						<div>
+							<h3>Essa talk não é um mandamento</h3>
+							<hr>
+							<ul>
+								<li class="fragment"><strong>Não</strong> estou negativando o uso de frameworks</li>
+								<li class="fragment">É uma visão minha <strong>baseada</strong>	na <strong>XP</strong> que eu acho que <strong>tenho</strong> </li>
+								<li class="fragment">E somada a interpretação literária e das ruas</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Por que isso é importante?</h3>
+							<hr>
+							<p class="fragment">A nova geração de devs quer aprender primeiro o <strong class="fragment highlight-red">framework antes da linguagem</strong></p>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Quais frameworks vocês conhecem/usam?</h3>
+
+					<img src="img/frameworks.jpeg" alt="">
+				</section>
+				
+				<section data-background="#6A93E5">
+					<h2 style="color: white; font-size: 3.5rem;">E o que diabé um <span style="font-size: 5rem;">framework</span>?</h2>
+				</section>
+				
+
+				
+				<section data-background="#e5bc6a">
+					<h2 style="color: #333; font-size: 3.5rem;">E uma <span style="font-size: 5rem;">Biblioteca/Library</span>?</h2>
+				</section>
+				
+				<section>
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Biblioteca/Library</h3>
+							<hr>
+							<ul>
+								<li class="fragment">Conjunto de códigos prontos com alguma(s) funcionalidade(s)</li>
+								<li class="fragment">É adicionada a aplicação para resolver um problema especifico</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#133337">
+					<div style="display: flex;text-align: left;">
+						<div>
+							<h3>Framework</h3>
+							<hr>
+							<ul>
+								<li class="fragment">Conjunto de códigos prontos com alguma(s) funcionalidade(s)</li>
+								<li class="fragment">Está na base da aplicação</li>
+								<li class="fragment">É decidido antes do projeto começar</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background="../img/gifs/miranha.gif">
+					<h3 style="color: white;">Library VS Framework</h3>
+				</section>	
+
+				<section data-background="#333">
+					<h4>A diferença está na</h4>
+					<h2>Inversão de Controle</h2>
+				</section>
+
+				<section data-background="#992d48">
+					<h2>Control of Inversion (IoC)</h2>
+
+					<p class="fragment">Termo surgiu em 1970</p>
+					<p class="fragment">Martin Fowler re-explicou em 1988</p>
+					<p class="fragment">Se popularizou novamente em 2004 pelo Uncle Bob <span class="fragment">(e Martin Fowler)</span></p>
+				</section>
+
+				<section>
+					<p style="font-size: 3rem;">
+						Ao usar uma library:
+					</p>
+					<img src="img/frameworks/control-inversion-library.png" alt="">
+					<p class="fragment">
+						<strong>Você está no controle</strong> no fluxo da aplicação.
+					</p>
+				</section>
+
+				<section data-background="#333">
+					<img src="img/frameworks/library-01.png" alt="">
+
+					<img class="fragment" width="500px;" src="img/frameworks/library-02.png" alt="">
+				</section>
+
+				<section>
+					<p style="font-size: 3rem;">
+						Ao usar um framework:
+					</p>
+					<img src="img/frameworks/control-inversion-framework.png" alt="">
+					<p class="fragment">
+						Agora o seu código roda dentro da <strong>estrutura fornecida</strong> pelo framework.
+					</p>
+				</section>
+
+				<section data-background="#990000">
+					<p style="font-size: 3rem; text-align: left;">
+						Laravel:
+						<hr style="border-color: white;">
+					</p>
+					<img src="img/frameworks/laravel.png" alt="">
+				</section>
+
+				<section>
+					<p style="font-size: 3rem; text-align: left;">
+						Laravel:
+						<hr style="border-color: white;">
+					</p>
+					<img src="img/frameworks/framework-01.png" alt="">
+				</section>
+
+				
+
+				<section data-background="#0b5394">
+					<p style="font-size: 3rem; text-align: left;">
+						React <span class="fragment">(criando uma aplicação nova):</span>
+						<hr style="border-color: white;">
+					</p>
+					<img src="img/frameworks/react.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img width="80%" src="img/frameworks/framework-02.png" alt="">
+				</section>
+
+				<section>
+					<div style="display: flex; justify-content: space-around;">
+						<div style="width: 100%;">
+							<img width="500px" src="img/frameworks/control-inversion.png" alt="">
+						</div>
+						<div style="width: 80%;">
+							No mundo real <strong>o framework usar seu código para executar bibliotecas</strong> 
+						</div>
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<img width="70%;" src="img/frameworks/fw-library.png" alt="">
+				</section>
+
+				<section>
+					<h3 style="color: #333; font-size: 3.5rem;">Geramos então o <span style="font-size: 5rem;">Acoplamento</span></h3>
+				
+					<img class="fragment" width="60%;" src="../../img/gifs/acoplamento.gif" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img src="img/frameworks/acoplamento-1.png" alt="">
+				</section>
+
+				<section>
+					<img src="img/frameworks/acoplamento-2.png" alt="">
+				</section>
+
+				<section data-background="#333">
+					<img src="img/frameworks/acoplamento-3.png" alt="">
+				</section>
+
+				<section>
+					<img src="img/frameworks/akon.jpeg" alt="">
+				</section>
+
+				<section>
+					<img src="../../img/gifs/macarronico.gif" alt="">
+				</section>
+
+				<section>
+					<p style="font-size: 3rem;">E a <strong style="font-size: 5rem;">coesão</strong>?</p>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Há quantos anos você faz código?</li>
+						<li class="fragment">Já precisou decidir qual framework ou biblioteca usar? </li>
+						<li class="fragment">Já cogitou começar um projeto do zero por causa da decisão de alguém?</li>
+					</ul>
+				</section>
+
+				<section data-background="img/frameworks/casal-framework-novo.png">
+
+				</section>
+
+				<section>
+					<p>Pontos <strong>Positivos</strong> de usar um framework</p>
+					<div style="display: flex;">
+						<div style="width: 100%; text-align: left;">
+
+							<img width="380px" src="../../img/gifs/vantagens.webp" alt="">
+						</div>
+						<div style="width: 100%;">
+							<ul>
+								<li class="fragment">Ecossistema Coeso</li>
+								<li class="fragment">Já tem o óbvio (Rotas, conexão, etc)</li>
+								<li class="fragment">Estrutura de arquivos e diretórios padronizada</li>
+								<li class="fragment">Objetivo</li>
+								<li class="fragment">Seguro**</li>
+								<li class="fragment">Validado pela comunidade*</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<p>Pontos <strong>Negativos</strong> de usar um framework</p>
+					<div style="display: flex; justify-content: space-around;">
+						<div style="width: 80%;">
+							<ul>
+								<li class="fragment">Muito código (nem sempre precisamos)</li>
+								<li class="fragment">"Díficil" integração com um projeto legado</li>
+								<li class="fragment">Pouca flexibilidade</li>
+							</ul>
+						</div>
+						<div style="width: 100%; text-align: left;">
+
+							<img width="390px" src="../../img/gifs/desvantagens.webp" alt="">
+						</div>
+						
+					</div>
+				</section>
+
+				<section data-background="#333">
+					<p style="font-size: 3.5rem">A tal da <span style="font-weight: bold; font-size: 4rem;">Alta Coesão</span> e <span style="font-weight: bold; font-size: 4rem;">Baixo Acoplamento</span></p>
+				</section>
+
+				<section>
+
+				</section>
+
+				<section>
+					<h2>Cuidado com o Lobisomen</h2>
+					<img src="../../img/gifs/lobisomem.gif" alt="">
+				</section>
+
+				<section>
+					<p>
+						<em>
+							<strong style="font-size: 3.4rem;">Aquilo que a gente conhece</strong> e confia pode se tornar 
+							<strong  style="font-size: 3.4rem;">nosso pior pesadelo</strong>
+						</em>
+					</p>
+					<div style="display: flex; justify-content: space-around;">
+						<div style="width: 100%;">
+							<img width="100%" src="../../img/gifs/jacob.webp" alt="">
+						</div>
+						<div style="width: 100%; text-align: center;">
+	
+							<img width="200px" class="fragment" src="img/frameworks/livro-mitico_.jpg" alt="">
+						</div>
+					</div>
+				</section>
+				
+				<section data-background="#acacac">
+					<p class="r-fit-text">
+						05 passos <br>para o sucesso
+					</p>
+				</section>
+
+				<section data-background="#333">
+					<h3>01 - Antes de sair comparando frameworks</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Domine a linguagem, <strong>Aprenda o PHP/JS</strong> de verdade, puro, <strong>das ruas</strong> </li>
+						<li class="fragment">Aprenda paradigmas, <strong>Orientação a Objetos, Funcional, Estruturado</strong> e como os artefatos se relacionam </li>
+						<li class="fragment">Domine a linguagem, <strong>Entenda</strong> o funcionamento de pacotes <strong>(Composer/NPM/PIP)</strong> </li>
+						<li class="fragment">Estude arquiteturas: <strong>(Monolitico, Microservices, serverless)</strong> e design de código </li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<h3>02 - Antes de escolher um framework</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment"> <strong>Instale</strong> e <strong>teste</strong> vários outros, teste, <strong>crie protótipos (não só CRUDs)</strong>  </li>
+						<li class="fragment">A documentação deve se abrir com você <strong>Se ela for misteriosa, fuja!</strong> </li>
+						<li class="fragment"><strong>Veja o engajamento da comunidade:</strong> (issues, PRs, discussion) </li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<h3>03 - Antes de se decidir</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Olhe o reclame aqui <strong>(Stackoverflow)</strong> </li>
+						<li class="fragment">Perguntar para <strong>quem já usa</strong> (equipe, comunidades) </li>
+						<li class="fragment">Veja o número de downloads/forks <strong>(packagist/git)</strong> </li>
+						<li class="fragment"><strong>Procure conteúdo </strong> (Palestras, eventos, tutoriais, videos) </li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<h3>04 - Depois de decidir</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment">Monte a sua stack (<strong>não precisa usar tudo</strong> que o framework oferece </li>
+						<li class="fragment"><strong>Aprenda SQL</strong> (nem só de ORM viverá o dev) </li>
+						<li class="fragment">Cuidado com as coisas <strong>automágicas</strong> </li>
+						<li class="fragment"> Não queime na largada (o que é "ágil" no ínicio <strong>pode se tornar custoso</strong> durante o processo, <strong>e inviável no fim</strong>) </li>
+					</ul>
+				</section>
+
+
+				<section data-background="#333">
+					<h3>05 - Pronto, e agora?</h3>
+				</section>
+
+				<section>
+					<ul>
+						<li class="fragment"><strong>Documente</strong> sua experiência </li>
+						<li class="fragment"><strong>Não se prenda demais</strong> ao framework (veja maneiras de isolar suas regras) </li>
+						<li class="fragment">Adapte-se (<strong>entenda</strong> o framework e <strong>reescreva as regras</strong>) </li>
+						<li class="fragment"> <strong>Sugira</strong> melhorias, <strong>reporte</strong> bugs, <strong>contribua</strong> com o projeto </li>
+						<li class="fragment"> <strong>Multiplique</strong> conhecimento</li>
+					</ul>
+				</section>
+
+				<section data-background="#333">
+					<hr>
+					<h3>E é isso</h3>
+					<hr>
+				</section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://speakerdeck.com/raphaeldealmeida/pare-de-programar-orientado-a-framework">
+								Pare de programar orientado a framework - <small>Raphael Almeida (PHP RIO)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.freecodecamp.org/news/the-difference-between-a-framework-and-a-library-bd133054023f/">
+								The difference between a framework and a library
+							</a>
+						</li>
+						<li>
+							<a href="https://tiagoanacretto.wordpress.com/2013/12/05/acoplamento-e-coesao-afinal-o-que-e-isso/">
+								Acoplamento e Coesão: afinal, o que é isso?
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O mitico homem mês <span style="font-size: 1.2rem;">(Ensaios sobre a Eng. de Software), Frederick Brooks Jr - 1995</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com.br/M%C3%ADtico-Homem-m%C3%AAs-Ensaios-Engenharia-Software/dp/8550802530">
+								O desenvolvedor limpo <span style="font-size: 1.2rem;">(Clean Coder), Uncle Bob - 2011</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+                    https://alessandrofeitoza.github.io/slides
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
