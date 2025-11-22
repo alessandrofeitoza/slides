@@ -26,99 +26,91 @@
 		<div class="reveal">
 			<div class="slides">
                 <div style="margin-top: 71%; font-size: 1.5rem;"> 🐘🏜️🤠 </div>
-				<section data-background="img/design-principles/bg.jpg">
+				<section data-background="img/design-principles/bg2.jpeg" data-background-size="120%">
                     <hr>
 					<h2 style="background-color: #FFF">Design Patterns VS Design Principles</h2>
-                    <h4 style="background-color: #333; color: #FFF;">O que se "dev" saber para dizer que sabe</h4>
+                    <h4 style="background-color: #333; color: #FFF;">O que se diabéisso</h4>
                     <hr>
 
-                    <small style="font-size: 1rem; color: white;"> <strong>PHP Velhoeste</strong> | 2025-05-31 14:08</small>
 				</section>
 
-				<section data-background="#333">
-                    <h2>Quem sou eu?</h2>
-                    <p class="fragment">
-                        Francisco <strong>Alessandro Feitoza</strong> de Patricio da Rocha de Sousa da Silva
-                        <hr>
-                        <em class="fragment">um dos maiores nomes desse evento</em>
-                    </p>
+
+
+                <section data-background="#333">
+                    <div style="display: flex;text-align: left;">
+                        <div>
+                            <h3>1 - Por que esse assunto é importante?</h3>
+                            <hr>
+                            <p class="fragment">Algumas pessoas que fazem código, acham melhor <strong class="fragment highlight-red">entregar rápido do que entregar bem</strong></p>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
                 </section>
 
-				<section>
-					<div style="display: flex;">
-						<div style="width: 60%">
-							<h3>Alessandro Feitoza</h3>
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code style="max-height: 800px; font-size: 1.8rem;"  class="hljs css" data-trim data-line-numbers>
+.header {
+  background-color: #3498db;
+  color: #ffffff;
+}
 
-							<ul style="font-size: 2rem">
-                                <li class="fragment" style="color: #741b47;">Fortaleza, <strong>Ceará</strong></li>
-								<li class="fragment"><strong>Professor de</strong>  códigos e outras <strong>computarias</strong> <small style="vertical-align: unset; font-size: 0.7rem;">( ͡° ͜ʖ ͡°)</small></li>
-								<li class="fragment">Programador/Dev/Severino</li>
-                                <li class="fragment">
-                                    <span style="color: #007cba;">
-                                        <strong>PHP</strong> com <strong>Rapadura</strong>
-                                    </span> |
-                                    <span style="color: #B45F06;"><strong>PHP</strong>este</span> 
-                                </li>
-								<li class="fragment">
-									<span>
-										<small style="vertical-align: unset;">Backend Developer</small> <strong style="color: #0b5394;">Bússola</strong>Social
-									</span>
-								</li>
-							</ul>
-						</div>
-						<div style="width: 40%">
-							<img width="70%" src="../img/alessandro-2025.png" alt="">
-						</div>
-					</div>
-				</section>
+.navbar {
+  background: #3498db;
+  border-bottom: 2px solid #3498db;
+}
 
-				<section style="align-items: flex-start; margin-top: 0;">
-					<h3 style="text-align: left;">Agenda</h3>
-					<hr>
-                    <div style="display: flex;">
-                        <ul>
-                            <li class="fragment">Por que isso é importante?</li>
-                            <li class="fragment">Definições</li>
-                            <li class="fragment">Outras Definições</li>
-                            <li class="fragment">Mais Definições</li>
-    
-                            <li class="fragment">e <span class="fragment">Exemplos Práticos</span></li>
-                        </ul>
+.button-primary {
+  background-color: #3498db;
+  color: #fff;
+}
 
-                        <img width="300px" class="fragment" src="../img/monica.png" alt="">
-                    </div>
-				</section>
+.footer {
+  background: #3498db;
+  color: #ffffff;
+}
+  </code></pre>
+                </section>
 
-				<section>
-					<div style="display: flex; text-align: left;">
-						<div>
-							<h3>⚠️ Essa talk não é um mandamento</h3>
-							<hr>
-							<ul>
-								<li class="fragment">É uma coletânea de devaneios que tenho baseados <strong>na academia, literatura, e conhecimento das ruas</strong></li>
-								<li class="fragment">Só quero que você <strong>abra sua mente</strong>, seja mais crítico nas pequenas decisões (ou entenda porque elas foram tomadas) </li>
-								<li class="fragment"><strong>Aproveite o que achar</strong> bom e descarte o restante</li>
-							</ul>
-						</div>
-                        <div>
-                        </div>
-					</div>
-				</section>
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.8rem;" class="hljs css" data-trim data-line-numbers="|1-4|7,12,16,21">
+:root {
+  --primary-color: #3498db;
+  --text-light: #ffffff;
+}
 
-				<section data-background="#333">
-					<div style="display: flex;text-align: left;">
-						<div>
-							<h3>1 - Por que isso é importante?</h3>
-							<hr>
-							<p class="fragment">Algumas pessoas que fazem código, acham melhor <strong class="fragment highlight-red">entregar rápido do que entregar bem</strong></p>
-						</div>
-                        <div>
-                        </div>
-					</div>
-				</section>
+.header {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.navbar {
+  background: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.button-primary {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.footer {
+  background: var(--primary-color);
+  color: var(--text-light);
+}
+  </code></pre>
+                </section>
+
+
+                <section data-background="../img/gifs/wow.gif">
+                    <p style="background-color: white">Acabamos de aplicar o DRY</p>
+                    <em style="background-color: white; color: red" class="fragment">Um Design Principle</em>
+                </section>
+
+
 
                 <section data-background="../2024/img/design-patterns-principles/pedreiro2.gif" data-background-size="70%" alt="">
-                    <span style="font-size: 4rem; background-color: white;" class="fragment">A gente esquece que não é pedreire, <Br> e sim <strong>Engenheire de Software</strong></span>
+                    <span style="font-size: 4rem; background-color: white;" class="fragment">A gente esquece que não é pedreiro, <Br> e sim <strong>Engenheiro de Software</strong></span>
 
                     <br><br>
                     <span class="fragment" style="font-size: 3rem; background-color: black; color: white;">E que precisamos <strong>desenhar o software</strong></span>
@@ -168,6 +160,48 @@
                 <section data-background="../img/obvio.jpg" data-background-size="70%">
                     
                 </section>
+
+                <section>
+                    <p style="font-size: 3rem;">Peguemos este exemplo...</p>
+                </section>
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code style="font-size: 1.7rem;" class="hljs html" data-trim data-line-numbers>
+&lt;html>
+  &lt;body>
+    &lt;h1 style="color: red; text-align:center;">
+        Bem-vindo
+    &lt;/h1>
+    &lt;button
+        onclick="alert('Olá!')"
+        style="background:blue;color:white;"
+    &gt;
+        Clique aqui
+    &lt;/button&gt;
+  &lt;/body>
+&lt;/html>
+  </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <pre data-id="code-animation"><code style="font-size: 1.7rem;" class="hljs html" data-trim data-line-numbers="|3,4|8|10,11">
+&lt;html>
+  &lt;head>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+  &lt;/head>
+
+  &lt;body>
+    <h1 class="title">Bem-vindo</h1>
+    &lt;button
+        class="btn-primary"
+        data-id="btn"
+    &gt;
+  &lt;/body>
+&lt;/html>
+  </code></pre>
+                </section>
+
 
                 <section data-background="../img/gifs/moonwalk.gif" data-background-color="#FF4F4F" data-background-size="80%">
                     <h3>Precisamos voltar alguns passos</h3>
@@ -242,10 +276,17 @@
                 <section data-background="#333">
                     <span style="font-size: 4rem;">Todo Projeto começa bonito e termina feio</span>
                 </section>
-
-                <section>
-                    <img src="../2024/img/design-patterns-principles/flow-02.png" alt="">
+                <section data-background="../img/cascata.png" data-background-size="60%">
+                    <h2>CASCATA</h2>
+                    <br><br><br><br><br><br><br><br><br>
                 </section>
+
+                <section data-background="img/design-principles/cringe.png" >
+                </section>
+
+                <!--<section>
+                    <img src="../2024/img/design-patterns-principles/flow-02.png" alt="">
+                </section>-->
 
                 <section data-background="#333">
                     <span style="font-size: 4rem;">seria o ideal?</span>
@@ -401,11 +442,11 @@
                     <table>
                         <tr>
                             <th>Principles</th>
-                            <td class="fragment">Guias para tomar decisões de design.</td>
+                            <td class="fragment">Filosofia e comportamento do código.</td>
                         </tr>
                         <tr>
                             <th>Patterns</th>
-                            <td class="fragment">Soluções prontas para problemas recorrentes.</td>
+                            <td class="fragment">Implementação Prática.</td>
                         </tr>
                     </table>
                 </section>
@@ -417,11 +458,11 @@
                     <table>
                         <tr>
                             <th>Principles</th>
-                            <td class="fragment">Guias para tomar decisões de design.</td>
+                            <td class="fragment">São aplicáveis em qualquer tipo de código.</td>
                         </tr>
                         <tr>
                             <th>Patterns</th>
-                            <td class="fragment">Soluções prontas para problemas recorrentes.</td>
+                            <td class="fragment">Podem ser usados em contextos especificos.</td>
                         </tr>
                     </table>
                 </section>
@@ -429,7 +470,7 @@
                 <section>
                     <h1>Há um 🐘 elefante <br> na Sala</h1>
                     <hr>
-                    <h3 class="fragment">bora Feitoza, quero ver códigos</h3>
+                    <h3 class="fragment">boW2ra Feitoza, quero ver códigos</h3>
                 </section>
 
                 <section data-background="#333">
@@ -453,23 +494,152 @@
                 <section data-background="img/design-principles/camadas.png" data-background-size="40%">
                 </section>
 
-                
+                <section data-background="#161577">
+                    <hr>
+                    <p style="font-size: 4rem;"><strong>Temos um problema:</strong> Criar um esquema de dar descontos nos ingressos do evento</p>
+                    <hr>
+                </section>
+
+				
+                <section data-background="../2024/img/design-patterns-principles/code-01.png" data-background-size="90%">
+
+                </section>
+
+                <section data-background="../2024/img/design-patterns-principles/code-02.png" data-background-color="#333" data-background-size="80%">
+
+                </section>
+
+                <section data-background="../2024/img/design-patterns-principles/code-03.png" data-background-size="80%">
+
+                </section>
+
+                <section data-background="../2024/img/design-patterns-principles/code-04.png" data-background-color="#333" data-background-size="90%">
+
+                </section>
+
+                <section data-background="../2024/img/design-patterns-principles/code-05.png" data-background-size="80%">
+
+                </section>
+
+                <section data-background="../img/gifs/meninoLouco.gif" data-background-size="50%">
+                    
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 5rem;">O que usamos ali? <br> <strong>Pattern</strong> ou <strong>Principle</strong>? </p>
+                    <p class="fragment">E qual?</p>
+                </section>
+
+                <section>
+                    <p style="font-size: 6rem;">S<span class="fragment highlight-red">O</span>LID</p>
+                    <hr>
+                    <span class="fragment">Open/Closed Principle</span>
+                </section>
+
+                <section data-background="../2024/img/design-patterns-principles/code-06.png" data-background-size="80%">
+                    <p class="fragment" style="font-size: 2rem; margin-top: 60px; background-color: #333; color: white;">Podemos simplesmente criar outro tipo de desconto sem afetar as classes existentes</p>
+                </section>
+
+				
+                <section data-background="img/design-principles/codigo01.png" data-background-size="90%">
+
+                </section>
+
+                <section data-background="img/design-principles/codigo02.png" data-background-color="#333" data-background-size="80%">
+
+                </section>
+
+                <section data-background="img/design-principles/codigo03.png" data-background-size="80%">
+
+                </section>
+
+                <section data-background="img/design-principles/codigo04.png" data-background-color="#333" data-background-size="90%">
+
+                </section>
+
+                <section data-background="img/design-principles/codigo05.png" data-background-size="80%">
+
+                </section>
+
+                <section data-background="../img/gifs/meninoLouco.gif" data-background-size="50%">
+                    
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 5rem;">O que usamos ali? <br> <strong>Pattern</strong> ou <strong>Principle</strong>? </p>
+                    <p class="fragment">E qual?</p>
+                </section>
+
+                <section>
+                    <p style="font-size: 6rem;">Strategy</p>
+                    <hr>
+                    <span class="fragment">Design Pattern</span>
+                </section>
+
+                <section data-background-size="80%">
+                    <p class="fragment" style="font-size: 5rem; margin-top: 60px; background-color: #333; color: white;">Podemos simplesmente criar outro tipo de desconto sem afetar as classes existentes</p>
+                </section>
+
                 <section data-background="#161577">
                     <hr>
                     <p style="font-size: 4rem;"><strong>Outro problema:</strong> Gravar logs</p>
                     <hr>
                 </section>
 
-                <section data-background="../2024/img/design-patterns-principles/code-2-01.png" data-background-size="70%">
+                <section data-auto-animate>
+                    <h2 data-id="code-title">Violando SRP</h2>
+                    <pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+    class Logger {
+      log(message, level = "INFO") {
+        const timestamp = new Date().toISOString();
+        const formattedMessage = `[${level}] ${timestamp} - ${message}`;
+        console.log(formattedMessage);
+      }
+    }
 
+    const logger = new Logger();
+    logger.log("Usuário logado", "INFO");
+    logger.log("Erro de conexão", "ERROR");
+  </code></pre>
+                    <p>Código com várias responsabilidades: formatação, nível e saída.</p>
                 </section>
 
-                <section data-background="../2024/img/design-patterns-principles/code-2-02.png" data-background-color="#333" data-background-size="63%">
+                <section data-auto-animate>
+                    <h2 data-id="code-title">Aplicando SRP</h2>
+                    <pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="|2-6|8-10|12-21">
+    class MessageFormatter {
+      format(message, level = "INFO") {
+        const timestamp = new Date().toISOString();
+        return `[${level}] ${timestamp} - ${message}`;
+      }
+    }
 
-                </section>
+    class ConsoleWriter {
+      write(message) {
+        console.log(message);
+      }
+    }
 
-                <section data-background="../2024/img/design-patterns-principles/code-2-03.png" data-background-size="90%">
+    class Logger {
+      constructor(formatter, writer) {
+        this.formatter = formatter;
+        this.writer = writer;
+      }
 
+      log(message, level = "INFO") {
+        const formatted = this.formatter.format(message, level);
+        this.writer.write(formatted);
+      }
+    }
+
+    const formatter = new MessageFormatter();
+    const writer = new ConsoleWriter();
+    const logger = new Logger(formatter, writer);
+
+    logger.log("Usuário logado", "INFO");
+    logger.log("Erro de conexão", "ERROR");
+  </code></pre>
+                    <p>Cada classe tem uma única responsabilidade, facilitando manutenção e extensão.</p>
                 </section>
 
                 <section>
@@ -477,12 +647,15 @@
                     <img src="../img/gifs/perda-de-tempo.gif" width="100%" class="fragment" alt="">
                 </section>
 
-                <section data-background="#333">
-                    <p style="font-size: 6rem;">Abstract <span class="fragment highlight-red">Factory</span></p>
+                <section>
+                    <p style="font-size: 6rem;"><span class="fragment highlight-red">S</span>OLID</p>
                     <hr>
-                    <span class="fragment">Creational Pattern</span>
+                    <span class="fragment">SRP - Single Responsability Principle</span>
                 </section>
 				
+                <section data-background="img/database-patterns/solid.png" data-background-size="90%">
+                </section>
+
                 <section>
                     <hr>
                     <p style="font-size: 4rem;">E com isso a gente vê o quanto essa <span class="fragment highlight-red" style="font-size: 5rem; font-weight: bold;">Teoria</span> é <span class="fragment highlight-red" style="font-size: 5rem; font-weight: bold;">Prática</span></p>
@@ -512,55 +685,12 @@
                     </div>
                 </section>
 
-				<section data-background="#333">
-					<p style="font-size: 5rem;">
-						Como dizia minha ex:  <br>
-						<span class="fragment" style="font-size: 8rem;">TERMINAMOS</span>
-					</p>
-				</section>
-
-				<section>
-					<h2>Referências</h2>
-					<ul>
-						<li>
-							<a href="https://www.amazon.com.br/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">
-								Livro: Design Patterns <br><small> Erich Gamma e outros [Gang of Four] (1994)</small>
-							</a>
-						</li>
-						<li>
-							<a href="https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164">
-								Clean Code, Clean Architecture. <span style="font-size: 1.2rem;">Uncle Bob - 2017</span>
-							</a>
-						</li>
-                        <li>
-							<a href="https://www.amazon.com.br/Aprenda-Domain-Driven-Design-arquitetura-estrat%C3%A9gia-ebook/dp/B0CTHS2P13/ref=sr_1_1?crid=31MHD2411Y9MX&dib=eyJ2IjoiMSJ9.ojMikL-0kcbwx-lWus3-QqwaPJgXrYWcdtJGq60HtjDaYxDfs9uVwg8NxHnv2EGKqjdIyOOXncMn3bpUyAwOcCdzh5nEC_dB1pVR7lcqj39xK-sX6M9GQZohLOLlC3o2XuUp_ZNpZ3Oeb7wbwoxFOC-uCeFsQkSvumx29p_tIV6sg2ROTZI7azV_KL1qFM2o.zzEzn8xYoWshYmQeXWC7OpmVi_iWIrpE-TotRKomtYo&dib_tag=se&keywords=aprendendo+domain+driven+design&qid=1748708791&s=digital-text&sprefix=aprendendo+doma%2Cdigital-text%2C165&sr=1-1">
-								Livro: Aprenda DDD <br><small> Vlad Khononov [Gang of Four] (1994)</small>
-							</a>
-						</li>
-						<li>
-							<a href="https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164">
-								Refactoring. <span style="font-size: 1.2rem;">Martin Fowler - 1999</span>
-							</a>
-						</li>
-                        <li>
-							<a href="https://medium.com/@dugguRK/undertsanding-design-pattern-and-principle-1d308edb54d7">
-								Understanding design patterns and principles <span style="font-size: 1.2rem;">(Duggu, Medium - 2023)</span>
-							</a>
-						</li>
-
-                        <li>
-							<a href="https://www.devmedia.com.br/artigo-engenharia-de-software-alguns-fundamentos-da-engenharia-de-software/8029">
-								Artigo Fundamentos da Eng de Software <span style="font-size: 1.2rem;">(Wilson Filho, DevMedia - Acesso em 2025)</span>
-							</a>
-						</li>
-					</ul>
-				</section>
 
 
 
 
 				<section>
-					<p class="r-fit-text">DÚVIDAS?</p>
+					<p class="r-fit-text">AO TRABALHO!</p>
 				</section>
 
 

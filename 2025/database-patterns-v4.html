@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Database Patterns</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../plugin/highlight/one-light.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <div style="margin-top: 71%; font-size: 1.5rem;"> 🐘🏜️🤠 </div>
+
+
+				<section>
+					<h1>Database Patterns</h1>
+					<p class="fragment" style="font-size: 3rem;"> (Padrões Arquiteturais)</p>
+				</section>
+
+                <section data-background="../aulas/2025/img/backend/mvc.svg" data-background-size="90%">
+
+                </section>
+
+
+                <section data-background="img/design-principles/camadas.png" data-background-size="45%">
+
+                </section>
+			
+
+				<section>
+					<h1>A questão é:</h1>
+					<h2 class="fragment">Fazer nosso código acessar</h2>
+					<img src="img/database-patterns/banco-de-dados.gif">
+				</section>
+
+
+				<section data-background="#333">
+					<h1>DEFINIÇÕES</h1>
+				</section>
+
+				<section data-background-size="100%" data-background="img/database-patterns/database.webp">
+					<h2 style="background-color: #333; color: #FFF;">SQL</h2>
+                    <br><br><br><br><br><br><br><br><br>
+				</section>
+
+
+				<section data-background-size="60%" data-background="img/database-patterns/nosql.webp">
+
+				</section>
+
+				
+				<section data-background-size="50%" data-background="../img/gifs/coelho_medonho_sentese_aqui_jovem.gif">
+					<h2 class="fragment" style="background-color: white;">Falaremos apenas de SQL</h2>
+				</section>
+
+				<section data-background-size="100%" data-background="img/database-patterns/figura5j.jpg">
+
+				</section>
+
+				<section data-background-size="80%" data-background="img/database-patterns/sql.png">
+
+				</section>
+
+
+
+		
+
+				<section data-background="#333">
+					<h1>Arquitetura</h1>
+				</section>
+
+				<section data-background-size="50%" data-background="img/database-patterns/single-tenant.png">
+
+				</section>
+
+
+				<section data-background-size="50%" data-background="img/database-patterns/multi-tenant.png">
+
+				</section>
+
+				<section data-background="#333">
+					<h1>Código</h1>
+				</section>
+
+				<section>
+					<h2>Opções</h2>
+					<ul>
+						<li class="fragment">O jeito Mundano (PHP/JS das ruas)</li>
+						<li class="fragment">Active Record</li>
+						<li class="fragment">Data Mapper</li>
+						<li class="fragment">Repository Pattern*</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h2>DAS RUAS (jeito mundano)</h2>
+
+					<ul>
+						<li class="fragment"><strong>Esquema do banco</strong> - Feito manualmente por fora da aplicação</li>
+						<li class="fragment"><strong>Performático*</strong> - Não existe nenhuma camada entre o seu código e o banco</li>
+					</ul>
+				</section>
+
+
+				<section data-background="../2024/img/database-patterns/sql-1.png">
+					<h2 style="background-color: #333; color: #FFF;">O esquema do banco</h2>
+                    <br><br><br><br><br><br><br><br><br>
+				</section>
+
+				<section>
+					<img src="img/database-patterns/phpmyadmin.svg" alt="">
+				</section>
+                
+				<section data-background-size="90%" data-background="../2024/img/database-patterns/mysqli.png">
+					<h2 style="background-color: #333; color: #FFF;">PHP com MySQLi</h2>
+                    <br><br><br><br><br><br><br><br><br>
+				</section>
+
+				<section data-background="../2024/img/database-patterns/pdo.png" data-background-size="100%"> 
+					<h2>PHP com PDO</h2>
+					<br><br><br><br><br><br><br> <br><br>
+				</section>
+
+				<section data-background="../2024/img/database-patterns/mysql2-1.png" data-background-size="90%">
+					<h2>NodeJS com mysql2</h2>
+					<br><br><br><br><br><br><br> <br><br>
+
+				</section>
+
+				<section data-background="../2024/img/database-patterns/mysql2-2.png" data-background-size="90%">
+					<h2>NodeJS com mysql2</h2>
+					<br><br><br><br><br><br><br><br>
+				</section>
+
+				<section data-background-image="img/database-patterns/access01.png"  data-background-color="#333">
+				</section>
+
+				<section data-background="#333">
+					<h2>ACTIVE RECORD</h2>
+
+					<ul>
+						<li class="fragment"><strong>Model/Modelo</strong> - Uma classe que representa um registro em uma tabela</li>
+						<li class="fragment"><strong>Acoplamento Forte</strong> - Está diretamente ligado ao esquema</li>
+						<li class="fragment"><strong>Fácil de usar</strong> - Não é necessário criar os principais métodos</li>
+					</ul>
+				</section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h2>Active Record</h2>
+							<p><em><strong class="fragment highlight-red">Um objeto que envolve uma linha em uma tabela</strong> ou exibição de banco de dados, encapsula o acesso ao banco de dados e <strong>adiciona lógica de domínio a esses dados</strong>.</em></p>
+						</div>
+						<div>
+							<img class="fragment" width="1400px" src="../2024/img/database-patterns/livro-patterns-fowler.png" alt="">
+						</div>
+					</div>
+				</section>
+
+                <section data-background-size="90%" data-background="img/database-patterns/codigo-ar-01.png">
+                </section>
+
+
+                <section data-background-size="100%" data-background="img/database-patterns/codigo-ar-02.png">
+                </section>
+
+
+
+                <section data-background-size="100%" data-background="img/database-patterns/codigo-ar-03.png">
+                </section>
+
+				
+
+				<section>
+                    <pre data-id="code-animation"><code style="max-height: 600px; font-size: 3rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|2|5,6,7,8|10">
+						// buscar todos
+						Produto::all(); // array de objetos Produto
+						
+						// criar um novo
+						$p = new Produto();
+						$p->nome = 'Ypioca';
+						$p->quantidade = 10;
+						$p->valor = 15.99;
+						
+						$p->save();
+  </code></pre>
+                </section>
+
+				<section data-background="img/database-patterns/javascripto.png" data-background-size="80%">
+					<span style="background-color: white;">E no javascripto?</span>
+				</section>
+
+				<section data-background="../2024/img/database-patterns/mysql2-3.png" data-background-size="80%">
+</section>
+
+                <section>
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2.5rem; line-height: 3rem;"  class="hljs javascript" data-trim data-line-numbers="|2|5,6,7,8|10">
+						let p = new Product(
+							"Ypioca (sem metanol)"
+						);
+						p.valor = 19.89;
+						
+						p.save();
+  </code></pre>
+
+                </section>
+
+				<section>
+					<h2>ELOQUENT (Active Record)</h2>
+
+					<ul>
+						<li class="fragment"><strong>PHP</strong> - O Laravel o traz por padrão</li>
+						<li class="fragment"><strong>ORM</strong> - Object Relational Mapper</li>
+						<li class="fragment"><strong>Bancos</strong> - MySQL, PostgreSQL, MS SQL Server, SQLite...</li>
+						<li class="fragment"><strong>Atributos/Colunas</strong> - São definidos em uma classe de modelo</li>
+					</ul>
+				</section>
+
+				<section data-background="../2024/img/database-patterns/eloquent.png" data-background-size="90%">
+					<h2>PHP: Eloquent</h2>
+				</section>
+
+				<section data-background="../2024/img/database-patterns/sequelize-1.png" data-background-size="90%">
+					<h2>JS: Sequelize</h2>
+					<br><br><br><br><br><br>
+				</section>
+
+				<section data-background="../2024/img/database-patterns/prisma-1.png" data-background-size="70%">
+					<h2>JS: Prisma</h2>
+					<br><br><br><br><br><br><br><br><br><br><br>
+				</section>
+
+				<section data-background="img/database-patterns/access02.png">
+				</section>
+
+				<section>
+					<p class="r-fit-text">DATA MAPPER</p>
+				</section>
+
+				<section data-background="#990000" >
+                    <p style="font-size: 4rem;">
+                        não confunda com <strong>Data Mapping</strong>
+                    </p>
+				</section>
+
+				<section data-background="#333">
+					<h2>DATA MAPPER</h2>
+
+					<ul>
+						<li class="fragment"><strong>Entity/Entidade</strong> - Uma classe que apenas modela um registro em uma tabela</li>
+						<li class="fragment"><strong>Acoplamento Fraco</strong> - Há uma camada a parte para consumir o banco (SoC)</li>
+						<li class="fragment"><strong>Menos Fácil de implementar</strong> - fornece uma robustez maior, que pode ser entendido como barreira</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>PHP: DOCTRINE (Data Mapper)</h2>
+
+					<ul>
+						<li class="fragment"><strong>PHP</strong> - Doctrine (O Symfony* o usa por padrão)</li>
+						<li class="fragment"><strong>ORM</strong> - Object Relational Mapper</li>
+						<li class="fragment"><strong>DBAL</strong> - Database Abstraction Layer</li>
+						<li class="fragment"><strong>Bancos</strong> - MySQL, PostgreSQL, MS SQL Server, SQLite...</li>
+						<li class="fragment"><strong>Atributos/Colunas</strong> - São definidos em uma classe de modelo ou XML/YAML isolado*</li>
+					</ul>
+				</section>
+
+				<section>
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|1|6,9,13,16|4,5,8">
+#[ORM\Entity)]
+class City extends AbstractEntity
+{
+    #[ORM\Id]
+    #[ORM\Column(type: UuidType::NAME)]
+    private Uuid $id;
+
+    #[ORM\Column(length: 100)]
+    private readonly string $name;
+
+    #[ORM\ManyToOne(targetEntity: State::class)]
+    #[ORM\JoinColumn(name: 'state_id', referencedColumnName: 'id')]
+    private readonly State $state;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private readonly ?int $cityCode;
+  </code></pre>
+
+                </section>
+
+				<section data-background="img/database-patterns/codigo-el-01.png" data-background-size="90%">
+					
+				</section>
+
+				<section>
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|2|5|6">
+$repository = $connection->getRepository(
+	City::class
+);
+
+$repository->findAll(); //SELECT * FROM
+$repository->find(42); //WHERE id=42
+  </code></pre>
+
+                </section>
+
+				<section>
+					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|1,2|4|5">
+$city = new City('Parnaiba');
+$city->setState($piaui);
+
+$connection->getEntityManager()
+	->persist($city);
+  </code></pre>
+
+                </section>
+				<section>
+					<h2>PHP: Doctrine</h2>
+					<img src="../2024/img/database-patterns/doctrine.png" width="80%" alt="">
+				</section>
+
+				<section data-background="../2024/img/database-patterns/doctrine-xml.png" data-background-size="90%">
+					<h2>PHP: Doctrine (XML)</h2>
+					<Br><Br><Br><Br><Br><Br><Br><Br><Br><Br>
+				</section>
+
+				<section>
+					<h2>PHP: Doctrine</h2>
+					<img src="../2024/img/database-patterns/doctrine.png" width="80%" alt="">
+				</section>
+
+				<section data-background="#333">
+					E no submundo das trocentas bibliotecas do javascript, tem algo?
+				</section>
+
+				<section>
+					<h2>JS: TypeORM*</h2>
+					<img src="../2024/img/database-patterns/typeorm-1.png" width="80%" alt="">
+				</section>
+
+				<section>
+					Feitozo, desenha pra mim
+				</section>
+
+				<section>
+					<h2>Jeito mundano</h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  codigo(Nosso código) <--> db[(Banco de Dados)]
+							
+						</pre>
+					  </div>
+				</section>
+
+				<section data-background="#777">
+					<h2 style="color: white">Active Record</h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  codigo(Nosso código) <--> m[Model] <--> db[(Banco de Dados)]
+							
+						</pre>
+					  </div>
+				</section>
+
+				<section data-background="">
+					<h2 style="color: #333">Data Mapper </h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  subgraph flow
+							  codigo(Nosso código) <-->  D[DataMapper] <--> db[(Banco de Dados)]
+							  end
+							  D <--- |Consulta para saber qual esquema| e(((Entity)))
+						</pre>
+					  </div>
+				</section>
+
+
+				<section data-background="">
+					<h2 style="color: #333">Repository Pattern</h2>
+					<div class="mermaid">
+						<pre>
+						  %%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						  flowchart LR
+							  subgraph nosso codigo
+								codigo(Service/Controller/Action) <--> R[Repository]
+							  end
+							  subgraph ORM
+							  	R <-->  D[DataMapper] <--> db[(Banco de Dados)]
+							  end
+							  D <--- |Consulta para saber qual esquema| e(((Entity)))
+							  codigo <--- |instanciar| e
+						</pre>
+					  </div>
+				</section>
+
+				<section >
+					<hr>
+					<h3>E é isso</h3>
+					<hr>
+				</section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://medium.com/@shiiyan/active-record-pattern-vs-repository-pattern-making-the-right-choice-f36d8deece94">
+								Active Record VS Repository Pattern
+							</a>
+						</li>
+						<li>
+							<a href="https://phproundtable.com/show/orms-and-the-active-record-data-mapper-paradigms">
+								Podcast: An ORM Discussion
+							</a>
+						</li>
+
+						<li>
+							<a href="https://medium.com/@matheusflauzino/entenda-orm-active-record-e-data-mapper-9be60da0e799">
+								Entenda ORM: Active Record e Data Mapper
+							</a>
+						</li>
+						
+					</ul>
+				</section>
+
+				<section style="font-size: 3.5rem;">
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+
+                    <strong>slides.feitoza.tec.br</strong>
+				</section>
+			</div>
+		</div>
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="../plugin/zoom/zoom.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.3.0/plugin/mermaid/mermaid.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				mermaid: {
+					// flowchart: {
+						//   curve: 'linear',
+						// },
+				},
+				plugins: [ RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes, RevealMermaid ],
+			});
+		</script>
+	</body>
+</html>
