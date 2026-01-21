@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Introdução ao Desenvolvimento Agil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <!-- Slide de Abertura -->
+        <section>
+            <h1>GIT, git e + git</h1>
+        </section>
+
+        <section data-background="#333">
+            <h3>Como era versionar antes?</h3>
+            <ul>
+                <li class="fragment">site.zip</li>
+                <li class="fragment">site_versao_hoje.zip</li>
+                <li class="fragment">site_final.zip</li>
+                <li class="fragment">site_final_final.zip</li>
+                <li class="fragment">site_final_final_agora_vai.zip</li>
+            </ul>
+        </section>
+
+        <section>
+            <hr>
+            <h2>SVN (Subversion)</h2>
+            <hr>
+        </section>
+
+        <section data-background="img/git/svn.png" data-background-size="80%" data-auto-animate>
+
+        </section>
+
+        <section data-background="img/git/svn2.png" data-background-size="80%" data-auto-animate>
+
+        </section>
+
+        <section data-background="img/git/svn3.png" data-background-size="80%" data-auto-animate>
+
+        </section>
+
+        <section data-background="img/git/svn4.png" data-background-size="80%" data-auto-animate>
+
+        </section>
+
+        <section data-background="#333">
+            <p style="font-size: 3rem;">O problema é: <strong style="color: yellow">trabalho dependente</strong></p>
+
+            <div class="fragment" style="background-color: #DEDEDE; color: #333;">
+                <hr>
+                    <em>"ei galera, vou dar um push, façam pull!</em>
+                <hr>
+            </div>
+        </section>
+
+        <section data-background="../..//img/gifs/rage-office.gif" data-background-size="80%" data-auto-animate>
+
+        </section>
+
+        <section>
+            <hr>
+            <img src="img/git/git.png" width="300px;" alt="">
+            <p>surge em 2005</p>
+            <hr>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git status</strong></p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Identificar quais arquivos foram <strong>adicionados/excluidos/modificados</strong></em>
+                </p>
+            </div>
+            <br><br><br><br>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git diff</strong></p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Visualizar as modificações</em>
+                </p>
+                <br>
+                <p class="fragment" style="color: #FFF; background-color: #333; font-size: 2rem; padding: 10px; font-family: 'Fira Code'; ">
+                    <span style="color: red;">- $t = 'valor';</span>
+                    <br>
+                    <span style="color: lightgreen;">+ $T = 'valor';</span>
+                </p>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git add</strong> file01.txt file02.txt </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Prepara <strong>os 2 arquivos</strong> para serem enviados</em>
+                </p>
+            </div>
+            <br><br><br><br>
+        </section>
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git add</strong> diretorio/</p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Prepara <strong>todos os arquivos daquele diretório</strong> para serem enviados</em>
+                </p>
+            </div>
+            <br><br><br><br>
+        </section>
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git add</strong> .</p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Prepara <strong>TUDO que foi modificado</strong> para ser enviado</em>
+                </p>
+            </div>
+            <br><br><br><br>
+        </section>
+
+        <section data-background="../../img/gifs/packaging.gif"></section>
+
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git commit -m </strong> "comentario"</p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>"Etiqueta" as mudanças, tente responder a pergunta <strong>"o que essa alteração faz?"</strong></em>
+                </p>
+                <br>
+                <p class="fragment" style="color: #FFF; background-color: #333; font-size: 2rem; padding: 10px; font-family: 'Fira Code'; ">
+                    <span>
+                        <em>Cria tal coisa...</em><br>
+                        <em>Valida o form...</em><br>
+                        <em>Configura a conexão...</em>
+                    </span>
+                </p>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git pull </strong> origin main</p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Traz as mudanças que houveram no<strong> repositório</strong></em>
+                </p>
+                <br><br><br><br>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;"> $_ <strong>git push </strong> origin main</p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Envia as suas mudanças (commits) para o <strong>repositório</strong></em>
+                </p>
+                <br><br><br><br>
+            </div>
+        </section>
+
+        <section data-background-size="80%" data-background="img/git/git1.png"></section>
+
+        <section data-background-size="80%" data-background="img/git/git-svn.png"></section>
+        <section data-background-size="80%" data-background="../../img/gifs/chaos.gif">
+            <p class="fragment" style="background-color: white;">
+                Em pleno 2025: <em>"Ei, vou dar um push, dá o pull aí"</em>
+            </p>
+        </section>
+
+        <section data-background="#333">
+            <hr>
+            <h1><span style="color: yellow">GIT</span> do jeito certo</h1>
+            <hr>
+        </section>
+        <section data-background-size="80%" data-background="img/git/gitflow.webp"></section>
+
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;">
+                    $_ <strong>git branch</strong> <em style="color: gray">nome-da-branch</em>
+                </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Lista, cria e organiza ramificações do projeto</em>
+                </p>
+                <br>
+                <p class="fragment" style="color: #FFF; background-color: #333; font-size: 2rem; padding: 10px; font-family: 'Fira Code';">
+                    <em>feature/login</em><br>
+                    <em>bugfix/issue-3</em><br>
+                    <em>hotfix/producao</em>
+                </p>
+                <br>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;">
+                    $_ <strong>git checkout</strong> feature/login
+                </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Troca de branch sem alterar histórico</em>
+                </p>
+                <br><br><br><br>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;">
+                    $_ <strong>git checkout -b</strong> feature/login
+                </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Cria e já troca de branch</em>
+                </p>
+                <br><br><br><br>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;">
+                    $_ <strong>git commit </strong> --amend
+                </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Adiciona as alterações no mesmo commit anterior</em>
+                </p>
+                <br><br><br><br>
+            </div>
+        </section>
+
+        <section data-background-size="80%" data-background="img/git/pulo-do-gato.jpg"></section>
+
+
+        <section data-background-size="80%" data-background="img/git/merges.png"></section>
+
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;">
+                    $_ <strong>git remote update</strong>
+                </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Atualiza referências remotas sem alterar sua branch local</em>
+                </p>
+                <br>
+                <p class="fragment" style="color: #FFF; background-color: #333; font-size: 2rem; padding: 10px; font-family: 'Fira Code';">
+                    <em>Ver o que mudou no remoto</em><br>
+                    <em>Sem risco de conflito</em>
+                </p>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;">
+                    $_ <strong>git merge</strong>
+                </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Combina o histórico de duas branches</em>
+                </p>
+                <br>
+                <p class="fragment" style="color: #FFF; background-color: #333; font-size: 2rem; padding: 10px; font-family: 'Fira Code';">
+                    <em>Une trabalho isolado</em><br>
+                    <em>Preserva a linha do tempo</em>
+                </p>
+            </div>
+        </section>
+
+        <section data-background="img/git/carbon.png" data-background-size="95%" data-auto-animate>
+            <div style="text-align: left;">
+                <p style="font-family: 'Fira Code'; color: #62e862;">
+                    $_ <strong>git rebase</strong>
+                </p>
+                <hr>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <em>Move commits para outra base, criando um histórico linear</em>
+                </p>
+                <br>
+                <p class="fragment" style="color: #FFF; background-color: #333; font-size: 2rem; padding: 10px; font-family: 'Fira Code';">
+                    <em>Histórico mais limpo</em><br>
+                    <em>Menos commits de merge</em>
+                </p>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+<script>
+    Reveal.initialize();
+</script>
+</body>
+</html>
