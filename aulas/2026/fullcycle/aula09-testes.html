@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introdução a Testes Automatizados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Testes Automatizados</h1>
+                <p>Tão natural quanto a luz do poste 💡</p>
+            </section>
+
+            
+            <section data-background="#333">
+                <h2>Por que investir em testes?</h2>
+                <ul>
+                    <li class="fragment">🐛 Evita bugs em produção</li>
+                    <li class="fragment">💻 Facilita manutenção e refatoração</li>
+                
+                    <li class="fragment">📈 Reduz custos a longo prazo</li>
+                    <li class="fragment">🧠 Documenta o comportamento esperado do sistema</li>
+                    <li class="fragment">👥 Facilita o trabalho em equipe e onboarding</li>
+                    <li class="fragment">🔄 Torna refatorações mais seguras</li>
+                    <li class="fragment">🚨 Detecta falhas rapidamente</li>
+                </ul>
+            </section>
+
+            <section data-background="../../../2025/img/sprint.png">
+
+            </section>
+        
+            <section data-background="../../../2025/img/sprint-2.png">
+        
+            </section>
+        
+            <section data-background-size="80%" data-background="../../../2025/img/sprint-3.png">
+        
+            </section>
+
+            <section data-background="#333">
+                <h2>Testes Automatizados vs QA</h2>
+                <ul>
+                    <li class="fragment">
+                        <strong>Testes Automatizados:</strong> escritos por devs, focam no comportamento do código.
+                    </li>
+                    <li class="fragment">
+                        <strong>Testes de QA:</strong> realizados por profissionais de qualidade (analistas/testers), muitas vezes de forma manual.
+                    </li>
+                </ul>
+            </section>
+            
+            <section data-background="#EEE">
+                <h2>Diferenças principais</h2>
+                <ul>
+                    <li class="fragment">QA analisa usabilidade, experiência, acessibilidade e casos não previstos</li>
+                    <li class="fragment">Automatizados cobrem o que foi previsto e codificado</li>
+                    <li class="fragment">Ambos são complementares</li>
+                </ul>
+            </section>
+
+            <section data-background="#333">
+                <h2>Teste Caixa Preta vs Caixa Branca</h2>
+                <ul>
+                    <li class="fragment"><strong>Caixa Preta:</strong> testa o sistema sem conhecer o código</li>
+                    <li class="fragment"><strong>Caixa Branca:</strong> testa com conhecimento da lógica interna</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h2>Exemplos práticos</h2>
+                <ul>
+                    <li class="fragment">
+                        ✅ Caixa Preta: Verifica se <code>login()</code> retorna erro com senha inválida
+                    </li>
+                    <li class="fragment">
+                        ✅ Caixa Branca: Verifica se todos os ramos do <code>if</code> dentro de <code>login()</code> são cobertos
+                    </li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>Exemplo prático</h2>
+                <ul>
+                    <li class="fragment">🧑‍💻 Dev escreve teste automatizado que garante que a função <code>login()</code> funciona</li>
+                    <li class="fragment">🧪 QA testa login em diferentes navegadores, dispositivos e situações fora do esperado</li>
+                </ul>
+            </section>
+
+            
+            
+
+            <section data-background="#DDD">
+                <h2>Tipos de teste</h2>
+                <ul>
+                    <li class="fragment"> Unitário </li>
+                    <li class="fragment"> Integração </li>
+                    <li class="fragment"> Funcionais </li>
+                    <li class="fragment"> E2E </li>
+
+                </ul>
+            </section>
+
+            <section data-background="#FFF">
+                <img src="../../../2025/img/tests/piramide.webp" alt="">
+            </section>
+
+            <section>
+                <h2>Teste Unitário</h2>
+
+                <ul>
+                    <li class="fragment">Testam unidades isoladas do código (funções, métodos ou classes). </li>
+                    <li class="fragment">Não dependem de bancos de dados, APIs ou outras partes externas. </li>
+                    <li class="fragment">Rápidos e fáceis de rodar. </li>
+                    <li class="fragment">Exemplo: Testar se uma função <code>soma(a, b)</code> retorna o valor correto. </li>
+                </ul>
+            </section>
+
+            <section data-background="#DDD">
+                <h2>Teste de Integração</h2>
+
+                <ul>
+                    <li class="fragment">Verificam a interação entre diferentes módulos do sistema.</li>
+                    <li class="fragment">Podem envolver chamadas ao banco de dados, APIs e serviços externos.</li>
+                    <li class="fragment">Mais lentos que os testes unitários.</li>
+                    <li class="fragment">Exemplo: Testar se um método de uma classe consegue buscar e processar dados corretamente de um banco.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Teste Funcional</h2>
+
+                <ul>
+                    <li class="fragment">Validam se um fluxo específico do sistema está funcionando conforme esperado.</li>
+                    <li class="fragment">São mais próximos do uso real do software.</li>
+                    <li class="fragment">Exemplo: Testar se um endpoint consegue fazer login com credenciais corretas.</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h2>Teste E2E</h2>
+
+                <ul>
+                    <li class="fragment">Simulam a experiência real do usuário no sistema completo.</li>
+                    <li class="fragment">Usam ferramentas como Cypress, Selenium ou Playwright.</li>
+                    <li class="fragment">São os mais lentos, pois testam todo o fluxo de ponta a ponta.</li>
+                    <li class="fragment">Exemplo: Testar se um usuário consegue se registrar, fazer login e concluir uma compra.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>O que é PHPUnit?</h2>
+                <p>Framework de testes para PHP</p>
+                <pre><code data-trim>
+composer require --dev phpunit/phpunit
+                </code></pre>
+            </section>
+            
+            <section>
+                <h2>Nosso primeiro teste</h2>
+                <pre><code class="javascript" data-trim>
+            test('soma 2 + 2 deve retornar 4', () => {
+                expect(2 + 2).toBe(4);
+            });
+                </code></pre>
+                <p>Executando os testes:</p>
+                <pre><code data-trim>
+            npx jest
+                </code></pre>
+            </section>
+            
+            
+            <section>
+                <h2>Testando uma classe real</h2>
+                <pre><code class="javascript" data-trim>
+            class Calculadora {
+                soma(a, b) {
+                    return a + b;
+                }
+            }
+                </code></pre>
+            </section>
+            
+            
+            <section>
+                <h2>Testando a Calculadora</h2>
+                <pre><code class="javascript" data-trim>
+            test('Calculadora.soma deve retornar 5 para 2 + 3', () => {
+                const calc = new Calculadora();
+                expect(calc.soma(2, 3)).toBe(5);
+            });
+                </code></pre>
+            </section>
+
+            <section data-background="#333">
+                <h2>Testes Funcionais</h2>
+                <p>Validação de funcionalidades específicas do sistema</p>
+            </section>
+            
+            <section>
+                <h3>Prós dos Testes Funcionais</h3>
+                <ul>
+                    <li class="fragment">Cobrem cenários reais de uso</li>
+                    <li class="fragment">Ajudam a detectar bugs em fluxos importantes</li>
+                    <li class="fragment">Podem ser automatizados e integrados no CI</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h3>Contras dos Testes Funcionais</h3>
+                <ul>
+                    <li class="fragment">Mais lentos que testes unitários</li>
+                    <li class="fragment">Podem ser instáveis se o ambiente mudar</li>
+                    <li class="fragment">Difíceis de manter em sistemas grandes</li>
+                </ul>
+            </section>
+
+            <section data-background="#333">
+                <h2>Testes End-to-End (E2E)</h2>
+                <p>Simulam o comportamento do usuário do início ao fim</p>
+            </section>
+            
+            <section>
+                <h3>Ferramentas comuns</h3>
+                <ul>
+                    <li class="fragment">🔧 <strong>Cypress</strong> (JavaScript)</li>
+                    <li class="fragment">🔧 <strong>Playwright</strong></li>
+                    <li class="fragment">🔧 <strong>Selenium</strong></li>
+                </ul>
+            </section>
+            
+            <section>
+                <h3>Prós dos Testes E2E</h3>
+                <ul>
+                    <li class="fragment">Cobre todo o sistema: frontend + backend</li>
+                    <li class="fragment">Simula o comportamento do usuário final</li>
+                    <li class="fragment">Evita regressões em funcionalidades críticas</li>
+                </ul>
+            </section>
+            
+            <section data-background="#DDD">
+                <h3>Contras dos Testes E2E</h3>
+                <ul>
+                    <li class="fragment">👎 Lentos (envolvem múltiplas camadas)</li>
+                    <li class="fragment">⚠️ Suscetíveis a falhas por instabilidade do ambiente</li>
+                    <li class="fragment">💸 Requerem mais infraestrutura (ex: servidores, CI robusto)</li>
+                    <li class="fragment">📉 Mais difíceis de depurar quando falham</li>
+                </ul>
+            </section>
+            
+            
+            <section>
+                <h2>Boas práticas</h2>
+                <ul>
+                    <li>Testes devem ser independentes</li>
+                    <li>Nome dos testes deve ser claro</li>
+                    <li>Utilize <code>setUp()</code> para preparar o ambiente</li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>Exercício prático</h2>
+                <p>Implemente uma classe <code>ConversorTemperatura</code> com os métodos:</p>
+                <ul>
+                    <li><code>celsiusParaFahrenheit()</code></li>
+                    <li><code>fahrenheitParaCelsius()</code></li>
+                </ul>
+                <p>Escreva testes para verificar o funcionamento.</p>
+            </section>
+
+
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true
+        });
+    </script>
+</body>
+</html>

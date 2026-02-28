@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Design Patterns na Prática</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../dist/theme/white.css">
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section data-background="#333">
+            <h2>Design Patterns</h2>
+
+            <p class="fragment">Não são frameworks</p>
+            <p class="fragment">Não são regras</p>
+            <p class="fragment">
+                São soluções recorrentes para problemas recorrentes
+            </p>
+        </section>
+
+        <section>
+            <h2>O problema não é o código</h2>
+
+            <ul>
+                <li class="fragment">Código difícil de manter</li>
+                <li class="fragment">Mudanças quebram tudo</li>
+                <li class="fragment">Regras espalhadas</li>
+                <li class="fragment">Ninguém entende o todo</li>
+            </ul>
+        </section>
+
+        <section data-background="#333">
+            <h2>Mini-projeto</h2>
+
+            <p class="fragment">
+                Sistema de Pagamentos de uma Escola
+            </p>
+
+            <ul>
+                <li class="fragment">Pix</li>
+                <li class="fragment">Cartão à vista</li>
+                <li class="fragment">Cartão parcelado</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Primeira abordagem</h2>
+
+            <p class="fragment">
+                "Vou resolver isso rápido"
+            </p>
+
+            <ul>
+                <li class="fragment">Método gigante</li>
+                <li class="fragment">If / else</li>
+                <li class="fragment">Regra misturada</li>
+            </ul>
+        </section>
+
+        <section data-background="#333">
+            <h2>Funciona… até não funcionar</h2>
+
+            <ul>
+                <li class="fragment">Nova forma de pagamento</li>
+                <li class="fragment">Nova regra de desconto</li>
+                <li class="fragment">Nova taxa</li>
+                <li class="fragment"><strong>Medo de mexer</strong></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O problema não é técnico</h2>
+
+            <p class="fragment">É estrutural</p>
+
+            <p class="fragment">
+                E é aqui que surgem os Design Patterns
+            </p>
+        </section>
+
+        <section>
+            <hr>
+            <h1>SISTEMA DE PAGAMENTO</h1>
+            <hr>
+        </section>
+
+        <section data-background="#333">
+            <h2>E se cada pagamento…</h2>
+
+            <ul>
+                <li class="fragment">Tivesse sua própria regra?</li>
+                <li class="fragment">Calculasse seu valor?</li>
+                <li class="fragment">Pudesse ser trocado sem quebrar tudo?</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Strategy Pattern</h2>
+
+            <p class="fragment">
+                Encapsular comportamentos variáveis
+            </p>
+
+            <p class="fragment">
+                e torná-los intercambiáveis
+            </p>
+        </section>
+
+        <section data-background="img/patterns.jpeg" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h2>Nem todo pattern é GoF</h2>
+
+            <p class="fragment">
+                GoF é só o começo
+            </p>
+        </section>
+
+        <section>
+            <h2>Migrations</h2>
+
+            <p class="fragment">
+                Não versionam tabelas
+            </p>
+
+            <p class="fragment">
+                Versionam decisões
+            </p>
+        </section>
+
+        <section>
+            <h2>Migrations aplicam patterns</h2>
+
+            <ul>
+                <li class="fragment">Command Pattern (up / down)</li>
+                <li class="fragment">Template Method</li>
+                <li class="fragment">Versionamento incremental</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Patterns Arquiteturais</h2>
+
+            <ul>
+                <li class="fragment">Layered</li>
+                <li class="fragment">Hexagonal</li>
+                <li class="fragment">Clean Architecture</li>
+                <li class="fragment">MVC</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Enterprise Patterns</h2>
+
+            <ul>
+                <li class="fragment">Repository</li>
+                <li class="fragment">Unit of Work</li>
+                <li class="fragment">Data Mapper</li>
+                <li class="fragment">Service Layer</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Integration & Infra Patterns</h2>
+
+            <ul>
+                <li class="fragment">Event-Driven</li>
+                <li class="fragment">Saga</li>
+                <li class="fragment">Circuit Breaker</li>
+                <li class="fragment">Strangler Fig</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Anti-Patterns</h2>
+
+            <ul>
+                <li class="fragment">God Object</li>
+                <li class="fragment">Spaghetti Code</li>
+                <li class="fragment">Big Ball of Mud</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mensagem final</h2>
+
+            <p class="fragment">
+                Design Patterns não são uma lista
+            </p>
+
+            <p class="fragment">
+                São uma linguagem para discutir decisões
+            </p>
+        </section>
+
+    </div>
+</div>
+
+<script src="../../../dist/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true
+    });
+</script>
+
+</body>
+</html>

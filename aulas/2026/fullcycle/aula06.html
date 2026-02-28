@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>
+            Design Patterns VS Design Principles: O que diabéisso?
+        </title>
+
+		<link rel="stylesheet" href="../../../dist/reset.css">
+
+		<link rel="stylesheet" href="../../../dist/reveal.css">
+		<link rel="stylesheet" href="../../../dist/theme/white.css">
+		
+		<link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<link rel="stylesheet" href="../../../css/custom.css">
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <div style="margin-top: 71%; font-size: 1.5rem;"> 🐘🏜️🤠 </div>
+				<section data-background="../../../2025/img/design-principles/bg.jpg">
+                    <hr>
+					<h2 style="background-color: #FFF">Design Patterns</h2>
+                    <hr>
+
+				</section>
+
+                <section data-background-size="70%" alt="">
+
+                    <span class="" style="font-size: 3rem; background-color: black; color: white;">A gente precisa <strong>desenhar o software</strong></span>
+                </section>
+
+                <section data-background="../../../2025/img/gifs/canguru.gif" data-background-size="40%">
+                    <span style="font-size: 4rem; background-color: #FFF;">  Afinal, o que é design? 🖌️ 🎨</span>
+                </section>
+
+                <section data-background="#333">
+                    <span style="font-size: 4rem;">
+                        É o momento de decidir como <strong class="fragment highlight-red">os códigos</strong> do sistema <strong class="fragment highlight-blue">se organizam</strong>, <strong class="fragment highlight-blue">se comunicam</strong> e <strong class="fragment highlight-blue">se comportam</strong> para alcançar os objetivos desejados.
+                    </span>
+                </section>
+
+                <section>
+                    <div style="text-align: left;">
+                        <h3><em>Design</em></h3>
+                        <hr>
+                        <p class="fragment">
+                            do Latim, <em style="color: red;">designare</em>
+                        </p>
+                        <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                            <strong><em> de-</em></strong> (de dentro, para fora) <br>
+                            
+                            <strong><em> signare-</em></strong> ( <em>signum</em>, indicar algo, marcar) <br> 
+
+                            "Designar, Determinar"
+                        </p>
+                    </div>
+                </section>
+
+                <section data-background="#3A5256">
+                    <span style="font-size: 4rem;">
+                        O processo de <strong>planejar e estruturar</strong> a solução técnica.
+                    </span>
+                </section>
+
+                <section data-background="../../../2025/img/gifs/obra.gif">
+                    <p style="background-color: #FFF; font-size: 2.6rem;">
+                        Mas qual é o momento de "planejar e estruturar"?
+                    </p>
+
+                    <em class="fragment" style="background-color: #333; color: white; padding: 0 20px;">No "inicio" do projeto</em>
+                </section>
+
+                <section data-background="../img/obvio.jpg" data-background-size="70%">
+                    
+                </section>
+
+                <section data-background="../../../2025/img/gifs/moonwalk.gif" data-background-color="#FF4F4F" data-background-size="80%">
+                    <h3>Precisamos voltar alguns passos</h3>
+                </section>
+
+                <section data-background="#333">
+                    <div style="text-align: left">
+                        <h1>2 - DEFINIÇÕES</h1>
+                        <hr>
+                        <p class="fragment">   
+                            Engenharia de Software
+                        </p>
+                    </div>
+                </section>
+
+                <section data-background="../../../2025/img/design-principles/diagram-1.png" data-background-size="27%">
+                    <p style="margin-bottom: 600px;">
+                        Como funciona a engenharia de software?</p>
+
+                </section>
+
+
+                <section data-background="../../../2025/img/design-principles/diagram-2.png" data-background-size="90%" data-background-color="#666">
+                    <p style="margin-bottom: 500px;">Como seria melhor?</p>
+
+                </section>
+
+                <section data-background="../../../2025/img/design-principles/diagram-3.png" data-background-size="65%" data-background-color="#FFF">
+                    <p style="margin-right: 300px; margin-bottom: 100px;"></p>
+
+                    <div style="margin-bottom: 280px; margin-left: 260px;">
+                        <p class="fragment"><span style="background-color: #8E7CC3; border-radius: 5px; padding: 0 10px;">Arquitetura?</span></p>
+                        <p class="fragment"><span style="margin-top: 20px; background-color: #333; border-radius: 4px; padding: 0 10px; color: #FFF;">Design?</span></p>
+                    </div>
+                </section>
+
+                <section style="font-family: 'Montserrat', sans-serif;" data-background="#333" data-background-size="50%" data-background-color="#FFF">
+                    <hr>
+                    <p>
+                        <em>
+                            <strong>Arquitetura (de soluções)</strong> é sobre a comunicação entre as diferentes <strong>tecnologias </strong> que compõem e  <strong> auxiliam o Software.</strong>
+                        </em>
+                    </p>
+                    <hr>
+                </section>
+
+                <section style="font-family: 'Montserrat', sans-serif;" data-background="#FFF" data-background-size="50%" data-background-color="#333">
+                    <p>
+                        <em>
+                            <strong>Arquitetura</strong> (do código) é sobre a conunicação entre as camadas de códigos, <strong>pensando I/O</strong>
+                        </em>
+                    </p>
+                </section>
+
+
+                <section style="font-family: 'Montserrat', sans-serif;" data-background="#333" data-background-size="50%" data-background-color="#333">
+                    <p>
+                        <em>
+                            <strong>Design</strong> é sobre o "desenho" do fluxo de partes do <strong>código com o próprio código</strong>
+                        </em>
+                    </p>
+                </section>
+
+                <section>
+                    <img src="../../../2024/img/design-patterns-principles/flow-03.png" alt="">
+                </section>
+
+                <section>
+                    <p>
+                        Então poderiamos dizer que design de software se divide nisso?
+                    </p>
+                    <img src="../../../2024/img/design-patterns-principles/dp-01.png" alt="">
+                </section>
+
+                <section data-background="../../../2024/img/design-patterns-principles/dp-02.png" data-background-size="80%">
+                    <p>O melhor seria isso</p>
+                    <br><br><br><br><br><br><br><br><br><br>
+                </section>
+
+                <section data-background="#333">
+                    <div style="text-align: left">
+                        <h1>3 - OUTRAS DEFINIÇÕES</h1>
+                    </div>
+                </section>
+
+                <section data-background="#134F5C">
+                    <p style="font-size: 7rem">Patterns</p>
+                    <hr>
+                    <p class="fragment">
+                        Soluções "gerais" repetitiveis, para resolverem problemas comuns.
+                    </p>
+                </section>
+
+                <section>
+                    <p>
+                        Cristopher Alexander, 1977
+                    </p>
+                    <img src="../../../2024/img/design-patterns-principles/livro-a-pattern-language.jpg" alt="" width="30%">
+
+                    <p>
+                        <em class="fragment">Um padrão descreve uma <strong>solução comprovada</strong> para um problema recorrente no design</em>
+                    </p>
+                </section>
+
+                <section>
+                    <p>
+                        Gang of Four, 1994
+                    </p>
+                    <img src="../../../2024/img/design-patterns-principles/livro-design-patterns.jpg" alt="" width="28%">
+
+                    <p>
+                        <em class="fragment"><Strong class="fragment highlight-red">Cataloga e explica padrões comuns</Strong> para resolver problemas <strong class="fragment highlight-red">de software orientado a objetos</strong>.</em>
+                    </p>
+                </section>
+
+                <section data-background="../../../2024/img/design-patterns-principles/homer.gif">
+                    <p style="background-color: #FFF">E como ninguém conhece esse livro?</p>
+                </section>
+
+                <section data-background="../../../2024/img/design-patterns-principles/livro-a-pattern-language-2.jpg" data-background-size="50%">
+                    <p style="background-color: #FFF">O mesmo livro com outra capa</p>
+                    <div class="fragment">
+                        <img src="../../../2024/img/arquitetura-frontend/pedreiro.png" alt="">
+                        <p style="background-color: #333; color: #FFF;">Sim, é um livro de arquitetura e urbanismo</p>
+                    </div>
+                </section>
+                
+                <section data-background="#333">
+                    E tá tudo bem, afinal,
+                    
+                    <br><br> <span style="font-weight: 900; font-size: 3.5rem; font-style: ilatic;">Design</span> de Software é uma parte da <span class="" style="font-weight: 900; font-size: 3.5rem; font-style: ilatic;">Engenharia</span> de Software
+                </section>
+
+                <section>
+                    <p>Design Patterns</p>
+                    <h2>Exemplos conhecidos</h2>
+                    <hr>
+                    <ul>
+                        <li class="fragment">Composite</li>
+                        <li class="fragment">Observer</li>
+                        <li class="fragment">Builder</li>
+                    </ul>
+                </section>
+
+                <section data-background="#ead1dc">
+                    <p style="font-size: 6rem">Principles</p>
+                    <hr>
+                    <p class="fragment">
+                        Representam <span class="fragment highlight-red" style="font-weight: bold; font-size: 3.5rem;">guidelines</span> de alto nível ou <span class="fragment highlight-red" style="font-weight: bold; font-size: 3rem;">boas práticas</span> para considerar ao projetar a arquitetura do software. 
+                    </p>
+                </section>
+
+                <section>
+                    <div style="text-align: left;">
+                        <h3><em>Principles</em></h3>
+                        <hr>
+                        <p class="fragment">
+                            do Latim, <em style="color: red;">Principium</em>
+                        </p>
+                        <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                            <strong><em> Começo/Inicio</em></strong> (Fundamento, Base) <br>
+                        </p>
+                    </div>
+                </section>
+
+                <section>
+                    <em>Um conjunto de regras, diretrizes e considerações de design que formam a base de qualquer produto.</em>
+                </section>
+
+                <section data-background="#333">
+                    <p>Design Principles</p>
+                    <h2>Exemplos Fundamentais</h2>
+                    <hr>
+                    <ul>
+                        <li class="fragment">SOLID</li>
+                        <li class="fragment">DRY</li>
+                        <li class="fragment">SoC</li>
+                    </ul>
+                </section>
+
+                <section data-background="../../../2024/img/design-patterns-principles/tarcisio.gif" data-background-size="30%">
+
+                    <p>Porque comparar os 2? Se são diferentes dos iguais</p>
+                    <br><br><br><br><br><br><br><br><br>
+                </section>
+
+                <section data-background="#333">
+                    <h1>APLICABILIDADE</h1>
+                </section>
+
+                <section data-background="#6A93E5">
+                    <h2 style="text-align: left; margin-bottom: 20px;">CONCEITO</h2>
+                    <br>
+
+                    <table>
+                        <tr>
+                            <th>Principles</th>
+                            <td class="fragment">Guias para tomar decisões de design.</td>
+                        </tr>
+                        <tr>
+                            <th>Patterns</th>
+                            <td class="fragment">Soluções prontas para problemas recorrentes.</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section data-background="#771615">
+                    <h2 style="text-align: left; margin-bottom: 20px;">Abordagem</h2>
+                    <br>
+
+                    <table>
+                        <tr>
+                            <th>Principles</th>
+                            <td class="fragment">Filosofia e comportamento do código.</td>
+                        </tr>
+                        <tr>
+                            <th>Patterns</th>
+                            <td class="fragment">Implementação Prática.</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section data-background="#008080">
+                    <h2 style="text-align: left; margin-bottom: 20px;">Flexibilidade</h2>
+                    <br>
+
+                    <table>
+                        <tr>
+                            <th>Principles</th>
+                            <td class="fragment">São aplicáveis em qualquer tipo de código.</td>
+                        </tr>
+                        <tr>
+                            <th>Patterns</th>
+                            <td class="fragment">Podem ser usados em contextos especificos.</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h1>Há um 🐘 elefante <br> na Sala</h1>
+                    <hr>
+                    <h3 class="fragment">bora Feitoza, quero ver códigos</h3>
+                </section>
+
+                <section data-background="#333">
+                    <hr>
+                    <p style="font-size: 4rem;"><strong>Temos um problema:</strong> Criar um sistema de venda de ingressos</p>
+                    <hr>
+                </section>
+
+                
+                <section>
+                    Arquitetura baseada em camadas
+                </section>
+
+                <section data-background="../../../2025/img/design-principles/camadas.png" data-background-size="40%">
+                </section>
+
+                <section>
+                    <h1>Voltando aos topicos de OO</h1>
+                </section>
+
+                <section>
+                    <h2>Construtores</h2>
+
+                    <p class="fragment">
+                        O construtor garante que o objeto já nasça válido
+                    </p>
+
+                    <ul>
+                        <li class="fragment">Executado automaticamente</li>
+                        <li class="fragment">Define dependências obrigatórias</li>
+                        <li class="fragment">Evita objetos inconsistentes</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Exemplo: Construtor</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class Plano
+{
+    public function __construct(
+        private float $valor,
+        private int $duracaoEmMeses
+    ) {}
+}
+    </code></pre>
+
+                    <p class="fragment">
+                        Sem construtor, o objeto pode existir inválido
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Encapsulamento</h2>
+
+                    <ul>
+                        <li class="fragment">Estado interno protegido</li>
+                        <li class="fragment">Mudanças controladas</li>
+                        <li class="fragment">Menos efeitos colaterais</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Encapsulamento na prática</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class Pagamento
+{
+    private bool $pago = false;
+
+    public function confirmar(): void
+    {
+        $this->pago = true;
+    }
+
+    public function estaPago(): bool
+    {
+        return $this->pago;
+    }
+}
+    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Herança</h1>
+                </section>
+
+                <section>
+                    <h2>Herança</h2>
+
+                    <ul>
+                        <li class="fragment">Relação "é um"</li>
+                        <li class="fragment">Pode gerar acoplamento forte</li>
+                        <li class="fragment">Prefira composição</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Exemplo de Herança</h2>
+
+                    <pre class="fragment"><code class="language-php">
+abstract class Pessoa
+{
+    public function __construct(
+        protected string $nome
+    ) {}
+}
+
+class Aluno extends Pessoa
+{
+}
+    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Composição</h2>
+
+                    <p class="fragment">
+                        Objetos são formados por outros objetos
+                    </p>
+
+                    <pre class="fragment"><code class="language-php">
+class Aluno
+{
+    public function __construct(
+        private Plano $plano
+    ) {}
+}
+    </code></pre>
+                </section>
+
+
+                <section>
+                    <h1>Interface</h1>
+                </section>
+
+                <section>
+                    <h2>Interface</h2>
+
+                    <p class="fragment">
+                        Interface define <strong>o que</strong> deve ser feito,
+                        não <strong>como</strong>
+                    </p>
+
+                    <ul>
+                        <li class="fragment">Reduz acoplamento</li>
+                        <li class="fragment">Facilita troca de implementações</li>
+                        <li class="fragment">Muito usada em integrações</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Exemplo de Interface</h2>
+
+                    <pre class="fragment"><code class="language-php">
+interface MeioDePagamento
+{
+    public function pagar(float $valor): void;
+}
+    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Implementação da Interface</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class Pix implements MeioDePagamento
+{
+    public function pagar(float $valor): void
+    {
+    }
+}
+
+class CartaoCredito implements MeioDePagamento
+{
+    public function pagar(float $valor): void
+    {
+    }
+}
+    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Polimorfismo</h1>
+                </section>
+                <section>
+                    <h2>Polimorfismo</h2>
+
+                    <ul>
+                        <li class="fragment">Objetos diferentes</li>
+                        <li class="fragment">Mesmo contrato</li>
+                        <li class="fragment">Código mais flexível</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Polimorfismo na prática</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class ProcessadorDePagamento
+{
+    public function processar(
+        MeioDePagamento $meio,
+        float $valor
+    ): void {
+        $meio->pagar($valor);
+    }
+}
+    </code></pre>
+
+                    <p class="fragment">
+                        Não importa se é Pix ou Cartão
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Polimorfismo na prática</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class ProcessadorDePagamento
+{
+    public function processar(
+        MeioDePagamento $meio,
+        float $valor
+    ): void {
+        $meio->pagar($valor);
+    }
+}
+    </code></pre>
+
+                    <p class="fragment">
+                        Não importa se é Pix ou Cartão
+                    </p>
+                </section>
+
+
+                <section>
+                    <h1>Herança Horizontal: Traits</h1>
+                </section>
+
+                <section>
+                    <h2>Traits</h2>
+
+                    <ul>
+                        <li class="fragment">Compartilham comportamento</li>
+                        <li class="fragment">Não representam conceito do domínio</li>
+                        <li class="fragment">Uso técnico, não de negócio</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Exemplo de Trait</h2>
+
+                    <pre class="fragment"><code class="language-php">
+trait Timestampable
+{
+    private DateTime $criadoEm;
+
+    public function marcarCriacao(): void
+    {
+        $this->criadoEm = new DateTime();
+    }
+}
+    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Usando Trait</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class Aluno
+{
+    use Timestampable;
+}
+    </code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Anti-OO: Objeto Anêmico</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class Aluno
+{
+    public string $nome;
+    public float $mensalidade;
+}
+    </code></pre>
+
+                    <p class="fragment">
+                        Só dados, nenhuma regra
+                    </p>
+                </section>
+
+
+
+                <section>
+                    <h2>Anti-OO: Objeto Anêmico</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class Aluno
+{
+    public string $nome;
+    public float $mensalidade;
+}
+    </code></pre>
+
+                    <p class="fragment">
+                        Só dados, nenhuma regra
+                    </p>
+                </section>
+
+
+                <section>
+                    <h2>Exceções também são OO</h2>
+
+                    <pre class="fragment"><code class="language-php">
+class PagamentoInvalido extends DomainException
+{
+}
+    </code></pre>
+
+                    <p class="fragment">
+                        Erros também fazem parte do domínio
+                    </p>
+                </section>
+
+
+                <section>
+                    <h2>OO não é só classe</h2>
+
+                    <ul>
+                        <li class="fragment">Construtores garantem validade</li>
+                        <li class="fragment">Interfaces reduzem acoplamento</li>
+                        <li class="fragment">Traits são ferramentas</li>
+                        <li class="fragment">Composição > Herança</li>
+                    </ul>
+
+                    <p class="fragment">
+                        OO é design, não sintaxe
+                    </p>
+                </section>
+
+
+                <section data-background="#161577">
+                    <hr>
+                    <p style="font-size: 4rem;"><strong>Outro problema:</strong> Gravar logs</p>
+                    <hr>
+                </section>
+
+                <section data-background="../../../2024/img/design-patterns-principles/code-2-01.png" data-background-size="70%">
+
+                </section>
+
+                <section data-background="../../../2024/img/design-patterns-principles/code-2-02.png" data-background-color="#333" data-background-size="63%">
+
+                </section>
+
+                <section data-background="../../../2024/img/design-patterns-principles/code-2-03.png" data-background-size="90%">
+
+                </section>
+
+                <section>
+                    <p style="font-size: 5rem">O que foi isso aqui?</p>
+                    <img src="../img/gifs/perda-de-tempo.gif" width="100%" class="fragment" alt="">
+                </section>
+
+                <section data-background="#333">
+                    <p style="font-size: 6rem;">Abstract <span class="fragment highlight-red">Factory</span></p>
+                    <hr>
+                    <span class="fragment">Creational Pattern</span>
+                </section>
+				
+                <section>
+                    <hr>
+                    <p style="font-size: 4rem;">E com isso a gente vê o quanto essa <span class="fragment highlight-red" style="font-size: 5rem; font-weight: bold;">Teoria</span> é <span class="fragment highlight-red" style="font-size: 5rem; font-weight: bold;">Prática</span></p>
+                    <hr>
+                </section>
+
+                <section data-background="../../../2025/img/gifs/coelho_esperto.gif">
+                    <h2 style="background-color: #EFEFEF" class="fragment">Mas cuidado, pra não matar uma formiga com uma bazuca</h2>
+                </section>
+
+				<section >
+					<hr>
+					<h3>E é isso</h3>
+					<hr>
+				</section>
+
+                <section data-background="#333">
+                    <div style="text-align: left">
+                        <h1>5 - CONCLUSÃO</h1>
+                        <hr>
+                        <ul>
+                            <li class="fragment">Pilares da Eng de Software</li>
+                            <li class="fragment">Design</li>
+                            <li class="fragment">Diferença Patterns/Principles</li>
+                            <li class="fragment">Aplicação Prática</li>
+                        </ul>
+                    </div>
+                </section>
+
+
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>
+							<a href="https://www.amazon.com.br/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">
+								Livro: Design Patterns <br><small> Erich Gamma e outros [Gang of Four] (1994)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164">
+								Clean Code, Clean Architecture. <span style="font-size: 1.2rem;">Uncle Bob - 2017</span>
+							</a>
+						</li>
+                        <li>
+							<a href="https://www.amazon.com.br/Aprenda-Domain-Driven-Design-arquitetura-estrat%C3%A9gia-ebook/dp/B0CTHS2P13/ref=sr_1_1?crid=31MHD2411Y9MX&dib=eyJ2IjoiMSJ9.ojMikL-0kcbwx-lWus3-QqwaPJgXrYWcdtJGq60HtjDaYxDfs9uVwg8NxHnv2EGKqjdIyOOXncMn3bpUyAwOcCdzh5nEC_dB1pVR7lcqj39xK-sX6M9GQZohLOLlC3o2XuUp_ZNpZ3Oeb7wbwoxFOC-uCeFsQkSvumx29p_tIV6sg2ROTZI7azV_KL1qFM2o.zzEzn8xYoWshYmQeXWC7OpmVi_iWIrpE-TotRKomtYo&dib_tag=se&keywords=aprendendo+domain+driven+design&qid=1748708791&s=digital-text&sprefix=aprendendo+doma%2Cdigital-text%2C165&sr=1-1">
+								Livro: Aprenda DDD <br><small> Vlad Khononov [Gang of Four] (1994)</small>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164">
+								Refactoring. <span style="font-size: 1.2rem;">Martin Fowler - 1999</span>
+							</a>
+						</li>
+                        <li>
+							<a href="https://medium.com/@dugguRK/undertsanding-design-pattern-and-principle-1d308edb54d7">
+								Understanding design patterns and principles <span style="font-size: 1.2rem;">(Duggu, Medium - 2023)</span>
+							</a>
+						</li>
+
+                        <li>
+							<a href="https://www.devmedia.com.br/artigo-engenharia-de-software-alguns-fundamentos-da-engenharia-de-software/8029">
+								Artigo Fundamentos da Eng de Software <span style="font-size: 1.2rem;">(Wilson Filho, DevMedia - Acesso em 2025)</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+
+
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+
+				<section>
+					Valeu o Boi, valeu o Vaqueiro
+
+					<br><br><br>
+
+					@alessandro_feitoza
+					<br>
+
+					https://linkedin.com/in/AlessandroFeitoza
+
+                    <br>
+
+                    <strong>slides.feitoza.tec.br</strong>
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../../../dist/reveal.js"></script>
+		<script src="../../../plugin/notes/notes.js"></script>
+		<script src="../../../plugin/markdown/markdown.js"></script>
+		<script src="../../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

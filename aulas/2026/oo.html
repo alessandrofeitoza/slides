@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Análise Orientada a Objetos</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/atom-one-dark.css">
+
+    <link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <!-- ========================= -->
+        <!-- CAPA -->
+        <!-- ========================= -->
+        <section data-background="#020617">
+            <h2>Análise Orientada a Objetos</h2>
+            <p class="fragment">Do problema real ao código</p>
+        </section>
+
+        <!-- ========================= -->
+        <!-- PARADIGMAS -->
+        <!-- ========================= -->
+        <section>
+            <h2>Paradigmas de Programação</h2>
+            <p class="fragment">Paradigma é a forma de pensar o código</p>
+            <ul>
+                <li class="fragment">Estruturado</li>
+                <li class="fragment">Funcional</li>
+                <li class="fragment">Orientado a Objetos</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Paradigma Estruturado</h2>
+            <ul>
+                <li class="fragment">Estruturas de dados</li>
+                <li class="fragment">Estruturas de Controle</li>
+            </ul>
+
+            <pre data-id="code-animation">
+	<code class="hljs php" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="|1-3|5|6|7">
+    $nome = "Chiquinha";
+    $cidade = "Caucaia";
+    $saldo = 9500.20;
+
+    if ($saldo < 0) {...}
+    for ()...
+    while()...
+    </code></pre>
+        </section>
+
+        <section>
+            <ul>
+                <li class="fragment">Funções + fluxo sequencial</li>
+                <li class="fragment">Dados separados do comportamento</li>
+            </ul>
+
+            <pre data-id="code-animation">
+	<code class="hljs php" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="|1-4|6|8-10">
+function aplicarDesconto(float $mensalidade): float
+{
+    return $mensalidade * 0.9;
+}
+
+$total = aplicarDesconto(300);
+
+if ($total > 0) {
+    registrarPagamento($aluno, $total);
+}
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>Paradigma Funcional</h2>
+            <ul>
+                <li class="fragment">Funções puras</li>
+                <li class="fragment">Imutabilidade</li>
+                <li class="fragment">Menos efeitos colaterais</li>
+            </ul>
+
+            <pre class="fragment"><code class="language-js">
+const calcularTotal = plano => plano.valor;
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>Paradigma Orientado a Objetos</h2>
+            <ul>
+                <li class="fragment">Código representa o mundo real</li>
+                <li class="fragment">Dados + comportamento juntos</li>
+                <li class="fragment">Responsabilidades claras</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Por que focar em OO?</h2>
+            <ul>
+                <li class="fragment">Domínio complexo</li>
+                <li class="fragment">Sistema cresce com o tempo</li>
+                <li class="fragment">Facilita manutenção</li>
+                <li class="fragment">Comunica melhor com o negócio</li>
+            </ul>
+        </section>
+
+        <!-- ========================= -->
+        <!-- CONTEXTO DO PROJETO -->
+        <!-- ========================= -->
+        <section data-background="#0f172a">
+            <h2>Projeto: Escola de Natação</h2>
+            <ul>
+                <li class="fragment">Gestão manual</li>
+                <li class="fragment">Inadimplência</li>
+                <li class="fragment">Pouca visibilidade financeira</li>
+                <li class="fragment">Donos sem tempo</li>
+            </ul>
+        </section>
+
+        <!-- ========================= -->
+        <!-- ANALISE OO -->
+        <!-- ========================= -->
+        <section>
+            <h2>Análise Orientada a Objetos</h2>
+            <p class="fragment">Antes do código, entendemos o domínio</p>
+            <ul>
+                <li class="fragment">Quais objetos existem?</li>
+                <li class="fragment">O que eles fazem?</li>
+                <li class="fragment">Como se relacionam?</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Objetos do Domínio</h2>
+            <ul>
+                <li class="fragment">Aluno</li>
+                <li class="fragment">Responsável</li>
+                <li class="fragment">Plano</li>
+                <li class="fragment">Pagamento</li>
+                <li class="fragment">Turma</li>
+                <li class="fragment">Escola</li>
+            </ul>
+        </section>
+
+        <!-- ========================= -->
+        <!-- UML -->
+        <!-- ========================= -->
+        <section>
+            <h2>UML – Visão Geral</h2>
+            <pre class="fragment"><code>
+Aluno ---- Plano
+  |
+Pagamento
+  |
+Turma
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>UML – Classe Aluno</h2>
+            <pre class="fragment"><code>
++----------------------+
+| Aluno                |
++----------------------+
+| id                   |
+| nome                 |
+| status               |
++----------------------+
+| pagarMensalidade()   |
+| matricular()         |
++----------------------+
+    </code></pre>
+        </section>
+        <!-- DDD -->
+        <!-- ========================= -->
+        <section>
+            <h2>DDD</h2>
+            <h4>Domain Driven Design</h4>
+            <ul>
+                <li class="fragment">Domínio no centro</li>
+                <li class="fragment">Linguagem ubíqua</li>
+                <li class="fragment">Entidades e regras claras</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>DDD no projeto</h2>
+            <ul>
+                <li class="fragment">Aluno é uma Entidade</li>
+                <li class="fragment">Plano define regras</li>
+                <li class="fragment">Pagamento é consequência</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>PILARES</h1>
+
+            <ul>
+                <li class="fragment">Abstração</li>
+                <li class="fragment">Encapsulamento</li>
+                <li class="fragment">Herança</li>
+                <li class="fragment">Polimorfismo</li>
+            </ul>
+        </section>
+        <!-- ========================= -->
+        <!-- CÓDIGO -->
+        <!-- ========================= -->
+        <section>
+            <h2>Código – Aluno</h2>
+            <pre data-id="code-animation">
+	<code class="hljs php" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="">
+class Aluno
+{
+    public function __construct(
+        private Plano $plano
+    ) {}
+
+    public function pagarMensalidade(): Pagamento
+    {
+        return new Pagamento($this->plano->valor());
+    }
+}
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>Código – Plano e Pagamento</h2>
+            <pre data-id="code-animation">
+	<code class="hljs php" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="">
+class Plano
+{
+    public function __construct(
+        private float $valor
+    ) {}
+
+    public function valor(): float
+    {
+        return $this->valor;
+    }
+}
+
+class Pagamento
+{
+    public function __construct(
+        private float $valor
+    ) {}
+}
+    </code></pre>
+        </section>
+
+        <!-- ========================= -->
+
+
+        <!-- ========================= -->
+        <!-- ANTI OO -->
+        <!-- ========================= -->
+        <section>
+            <h2>Anti-OO (Exemplo Errado)</h2>
+            <pre data-id="code-animation">
+	<code class="hljs php" style="max-height: 800px; font-size: 1.5rem;" data-trim data-line-numbers="">
+class Sistema
+{
+    public function pagarAluno($aluno, $plano)
+    {
+        if ($plano['valor'] > 0) {
+            // faz tudo aqui
+        }
+    }
+}
+    </code></pre>
+
+            <p class="fragment">Objeto Deus detectado</p>
+        </section>
+
+        <section>
+            <h2>Por que isso é ruim?</h2>
+            <ul>
+                <li class="fragment">Alto acoplamento</li>
+                <li class="fragment">Baixa legibilidade</li>
+                <li class="fragment">Difícil de evoluir</li>
+            </ul>
+        </section>
+
+        <!-- ========================= -->
+        <!-- EXERCICIO -->
+        <!-- ========================= -->
+        <section>
+            <h2>Exercício Prático</h2>
+            <ul>
+                <li class="fragment">Liste objetos do domínio</li>
+                <li class="fragment">Defina responsabilidades</li>
+                <li class="fragment">Desenhe um mini UML</li>
+                <li class="fragment">Implemente 1 classe</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Desafio Extra</h2>
+            <ul>
+                <li class="fragment">Crie um Anti-OO</li>
+                <li class="fragment">Refatore para OO</li>
+            </ul>
+        </section>
+
+        <!-- ========================= -->
+        <!-- ENCERRAMENTO -->
+        <!-- ========================= -->
+        <section>
+            <h2>Resumo</h2>
+            <ul>
+                <li class="fragment">Paradigma molda o código</li>
+                <li class="fragment">OO representa o negócio</li>
+                <li class="fragment">Boa análise evita retrabalho</li>
+            </ul>
+
+            <p class="fragment">Código é consequência</p>
+        </section>
+
+    </div>
+</div>
+
+<!--<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/highlight.js@11/highlight.min.js"></script>-->
+
+<script src="../../dist/reveal.js"></script>
+<script src="../../plugin/notes/notes.js"></script>
+<script src="../../plugin/markdown/markdown.js"></script>
+<script src="../../plugin/highlight/highlight.js"></script>
+
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealHighlight ]
+    });
+
+    // hljs.highlightAll();
+</script>
+
+</body>
+</html>

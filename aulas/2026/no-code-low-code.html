@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Análise Orientada a Objetos</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/atom-one-dark.css">
+
+    <link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <!-- ========================= -->
+        <!-- CAPA -->
+        <!-- ========================= -->
+        <section >
+            <h2>Code, No-Code, e Low-Code</h2>
+            <p class="fragment">Do problema real ao código</p>
+        </section>
+        <section data-background="#333">
+            <p style="font-size: 3rem;">Abordagens diferentes para problemas diferentes</p>
+        </section>
+
+
+        <section>
+            <h3>⚡ No Code</h3>
+            <ul>
+                <li class="fragment">Construção 100% visual</li>
+                <li class="fragment">Não exige conhecimento técnico profundo</li>
+                <li class="fragment">Extremamente rápido para validar ideias</li>
+                <li class="fragment">Limitações fortes de escala e regra de negócio</li>
+            </ul>
+            <p class="fragment"><strong>Ideal para:</strong> protótipos, landing pages, validação de negócio</p>
+        </section>
+
+        <section data-background="#333">
+            <ul>
+                <li class="fragment">WIX</li>
+                <li class="fragment">FlutterFlow</li>
+                <li class="fragment">AirTable</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h3>🧩 Low Code</h3>
+            <ul>
+                <li class="fragment">Desenvolvimento visual + código quando necessário</li>
+                <li class="fragment">Acelera entregas sem perder totalmente o controle</li>
+                <li class="fragment">Dependência da plataforma</li>
+                <li class="fragment">Customização limitada fora do "caminho feliz"</li>
+            </ul>
+            <p class="fragment"><strong>Ideal para:</strong> MVPs, sistemas internos, automações mais robustas</p>
+        </section>
+
+        <section data-background="#333">
+            <ul>
+                <li class="fragment">Zeev</li>
+                <li class="fragment">SalesForce</li>
+                <li class="fragment">AppBuilder</li>
+            </ul>
+        </section>
+
+
+
+        <section>
+            <h3>🧠 Programação Convencional</h3>
+            <ul>
+                <li class="fragment">Código escrito manualmente (PHP, JS, Java, etc.)</li>
+                <li class="fragment">Controle total da regra de negócio</li>
+                <li class="fragment">Alta flexibilidade e escalabilidade</li>
+                <li class="fragment">Maior custo inicial (tempo + pessoas)</li>
+            </ul>
+            <p class="fragment"><strong>Ideal para:</strong> sistemas complexos, regras específicas, longo prazo</p>
+        </section>
+
+
+
+
+        <section>
+            <h3>📊 Comparação Direta</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Critério</th>
+                    <th>Convencional</th>
+                    <th>Low Code</th>
+                    <th>No Code</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Flexibilidade</td>
+                    <td>Alta</td>
+                    <td>Média</td>
+                    <td>Baixa</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Velocidade Inicial</td>
+                    <td>Baixa</td>
+                    <td>Alta</td>
+                    <td>Muito Alta</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Escalabilidade</td>
+                    <td>Alta</td>
+                    <td>Média</td>
+                    <td>Baixa</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Dependência de Ferramenta</td>
+                    <td>Nenhuma</td>
+                    <td>Alta</td>
+                    <td>Total</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h3>💡 A pergunta certa não é “qual é melhor?”</h3>
+            <ul>
+                <li class="fragment">Qual é o problema?</li>
+                <li class="fragment">Qual o prazo?</li>
+                <li class="fragment">Quem vai manter isso?</li>
+                <li class="fragment">Qual o custo do erro?</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Onde entram HTML e CSS?</h2>
+            <ul>
+                <li class="fragment">HTML define a estrutura da interface</li>
+                <li class="fragment">CSS define aparência e comportamento visual</li>
+                <li class="fragment">No Code e Low Code geram HTML + CSS por baixo</li>
+                <li class="fragment">Programação convencional escreve isso de forma explícita</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h3>HTML — Estrutura</h3>
+            <ul>
+                <li class="fragment">Define o esqueleto da página</li>
+                <li class="fragment">Organiza conteúdo: texto, tabelas, formulários</li>
+                <li class="fragment">Sem CSS é funcional, mas feio</li>
+                <li class="fragment">Base de qualquer aplicação web</li>
+            </ul>
+
+            <p class="fragment"><strong>HTML responde:</strong> o que existe na tela?</p>
+        </section>
+        <section>
+            <h3>CSS — Aparência</h3>
+            <ul>
+                <li class="fragment">Define cores, espaçamentos e fontes</li>
+                <li class="fragment">Controla layout (grid, flex, responsividade)</li>
+                <li class="fragment">Transforma HTML cru em interface agradável</li>
+                <li class="fragment">Sem HTML, CSS não existe</li>
+            </ul>
+
+            <p class="fragment"><strong>CSS responde:</strong> como isso aparece?</p>
+        </section>
+
+        <section>
+            <h3>HTML + CSS no No Code e Low Code</h3>
+            <ul>
+                <li class="fragment">Ferramentas visuais geram HTML automaticamente</li>
+                <li class="fragment">O CSS vem pronto, mas limitado</li>
+                <li class="fragment">Quanto menos código, menos controle</li>
+                <li class="fragment">Saber HTML/CSS evita dependência total da ferramenta</li>
+            </ul>
+        </section>
+
+        <section data-background="#333">
+            <h1>COMPONENTES</h1>
+        </section>
+
+        <section>
+            <h2>O que é um componente de interface?</h2>
+            <ul>
+                <li class="fragment">Bloco reutilizável de UI</li>
+                <li class="fragment">Combina HTML + CSS (+ JS)</li>
+                <li class="fragment">Resolve um problema específico de interação</li>
+                <li class="fragment">Presente em código, Low Code e No Code</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Componente: Tabela</h3>
+            <ul>
+                <li class="fragment">Exibe dados estruturados</li>
+                <li class="fragment">Muito usada em sistemas administrativos</li>
+                <li class="fragment">Pode ter paginação, filtros e ordenação</li>
+                <li class="fragment">Complexidade cresce rápido</li>
+            </ul>
+
+            <p class="fragment"><strong>Quando usar:</strong> dados comparáveis e listagens</p>
+        </section>
+
+        <section data-background="img/code/table01.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/table02.jpg" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/table03.jpg" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h3>Componente: Card</h3>
+            <ul>
+                <li class="fragment">Agrupa informações relacionadas</li>
+                <li class="fragment">Visualmente simples e reutilizável</li>
+                <li class="fragment">Muito comum em dashboards</li>
+                <li class="fragment">Facilita leitura e escaneabilidade</li>
+            </ul>
+
+            <p class="fragment"><strong>Quando usar:</strong> resumos, KPIs, blocos de informação</p>
+        </section>
+
+        <section data-background="img/code/card02.webp" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/card03.webp" data-background-size="80%">
+
+        </section>
+        <section>
+            <h3>Componente: Dropdown</h3>
+            <ul>
+                <li class="fragment">Economiza espaço na interface</li>
+                <li class="fragment">Usado para seleção ou navegação</li>
+                <li class="fragment">Depende de JavaScript</li>
+                <li class="fragment">Pode causar problemas de usabilidade</li>
+            </ul>
+
+            <p class="fragment"><strong>Quando usar:</strong> muitas opções, pouco espaço</p>
+        </section>
+
+        <section data-background="img/code/dropdown01.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/dropdown02.webp" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h3>Componente: Modal</h3>
+            <ul>
+                <li class="fragment">Interrompe o fluxo do usuário</li>
+                <li class="fragment">Usado para confirmação ou ações críticas</li>
+                <li class="fragment">Precisa ser usado com cuidado</li>
+                <li class="fragment">Muito comum em CRUDs</li>
+            </ul>
+
+            <p class="fragment"><strong>Regra de ouro:</strong> só use quando necessário</p>
+        </section>
+        <section data-background="img/code/modal01.gif" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/modal02.png" data-background-size="80%">
+
+        </section>
+
+
+
+        <section>
+            <h3>Componente: Menu Lateral / Drawer</h3>
+            <ul>
+                <li class="fragment">Principal estrutura de navegação do sistema</li>
+                <li class="fragment">Pode ser fixo ou retrátil</li>
+                <li class="fragment">Muito usado em dashboards e sistemas internos</li>
+                <li class="fragment">Impacta diretamente a usabilidade</li>
+            </ul>
+
+            <p class="fragment"><strong>Cuidado:</strong> excesso de opções confunde</p>
+        </section>
+
+        <section data-background="img/code/drawer01.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/drawer02.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/drawer03.png" data-background-size="80%">
+
+        </section>
+
+
+        <section>
+            <h3>Componente: Input</h3>
+            <ul>
+                <li class="fragment">Permite entrada de dados pelo usuário</li>
+                <li class="fragment">Pode ter validação, máscara e feedback visual</li>
+                <li class="fragment">Base de qualquer formulário</li>
+                <li class="fragment">Simples por fora, crítico por dentro</li>
+            </ul>
+
+            <p class="fragment"><strong>Regra:</strong> erro precisa ser claro</p>
+        </section>
+        <section data-background="img/code/input01.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/input03.webp" data-background-size="80%">
+
+        </section>
+        <section>
+            <h3>Componente: Select</h3>
+            <ul>
+                <li class="fragment">Usado para escolher uma opção entre várias</li>
+                <li class="fragment">Pode ser nativo ou customizado</li>
+                <li class="fragment">Customização excessiva pode piorar UX</li>
+                <li class="fragment">Muito comum em filtros e formulários</li>
+            </ul>
+
+            <p class="fragment"><strong>Dica:</strong> poucas opções? prefira radio</p>
+        </section>
+        <section data-background="img/code/select01.jpeg" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/select02.webp" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/select03.png" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h3>Componente: Tabs</h3>
+            <ul>
+                <li class="fragment">Organiza conteúdos relacionados</li>
+                <li class="fragment">Evita múltiplas telas desnecessárias</li>
+                <li class="fragment">Mantém contexto do usuário</li>
+                <li class="fragment">Muito usada em telas de detalhe</li>
+            </ul>
+
+            <p class="fragment"><strong>Use quando:</strong> o conteúdo é do mesmo domínio</p>
+        </section>
+
+        <section data-background="img/code/tabs01.webp" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/tabs02.jpg" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/tabs03.webp" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h3>Componente: Botão</h3>
+            <ul>
+                <li class="fragment">Dispara ações</li>
+                <li class="fragment">Pode ser primário, secundário ou destrutivo</li>
+                <li class="fragment">Cor comunica intenção</li>
+                <li class="fragment">Elemento mais clicado da interface</li>
+            </ul>
+
+            <p class="fragment"><strong>Erro comum:</strong> muitos botões primários</p>
+        </section>
+
+        <section data-background="img/code/button01.jpg" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/button02.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/button03.png" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h3>Checkbox & Radio</h3>
+            <ul>
+                <li class="fragment">Checkbox: múltiplas escolhas</li>
+                <li class="fragment">Radio: escolha única</li>
+                <li class="fragment">Simples, mas essenciais</li>
+                <li class="fragment">Muito usados em formulários e filtros</li>
+            </ul>
+
+            <p class="fragment"><strong>UX:</strong> escolha errada confunde o usuário</p>
+        </section>
+        <section data-background="img/code/checkbox01.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/checkbox02.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/checkbox03.webp" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h3>Componente: Alert / Feedback</h3>
+            <ul>
+                <li class="fragment">Informa sucesso, erro ou aviso</li>
+                <li class="fragment">Guia o usuário após uma ação</li>
+                <li class="fragment">Cores têm significado semântico</li>
+                <li class="fragment">Essencial para experiência</li>
+            </ul>
+
+            <p class="fragment"><strong>Sem feedback:</strong> o usuário se perde</p>
+        </section>
+
+        <section data-background="img/code/alert01.webp" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/alert02.webp" data-background-size="80%">
+
+        </section>
+        <section data-background="img/code/alert03.png" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <h2>Componentes não são só visuais</h2>
+            <ul>
+                <li class="fragment">Carregam regras de interação</li>
+                <li class="fragment">Impactam diretamente a experiência</li>
+                <li class="fragment">Precisam ser consistentes</li>
+                <li class="fragment">São reutilizáveis por definição</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O que muda entre as abordagens?</h2>
+            <ul>
+                <li class="fragment">Código: você cria e controla o componente</li>
+                <li class="fragment">Low Code: você ajusta o componente</li>
+                <li class="fragment">No Code: você aceita o componente</li>
+                <li class="fragment">Menos código = menos decisão</li>
+            </ul>
+
+            <p class="fragment"><strong>Entender componentes é entender produto</strong></p>
+        </section>
+
+
+
+        <section>
+            <h2>Amarrando tudo</h2>
+            <ul>
+                <li class="fragment">HTML estrutura</li>
+                <li class="fragment">CSS apresenta</li>
+                <li class="fragment">Componentes organizam</li>
+                <li class="fragment">Ferramentas só aceleram decisões</li>
+            </ul>
+
+            <p class="fragment"><strong>Quem entende a base, escolhe melhor a ferramenta</strong></p>
+        </section>
+
+    </div>
+</div>
+
+<!--<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/highlight.js@11/highlight.min.js"></script>-->
+
+<script src="../../dist/reveal.js"></script>
+<script src="../../plugin/notes/notes.js"></script>
+<script src="../../plugin/markdown/markdown.js"></script>
+<script src="../../plugin/highlight/highlight.js"></script>
+
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealHighlight ]
+    });
+
+    // hljs.highlightAll();
+</script>
+
+</body>
+</html>

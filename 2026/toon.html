@@ -1,0 +1,285 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Conversando com LLMs sem falir no token</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../dist/reset.css">
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/white.css">
+
+    <style>
+        .highlight { color: #00d8ff; }
+        .danger { color: #ff4d4d; }
+        .success { color: #04702a; }
+    </style>
+
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <p style="font-size: 4rem">Ei DEV: Tua app tá pronta pra conversar com LLMs?</p>
+        </section>
+
+        <section>
+            <div style="display: flex;">
+                <div style="width: 60%">
+                    <h3>Alessandro Feitoza</h3>
+
+                    <ul style="font-size: 2rem">
+                        <li class="fragment" style="color: #741b47;">Fortaleza, <strong>Ceará</strong></li>
+                        <li class="fragment"><strong>Professor de</strong>  códigos e outras <strong>computarias</strong> <small style="vertical-align: unset; font-size: 0.7rem;">( ͡° ͜ʖ ͡°)</small></li>
+                        <li class="fragment">Programador/Dev/Severino</li>
+                        <li class="fragment">
+                                    <span style="color: #007cba;">
+                                        <strong>PHP</strong> com <strong>Rapadura</strong>
+                                    </span> |
+                            <span style="color: #B45F06;"><strong>PHP</strong>este</span>
+                        </li>
+                        <li class="fragment">
+									<span>
+										<small style="vertical-align: unset;">TechLead/Dev</small> <strong style="color: #38761d;">Bússola</strong>Social
+									</span>
+                        </li>
+                    </ul>
+                </div>
+                <div style="width: 40%">
+                    <img width="70%" src="../img/AlessandroFeitoza-2026-2.jpg" alt="">
+                </div>
+            </div>
+        </section>
+
+
+        <section style="align-items: flex-start; margin-top: 0;">
+            <h3 style="text-align: left;">Agenda</h3>
+            <hr>
+            <div style="display: flex;">
+                <ul>
+                <li class="fragment">Arquitetura</li>
+                <li class="fragment">Performance</li>
+                <li class="fragment">Consumo de Tokens</li>
+                <li class="fragment danger">E o padrão TOON</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h3>Parece simples…</h3>
+            <pre><code>
+Frontend → Backend → API LLM → Resposta
+  </code></pre>
+            <p class="fragment danger">Se é só um POST… por que a conta explode?</p>
+        </section>
+
+        <section>
+            <pre data-id="code-animation"><code style="max-height: 800px; font-size: 1.8rem; line-height: 1.3"  class="hljs css" data-trim data-line-numbers>
+const response = await fetch("/api/llm", {
+    method: "POST",
+    body: JSON.stringify({
+      system: "Você é um analista financeiro.",
+      context: dados,
+      question: "pergunta"
+    })
+})
+            </code>
+            </pre>
+        </section>
+
+        <section>
+            <h3>O que realmente vai na requisição</h3>
+            <ul>
+                <li class="fragment">System prompt</li>
+                <li class="fragment">Instruções</li>
+                <li class="fragment">Contexto adicional</li>
+                <li class="fragment">Histórico da conversa</li>
+                <li class="fragment">Pergunta atual</li>
+            </ul>
+            <p class="fragment danger">Nada disso é grátis.</p>
+        </section>
+
+        <section>
+            <h3>Token ≠ Palavra</h3>
+            <ul>
+                <li class="fragment">Token é pedaço de palavra</li>
+                <li class="fragment">Pontuação vira token</li>
+                <li class="fragment">Aspas viram token</li>
+                <li class="fragment">Estrutura vira token</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>O problema do JSON</h3>
+            <pre><code class="json">
+{
+  "user": "AlessandroFeitoza",
+  "message": "Explique orientação a objetos"
+}
+</code></pre>
+            <p class="fragment danger">Aspas. Chaves. Vírgulas. Indentação.</p>
+            <p class="fragment">Tudo vira token.</p>
+        </section>
+
+        <section>
+            <h3>Performance não é só latência</h3>
+            <ul>
+                <li class="fragment">💰 Custo financeiro (tokens)</li>
+                <li class="fragment">⏱ Processamento maior</li>
+                <li class="fragment">🧠 Contexto poluído reduz precisão</li>
+            </ul>
+            <p class="fragment danger">Se o prompt é pesado, a LLm fica lenta</p>
+        </section>
+
+        <section data-background="../img/obvio.jpg" data-background-size="70%">
+
+        </section>
+
+        <section>
+            <h3>Erro clássico</h3>
+            <p class="fragment">Tratar LLM como API REST comum</p>
+            <pre><code class="php">
+return response()->json([
+  "status" => "success",
+  "data" => [
+     "title" => "...",
+     "description" => "...",
+     "confidence" => 0.98
+  ]
+]);
+</code></pre>
+            <p class="fragment danger">Você está pagando por sintaxe.</p>
+        </section>
+
+        <section>
+            <p class="r-fit-text">JSON é pra <br> humano ver</p>
+        </section>
+
+        <section>
+            <pre><code class="json">
+{
+    "name": "Chiquim",
+    "phones": [
+        "85 9 8888-9999",
+        "85 9 9797-1234"
+    ]
+}
+</code></pre>
+            <pre class="fragment"><code class="json">
+{"name": "Chiquim", "phones": ["85 9 8888-9999", "85 9 9797-1234"]}
+</code></pre>
+        </section>
+
+        <section data-background="#333">
+            <h2 class="highlight">TOON</h2>
+            <p class="fragment">Text-Oriented Object Notation</p>
+            <ul>
+                <li class="fragment">Estrutura mínima</li>
+                <li class="fragment">Sem ruído sintático</li>
+                <li class="fragment">Linear</li>
+                <li class="fragment">Foco em semântica</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>JSON vs TOON</h3>
+
+            <div style="display: flex; gap: 40px;">
+                <div style="width: 50%;">
+                    <h4>JSON</h4>
+                    <pre><code class="json">
+{
+  "title": "OO",
+  "summary": "Paradigma...",
+  "keywords": ["classe","objeto"]
+}
+</code></pre>
+                </div>
+
+                <div style="width: 50%;">
+                    <h4>TOON</h4>
+                    <pre><code>
+title: OO
+summary: Paradigma...
+keywords: classe | objeto
+</code></pre>
+                </div>
+            </div>
+
+            <p class="fragment success">Menos tokens. Mesma informação.</p>
+        </section>
+
+        <section data-background="img/toon/yaml.webp"></section>
+        <section>
+            <div style="display: flex">
+                <div>
+                    <img src="img/toon/json.png" alt="">
+                </div>
+                <div>
+                    <img src="img/toon/toon.png" alt="">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Arquitetura recomendada</h3>
+            <pre><code>
+Controller
+   ↓
+Prompt Builder
+   ↓
+Context Optimizer
+   ↓
+LLM Client
+   ↓
+TOON Parser
+</code></pre>
+            <ul>
+                <li class="fragment">Separação de responsabilidades</li>
+                <li class="fragment">Redução de contexto desnecessário</li>
+                <li class="fragment">Parsing simples</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>No fim</h2>
+            <ul>
+                <li class="fragment">IA é linguagem</li>
+                <li class="fragment">Linguagem é token</li>
+                <li class="fragment">Token é custo</li>
+                <li class="fragment highlight">Custo é arquitetura</li>
+            </ul>
+        </section>
+
+        <section>
+
+        </section>
+
+    </div>
+</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/notes/notes.js"></script>
+<script src="../plugin/markdown/markdown.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+</script>
+
+
+</body>
+</html>
