@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Design Patterns na Web & Mobile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h1>Design Patterns</h1>
+            <h3>Foco em Web & Mobile Development</h3>
+            <p>Composite • Observer • Strategy</p>
+        </section>
+
+        <section>
+            <section>
+                <h2>1. Composite Pattern</h2>
+                <p><strong>Cenário:</strong> Árvores de Componentes (DOM/React)</p>
+            </section>
+
+            <section>
+                <h3>O Problema Real 🧩</h3>
+                <p>Como criar um sistema de permissões em um Menu? Alguns itens são <strong>Links simples</strong>, outros são <strong>Dropdowns</strong> que contêm mais Links.</p>
+                <p class="fragment">Se eu esconder o "Pai", todos os "Filhos" devem sumir automaticamente.</p>
+            </section>
+
+            <section>
+                <h3>A Solução Web</h3>
+                <p>Tratamos um <code>&lt;ButtonGroup /&gt;</code> (Composite) exatamente como um <code>&lt;Button /&gt;</code> (Leaf). Ambos respondem ao método <code>render()</code>.</p>
+
+            </section>
+
+            <section>
+                <h3>Onde você usa isso?</h3>
+                <ul>
+                    <li><strong>DOM do Navegador:</strong> Uma <code>div</code> pode conter outras <code>divs</code> ou apenas <code>texto</code>.</li>
+                    <li><strong>Flutter/React:</strong> <code>Column</code> e <code>Row</code> são Composites de <code>Widgets</code>.</li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2>2. Observer Pattern</h2>
+                <p><strong>Cenário:</strong> Reatividade e Eventos</p>
+            </section>
+
+            <section>
+                <h3>O Problema Real ⚡</h3>
+                <p>Você tem um carrinho de compras. Quando o usuário clica em "Adicionar", três lugares precisam atualizar:</p>
+                <ul>
+                    <li>O ícone do topo (contador).</li>
+                    <li>A listagem lateral (modal).</li>
+                    <li>O cálculo do frete.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>A Solução Web</h3>
+                <p>O <strong>Store</strong> (Subject) notifica todos os <strong>Componentes</strong> (Observers) que o estado mudou.</p>
+
+                <pre><code class="language-javascript">
+// Exemplo simplificado de Redux/Vuex
+store.subscribe(() => {
+  console.log("O estado mudou! Atualizando UI...");
+});
+						</code></pre>
+            </section>
+
+            <section>
+                <h3>Exemplos no Dia a Dia</h3>
+                <ul>
+                    <li><strong>React `useEffect`:</strong> Observando mudanças em dependências.</li>
+                    <li><strong>WebSockets:</strong> O servidor avisa o app (cliente) que chegou mensagem.</li>
+                    <li><strong>Firebase:</strong> `onSnapshot` para atualizações em tempo real.</li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2>3. Strategy Pattern</h2>
+                <p><strong>Cenário:</strong> Lógica de Negócio Intercambiável</p>
+            </section>
+
+            <section>
+                <h3>O Problema Real 💳</h3>
+                <p>Seu app aceita Stripe, PayPal e Pix. Cada um tem uma API diferente.</p>
+                <p><strong>O Erro:</strong> Encher seu componente de Checkout com <code>if(tipo == 'stripe')</code>.</p>
+            </section>
+
+            <section>
+                <h3>A Solução Web</h3>
+                <p>Defina uma interface <code>PaymentProcessor</code>. O código do seu App não sabe <strong>quem</strong> está processando, apenas que o método <code>pay()</code> existe.</p>
+
+            </section>
+
+            <section>
+                <h3>Aplicações Reais</h3>
+                <ul>
+                    <li><strong>Auth:</strong> Login via Google, Apple ou E-mail (Estratégias de Passport.js).</li>
+                    <li><strong>Upload de Arquivos:</strong> Enviar para S3, Firebase Storage ou Local.</li>
+                    <li><strong>Validação de Forms:</strong> Aplicar regras diferentes (Regex, Tamanho, Email) dinamicamente.</li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <h2>Resumo para Devs</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Aplicação Web/Mobile</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Composite</td>
+                    <td>Hierarquia de Componentes / UI</td>
+                </tr>
+                <tr>
+                    <td>Observer</td>
+                    <td>State Management / Event Listeners</td>
+                </tr>
+                <tr>
+                    <td>Strategy</td>
+                    <td>Gateways / Drivers de Terceiros</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Dúvidas?</h2>
+            <p>Bora codar!</p>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: 'h/v',
+        transition: 'slide'
+    });
+</script>
+</body>
+</html>

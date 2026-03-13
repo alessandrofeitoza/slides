@@ -10,86 +10,60 @@
 		<link rel="stylesheet" href="../dist/reveal.css">
 		<link rel="stylesheet" href="../dist/theme/white.css">
 
-		<link rel="stylesheet" href="../plugin/highlight/one-light.css">
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-                <div style="margin-top: 71%; font-size: 1.5rem;"> 🐘🏜️🤠 </div>
-
-
 				<section>
 					<h1>Database Patterns</h1>
-					<p class="fragment" style="font-size: 3rem;"> (Padrões Arquiteturais)</p>
+					<p class="fragment" style="font-size: 4rem;"> O que se <strong>DEV</strong> saber para dizer que conhece </p>
 				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+								<li class="fragment"><strong>Wayne</strong> desde 04/2023</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../img/AlessandroFeitoza-2025.jpg" alt="">
+						</div>
+					</div>
+				</section>
+
+				<!--
+				<section>
+					<div style="display: flex;">
+						<div>
+							<ul style="font-size: 2rem">
+								<li class="fragment">+12 anos como Dev</li>
+								<li class="fragment">+12 anos como professor de devs</li>
+								<li class="fragment">Já fui contratado, demitido, readimitido</li>
+								<li class="fragment">Já contratei, já desliguei pessoas</li>
+								<br>
+								<li class="fragment">E nenhuma dessas coisas eu fiz direito 🦆 </li>
+							</ul>
+						</div>
+						<div>
+							<img class="fragment" width="80%" src="../img/gifs/pato.gif" alt="">
+						</div>
+					</div>
+				</section>
+				-->
 
 
 				<section>
 					<h1>A questão é:</h1>
-					<h2 class="fragment">Fazer nosso código acessar</h2>
-					<img src="img/database-patterns/banco-de-dados.gif">
-				</section>
-
-
-				<section data-background="../aulas/2025/img/backend/mvc.svg" data-background-size="90%">
-
-				</section>
-
-
-				<section data-background="img/design-principles/camadas.png" data-background-size="45%">
-
-				</section>
-
-				<section data-background="../img/front-back.png" data-background-size="80%">
-
-				</section>
-
-				<section data-background="#333">
-					<h1>DEFINIÇÕES</h1>
-				</section>
-
-				<section data-background-size="100%" data-background="img/database-patterns/database.webp">
-					<h2 style="background-color: #333; color: #FFF;">SQL</h2>
-                    <br><br><br><br><br><br><br><br><br>
-				</section>
-
-
-				<section data-background-size="60%" data-background="img/database-patterns/nosql.webp">
-
-				</section>
-
-				
-				<section data-background-size="50%" data-background="../img/gifs/coelho_medonho_sentese_aqui_jovem.gif">
-					<h2 class="fragment" style="background-color: white;">Falaremos apenas de SQL</h2>
-				</section>
-
-				<section data-background-size="100%" data-background="img/database-patterns/figura5j.jpg">
-
-				</section>
-
-				<section data-background-size="80%" data-background="img/database-patterns/sql.png">
-
-				</section>
-
-
-
-		
-
-				<section data-background="#333">
-					<h1>Arquitetura</h1>
-				</section>
-
-				<section data-background-size="50%" data-background="img/database-patterns/single-tenant.png">
-
-				</section>
-
-
-				<section data-background-size="50%" data-background="img/database-patterns/multi-tenant.png">
-
-				</section>
-
-				<section data-background="#333">
-					<h1>Código</h1>
+					<h2 class="fragment">Fazer nosso código acessar o banco</h2>
 				</section>
 
 				<section>
@@ -103,8 +77,8 @@
 				</section>
 
 
-				<section>
-					<h2>DAS RUAS (jeito mundano)</h2>
+				<section data-background="#333">
+					<h2>Jeito Mundano</h2>
 
 					<ul>
 						<li class="fragment"><strong>Esquema do banco</strong> - Feito manualmente por fora da aplicação</li>
@@ -113,42 +87,42 @@
 				</section>
 
 
-				<section data-background="../2024/img/database-patterns/sql-1.png" data-background-size="80%">
-					<h2 style="background-color: #333; color: #FFF;">O esquema do banco</h2>
-                    <br><br><br><br><br><br><br><br><br>
+				<section>
+					<h2>O esquema do banco</h2>
+					<img src="img/database-patterns/sql-1.png" alt="">
 				</section>
 
 				<section>
-					<img src="img/database-patterns/phpmyadmin.svg" alt="">
-				</section>
-                
-				<section data-background-size="90%" data-background="../2024/img/database-patterns/mysqli.png">
-					<h2 style="background-color: #333; color: #FFF;">PHP com MySQLi</h2>
-                    <br><br><br><br><br><br><br><br><br>
+					<h2>PHP com MySQLi</h2>
+					<img src="img/database-patterns/mysqli.png" alt="">
 				</section>
 
-				<section data-background="../2024/img/database-patterns/pdo.png" data-background-size="100%"> 
+				<section>
 					<h2>PHP com PDO</h2>
-					<br><br><br><br><br><br><br> <br><br>
+					<img src="img/database-patterns/pdo.png" alt="">
 				</section>
 
-				<section data-background="../2024/img/database-patterns/mysql2-1.png" data-background-size="90%">
+				<section>
 					<h2>NodeJS com mysql2</h2>
-					<br><br><br><br><br><br><br> <br><br>
-
+					<img src="img/database-patterns/mysql2-1.png" alt="">
 				</section>
 
-				<section data-background="../2024/img/database-patterns/mysql2-2.png" data-background-size="90%">
+				<section>
 					<h2>NodeJS com mysql2</h2>
-					<br><br><br><br><br><br><br><br>
-				</section>
-				<section data-background="../2025/img/database-patterns/python.png" data-background-size="90%">
-					<h2 style="color: white">Python com mysql</h2>
-					<br><br><br><br><br><br><br><br>
+					<img src="img/database-patterns/mysql2-2.png" alt="">
 				</section>
 
-				<section data-background-image="img/database-patterns/access01.png"  data-background-color="#333">
+				<section>
+					<div class="mermaid">
+					  <pre>
+						%%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						flowchart LR
+						    codigo(Nosso código) <--> db[(Banco de Dados)]
+						  
+					  </pre>
+					</div>
 				</section>
+
 
 				<section data-background="#333">
 					<h2>ACTIVE RECORD</h2>
@@ -167,57 +141,26 @@
 							<p><em><strong class="fragment highlight-red">Um objeto que envolve uma linha em uma tabela</strong> ou exibição de banco de dados, encapsula o acesso ao banco de dados e <strong>adiciona lógica de domínio a esses dados</strong>.</em></p>
 						</div>
 						<div>
-							<img class="fragment" width="1400px" src="../2024/img/database-patterns/livro-patterns-fowler.png" alt="">
+							<img width="1400px" src="img/database-patterns/livro-patterns-fowler.png" alt="">
 						</div>
 					</div>
 				</section>
 
-                <section data-background-size="90%" data-background="img/database-patterns/codigo-ar-01.png">
+                <section>
+                    <img width="60%" src="img/database-patterns/active-record-02.png" alt="">
                 </section>
 
-
-                <section data-background-size="100%" data-background="img/database-patterns/codigo-ar-02.png">
+                <section data-background="#333">
+                    <img src="img/database-patterns/acitve-record-01.png" alt="">
                 </section>
-
-
-
-                <section data-background-size="100%" data-background="img/database-patterns/codigo-ar-03.png">
-                </section>
-
-				
-
-				<section>
-                    <pre data-id="code-animation"><code style="max-height: 600px; font-size: 3rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|2|5,6,7,8|10">
-						// buscar todos
-						Produto::all(); // array de objetos Produto
-						
-						// criar um novo
-						$p = new Produto();
-						$p->nome = 'Ypioca';
-						$p->quantidade = 10;
-						$p->valor = 15.99;
-						
-						$p->save();
-  </code></pre>
-                </section>
-
-				<section data-background="img/database-patterns/javascripto.png" data-background-size="80%">
-					<span style="background-color: white;">E no javascripto?</span>
-				</section>
-
-				<section data-background="../2024/img/database-patterns/mysql2-3.png" data-background-size="80%">
-</section>
 
                 <section>
-					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2.5rem; line-height: 3rem;"  class="hljs javascript" data-trim data-line-numbers="|2|5,6,7,8|10">
-						let p = new Product(
-							"Ypioca (sem metanol)"
-						);
-						p.valor = 19.89;
-						
-						p.save();
-  </code></pre>
+                    <img width="60%" src="img/database-patterns/active-record-03.png" alt="">
+                </section>
 
+                <section>
+					<p>E no Javascripto?</p>
+                    <img class="fragment" width="60%" src="img/database-patterns/mysql2-3.png" alt="">
                 </section>
 
 				<section>
@@ -231,31 +174,38 @@
 					</ul>
 				</section>
 
-				<section data-background="../2024/img/database-patterns/eloquent.png" data-background-size="90%">
+				<section>
 					<h2>PHP: Eloquent</h2>
+					<img src="img/database-patterns/eloquent.png" alt="">
 				</section>
 
-				<section data-background="../2024/img/database-patterns/sequelize-1.png" data-background-size="90%">
+				<section>
 					<h2>JS: Sequelize</h2>
-					<br><br><br><br><br><br>
+					<img src="img/database-patterns/sequelize-1.png" alt="">
 				</section>
 
-				<section data-background="../2024/img/database-patterns/prisma-1.png" data-background-size="70%">
+				<section>
 					<h2>JS: Prisma</h2>
-					<br><br><br><br><br><br><br><br><br><br><br>
+					<img src="img/database-patterns/prisma-1.png" alt="">
 				</section>
 
-				<section data-background="img/database-patterns/access02.png">
+				<section>
+					<div class="mermaid">
+					  <pre>
+						%%{init: {'theme': 'light', 'themeVariables': { 'darkMode': false }}}%%
+						flowchart LR
+						    codigo(Nosso código) <--> m[Model] <--> db[(Banco de Dados)]
+						  
+					  </pre>
+					</div>
 				</section>
 
 				<section>
 					<p class="r-fit-text">DATA MAPPER</p>
 				</section>
 
-				<section data-background="#990000" >
-                    <p style="font-size: 4rem;">
-                        não confunda com <strong>Data Mapping</strong>
-                    </p>
+				<section data-background="#990000">
+					não confunda com <strong>Data Mapping</strong>
 				</section>
 
 				<section data-background="#333">
@@ -281,66 +231,18 @@
 				</section>
 
 				<section>
-					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|1|6,9,13,16|4,5,8">
-#[ORM\Entity)]
-class City extends AbstractEntity
-{
-    #[ORM\Id]
-    #[ORM\Column(type: UuidType::NAME)]
-    private Uuid $id;
-
-    #[ORM\Column(length: 100)]
-    private readonly string $name;
-
-    #[ORM\ManyToOne(targetEntity: State::class)]
-    #[ORM\JoinColumn(name: 'state_id', referencedColumnName: 'id')]
-    private readonly State $state;
-
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private readonly ?int $cityCode;
-  </code></pre>
-
-                </section>
-
-				<section data-background="img/database-patterns/codigo-el-01.png" data-background-size="90%">
-					
-				</section>
-
-				<section>
-					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|2|5|6">
-$repository = $connection->getRepository(
-	City::class
-);
-
-$repository->findAll(); //SELECT * FROM
-$repository->find(42); //WHERE id=42
-  </code></pre>
-
-                </section>
-
-				<section>
-					<pre data-id="code-animation"><code style="max-height: 600px; font-size: 2rem; line-height: 3rem;"  class="hljs php" data-trim data-line-numbers="|1,2|4|5">
-$city = new City('Parnaiba');
-$city->setState($piaui);
-
-$connection->getEntityManager()
-	->persist($city);
-  </code></pre>
-
-                </section>
-				<section>
 					<h2>PHP: Doctrine</h2>
-					<img src="../2024/img/database-patterns/doctrine.png" width="80%" alt="">
+					<img src="img/database-patterns/doctrine.png" width="80%" alt="">
 				</section>
 
-				<section data-background="../2024/img/database-patterns/doctrine-xml.png" data-background-size="90%">
+				<section>
 					<h2>PHP: Doctrine (XML)</h2>
-					<Br><Br><Br><Br><Br><Br><Br><Br><Br><Br>
+					<img src="img/database-patterns/doctrine-xml.png" width="100%" alt="">
 				</section>
 
 				<section>
 					<h2>PHP: Doctrine</h2>
-					<img src="../2024/img/database-patterns/doctrine.png" width="80%" alt="">
+					<img src="img/database-patterns/doctrine.png" width="80%" alt="">
 				</section>
 
 				<section data-background="#333">
@@ -349,7 +251,7 @@ $connection->getEntityManager()
 
 				<section>
 					<h2>JS: TypeORM*</h2>
-					<img src="../2024/img/database-patterns/typeorm-1.png" width="80%" alt="">
+					<img src="img/database-patterns/typeorm-1.png" width="80%" alt="">
 				</section>
 
 				<section>
@@ -394,6 +296,7 @@ $connection->getEntityManager()
 					  </div>
 				</section>
 
+				<section data-background="../img/gifs/isso_e_tudo_pessoal.gif"></section>
 
 				<section data-background="">
 					<h2 style="color: #333">Repository Pattern</h2>
@@ -417,6 +320,13 @@ $connection->getEntityManager()
 					<hr>
 					<h3>E é isso</h3>
 					<hr>
+				</section>
+
+				<section data-background="#333">
+					<p style="font-size: 5rem;">
+						Como dizia minha ex:  <br>
+						<span class="fragment" style="font-size: 8rem;">Terminamos</span>
+					</p>
 				</section>
 
 				<section>
@@ -446,7 +356,7 @@ $connection->getEntityManager()
 					</ul>
 				</section>
 
-				<section style="font-size: 3.5rem;">
+				<section>
 					Valeu o Boi, valeu o Vaqueiro
 
 					<br><br><br>
