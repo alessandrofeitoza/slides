@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Problemático</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        h1 { text-align: center; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        select, input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        #resultado { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; }
+        .sucesso { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Finalizar Compra</h1>
+    
+    <div class="form-group">
+        <label>Valor Total do Carrinho (R$):</label>
+        <input type="number" id="valorTotal" placeholder="Ex: 150.00" value="100">
+    </div>
+
+    <div class="form-group">
+        <label>Método de Envio (Transportadora):</label>
+        <select id="metodoEnvio">
+            <option value="correios_sedex">Correios SEDEX (Rápido)</option>
+            <option value="correios_pac">Correios PAC (Normal)</option>
+            <option value="fedex">FedEx (Internacional)</option>
+            </select>
+    </div>
+
+    <div class="form-group">
+        <label>Tipo de Cliente (Cupom):</label>
+        <select id="tipoCliente">
+            <option value="comum">Cliente Comum</option>
+            <option value="premium">Cliente Premium (10% OFF)</option>
+            <option value="vip">Cliente VIP (20% OFF + Frete Grátis no SEDEX)</option>
+        </select>
+    </div>
+
+    <button id="btnCalcular">Calcular Total com Frete e Desconto</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+    function processarPedido() {
+        const valorCarrinho = parseFloat(document.getElementById('valorTotal').value);
+        const metodoEnvio = document.getElementById('metodoEnvio').value;
+        const tipoCliente = document.getElementById('tipoCliente').value;
+        const divResultado = document.getElementById('resultado');
+
+        if (isNaN(valorCarrinho) || valorCarrinho <= 0) {
+            alert("Por favor, insira um valor válido.");
+            return;
+        }
+
+        let valorFrete = 0;
+        let desconto = 0;
+
+
+        if (metodoEnvio === 'correios_sedex') {
+            valorFrete = 30.00;
+        } else if (metodoEnvio === 'correios_pac') {
+            valorFrete = 15.00;
+        } else if (metodoEnvio === 'fedex') {
+            valorFrete = 80.00 + (valorCarrinho * 0.05); // Taxa extra de 5% sobre o valor
+        } else {
+            valorFrete = 0; // Default perigoso
+        }
+
+        if (tipoCliente === 'premium') {
+            desconto = valorCarrinho * 0.10; // 10% OFF
+        } else if (tipoCliente === 'vip') {
+            desconto = valorCarrinho * 0.20; // 20% OFF
+            
+            if (metodoEnvio === 'correios_sedex') {
+                console.log("Aplicando Regra Especial: Frete VIP Grátis no SEDEX");
+                valorFrete = 0;
+            }
+        }
+
+        const valorFinal = valorCarrinho + valorFrete - desconto;
+
+        divResultado.style.display = 'block';
+        divResultado.className = 'sucesso';
+        divResultado.innerHTML = `
+            <strong>Resumo do Pedido:</strong><br>
+            Produtos: R$ ${valorCarrinho.toFixed(2)}<br>
+            Frete (${metodoEnvio.toUpperCase()}): R$ ${valorFrete.toFixed(2)}<br>
+            Desconto (${tipoCliente.toUpperCase()}): R$ ${desconto.toFixed(2)}<br>
+            <hr>
+            <strong>Total a Pagar: R$ ${valorFinal.toFixed(2)}</strong>
+        `;
+    }
+
+    document.getElementById('btnCalcular').addEventListener('click', processarPedido);
+
+</script>
+
+</body>
+</html>
