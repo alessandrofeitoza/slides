@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Aula 17 - Cultura DevOps e O Projeto Fênix</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+
+    <style>
+        .highlight { color: #42afff; font-weight: bold; }
+        .alert { color: #ff5e5e; font-weight: bold; }
+        .fragment.blur { filter: blur(5px); }
+        .fragment.blur.visible { filter: none; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h3>Aula 17: Cultura DevOps</h3>
+            <h2 class="highlight">O Projeto Fênix</h2>
+            <p>Quebrando Silos e Criando Fluxo</p>
+            <aside class="notes">
+                Inicie perguntando quem já sentiu que o trabalho é só apagar incêndio.
+            </aside>
+        </section>
+
+        <section>
+            <h3>O Cenário: Parts Unlimited</h3>
+            <ul>
+                <li class="fragment">Empresa à beira da falência.</li>
+                <li class="fragment">Projeto <span class="highlight">Fênix</span>: A última esperança.</li>
+                <li class="fragment">Realidade: Atrasado, instável e caro.</li>
+            </ul>
+            <blockquote class="fragment" style="margin-top: 20px; font-size: 0.8em;">
+                "TI não é um departamento; é a competência estratégica da empresa."
+            </blockquote>
+        </section>
+
+        <section>
+            <h3>O "Muro da Confusão"</h3>
+            <div style="display: flex; justify-content: space-around; align-items: center;">
+                <div style="background: #2a2a2a; padding: 20px; border-radius: 10px;">
+                    <h4 style="color: #42afff;">DEV</h4>
+                    <p style="font-size: 0.7em;">Meta: <b>Mudança</b><br>(Novas Features)</p>
+                </div>
+                <div style="font-size: 2em;">🧱</div>
+                <div style="background: #2a2a2a; padding: 20px; border-radius: 10px;">
+                    <h4 style="color: #ff5e5e;">OPS</h4>
+                    <p style="font-size: 0.7em;">Meta: <b>Estabilidade</b><br>(Manter no Ar)</p>
+                </div>
+            </div>
+            <p class="fragment" style="margin-top: 30px; font-size: 0.9em;">Resultado: Culpa, lentidão e silos.</p>
+        </section>
+
+        <section>
+            <h3>Os 4 Tipos de Trabalho</h3>
+            <ol>
+                <li class="fragment"><span class="highlight">Projetos de Negócio:</span> O que gera receita.</li>
+                <li class="fragment"><span class="highlight">Projetos de TI:</span> Infra, updates, segurança.</li>
+                <li class="fragment"><span class="highlight">Mudanças (Changes):</span> Tickets, pequenos pedidos.</li>
+                <li class="fragment"><span class="alert">Trabalho Não Planejado:</span> O vilão (Bugs, quedas).</li>
+            </ol>
+            <p class="fragment" style="font-size: 0.8em; border: 1px dashed #777; padding: 10px;">
+                Quanto mais <b>trabalho não planejado</b>, menos tempo para o <b>negócio</b>.
+            </p>
+        </section>
+
+        <section>
+            <section>
+                <h3>O 1º Caminho: <span class="highlight">FLUXO</span></h3>
+                <p>Da Esquerda para a Direita (Dev → Ops)</p>
+                <img width="100%" src="https://itrevolution-com.translate.goog/wp-content/uploads/2022/03/first-way2.png.webp?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=sge" style="background: white;">
+            </section>
+            <section>
+                <h4>Como acelerar?</h4>
+                <ul>
+                    <li>Tornar o trabalho visível (Kanban).</li>
+                    <li>Reduzir o tamanho dos lotes.</li>
+                    <li>Limpar o "WIP" (Work In Progress).</li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <h3>O 2º Caminho: <span class="highlight">FEEDBACK</span></h3>
+            <p>Da Direita para a Esquerda (Ops → Dev)</p>
+            <ul>
+                <li class="fragment">O sistema deve avisar quando falha.</li>
+                <li class="fragment"><b>Corda de Andon:</b> Qualquer um pode parar a linha.</li>
+                <li class="fragment">Corrigir na fonte, não "deixar para depois".</li>
+            </ul>
+        </section>
+
+        <section>
+            <img src="https://itrevolution-com.translate.goog/wp-content/uploads/2022/03/second-way1.png.webp?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc" width="80%" alt="">
+        </section>
+
+        <section>
+            <h3>O 3º Caminho: <span class="highlight">APRENDIZADO</span></h3>
+            <p>Cultura de Experimentação e Risco</p>
+            <ul>
+                <li class="fragment">Post-mortems <span class="highlight">sem culpa</span> (Blameless).</li>
+                <li class="fragment">Transformar erros em conhecimento.</li>
+                <li class="fragment">Injetar falhas para treinar a resiliência.</li>
+            </ul>
+        </section>
+        
+        <section>
+            <img src="https://itrevolution-com.translate.goog/wp-content/uploads/2022/03/third-way.png.webp?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=sge" alt="">
+        </section>
+
+        <section>
+            <h3>O "Gargalo" chamado Brent</h3>
+            <p class="fragment">Brent é o cara que sabe tudo e resolve tudo.</p>
+            <h4 class="fragment alert">Problema:</h4>
+            <p class="fragment">Nada anda sem o Brent. Ele é o gargalo do sistema.</p>
+            <p class="fragment highlight" style="font-size: 1.2em;">Se a informação não está no processo, ela não existe.</p>
+        </section>
+
+        <section>
+            <h3>DevOps é sobre <span class="highlight">PESSOAS</span></h3>
+            <p>Ferramentas (Docker, IA) servem à Cultura.</p>
+            <div class="fragment" style="background: #333; padding: 20px;">
+                <p>Próximo Passo: <b>Automação e CI/CD</b></p>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: 'c/t',
+        transition: 'slide'
+    });
+</script>
+</body>
+</html>

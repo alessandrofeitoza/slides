@@ -1,0 +1,411 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Do Caos à Ordem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/white.css">
+
+    <link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+</head>
+
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h2>Do Caos à Ordem</h2>
+            <p>Refinamento, Modelagem e Design de Software</p>
+        </section>
+
+            <section>
+                <h3>Bloco 1: Do Caos à Ordem</h3>
+                <p>Foco: Refinamento, Modelagem e SOLID</p>
+            </section>
+
+            <!--<section style="display: none">
+                <h4>Warm-up (30 min)</h4>
+                <ul>
+                    <li class="fragment">Apresentar código procedural e complexo</li>
+                    <li class="fragment">Identificar riscos de manutenção</li>
+                    <li class="fragment">Criar incômodo técnico</li>
+                    <li class="fragment">Motivar uso de POO</li>
+                </ul>
+            </section>-->
+
+        <section>
+            <h3>Warm-up: O Código "Macarrônico"</h3>
+            <p>Por que sistemas falham ao crescer?</p>
+        </section>
+        <section>
+            <h4>O Antipattern: O método de deus</h4>
+            <pre><code class="hljs python" data-trim>
+def processar_tudo(pedido):
+    # 500 linhas de if/else
+    if pedido.tipo == "AULAS_MENSAIS":
+        if pedido.valor > 100000:
+            enviar_para_plenario()
+    elif pedido.tipo == "AULAS_QUINZENAIS":
+        if aluno.idade < 5:
+            alocar_piscina_aquecida()
+                    </code></pre>
+            <p class="fragment" style="color: #ff5555;">Riscos: Rigidez, Fragilidade e Imobilidade.</p>
+        </section>
+        <section data-auto-animate="">
+            <h4>Mais um método de deus</h4>
+            <pre data-id="code-animation"><code class="hljs python" data-trim data-line-numbers="|1|2|3|11">
+function processarPedido() {
+    if (metodoEnvio === 'correios_sedex') {
+        valorFrete = 30.00;
+    } else if (metodoEnvio === 'correios_pac') {
+        valorFrete = 15.00;
+    } else if (metodoEnvio === 'fedex') {
+        valorFrete = 80.00 + (valorCarrinho * 0.05); // Taxa extra de 5% sobre o valor
+    } else {
+        valorFrete = 0; // Default perigoso
+    }
+    return valorFrete;
+}
+                    </code></pre>
+        </section>
+        <section data-auto-animate="">
+            <h4>E quando precisamos modificar</h4>
+            <pre data-id="code-animation"><code class="hljs python" data-trim data-line-numbers="|8-10|">
+function processarPedido() {
+    if (metodoEnvio === 'correios_sedex') {
+        valorFrete = 30.00;
+    } else if (metodoEnvio === 'correios_pac') {
+        valorFrete = 15.00;
+    } else if (metodoEnvio === 'fedex') {
+        valorFrete = 80.00 + (valorCarrinho * 0.05); // Taxa extra de 5% sobre o valor
+    } else if (metodoEnvio === 'retirada') {
+        valorFrete = 0;
+    } else {
+        valorFrete = 0; // Default perigoso
+    }
+    return valorFrete;
+}
+                    </code></pre>
+        </section>
+
+        <section>
+            <div style="text-align: left;">
+                <h3><em>Decomposição</em></h3>
+                <hr>
+                <p class="fragment">
+                    do Latim, <em style="color: red;">decomposito/decomponere</em>
+                </p>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <strong><em> de-</em></strong> (negação/remoção/separação) <br>
+
+                    <strong><em> composito-</em></strong> ( <em>colocar/compor</em>, junto/composto) <br>
+                    <br>
+                    "Decompor uma frase, Decompor um problema em problemas menores"
+                </p>
+            </div>
+        </section>
+
+
+            <section>
+                <h4>Arquitetura e <span style="color: red;">Decomposição</span></h4>
+                <hr>
+                <ul>
+                    <li class="fragment"><strong>Domínio</strong> do problema → solução</li>
+                    <li class="fragment">Identificar <strong>entidades</strong></li>
+                    <li class="fragment">Definir <strong>Agregados</strong></li>
+                    <li class="fragment">Modelar <strong>comportamentos</strong></li>
+                    <li class="fragment">Evitar pensar apenas em <strong>tabelas</strong></li>
+                </ul>
+            </section>
+
+        <section>
+            <h4>Abstração do Domínio</h4>
+            <img src="img/flow.png" width="70%" alt="">
+        </section>
+
+        <section>
+            <h3>O <em>dominio</em> é o coração do software</h3>
+            <hr>
+            <p class="fragment">o que o sistema faz, independente da tecnologia</p>
+        </section>
+
+        <section data-background="#333">
+            <h3>Qual a pergunta norteadora?</h3>
+            <hr>
+            <h2 class="fragment">Qual problema queremos resolver?</h2>
+        </section>
+
+        <section>
+            <h3>Modelagem de Software: Entidades</h3>
+            <hr>
+            <p class="fragment"><strong>Identificar</strong> entidades (o que é)</p>
+            <p class="fragment"><strong>comportamentos</strong> (o que faz)</p>
+            <p class="fragment"><strong>relacionamentos</strong> (com quem faz)</p>
+        </section>
+
+        <section>
+            <h4>Exemplo em PHP: A Entidade Projeto</h4>
+            <pre><code class="hljs php">
+class Projeto {
+    private int $id; // Identidade única
+    private string $nome;
+    private float $valorOrcado;
+
+    public function __construct(int $id, string $nome, float $valor) {
+        $this->id = $id;
+        $this->nome = $nome;
+        $this->valorOrcado = $valor;
+    }
+
+}
+</code></pre>
+
+        </section>
+
+        <section>
+            <h3>Agregados</h3>
+            <hr>
+            <p class="fragment"><strong>Agregados</strong> são grupos de entidades que estão fortemente relacionadas e devem ser tratadas como uma unidade.</p>
+        </section>
+        <section data-background="#333">
+            <p class="fragment"><strong>Raiz do Agregado:</strong> A entidade principal que controla o acesso às outras entidades do agregado.</p>
+            <p class="fragment"><strong>Exemplo:</strong> Em um sistema de e-commerce, um <em>Pedido</em> pode ser um agregado que contém entidades como <em>ItemPedido</em>, <em>Pagamento</em> e <em>Cliente</em>. O <em>Pedido</em> seria a raiz do agregado, controlando o acesso e as regras de negócio relacionadas a ele.</p>
+        </section>
+
+        <section data-background="img/agregados.png"></section>
+
+
+        <section>
+            <h4>Exemplo em PHP: Agregado Orçamento</h4>
+            <pre><code class="hljs php">
+class Orcamento {
+    private array $lancamentos = [];
+
+    // O Agregado garante a consistência:
+    // Não posso adicionar lançamento se o orçamento estiver fechado.
+    public function adicionarLancamento(float $valor, string $descricao) {
+        if ($this->estaFechado()) {
+            throw new Exception("Orçamento encerrado!");
+        }
+        $this->lancamentos[] = new Lancamento($valor, $descricao);
+    }
+}
+</code></pre>
+
+        </section>
+
+        <section>
+            <h3>Modelar Comportamentos</h3>
+            <hr>
+            <p class="fragment"><strong>Comportamento:</strong> O que a entidade faz, suas ações e regras de negócio.</p>
+        </section>
+        <section data-background="#333">
+            <p class="fragment"><strong>Dados:</strong> O que a entidade é, suas propriedades e atributos.</p>
+            <p class="fragment"><strong>Evitar:</strong> Pensar apenas em dados (tabelas) e esquecer do comportamento (regras de negócio).</p>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Exemplo bom</h3>
+
+            <pre data-id="code-animation"><code class="hljs php">
+class Orcamento {
+    private float $valorTotal;
+
+    public function setValorTotal(float $valor) {
+        $this->valorTotal = $valor;
+    }
+}
+</code></pre>
+        </section>
+        <section data-auto-animate>
+            <h3>Exemplo bom</h3>
+
+            <pre  data-id="code-animation"><code class="hljs php" data-line-numbers="4,5,6">
+class Orcamento {
+    private float $valorTotal;
+
+    public function processarPagamento(float $valor) {
+        // regras e validações...
+        $this->valorTotal += $valor; // ou -=
+    }
+}
+</code></pre>
+        </section>
+
+        <section>
+            <h4>Exemplo em PHP: Comportamento vs. Dados</h4>
+            <pre ><code class="hljs php">
+class Projeto {
+    private string $status;
+
+    // Ruim: setStatus("Atrasado") -> Alguém fora da classe decide.
+    // Bom: O comportamento abaixo encapsula a regra de negócio.
+    public function verificarAtraso(DateTime $prazo): void {
+        if (new DateTime() > $prazo) {
+            $this->status = "Atrasado";
+            $this->notificarGerente();
+        }
+    }
+
+}
+</code></pre>
+
+        </section>
+
+
+        <section>
+            <h3>Evitar pensar em tabelas</h3>
+            <hr>
+            <p class="fragment">É sempre bom lembrar que uma classe Usuario pode salvar em 3 lugares ao mesmo tempo</p>
+        </section>
+        <section>
+            <h4>Exemplo em PHP: Desacoplamento do Banco (Repository)</h4>
+            <pre><code class="hljs php">
+// O código de negócio não sabe que existe SQL.
+// Ele pede ao "Repositório" o que precisa.
+class ProjetoRepository {
+    public function buscarAtivos(): array {
+        // Aqui dentro pode ter um SELECT complexo,
+        // mas para o resto do sistema, são apenas objetos.
+        return $this->db->query("SELECT * FROM projetos WHERE status = 'Ativo'");
+    }
+}
+</code></pre>
+        </section>
+        <section>
+                <h3>Problema 01</h3>
+                <a href="https://gist.github.com/alessandrofeitoza/05948e207242cef2424e09b0a66951cc">Gist</a>
+            </section>
+
+            <section>
+                <h3>Problema 02</h3>
+                <a href="https://gist.github.com/alessandrofeitoza/45c950cb45a0a845bcfef34859633aa1">Gist</a>
+            </section>
+
+            <section>
+                <h3>Problema 01</h3>
+                <a href="https://gist.github.com/alessandrofeitoza/50c94407ac94027d36fa80fa7db744b1">Gist</a>
+            </section>
+
+            <section>
+                <h4>SOLID na Prática </h4>
+                <ul>
+                    <li class="fragment">Cadê a Responsabilidade Única</li>
+                    <li class="fragment">violação do OCP</li>
+                    <li class="fragment">if/else crescente</li>
+                    <li class="fragment">Falta de polimorfismo</li>
+                    <li class="fragment">Falta de Strategy</li>
+                </ul>
+            </section>
+
+            <section>
+                <h4>Intervalo (30 min)</h4>
+            </section>
+
+            <section>
+                <h3>Bloco 2: Mão na Massa</h3>
+                <p>Foco: Implementação e Refatoração</p>
+            </section>
+
+            <section>
+                <h4>Workshop: Desafio do Legado</h4>
+                <ul>
+                    <li class="fragment">Dividir em grupos</li>
+                    <li class="fragment">Código com mlasse "deus"</li>
+                    <li class="fragment">Ex: Pedido que faz tudo</li>
+                    <li class="fragment">Refatorar usando patterns</li>
+                    <li class="fragment">Strategy (impostos)</li>
+                    <li class="fragment">Observer (notificações)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h4>Implementação com Testes (TDD)</h4>
+                <ul>
+                    <li class="fragment">Escrever teste primeiro</li>
+                    <li class="fragment">Forçar desacoplamento</li>
+                    <li class="fragment">Melhorar design naturalmente</li>
+                    <li class="fragment">Classes mais simples</li>
+                </ul>
+            </section>
+
+            <section>
+                <h4>Showcase e Debate</h4>
+                <ul>
+                    <li class="fragment">Apresentação por grupo</li>
+                    <li class="fragment">Explicar decisões</li>
+                    <li class="fragment">Justificar arquitetura</li>
+                    <li class="fragment">Discutir trade-offs</li>
+                    <li class="fragment">Não focar só no código</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Dicas de Sucesso</h3>
+            </section>
+
+            <section>
+                <ul>
+                    <li class="fragment">Evitar exemplos infantis</li>
+                    <li class="fragment">Usar domínio real (financeiro, saúde, logística)</li>
+                    <li class="fragment">Focar em problemas reais</li>
+                </ul>
+            </section>
+
+            <section>
+                <ul>
+                    <li class="fragment">Priorizar composição sobre herança</li>
+                    <li class="fragment">Evitar hierarquias rígidas</li>
+                    <li class="fragment">Manter flexibilidade</li>
+                </ul>
+            </section>
+
+            <section>
+                <ul>
+                    <li class="fragment">Criar starter kit</li>
+                    <li class="fragment">Repositório pronto</li>
+                    <li class="fragment">Evitar perda de tempo com setup</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Itens para Apresentação</h3>
+            </section>
+
+            <section>
+                <ul>
+                    <li class="fragment">Diagramas de sequência</li>
+                    <li class="fragment">Fluxo entre objetos</li>
+                    <li class="fragment">Quem chama quem</li>
+                </ul>
+            </section>
+
+            <section>
+                <ul>
+                    <li class="fragment">Tabela de trade-offs</li>
+                    <li class="fragment">Solução simples vs robusta</li>
+                    <li class="fragment">Custo vs flexibilidade</li>
+                </ul>
+            </section>
+
+        <section>
+            <h2>Encerramento</h2>
+            <p>De código que funciona → código que escala</p>
+        </section>
+
+    </div>
+</div>
+
+<script src="../../dist/reveal.js"></script>
+<script src="../../plugin/notes/notes.js"></script>
+<script src="../../plugin/markdown/markdown.js"></script>
+<script src="../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

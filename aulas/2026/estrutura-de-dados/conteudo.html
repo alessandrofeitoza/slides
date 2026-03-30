@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ARA0098 - Fundamentos de Dados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css">
+    <style>
+        .highlight-blue { color: #42afff; font-weight: bold; }
+        .highlight-red { color: #ff5e5e; font-weight: bold; }
+        .code-small { font-size: 1.5rem !important; }
+
+        code {
+            font-size: 3rem;
+            line-height: 3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section data-background="#111">
+            <hr>
+            <h2>Fundamentos de Dados</h2>
+            <h4 style="background-color: #f1c40f; color: #000;">Antes de correr, precisamos andar</h4>
+            <p>Tipos, Coleções e Repetições</p>
+            <hr>
+        </section>
+
+        <section data-background="#222">
+            <h3>1. Tipos Primitivos</h3>
+            <p>O átomo da informação.</p>
+            <pre><code class="javascript" data-trim>
+let nome = "Chiquim"; // String
+let idade = 42; // Number
+let ativo = true; // Boolean
+let nulo = null; // Vazio intencional
+                </code></pre>
+        </section>
+
+        <section>
+            <h2>O que é nada?</h2>
+            <pre><code class="javascript" data-trim>
+let nome = ""; // String vazia
+let idade = 0; // Number vazio
+let nulo = null;  // Vazio absoluto
+                </code></pre>
+        </section>
+
+        <section>
+            <p style="font-size: 4rem;">
+                <em>O nada é diferente do vazio</em>
+            </p>
+        </section>
+
+
+
+        <section data-background="#333">
+            <h3>2. Arrays (Vetores)</h3>
+            <p>Uma gaveta com várias divisórias.</p>
+            <pre><code class="javascript" data-trim>
+let frutas = [
+    "🍎",
+    "🍌",
+    "🍇",
+];
+
+console.log(frutas[0]);
+// Acesso direto via Índice
+                </code></pre>
+
+        </section>
+
+        <section data-background="#333">
+            <p>⚠️ <span class="highlight-red">Toda String é um Array de caracteres!</span></p>
+            <pre class="fragment"><code class="javascript" data-trim>
+let texto = "DADOS";
+
+console.log(texto[0]);
+
+// "D"
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>Arrays Multidimensionais</h3>
+            <p>Gavetas dentro de gavetas (Matrizes).</p>
+            <pre><code class="javascript" data-trim>
+let tabuleiro = [
+    [1, 2, 3], // Linha 0
+    [4, 5, 6], // Linha 1
+    [7, 8, 9]  // Linha 2
+];
+console.log(tabuleiro[1][1]);
+
+// 5
+                </code></pre>
+        </section>
+
+        <section data-background="#1a1a1a">
+            <h3>3. Objetos (Dicionários)</h3>
+            <p>Chave e Valor.</p>
+            <pre><code class="javascript" data-trim>
+const user = {
+    id: 1,
+    nome: "Zezo",
+    skills: ["JS", "PHP"] // Objeto com Array
+};
+             </code></pre>
+        </section>
+
+        <section data-background="#1a1a1a">
+            <h3>3. Objetos (Dicionários)</h3>
+            <p>Chave e Valor.</p>
+            <pre><code class="javascript" data-trim>
+
+const lista = [
+    {id: 1, nome: "José"},
+    {id: 2, nome: "Ari"}
+]; // Array de Objetos
+                </code></pre>
+        </section>
+
+        <section data-background="#2c3e50">
+            <h3>4. Estruturas de Repetição</h3>
+            <p>Como processar muitos dados?</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|2|5|8">
+// FOR Clássico (Controle total)
+for (let i = 0; i < 5; i++) { ... }
+
+// FOR...OF (Iterar valores de um array)
+for (let fruta of frutas) { ... }
+
+// WHILE (Enquanto uma condição for real)
+while (saldo > 0) { ... }
+                </code></pre>
+        </section>
+
+        <section data-background="#1e272e">
+            <div style="text-align: left;">
+                <h3>Conceito: <span class="highlight-blue">Iterar</span></h3>
+                <hr>
+                <p class="fragment">Do latim <i>iterare</i>: "Repetir", "Fazer de novo".</p>
+                <p class="fragment">Na computação: É o ato de <strong>percorrer</strong> uma coleção de dados, um por um, para processá-los.</p>
+                <div class="fragment" style="background: #333; padding: 10px; border-left: 5px solid #f1c40f;">
+                    <p style="font-size: 0.8em;">Imagine um carteiro passando em cada casa de uma rua. A rua é o <strong>Array</strong>, e o ato de entregar a carta é a <strong>Iteração</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h1>LIFO vs FIFO</h1>
+        </section>
+
+        <section data-background="#4b7bec">
+            <div style="text-align: left;">
+                <h2 style="background-color: #FFF; color: #000; display: inline-block; padding: 0 10px;">LIFO</h2>
+                <h3>Last In, First Out</h3>
+                <hr>
+                <p class="fragment">"O último a entrar é o <span class="highlight-red">primeiro</span> a sair."</p>
+                <p class="fragment">Imagine uma <strong>Pilha de Pratos</strong>: você coloca um em cima do outro. Qual você tira primeiro para não quebrar tudo?</p>
+                <div class="fragment" style="background: #333; padding: 10px; border-left: 5px solid #ff5e5e;">
+                    <p style="font-size: 0.8em;">Estrutura de Dados: <strong>Pilha (Stack)</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#333">
+            <h3>LIFO no dia a dia</h3>
+            <div style="display: flex; justify-content: space-around; align-items: center;">
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🥞</p>
+                    <p>Pilha de Panquecas</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">📦</p>
+                    <p>Caminhão de Mudança</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">↩️</p>
+                    <p>Botão "Desfazer"</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section data-auto-animate>
+            <h3>LIFO na Prática (JS)</h3>
+            <p>O Array se comporta como Pilha com <code>push</code> e <code>pop</code>.</p>
+            <pre data-id="code-lifo"><code class="javascript" data-trim data-line-numbers="|1|2-3|5|6">
+const pilha = [];
+
+pilha.push("Página A");
+pilha.push("Página B"); // Último a entrar
+
+console.log(pilha); // ["Página A", "Página B"]
+
+const saindo = pilha.pop(); // Tira o último!
+console.log(saindo); // "Página B"
+    </code></pre>
+        </section>
+
+        <section data-background="#20bf6b">
+            <div style="text-align: left;">
+                <h2 style="background-color: #FFF; color: #000; display: inline-block; padding: 0 10px;">FIFO</h2>
+                <h3>First In, First Out</h3>
+                <hr>
+                <p class="fragment">"O primeiro a entrar é o <span class="highlight-blue">primeiro</span> a sair."</p>
+                <p class="fragment">A justiça impera: Imagine uma <strong>Fila de Banco</strong>. Quem chegou primeiro, deve ser atendido primeiro.</p>
+                <div class="fragment" style="background: #333; padding: 10px; border-left: 5px solid #42afff;">
+                    <p style="font-size: 0.8em;">Estrutura de Dados: <strong>Fila (Queue)</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#1a1a1a">
+            <h3>FIFO no dia a dia</h3>
+            <div style="display: flex; justify-content: space-around; align-items: center;">
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🚶‍♂️🚶‍♀️🚶‍♂️</p>
+                    <p>Fila do Lotérica</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🖨️</p>
+                    <p>Fila de Impressão</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🚗</p>
+                    <p>Drive-thru</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section data-auto-animate>
+            <h3>FIFO na Prática (JS)</h3>
+            <p>Usamos <code>push</code> para entrar e <code>shift</code> para sair pela frente.</p>
+            <pre data-id="code-fifo"><code class="javascript" data-trim data-line-numbers="|1|2-3|5|6">
+const fila = [];
+
+fila.push("Cliente 1"); // Primeiro a entrar
+fila.push("Cliente 2");
+
+console.log(fila); // ["Cliente 1", "Cliente 2"]
+
+const atendido = fila.shift(); // Tira o primeiro da frente!
+console.log(atendido); // "Cliente 1"
+    </code></pre>
+        </section>
+
+        <section data-background="#333">
+            <h3>Resumo Visual</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Conceito</th>
+                    <th>Estrutura</th>
+                    <th>Regra</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td class="highlight-red">LIFO</td>
+                    <td>Pilha</td>
+                    <td>O último sai primeiro</td>
+                </tr>
+                <tr class="fragment">
+                    <td class="highlight-blue">FIFO</td>
+                    <td>Fila</td>
+                    <td>O primeiro sai primeiro</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section data-background="../img/gifs/confused.gif">
+            <h3 style="background: white; color: black;">E se eu percorrer (iterar)?</h3>
+            <p class="fragment" style="background: black; color: white;">Aí entra o <strong>Big O</strong>: quanto tempo eu levo para achar um item no meio da pilha ou no fim da fila?</p>
+        </section>
+
+
+        <section data-background="#2f3640">
+            <h3>Objetos "Built-in": <span class="highlight-blue">Date</span></h3>
+            <p>Nem todo objeto a gente cria do zero.</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1|3|4|5">
+const agora = new Date(); // Instanciando um objeto de data
+
+console.log(agora.getFullYear()); // 2026
+console.log(agora.toLocaleDateString('pt-BR')); // "30/03/2026"
+console.log(agora.getTime()); // Milissegundos desde 1970 (Timestamp)
+    </code></pre>
+            <p class="fragment" style="font-size: 0.7em;">💡 <i>Timestamp</i> é essencial para ordenar logs e mensagens em Estrutura de Dados!</p>
+        </section>
+
+        <section>
+            <h3>O "Arroz com Feijão" do Dev</h3>
+            <p>Array de Objetos (JSON Style)</p>
+            <pre><code class="javascript" data-trim>
+const alunos = [
+    { id: 101, nome: "Ana", notas: [8, 9, 10] },
+    { id: 102, nome: "Beto", notas: [5, 6, 4] },
+    { id: 103, nome: "Caio", notas: [7, 7, 8] }
+];
+
+// Acessando o nome do segundo aluno:
+console.log(alunos[1].nome); // "Beto"
+    </code></pre>
+        </section>
+
+        <section data-background="#4b7bec">
+            <h3>O conceito de <span style="color: yellow;">Callback</span></h3>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="flex: 1; text-align: left; font-size: 0.8em;">
+                    <p class="fragment">"Eu te ligo de volta!"</p>
+                    <p class="fragment">É uma função passada como <strong>argumento</strong> para outra função.</p>
+                    <p class="fragment">A função principal decide <strong>quando</strong> e <strong>como</strong> chamar a função que você enviou.</p>
+                </div>
+                <div style="flex: 1;" class="fragment">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJmNHJ3ZzRyeGZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JnB0X2lkPU1lZGlhJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l3vR67tS0K9V3tN60/giphy.gif" width="100%">
+                </div>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Callback: Exemplo Real</h3>
+            <pre data-id="code-anim"><code class="javascript" data-trim data-line-numbers="|1-4|6-10|12">
+// 1. A função que define o "O QUE" fazer
+const enviarEmail = (nome) => {
+    console.log(`📧 E-mail enviado para ${nome}`);
+};
+
+// 2. A função que define "QUANDO" fazer
+const salvarNoBanco = (nome, acaoFinal) => {
+    console.log(`💾 Salvando ${nome} no banco...`);
+    acaoFinal(nome); // Aqui o callback é executado!
+};
+
+salvarNoBanco("Feitoza", enviarEmail);
+    </code></pre>
+        </section>
+
+        <section>
+            <pre><code class="javascript">
+const welcome = (nome) => `Bem vinde ${nome}`;
+
+function login (email, senha) {
+
+    console.log(
+        welcome("seu zé")
+    );
+}
+            </code></pre>
+        </section>
+
+        <section data-background="#20bf6b">
+            <h3>Métodos de Array = <span style="color: #333;">Loops + Callbacks</span></h3>
+            <p>O <code>.map()</code> percorre (itera) e executa o seu callback para cada item.</p>
+            <pre><code class="javascript" data-trim>
+const nomes = ["Ana", "Beto", "Caio"];
+
+// O callback aqui é a função anônima: (n) => n.toUpperCase()
+const gritando = nomes.map(n => n.toUpperCase());
+
+console.log(gritando); // ["ANA", "BETO", "CAIO"]
+    </code></pre>
+        </section>
+
+        <section>
+            <div style="display: flex; justify-content: space-around;">
+                <div class="fragment">
+                    <h4>.map()</h4>
+                    <p style="font-size: 0.6em;">Transforma 1 para 1</p>
+                    <p style="font-size: 2rem;">🍎 🍌 🍇</p>
+                    <p style="font-size: 1rem;">⬇️</p>
+                    <p style="font-size: 2rem;">🧃 🥤 🍷</p>
+                </div>
+                <div class="fragment">
+                    <h4>.filter()</h4>
+                    <p style="font-size: 0.6em;">Filtra a coleção</p>
+                    <p style="font-size: 2rem;">🍎 🍌 🍇</p>
+                    <p style="font-size: 1rem;">⬇️ (somente 🍎)</p>
+                    <p style="font-size: 2rem;">🍎</p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#8e44ad">
+            <h3>5. Funções e Callbacks</h3>
+            <p>A função que é passada como "recado".</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1-3|5-7">
+function saudar(nome) {
+    console.log("Olá " + nome);
+}
+
+function processarUsuario(callback) {
+    callback("Aluno"); // Executa o "recado"
+}
+                </code></pre>
+        </section>
+
+        <section data-background="#b33939">
+            <h3>Métodos de "Modificação"</h3>
+            <p>Esses alteram o array <span class="highlight-red">original</span>.</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1|3|5|7|9">
+let frutas = ["🍎", "🍌"];
+
+frutas.push("🍇");     // Adiciona no fim -> ["🍎", "🍌", "🍇"]
+
+frutas.pop();          // Remove do fim -> ["🍎", "🍌"]
+
+frutas.unshift("🍓");  // Adiciona no início -> ["🍓", "🍎", "🍌"]
+
+frutas.shift();        // Remove do início -> ["🍎", "🍌"]
+    </code></pre>
+        </section>
+
+        <section data-background="#333">
+            <h3>Performance: O "Pulo do Gato"</h3>
+            <div style="display: flex; gap: 20px;">
+                <div class="fragment" style="flex: 1; border: 1px solid #2ecc71; padding: 10px;">
+                    <h4 style="color: #2ecc71;">Rápido</h4>
+                    <p><code>push</code> / <code>pop</code></p>
+                    <p style="font-size: 0.7em;">Você só mexe na última gaveta. Ninguém mais se move.</p>
+                </div>
+                <div class="fragment" style="flex: 1; border: 1px solid #e74c3c; padding: 10px;">
+                    <h4 style="color: #e74c3c;">Lento</h4>
+                    <p><code>unshift</code> / <code>shift</code></p>
+                    <p style="font-size: 0.7em;">Você mexe na primeira gaveta. <b>Todos</b> os outros itens precisam "pular" uma casa.</p>
+                </div>
+            </div>
+            <p class="fragment" style="margin-top: 20px; font-size: 0.8em;">Isso é a base do <strong>Big O</strong> que veremos depois!</p>
+        </section>
+
+
+
+        <section data-background="#2c3e50">
+            <h3>Encontrando Dados</h3>
+            <pre><code class="javascript" data-trim data-line-numbers="|1|3|6|9">
+const convidados = ["Ana", "Beto", "Caio", "Beto"];
+
+// Retorna a primeira posição onde encontrou
+console.log(convidados.indexOf("Beto")); // 1
+
+// Retorna true ou false
+console.log(convidados.includes("Caio")); // true
+
+// Encontra o primeiro que satisfaz uma condição (callback!)
+const busca = convidados.find(nome => nome.length > 3); // "Beto"
+    </code></pre>
+        </section>
+
+        <section data-background="#218c74">
+            <h3>Transformação e Filtro</h3>
+            <p>Não mexem no original, criam um <span class="highlight-blue">novo array</span>.</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1-2|4-5|7-8">
+const nums = [1, 2, 3, 4];
+
+// MAP: Transforma todo mundo
+const dobro = nums.map(n => n * 2); // [2, 4, 6, 8]
+
+// FILTER: Seleciona alguns
+const pares = nums.filter(n => n % 2 === 0); // [2, 4]
+
+// SLICE: Fatia uma parte (do índice 1 ao 3 - sem incluir o 3)
+const parte = nums.slice(1, 3); // [2, 3]
+    </code></pre>
+        </section>
+
+
+
+        <section data-background="#84817a">
+            <h3>O "Canivete Suíço": <span style="color: #f1c40f;">Reduce</span></h3>
+            <p>Reduz o array inteiro a um único valor.</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1|3-6|8">
+const carrinho = [10.50, 20.00, 5.00];
+
+// acc = acumulador | n = valor atual
+const total = carrinho.reduce((acc, n) => {
+    return acc + n;
+}, 0); // 0 é o valor inicial do acumulador
+
+console.log(total); // 35.50
+    </code></pre>
+        </section>
+
+        <section>
+            <h3>String ↔️ Array</h3>
+            <pre><code class="javascript" data-trim data-line-numbers="|1-2|4-5">
+// SPLIT: Transforma String em Array
+const dataStr = "2026-03-30";
+const partes = dataStr.split("-"); // ["2026", "03", "30"]
+
+// JOIN: Transforma Array em String
+const dataBr = partes.reverse().join("/"); // "30/03/2026"
+    </code></pre>
+            <p class="fragment">💡 <i>Reverse</i> também é mutável! Cuidado.</p>
+        </section>
+
+        <section data-background="#27ae60">
+            <h3>6. High Order Functions</h3>
+            <p>Manipulação moderna de dados.</p>
+            <pre class="code-small"><code class="javascript" data-trim data-line-numbers="|2|5|8|11-12">
+// forEach: Apenas percorre
+nums.forEach(n => console.log(n));
+
+// Map: Transforma e gera novo array
+const dobro = nums.map(n => n * 2);
+
+// Filter: Filtra elementos
+const pares = nums.filter(n => n % 2 === 0);
+
+// Reduce: Reduz a um único valor (ex: soma)
+const total = nums.reduce((acc, n) => acc + n, 0);
+                </code></pre>
+        </section>
+
+        <section data-background="#c0392b">
+            <h2>O Grande "E Daí?"</h2>
+            <hr>
+            <p class="fragment">Se o JS já faz tudo isso com <code>filter</code> e <code>map</code>...</p>
+            <h3 class="fragment">Por que aprender Estrutura de Dados?</h3>
+            <p class="fragment highlight-blue">Resposta: Eficiência e Escala.</p>
+        </section>
+
+        <section data-background="../img/gifs/mindblown.gif">
+            <h2 style="background: white; color: black;">Próxima Aula: Big O</h2>
+            <p style="background: white; color: black;">Vamos descobrir quanto custa cada linha de código acima.</p>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        transition: 'convex',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
