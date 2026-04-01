@@ -71,7 +71,6 @@
             </p>
         </section>
 
-        <section>
             <section>
                 <h3>O 1º Caminho: <span class="highlight">FLUXO</span></h3>
                 <p>Da Esquerda para a Direita (Dev → Ops)</p>
@@ -85,7 +84,6 @@
                     <li>Limpar o "WIP" (Work In Progress).</li>
                 </ul>
             </section>
-        </section>
 
         <section>
             <h3>O 2º Caminho: <span class="highlight">FEEDBACK</span></h3>
@@ -125,9 +123,127 @@
 
         <section>
             <h3>DevOps é sobre <span class="highlight">PESSOAS</span></h3>
-            <p>Ferramentas (Docker, IA) servem à Cultura.</p>
-            <div class="fragment" style="background: #333; padding: 20px;">
-                <p>Próximo Passo: <b>Automação e CI/CD</b></p>
+            <p>Ferramentas (Docker, IA, etc) servem à Cultura do bom desenvolvimento.</p>
+        </section>
+
+        <section data-background-color="#1a1a1a">
+            <h2>Parte 2: Do Fluxo à Segurança</h2>
+            <p class="highlight">Aula 19: Ambientes, Configurações e Segredos</p>
+        </section>
+
+        <section>
+            <h3>O Problema: "Na minha máquina funciona"</h3>
+            <ul>
+                <li class="fragment">Diferenças entre Dev, Staging e Produção.</li>
+                <li class="fragment">Configurações manuais = <span class="alert">Deriva de Configuração</span>.</li>
+                <li class="fragment">O risco de "brincar" de Deus nos servidores.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>1. Imutabilidade da Infraestrutura</h3>
+            <p>Em vez de consertar um servidor, nós o <b>substituímos</b>.</p>
+            <div class="fragment" style="background: #2a2a2a; padding: 15px; border-left: 5px solid #42afff;">
+                <p style="font-size: 0.8em; margin: 0;">"Servidores devem ser tratados como <b>Gado</b>, não como <b>Pets</b>."</p>
+            </div>
+            <ul style="font-size: 0.8em; margin-top: 20px;">
+                <li class="fragment">Pets: Têm nomes, cuidados especiais e dor quando morrem.</li>
+                <li class="fragment">Gado: São idênticos, numerados e substituíveis.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>2. Gestão de Configuração</h3>
+            <p>Onde guardamos as variáveis de ambiente?</p>
+            <table style="font-size: 0.6em;">
+                <thead>
+                <tr>
+                    <th>Método</th>
+                    <th>Risco</th>
+                    <th>Recomendação</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Hardcoded (Código)</td>
+                    <td class="alert">Altíssimo</td>
+                    <td>Nunca fazer.</td>
+                </tr>
+                <tr>
+                    <td>Arquivos .env locais</td>
+                    <td>Médio</td>
+                    <td>Apenas para Dev.</td>
+                </tr>
+                <tr>
+                    <td>Gerenciadores de Segredos</td>
+                    <td class="highlight">Baixo</td>
+                    <td>Padrão de Indústria.</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h3>3. O Perigo do "Leaking"</h3>
+            <p class="alert">O que nunca deve ir para o Git?</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.8em;">
+                <div class="fragment" style="background: #331111; padding: 10px;">API Keys</div>
+                <div class="fragment" style="background: #331111; padding: 10px;">Senhas de Banco</div>
+                <div class="fragment" style="background: #331111; padding: 10px;">Certificados SSL</div>
+                <div class="fragment" style="background: #331111; padding: 10px;">Tokens de Acesso</div>
+            </div>
+            <p class="fragment" style="margin-top: 20px; font-size: 0.7em;">A internet é varrida por bots em segundos à procura de segredos expostos.</p>
+        </section>
+
+        <section>
+            <h3>4. Princípio do Menor Privilégio</h3>
+            <p>A segurança começa no acesso.</p>
+            <ul style="font-size: 0.8em;">
+                <li class="fragment">A aplicação só acessa o que precisa.</li>
+                <li class="fragment">O desenvolvedor não precisa de <i>root</i> em produção.</li>
+                <li class="fragment"><b>RBAC:</b> Role-Based Access Control.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>5. Cofres Digitais (Secret Management)</h3>
+            <p>Ferramentas para centralizar a segurança:</p>
+            <div style="display: flex; justify-content: space-around; font-size: 0.7em;">
+                <div class="fragment"><b>HashiCorp Vault</b><br>O padrão ouro.</div>
+                <div class="fragment"><b>AWS Secrets Manager</b><br>Cloud Native.</div>
+                <div class="fragment"><b>GitHub Secrets</b><br>Para CI/CD.</div>
+            </div>
+        </section>
+
+        <section>
+            <h3>6. DevSecOps: Shift Left</h3>
+            <p>Trazer a segurança para o início do fluxo.</p>
+            <img width="70%" src="https://www.redhat.com/cms/managed-files/devsecops-loop-graphic_1.png" style="background: white; border-radius: 10px;">
+            <p style="font-size: 0.6em;">Segurança não é um "checklist final", é parte do código.</p>
+        </section>
+
+        <section>
+            <h3>7. Ambientes Efêmeros</h3>
+            <p>O poder dos containers (Docker/K8s).</p>
+            <ul>
+                <li class="fragment">Ambientes que nascem para um teste e morrem em seguida.</li>
+                <li class="fragment">Garantia de que o ambiente de teste é <span class="highlight">idêntico</span> ao de produção.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>8. Auditoria e Rastreabilidade</h3>
+            <blockquote style="font-size: 0.8em;">
+                "Quem alterou a variável de banco às 03:00 da manhã de domingo?"
+            </blockquote>
+            <p class="fragment">Logs não são apenas para erros, são para <b>conformidade</b>.</p>
+        </section>
+
+        <section>
+            <h3>Conclusão: O Próximo Passo</h3>
+            <p>Ambientes seguros permitem <b>velocidade com confiança</b>.</p>
+            <div class="fragment" style="border: 2px solid #42afff; padding: 20px;">
+                <p>Mão na Massa: Configurando nosso primeiro <b>Secret Manager</b>.</p>
             </div>
         </section>
 

@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Tech Challenge: Refactoring</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h1>Code Review Challenge</h1>
+        </section>
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>HTML & CSS</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 0: CSS </h2>
+            <pre data-id="code-animation"><code class="css" data-trim data-line-numbers>
+    .card {
+        background-color: #3498db;
+        padding: 20px;
+        border: 1px solid #2980b9;
+    }
+    .button {
+        background-color: #3498db;
+    }
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 0: Design Tokens (Vars)</h2>
+            <pre data-id="code-animation"><code class="css" data-trim data-line-numbers="1-4|7,9">
+    :root {
+        --primary-color: #3498db;
+        --primary-dark: #2980b9;
+        --spacing-md: 1.25rem;
+    }
+    .card {
+        background-color: var(--primary-color);
+        padding: var(--spacing-md);
+        border: 1px solid var(--primary-dark);
+    }
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 1: HTML e CSS</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers>
+    <div id="header">
+        <div class="menu-item" style="float: left; margin-left: 20px;">
+            Home
+        </div>
+        <div class="menu-item" style="float: left; margin-left: 20px;">
+            Categorias
+        </div>
+    </div>
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 1: Semântica e Flex</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers="|3,4,5">
+    <header style="display: flex; align-items: center;">
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Categorias</li>
+            </ul>
+        </nav>
+    </header>
+    </code></pre>
+            <p><small>Melhoria: Tags semânticas (header/nav) e alinhamento via Flexbox (adeus float!).</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 2: HTML & Acessibilidade</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers>
+    <div class="btn-enviar" onclick="submitForm()">
+        <img src="check.png">
+        <span>Confirmar</span>
+    </div>
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 2: Semântica Real</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers="1,2">
+    <button type="submit" aria-label="Confirmar envio">
+        <img src="check.png" alt="Ícone de check">
+        Confirmar
+    </button>
+    </code></pre>
+            <p><small>Melhoria: Uso de <code>&lt;button&gt;</code> (focável por teclado), <code>aria-label</code> e <code>alt</code> em imagens.</small></p>
+        </section>
+
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>JAVASCRIPTO</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 3: JS: O que há de errado?</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+                function calc(a) {
+                  let r = 0;
+                  for (let i = 0; i < a.length; i++) {
+                    r += a[i];
+                  }
+                  return r;
+                }
+                </code></pre>
+            <aside class="notes">
+                Problema: Nomes de variáveis genéricos e falta de métodos funcionais (Clean Code).
+            </aside>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 3: JS Refatorado!</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="1,2">
+                function sumArrayElements(numbers) {
+                  return numbers.reduce((acc, curr) => acc + curr, 0);
+                }
+                </code></pre>
+            <p><small>Melhoria: Nomes semânticos e uso de <code>reduce</code>.</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 4: JS O Desafio do If-Else</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+                function getPrice(type) {
+                  if (type === 'apple') {
+                    return 1.5;
+                  } else if (type === 'banana') {
+                    return 1.0;
+                  } else if (type === 'cherry') {
+                    return 2.5;
+                  } else {
+                    return 0;
+                  }
+                }
+                </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 4: JS Object Literal</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="2-6|7">
+                function getPrice(type) {
+                  const prices = {
+                    apple: 1.5,
+                    banana: 1.0,
+                    cherry: 2.5
+                  };
+                  return prices[type] || 0;
+                }
+                </code></pre>
+        </section>
+
+
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>Banco de Dados | SQL</h1>
+            <hr>
+        </section>
+
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 5: Banco de Dados</h2>
+            <p>O que há de perigoso e ineficiente aqui?</p>
+            <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers>
+    -- Buscando dados do usuário logado
+    SELECT * FROM usuarios
+    WHERE id = " + id_do_input + "
+    AND ativo = 1;
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 5: Projeção exata</h2>
+            <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers="2,3">
+    -- Proteção contra SQL Injection e Performance
+    SELECT nome, email, avatar FROM usuarios
+    WHERE id = " + id_do_input + "
+    AND ativo = 1
+    LIMIT 1;
+    </code></pre>
+            <p><small>Melhoria: seleção de campos específicos e <code>LIMIT 1</code>.</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 5: Prepared Statements</h2>
+            <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers="2,3">
+    -- Proteção contra SQL Injection e Performance
+    SELECT nome, email, avatar FROM usuarios
+    WHERE id = ?
+    AND ativo = 1
+    LIMIT 1;
+    </code></pre>
+            <p><small>Melhoria: Uso de placeholders (?)</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 7: Transação de Saldo</h2>
+            <p>O que acontece se o servidor cair na linha 3?</p>
+            <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers>
+    -- Retira 100 da conta A
+    UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
+
+    -- Adiciona 100 na conta B
+    UPDATE contas SET saldo = saldo + 100 WHERE id = 2;
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 7: Atomicidade (ACID)</h2>
+            <pre data-id="code-animation"><code class="sql" data-trim data-line-numbers="1,6">
+    START TRANSACTION;
+
+    UPDATE contas SET saldo = saldo - 100 WHERE id = 1;
+    UPDATE contas SET saldo = saldo + 100 WHERE id = 2;
+
+    COMMIT;
+    </code></pre>
+            <p><small>Melhoria: Uso de Transações. Ou tudo acontece, ou nada acontece (Rollback automático em caso de erro).</small></p>
+        </section>
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>PHP</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 8: PHP "das antigas"</h2>
+            <pre data-id="code-animation"><code class="php" data-trim data-line-numbers>
+    function get_user_name($data) {
+        if (isset($data['name'])) {
+            return $data['name'];
+        } else {
+            return 'Visitante';
+        }
+    }
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 8: PHP Moderno</h2>
+            <pre data-id="code-animation"><code class="php" data-trim data-line-numbers="1,2">
+    function getUserName(array $data): string {
+        return $data['name'] ?? 'Visitante';
+    }
+    </code></pre>
+            <p><small>Melhoria: Type hinting (array/string) e operador <code>??</code>.</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 9: PHP e Objetos</h2>
+            <p>O que acontece se o usuário não for encontrado?</p>
+            <pre data-id="code-animation"><code class="php" data-trim data-line-numbers>
+    function getProfile($id) {
+        $user = User::find($id);
+        return $user->name;
+    }
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 9: Nullsafe & Types</h2>
+            <pre data-id="code-animation"><code class="php" data-trim data-line-numbers="1,2">
+    function getProfile(int $id): ?string {
+        return User::find($id)?->name ?? 'Usuário não encontrado';
+    }
+    </code></pre>
+            <p><small>Melhoria: <code>?string</code> (permite null), operador nullsafe <code>?-></code> e valor padrão.</small></p>
+        </section>
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>PROCESSO</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 10: Daily Scrum de 40 min</h2>
+            <div data-id="scrum-box" style="background: #ff5555; padding: 20px; border-radius: 10px; font-size: 0.8em;">
+                "Ontem eu tive um erro no CSS da linha 45, tentei mudar o padding mas não deu certo, aí o João me ajudou, mas o servidor caiu e eu fiquei 2 horas esperando..."
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 10: Daily Objetiva</h2>
+            <div data-id="scrum-box" style="background: #282a36; border-left: 5px solid #42ffa1; padding: 20px; text-align: left; font-size: 0.8em;">
+                <b>1. O que fiz:</b> Finalizei o layout do card de produtos.<br>
+                <b>2. O que farei:</b> Iniciar a integração com o Checkout.<br>
+                <b>3. Impedimentos:</b> Preciso de acesso às chaves da API de pagamento.<br>
+                <br>
+                <small><i>* Detalhes técnicos ficam para o "Pós-Daily" (Parking Lot).</i></small>
+            </div>
+            <p><small>Melhoria: Foco em metas e bloqueios, mantendo a reunião em no máximo 15 minutos.</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 11: Histórico do Git</h2>
+            <p>O que há de errado com este fluxo de trabalho?</p>
+            <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+    git add .
+    git commit -m "ajustes e correções gerais"
+    git push origin main
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 11: Commits Atômicos</h2>
+            <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers="1-2|4-5">
+    git add src/components/Button.js
+    git commit -m "feat: adiciona variante outline ao componente Button"
+
+    git add src/services/api.js
+    git commit -m "fix: corrige timeout na chamada de login"
+    </code></pre>
+            <p><small>Melhoria: Commits atômicos (uma tarefa por vez) e uso de <b>Conventional Commits</b>.</small></p>
+        </section>
+
+
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 12: Code Review</h2>
+            <div data-id="comment" style="background: #ff5555; padding: 20px; border-radius: 10px;">
+                "Seu código está horrível e lento. Refaça tudo usando map."
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 12: Revisão Empática</h2>
+            <div data-id="comment" style="background: #282a36; border-left: 5px solid #42ffa1; padding: 20px; text-align: left;">
+                "Notei que este laço <b>for</b> pode causar problemas de performance se o array crescer. <br><br>
+                Sugiro utilizarmos o método <b>.map()</b> para deixar o código mais declarativo. O que acha?"
+            </div>
+            <p><small>Melhoria: Comunicação não-violenta, foco no código (não na pessoa) e sugestão de melhoria.</small></p>
+        </section>
+
+
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>TESTES</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 13: Testes de Unidade</h2>
+            <p>O que falta para este teste ser confiável?</p>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+    test('deve somar dois números', () => {
+      const resultado = somar(2, 2);
+      expect(resultado).toBe(4);
+    });
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 13: Edge Cases</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="4-7">
+    test('deve somar dois números e tratar entradas inválidas', () => {
+      expect(somar(2, 2)).toBe(4);
+
+      // Testando os limites (Edge Cases)
+      expect(somar("2", 2)).toThrow("Input deve ser numérico");
+      expect(somar(null, 2)).toThrow();
+      expect(somar(0.1, 0.2)).toBeCloseTo(0.3);
+    });
+    </code></pre>
+            <p><small>Melhoria: Testar tipos errados, valores nulos e precisão de ponto flutuante.</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 14: Teste Frágil</h2>
+            <p>Por que este teste unitário vai falhar no CI (integração contínua)?</p>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+    test('deve buscar dados do usuário', async () => {
+      // Faz uma chamada real para a API de produção
+      const user = await UserService.fetchFromServer(1);
+
+      expect(user.name).toBe('John Doe');
+    });
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 14: Mocking (Dublês)</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="2-4|6-7">
+    test('deve buscar dados usando Mock', async () => {
+      const spy = jest.spyOn(UserService, 'fetchFromServer')
+        .mockResolvedValue({ id: 1, name: 'John Doe' });
+
+      const user = await UserService.getById(1);
+
+      expect(user.name).toBe('John Doe');
+      expect(spy).toHaveBeenCalledWith(1);
+    });
+    </code></pre>
+            <p><small>Melhoria: O teste não depende da API externa. É rápido, isolado e determinístico.</small></p>
+        </section>
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>DEPLOY</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 15: Deploy de Sexta-feira</h2>
+            <pre data-id="code-animation"><code class="bash" data-trim data-line-numbers>
+    # Processo Manual
+    npm run build
+    scp -r ./dist user@server:/var/www/html
+    ssh user@server "service nginx restart"
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 15: Pipeline de CI/CD</h2>
+            <pre data-id="code-animation"><code class="yaml" data-trim data-line-numbers="2-4|6-8">
+    # .github/workflows/deploy.yml
+    on:
+      push:
+        branches: [ main ]
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Run Tests
+            run: npm test
+          - name: Deploy to Prod
+            run: ./deploy-script.sh
+    </code></pre>
+            <p><small>Melhoria: Deploy automatizado gatilhado por push, garantindo que os testes passem antes.</small></p>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
