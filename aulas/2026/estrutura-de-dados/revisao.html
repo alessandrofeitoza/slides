@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ARA0098 - Revisão Simulado 01</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css">
+    <style>
+        .highlight-blue { color: #42afff; font-weight: bold; }
+        .highlight-red { color: #ff5e5e; font-weight: bold; }
+        .code-small { font-size: 1.5rem !important; }
+
+        code {
+            font-size: 3rem;
+            line-height: 3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section data-background="#111">
+            <hr>
+            <h2>Revisão</h2>
+            <h4 style="background-color: #f1c40f; color: #000;">Simulado 01</h4>
+            <hr>
+        </section>
+
+        <section>
+            <ul>
+                <li>Vetor X Matriz</li>
+                <li>Heterogeneidade X Homogeneidade</li>
+                <li>
+                    Modularização
+                    <ul>
+                        <li>Procedimentos</li>
+                        <li>Subrotinas</li>
+                    </ul>
+                </li>
+                <li>Escopo de variáveis
+                    <ul>
+                        <li>Global</li>
+                        <li>Local</li>
+                        <li>Referencia</li>
+                    </ul>
+                </li>
+                <li>
+                    Algoritmos
+                    <ul>
+                        <li>LIFO</li>
+                        <li>FIFO</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section data-background="#222">
+            <h3>VETOR</h3>
+            <p class="fragment">Array linear / apenas 1 dimensão</p>
+            <img class="fragment" src="img/vetor.png" width="100%" alt="">
+        </section>
+
+        <section >
+            <h3>MATRIZ</h3>
+            <p class="fragment">Array multidimensional / duas ou dimensões</p>
+        </section>
+
+        <section data-background="img/matriz-1.webp" data-background-size="100%"></section>
+
+        <section>
+
+            <h1>TIPOS DE ARRAY</h1>
+        </section>
+
+        <section data-background="#333">
+            <pre><code class="javascript" data-trim>
+let frutas = [
+    "banana",
+    "maça",
+    "carambola",
+];
+
+                </code></pre>
+
+        </section>
+
+        <section>
+            <h1>HOMOGENEO</h1>
+        </section>
+
+        <section data-background="#333">
+            <pre><code class="javascript" data-trim>
+let dados = [
+    "Chiquim",
+    42,
+    {cidade: "Fortaleza"},
+];
+
+                </code></pre>
+
+        </section>
+
+        <section>
+            <h1>HETEROGENEO</h1>
+        </section>
+
+
+        <section data-background="#333">
+            <h1>MODULARIZAÇÃO</h1>
+        </section>
+
+
+        <section data-background="">
+            <h2>Procedimento</h2>
+            <pre><code class="javascript" data-trim>
+function welcome() {
+    document.body = "Bem vinde";
+}
+                </code></pre>
+
+        </section>
+
+        <section data-background="">
+            <h2>Procedimento</h2>
+            <hr>
+            <p>
+                Apenas executa a ação.
+            </p>
+            <ul>
+                <li class="fragment"><strong>Nao retorna nada</strong></li>
+                <li class="fragment"><strong>Não precisa de nada para ser executado</strong></li>
+            </ul>
+
+        </section>
+
+        <section >
+            <h2>SubRotina</h2>
+            <pre><code class="javascript" data-trim>
+function welcome(nome) {
+    return `Bem vinde ${nome}`;
+}
+                </code></pre>
+
+        </section>
+
+
+        <section data-background="">
+            <h2>SubRotina</h2>
+            <hr>
+            <p>
+                Executa uma ação mediante um input e retorna um output.
+            </p>
+            <ul>
+                <li class="fragment"><strong>retorna algo</strong></li>
+                <li class="fragment"><strong>precisa de alog para ser executado</strong></li>
+            </ul>
+
+        </section>
+
+        <section data-background="#333">
+            <h1>ESCOPO DE VARIÁVEIS</h1>
+        </section>
+
+        <section >
+            <h2>Global</h2>
+            <pre><code class="javascript" data-trim>
+var cidade = "Fortaleza";
+
+function welcome(nome) {
+    return `Bem vinde ${nome}, de ${cidade}`;
+}
+                </code></pre>
+
+        </section>
+        <section >
+            <h2>Global</h2>
+            <hr>
+            <p>Definida no inicio do código e <strong>pode ser usada dentro e fora de subrotinas/functions</strong></p>
+
+        </section>
+
+
+        <section >
+            <h2>Local</h2>
+            <pre><code class="javascript" data-trim>
+var cidade = "Fortaleza";
+
+function welcome(nome) {
+    let cidade = "Caucaia";
+    return `Bem vinde ${nome}, de ${cidade}`;
+}
+
+welcome("Chiquim");
+
+console.log(cidade);
+                </code></pre>
+
+        </section>
+        <section >
+            <h2>Local</h2>
+            <hr>
+            <p>Definida dentro de uma subrotina e <strong>só pode ser usada dentro dela</strong></p>
+        </section>
+
+        <section >
+            <h2>Referencia</h2>
+            <pre><code class="javascript" data-trim>
+var cidade = "Fortaleza";
+
+function welcome(nome, &cidade) {
+    cidade = "Caucaia";
+    return `Bem vinde ${nome}, de ${cidade}`;
+}
+
+welcome("Chiquim", cidade);
+console.log(cidade);
+                </code></pre>
+
+        </section>
+        <section >
+            <h2>Referencia</h2>
+            <hr>
+            <p>Uma variavel global só pode ser alterada em escopo local se for passada por referencia (&)</p>
+        </section>
+
+        <section data-background="#333">
+            <h1>ALGORITMOS</h1>
+        </section>
+
+
+        <section data-background="#4b7bec">
+            <div style="text-align: left;">
+                <h2 style="background-color: #FFF; color: #000; display: inline-block; padding: 0 10px;">LIFO</h2>
+                <h3>Last In, First Out</h3>
+                <hr>
+                <p class="fragment">"O último a entrar é o <span class="highlight-red">primeiro</span> a sair."</p>
+                <p class="fragment">Imagine uma <strong>Pilha de Pratos</strong>: você coloca um em cima do outro. Qual você tira primeiro para não quebrar tudo?</p>
+                <div class="fragment" style="background: #333; padding: 10px; border-left: 5px solid #ff5e5e;">
+                    <p style="font-size: 0.8em;">Estrutura de Dados: <strong>Pilha (Stack)</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#333">
+            <h3>LIFO no dia a dia</h3>
+            <div style="display: flex; justify-content: space-around; align-items: center;">
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🥞</p>
+                    <p>Pilha de Panquecas</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">📦</p>
+                    <p>Caminhão de Mudança</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">↩️</p>
+                    <p>Botão "Desfazer"</p>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section data-background="#20bf6b">
+            <div style="text-align: left;">
+                <h2 style="background-color: #FFF; color: #000; display: inline-block; padding: 0 10px;">FIFO</h2>
+                <h3>First In, First Out</h3>
+                <hr>
+                <p class="fragment">"O primeiro a entrar é o <span class="highlight-blue">primeiro</span> a sair."</p>
+                <p class="fragment">A justiça impera: Imagine uma <strong>Fila de Banco</strong>. Quem chegou primeiro, deve ser atendido primeiro.</p>
+                <div class="fragment" style="background: #333; padding: 10px; border-left: 5px solid #20bf6b;">
+                    <p style="font-size: 0.8em; color: #20bf6b">Estrutura de Dados: <strong>Fila (Queue)</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#1a1a1a">
+            <h3>FIFO no dia a dia</h3>
+            <div style="display: flex; justify-content: space-around; align-items: center;">
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🚶‍♂️🚶‍♀️🚶‍♂️</p>
+                    <p>Fila do Lotérica</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🖨️</p>
+                    <p>Fila de Impressão</p>
+                </div>
+                <div class="fragment">
+                    <p style="font-size: 3rem;">🚗</p>
+                    <p>Drive-thru</p>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section data-background="#333">
+            <h3>Resumo Visual</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Conceito</th>
+                    <th>Estrutura</th>
+                    <th>Regra</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td class="highlight-red">LIFO</td>
+                    <td>Pilha</td>
+                    <td>O último sai primeiro</td>
+                </tr>
+                <tr class="fragment">
+                    <td class="highlight-blue">FIFO</td>
+                    <td>Fila</td>
+                    <td>O primeiro sai primeiro</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        transition: 'convex',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
