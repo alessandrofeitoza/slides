@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Tech Challenge: Refactoring</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section data-background="#1e1e1e">
+            <h1>Ambientes & Segurança</h1>
+            <p>Configurações, Segredos e Hardening Profissional</p>
+            <div style="margin-top: 50px; font-size: 0.6em; opacity: 0.7;">
+                Aula 19: Gestão de Ambientes | Aula 20: Segurança Operacional
+            </div>
+        </section>
+
+        <section>
+            <h3>Introdução</h3>
+        </section>
+
+        <section data-background="#fff">
+            Ambiente Monolitico
+            <img src="../../../img/backend-security/monolitico.png" alt="">
+        </section>
+
+        <section data-background="#fff">
+            Ambiente com Frontend & Backend
+            <img src="../../../img/backend-security/req-res.png" alt="">
+        </section>
+
+
+        <section>
+            <h2>E onde que entra a segurança?</h2>
+            <p class="fragment">Validações no frontend são usabilidade</p>
+            <p class="fragment">Validações no backend são segurança</p>
+        </section>
+
+        <section>
+            <img width="50%" src="../../../img/backend-security/piramide.png" alt="">
+
+            <p class="fragment"><strong>Segurança</strong> não é produto, é processo, ela <strong>fornece qualidade</strong></p>
+        </section>
+
+
+
+
+        <section data-background="#140536">
+            <p style="font-size: 3rem;">
+                Segurança e Velocidade de entrega são situações <span style="color: yellow;">completamentes diferentes</span>.
+                <br><br>
+                Enquanto velocidade é vísivel, segurança não...
+                <em class="fragment" style="font-weight: bold; color: red;">até que ela falhe</em>
+            </p>
+        </section>
+
+
+        <section>
+            <p class="fragment">Custo para corrigir uma falha de segurança</p>
+
+            <img width="70%" src="../../../img/backend-security/custos-falhas.gif" alt="">
+
+            <p class="fragment" style="font-size: 1rem;">Retirado de relatório da IBM</p>
+        </section>
+
+        <section data-background="#333">
+            <h1>E a culpa é quase sempre do dev</h1>
+        </section>
+
+
+        <section>
+            <p class="">Vale ressaltar os pilares</p>
+
+            <img width="50%" src="../../../img/backend-security/pilares.png" alt="">
+
+        </section>
+
+        <section>
+            <h2>Pergunta de 1 Milhão de Lulas</h2>
+            <blockquote class="fragment" style="background: #444; color: #fff;">
+                "Quem aqui já subiu uma senha de banco ou chave de API no GitHub por acidente?"
+            </blockquote>
+            <p class="fragment">Se não aconteceu ainda, vai acontecer.</p>
+        </section>
+
+        <section data-background="#333">
+            <h1>E de quem foi a culpa?</h1>
+        </section>
+
+        <section>
+            <h3>Muita gente só se preocupa com isso</h3>
+            <ul>
+
+                <li class="fragment">Senhas e criptografia</li>
+                <li class="fragment">XSS</li>
+                <li class="fragment">SQL Injection</li>
+                <li class="fragment">upload de arquivos</li>
+            </ul>
+        </section>
+
+        <section>
+            <p class="">O ambiente é o grande vilão</p>
+            <img width="50%" src="img/troia.png" alt="">
+        </section>
+
+        <section>
+            <h3>O Cenário do Desastre</h3>
+            <ul>
+                <li><code>.env</code> versionado.</li>
+                <li>Chaves "Hardcoded" no código.</li>
+                <li>Ambiente local diferente da produção.</li>
+                <li>Logs expondo dados de clientes.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Código vs Configuração</h2>
+            <div style="display: flex; gap: 20px;">
+                <div style="background: #333; color: white; padding: 20px; border-radius: 10px;">
+                    <h4 style="color: red;">Código</h4>
+                    <p><small>Lógica de negócio, algoritmos, rotas. <span style="font-weight: bold; color: yellow">É igual em qualquer lugar.</span></small></p>
+                </div>
+                <div style="background: #444; color: white; padding: 20px; border-radius: 10px;">
+                    <h4 style="color: red;">Config</h4>
+                    <p><small>Portas, URLs de banco, níveis de log. <span style="font-weight: bold; color: yellow">Muda conforme o lugar.</span></small></p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#333">
+            <h2>E os Segredos?</h2>
+            <p>Configurações que, se vazadas, comprometem o negócio.</p>
+            <ul style="font-size: 0.8em;">
+                <li class="fragment">Tokens de API (Stripe, AWS, Sendgrid).</li>
+                <li class="fragment">Senhas de Bancos de Dados.</li>
+                <li class="fragment">Certificados SSL / Chaves Privadas.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>1. Desenvolvimento (DEV)</h3>
+            <ul>
+                <li>Onde o código nasce.</li>
+                <li class="fragment"><strong>Foco:</strong> Velocidade e Debug.</li>
+                <li class="fragment"><strong>Config:</strong> <code>DB_HOST=localhost</code>, <code>DEBUG=true</code>.</li>
+            </ul>
+        </section>
+
+        <section data-background="#333">
+            <h3>2. Staging (Homologação)</h3>
+            <ul>
+                <li>O espelho da realidade.</li>
+                <li class="fragment"><strong>Foco:</strong> Testar o deploy antes do cliente ver.</li>
+                <li class="fragment"><strong>Config:</strong> Banco de dados isolado, mas com dados reais (anônimos).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>3. Produção (PROD)</h3>
+            <ul>
+                <li>Onde o dinheiro entra.</li>
+                <li class="fragment"><strong>Foco:</strong> Segurança, Estabilidade e Performance.</li>
+                <li class="fragment"><strong>Config:</strong> <code>DEBUG=false</code>, Logs sanitizados.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>O Padrão: .env</h3>
+            <p>O arquivo que você nunca deve compartilhar.</p>
+            <pre><code class="bash" data-trim>
+        PORT=3000
+        DATABASE_URL=postgres://user:pass@localhost:5432/db
+        STRIPE_KEY=sk_test_4eC39HqLyjWDarjtT1zdp7dc
+      </code></pre>
+        </section>
+
+        <section>
+            <h3>O Vigia</h3>
+            <pre><code class="bash" data-trim>
+        # .gitignore
+        .env
+        node_modules/
+        dist/
+        .DS_Store
+      </code></pre>
+            <p style="color: #ff5555;">Sem isso, adianta bulhufas nenhuma.</p>
+        </section>
+
+        <section>
+            <h3>O Mapa do Tesouro</h3>
+            <p>Documente o que o projeto precisa para rodar.</p>
+            <pre><code class="bash" data-trim>
+        # .env.example
+        PORT=3000
+        DATABASE_URL=
+        STRIPE_KEY=
+      </code></pre>
+            <p><small>Valores vazios ou genéricos apenas!</small></p>
+        </section>
+
+        <!--<section data-background="#2d3436">
+            <h2>⚡ Desafio Rápido 1</h2>
+            <p>Crie um <code>.env.example</code> para uma aplicação que usa:</p>
+            <ul>
+                <li>Uma porta de servidor.</li>
+                <li>Uma URL do MongoDB.</li>
+                <li>Uma chave de acesso do AWS S3.</li>
+            </ul>
+        </section>-->
+
+        <section>
+            <h3>Implementação: Node.js</h3>
+            <pre><code class="javascript" data-trim>
+        require('dotenv').config();
+
+        const port = process.env.PORT;
+        console.log(`Rodando na porta ${port}`);
+      </code></pre>
+        </section>
+
+        <section>
+            <h3>Implementação: PHP</h3>
+            <pre><code class="php" data-trim>
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+        $dotenv->load();
+
+        $dbHost = $_ENV['DB_HOST'];
+      </code></pre>
+        </section>
+
+        <section>
+            <h3>Troca de Ambiente</h3>
+            <p>O que acontece quando você muda de Dev para Prod?</p>
+            <ul style="font-size: 0.8em;">
+                <li class="fragment">Variáveis faltantes derrubam o app.</li>
+                <li class="fragment">Permissões de escrita em pastas.</li>
+                <li class="fragment">Conexões de rede (Firewalls).</li>
+            </ul>
+        </section>
+
+        <section data-background="#333">
+            <h1>REVISÃO PRÁTICA</h1>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs js" data-trim data-line-numbers>const express = require('express');
+const app = express();
+
+const STRIPE_KEY = "sk_live_51MzByzL902384902384902384";
+const DB_URL = "mongodb+srv://admin:senha123@cluster0.mongodb.net/meuapp";
+
+const DEBUG = true;
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    console.log(`Tentativa de login: Usuário=${email}, Senha=${password}`);
+
+    if (DEBUG) {
+        return res.status(500).json({ error: "Erro interno", stack: new Error().stack });
+    }
+
+    res.send("Logado!");
+});
+
+app.listen(3000);
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs js" data-trim data-line-numbers>const express = require('express');
+const app = express();
+
+// ERRO 1: Coisas expostas de forma hardcoded
+const STRIPE_KEY = "sk_live_51MzByzL902384902384902384";
+const DB_URL = "mongodb+srv://admin:senha123@cluster0.mongodb.net/meuapp";
+
+const DEBUG = true;
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    console.log(`Tentativa de login: Usuário=${email}, Senha=${password}`);
+
+    if (DEBUG) {
+        return res.status(500).json({ error: "Erro interno", stack: new Error().stack });
+    }
+
+    res.send("Logado!");
+});
+
+app.listen(3000);
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs js" data-trim data-line-numbers>// ERRO 1: Coisas expostas de forma hardcoded
+const STRIPE_KEY = "sk_live_51MzByzL902384902384902384";
+const DB_URL = "mongodb+srv://admin:senha123@cluster0.mongodb.net/meuapp";
+
+// ERRO 2: Debug sempre ativo, independente do ambiente
+const DEBUG = true;
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    console.log(`Tentativa de login: Usuário=${email}, Senha=${password}`);
+
+    if (DEBUG) {
+        return res.status(500).json({ error: "Erro interno", stack: new Error().stack });
+    }
+
+    res.send("Logado!");
+});
+
+app.listen(3000);
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs js" data-trim data-line-numbers>// ERRO 1: Coisas expostas de forma hardcoded
+const STRIPE_KEY = "sk_live_51MzByzL902384902384902384";
+const DB_URL = "mongodb+srv://admin:senha123@cluster0.mongodb.net/meuapp";
+
+// ERRO 2: Debug sempre ativo, independente do ambiente
+const DEBUG = true;
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    // ERRO 3: Log de dados sensíveis
+    console.log(`Tentativa de login: Usuário=${email}, Senha=${password}`);
+
+    if (DEBUG) {
+        return res.status(500).json({ error: "Erro interno", stack: new Error().stack });
+    }
+
+    res.send("Logado!");
+});
+
+app.listen(3000);
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs js" data-trim data-line-numbers>// ERRO 1: Coisas expostas de forma hardcoded
+const STRIPE_KEY = "sk_live_51MzByzL902384902384902384";
+const DB_URL = "mongodb+srv://admin:senha123@cluster0.mongodb.net/meuapp";
+
+// ERRO 2: Debug sempre ativo, independente do ambiente
+const DEBUG = true;
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    // ERRO 3: Log de dados sensíveis
+    console.log(`Tentativa de login: Usuário=${email}, Senha=${password}`);
+
+    if (DEBUG) {
+        // ERRO 4: Vazamento de stack trace para o cliente
+        return res.status(500).json({ error: "Erro interno", stack: new Error().stack });
+    }
+
+    res.send("Logado!");
+});
+
+app.listen(3000);
+            </code></pre>
+        </section>
+
+        <section data-background="#333">
+            <h3>Mais um</h3>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$conn = mysqli_connect('192.168.1.50', 'root', 'senha_do_root');
+
+if (!$conn) {
+    die("Falha crítica ao conectar no IP 192.168.1.50 usando o usuário root");
+}
+
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+$config = [
+    'host' => '192.168.1.50',
+    'user' => 'root',
+    'pass' => 'senha_do_root',
+    'env'  => 'production'
+];
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$conn = mysqli_connect($config['host'], $config['user'], $config['pass']);
+
+if (!$conn) {
+    die("Falha crítica ao conectar no IP " . $config['host'] . " usando o usuário " . $config['user']);
+}
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+// ERRO 1: Configurações globais que mudam por ambiente fixas no arquivo
+$config = [
+    'host' => '192.168.1.50',
+    'user' => 'root',
+    'pass' => 'senha_do_root',
+    'env'  => 'production'
+];
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$conn = mysqli_connect($config['host'], $config['user'], $config['pass']);
+
+if (!$conn) {
+    die("Falha crítica ao conectar no IP " . $config['host'] . " usando o usuário " . $config['user']);
+}
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+// ERRO 1: Configurações globais que mudam por ambiente fixas no arquivo
+$config = [
+    'host' => env('DB_HOST'),
+    'user' => env('DB_USER'),
+    'pass' => env('DB_PASS'),
+    'env'  => env('APP_ENV')
+];
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$conn = mysqli_connect($config['host'], $config['user'], $config['pass']);
+
+if (!$conn) {
+    die("Falha crítica ao conectar no IP " . $config['host'] . " usando o usuário " . $config['user']);
+}
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+// ERRO 2: Exibição de erros habilitada direto no código (Hardening)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$conn = mysqli_connect($config['host'], $config['user'], $config['pass']);
+
+if (!$conn) {
+    die("Falha crítica ao conectar no IP " . $config['host'] . " usando o usuário " . $config['user']);
+}
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$conn = mysqli_connect($config['host'], $config['user'], $config['pass']);
+
+if (!$conn) {
+    // ERRO 3: Revelando detalhes da infraestrutura no erro
+    die("Falha crítica ao conectar no IP " . $config['host'] . " usando o usuário " . $config['user']);
+}
+            </code></pre>
+        </section>
+
+        <section data-background="#333">
+            <h3>E o docker?</h3>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+# Dockerfile
+FROM node:18
+
+WORKDIR /
+
+COPY . .
+
+RUN npm install
+
+# Falta o comando 'USER appuser'
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+            </code></pre>
+        </section>
+
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+# Dockerfile
+FROM node:18
+
+# ERRO 1: Trabalhando no diretório raiz sem isolamento
+WORKDIR /
+
+COPY . .
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+            </code></pre>
+        </section>
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+FROM node:18
+
+# ERRO 1: Trabalhando no diretório raiz sem isolamento
+WORKDIR /
+
+COPY . .
+
+# ERRO 2: Instalando dependências sem checar vulnerabilidades (npm audit)
+RUN npm install
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+FROM node:18
+
+# ERRO 1: Trabalhando no diretório raiz sem isolamento
+WORKDIR /
+
+COPY . .
+
+# ERRO 2: Instalando dependências sem checar vulnerabilidades (npm audit)
+RUN npm install
+
+# ERRO 3: O container vai tá como ROOT
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+FROM node:18
+
+# ERRO 1: Trabalhando no diretório raiz sem isolamento
+WORKDIR /
+
+COPY . .
+
+# ERRO 2: Instalando dependências sem checar vulnerabilidades (npm audit)
+RUN npm install
+
+# ERRO 3: O container vai tá como ROOT
+
+USER appuser
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <pre  data-id="code-animation"><code class="hljs php" data-trim data-line-numbers>
+FROM node:18
+
+# ERRO 1: Trabalhando no diretório raiz sem isolamento
+WORKDIR /
+
+COPY . .
+
+# ERRO 2: Instalando dependências sem checar vulnerabilidades (npm audit)
+RUN npm install
+
+# ERRO 3: O container rodará como ROOT (Usuário privilegiado)
+USER appuser
+
+EXPOSE 3000
+
+# ERRO 4: Rodando comando que permite execução de scripts arbitrários
+CMD ["npm", "run", "dev"]
+            </code></pre>
+        </section>
+
+
+        <section data-background="#2b0101">
+            <h1>Aula 20: Segurança de Ambiente</h1>
+            <p>Hardening e Blindagem de Aplicações</p>
+        </section>
+
+        <section>
+            <h2>Defesa em Profundidade</h2>
+            <ol>
+                <li>Segurança no Código (Sanitização).</li>
+                <li>Segurança no Ambiente (Configs).</li>
+                <li>Segurança na Infra (Rede/Firewall).</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>APP_DEBUG = TRUE</h3>
+            <div style="background: #eee; color: #333; padding: 10px; font-family: monospace; font-size: 0.5em;">
+                Fatal Error: Cannot connect to DB.<br>
+                at /var/www/html/config/database.php:45<br>
+                'password' => '123456'<br>
+                'host' => '10.0.0.5'
+            </div>
+            <p style="color: red;">Isso é um convite para hackers.</p>
+        </section>
+
+        <section>
+            <h3>Vazamento em Logs</h3>
+            <pre><code class="javascript" data-trim>
+        // Ruim
+        console.log("Usuário tentando login:", user);
+        // O log salva a senha em texto plano no disco!
+      </code></pre>
+            <p>Sempre sanitize os logs antes de salvar.</p>
+        </section>
+
+        <section>
+            <h3>O Cavalo de Troia</h3>
+            <p>Você usa bibliotecas vulneráveis?</p>
+            <pre><code class="bash" data-trim>
+        # Verifique agora:
+        npm audit
+        # ou
+        composer audit
+      </code></pre>
+        </section>
+
+        <section>
+            <h3>GitHub Secrets</h3>
+            <p>Onde colocar as chaves se o <code>.env</code> não sobe?</p>
+            <ul>
+                <li>Settings > Secrets and Variables > Actions.</li>
+                <li>Injetadas durante o Deploy via Pipeline.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Segurança em Containers</h3>
+            <p>Nunca rode como Root!</p>
+            <pre><code class="dockerfile" data-trim>
+        # Dockerfile Profissional
+        FROM node:alpine
+        RUN adduser -D appuser
+        USER appuser
+        COPY . .
+        CMD ["node", "server.js"]
+      </code></pre>
+        </section>
+
+        <section>
+            <h3>Sistema de Arquivos</h3>
+            <p>Em produção, seu container deve ser "Imutável".</p>
+            <pre><code class="yaml" data-trim>
+        # docker-compose.yml
+        services:
+          app:
+            read_only: true
+            tmpfs:
+              - /tmp
+      </code></pre>
+        </section>
+
+        <section data-background="#2d3436">
+            <h2>🔍 Desafio de Auditoria</h2>
+            <ol>
+                <li>Rode <code>npm audit</code> ou <code>composer audit</code>.</li>
+                <li>Quantas vulnerabilidades existem?</li>
+                <li>O que a biblioteca vulnerável faz?</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>Menor Privilégio</h3>
+            <p>Dê apenas o acesso necessário.</p>
+            <ul>
+                <li>Usuário do Banco só pode dar SELECT/INSERT?</li>
+                <li>A aplicação pode apagar tabelas? (Espero que não).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Varredura de Segredos</h3>
+            <p>Ferramentas que impedem o <code>git push</code> se houver uma chave no código:</p>
+            <ul>
+                <li>gitleaks</li>
+                <li>trufflehog</li>
+                <li>GitHub Secret Scanning</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Organização Final do Projeto</h3>
+            <ul style="font-size: 0.7em;">
+                <li>📁 src/ (Código lógico)</li>
+                <li>📄 .env.example (Documentação de chaves)</li>
+                <li>📄 .gitignore (Proibindo o .env)</li>
+                <li>📄 Dockerfile (Sem usuário root)</li>
+                <li>📄 README.md (Instruções de setup)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>O Checklist de Ouro</h3>
+            <ul style="font-size: 0.6em;">
+                <li>[ ] .env ignorado no Git.</li>
+                <li>[ ] APP_DEBUG=false em produção.</li>
+                <li>[ ] Logs não registram senhas.</li>
+                <li>[ ] Dependências auditadas e sem High Vulnerabilities.</li>
+                <li>[ ] Container sem privilégios de root.</li>
+                <li>[ ] Chaves de API no GitHub Secrets (não no código).</li>
+            </ul>
+        </section>
+
+        <section data-background="#34495e">
+            <h2>Dever de Casa</h2>
+            <p>Refatore seu projeto atual aplicando o checklist anterior. Envie o link do repositório com o arquivo <code>README.md</code> atualizado com instruções de ambiente.</p>
+        </section>
+
+        <section data-background="#00b894">
+            <h2>Dúvidas?</h2>
+            <p>A segurança é uma jornada, não um destino.</p>
+            <p><strong>Mãos à obra!</strong></p>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
