@@ -458,6 +458,148 @@ class EmailNotifier implements Observer {
             <li class="fragment">D) Adapter → Garantir instância única</li></ul><p class="fragment"><strong>Resposta:</strong> C</p>
         </section>
 
+        <section>
+            <h2>Singleton — Conceito</h2>
+            <p>
+                O padrão <strong>Singleton</strong> garante que uma classe possua
+                <strong>apenas uma única instância</strong> durante todo o ciclo de vida da aplicação,
+                fornecendo um ponto global de acesso a essa instância.
+            </p>
+
+            <ul>
+                <li class="fragment">Evita múltiplas instâncias desnecessárias</li>
+                <li class="fragment">Centraliza acesso a recursos compartilhados</li>
+                <li class="fragment">Muito usado com configuração, cache e conexão global</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Singleton — Exemplos Práticos</h2>
+            <p>Casos reais onde Singleton costuma aparecer:</p>
+
+            <ul>
+                <li class="fragment">Gerenciador de conexão com banco de dados</li>
+                <li class="fragment">Serviço global de configuração da aplicação</li>
+                <li class="fragment">Logger centralizado</li>
+                <li class="fragment">Cache compartilhado em memória</li>
+                <li class="fragment">Service Container / IoC em frameworks</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Singleton — Exemplo em JavaScript</h2>
+            <pre><code class="language-javascript">class AppConfig {
+  constructor() {
+    if (AppConfig.instance) {
+      return AppConfig.instance;
+    }
+
+    this.theme = 'dark';
+    AppConfig.instance = this;
+  }
+}
+
+const a = new AppConfig();
+const b = new AppConfig();
+
+console.log(a === b); // true</code></pre>
+        </section>
+
+        <section>
+            <h2>Singleton — Exemplo em PHP</h2>
+            <pre><code class="language-php">class DatabaseConnection
+{
+    private static ?self $instance = null;
+
+    private function __construct() {}
+
+    public static function getInstance(): self
+    {
+        return self::$instance ??= new self();
+    }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Singleton — Cuidados no Uso</h2>
+            <p>
+                Apesar de útil, Singleton deve ser usado com cautela.
+            </p>
+
+            <ul>
+                <li class="fragment">Pode introduzir estado global excessivo</li>
+                <li class="fragment">Dificulta testes unitários</li>
+                <li class="fragment">Pode esconder dependências da aplicação</li>
+                <li class="fragment">Frequentemente é overused por iniciantes</li>
+            </ul>
+
+            <p class="fragment">
+                <strong>Regra prática:</strong> use apenas quando realmente fizer sentido existir uma única instância.
+            </p>
+        </section>
+
+        <section>
+            <p>
+                Uma equipe está desenvolvendo um sistema web e deseja garantir que toda a aplicação
+                utilize a mesma instância de configuração global, evitando inconsistências entre módulos
+                e múltiplos carregamentos desnecessários de parâmetros.
+            </p>
+        </section>
+        <section>
+
+            <p>Nesse cenário, o padrão de projeto mais adequado é:</p>
+
+            <ul>
+                <li class="fragment">A) Adapter</li>
+                <li class="fragment">B) Observer</li>
+                <li class="fragment">C) Singleton</li>
+                <li class="fragment">D) Composite</li>
+            </ul>
+
+            <p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+            <p>
+                Um desenvolvedor implementou uma classe de conexão com banco de dados utilizando Singleton.
+                A principal justificativa técnica para essa decisão foi evitar a criação de múltiplas conexões
+                desnecessárias durante o processamento da aplicação.
+            </p>
+        </section>
+        <section>
+
+            <p>Essa decisão está relacionada a qual benefício do Singleton?</p>
+
+            <ul>
+                <li class="fragment">A) Permitir múltiplas estratégias de conexão</li>
+                <li class="fragment">B) Garantir instância única e acesso compartilhado</li>
+                <li class="fragment">C) Facilitar comunicação entre objetos observadores</li>
+                <li class="fragment">D) Reduzir a complexidade de herança</li>
+            </ul>
+
+            <p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>
+                Embora útil em alguns cenários, o uso indiscriminado de Singleton pode trazer problemas
+                arquiteturais quando aplicado sem necessidade real.
+            </p>
+        </section>
+        <section>
+
+            <p>Qual das alternativas abaixo representa uma desvantagem comum do Singleton?</p>
+
+            <ul>
+                <li class="fragment">A) Pode dificultar testes unitários e introduzir estado global excessivo</li>
+                <li class="fragment">B) Impede o uso de orientação a objetos</li>
+                <li class="fragment">C) Elimina a possibilidade de reutilização de código</li>
+                <li class="fragment">D) Aumenta automaticamente o consumo de memória</li>
+            </ul>
+
+            <p class="fragment"><strong>Resposta:</strong> A</p>
+        </section>
+
     </div>
 </div>
 
