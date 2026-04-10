@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão - Design Patterns</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section data-background="#333">
+            <hr><h1>TEÓRICAS</h1>
+            <hr></section>
+
+        <section>
+            <h3>Questão Teórica 1 — Importância dos Design Patterns</h3>
+            <p>
+                Durante o desenvolvimento de um sistema corporativo, uma equipe percebeu que diversos módulos apresentavam soluções semelhantes
+                para problemas recorrentes de organização de código, acoplamento excessivo e dificuldade de manutenção.
+                O líder técnico sugeriu a adoção de Design Patterns como estratégia para melhorar a qualidade estrutural do software.
+            </p>
+
+        </section>
+        <section>
+            <p>Considerando esse contexto, assinale a alternativa correta:</p>
+
+            <ul>
+                <li class="fragment">A) São bibliotecas prontas que substituem a necessidade de implementação manual</li>
+                <li class="fragment">B) São soluções reutilizáveis e documentadas para problemas recorrentes de projeto</li>
+                <li class="fragment">C) São regras obrigatórias definidas por linguagens orientadas a objetos</li>
+                <li class="fragment">D) São algoritmos focados exclusivamente em performance</li>
+            </ul>
+
+            <p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <h3>Questão Teórica 2 — Comunicação Entre Desenvolvedores</h3>
+            <p>
+                Em uma discussão técnica entre desenvolvedores experientes, foi mencionado que o uso de Design Patterns melhora não apenas
+                a estrutura interna do software, mas também a comunicação entre membros da equipe, pois determinados nomes passam a representar
+                soluções arquiteturais conhecidas por todos.
+            </p>
+
+        </section>
+        <section>
+            <p>Esse benefício ocorre porque os Design Patterns:</p>
+
+            <ul>
+                <li class="fragment">A) Padronizam a interface visual das aplicações</li>
+                <li class="fragment">B) Permitem substituir a documentação técnica do projeto</li>
+                <li class="fragment">C) Criam um vocabulário comum para discussão de soluções de design</li>
+                <li class="fragment">D) Eliminam a necessidade de reuniões técnicas</li>
+            </ul>
+
+            <p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+            <h3>Questão Teórica 3 — Uso Indevido de Patterns</h3>
+            <p>
+                Um desenvolvedor iniciante decidiu aplicar diversos Design Patterns em um sistema simples apenas para “deixar o projeto mais profissional”.
+                Após algumas semanas, a equipe percebeu que o código havia se tornado excessivamente complexo, com muitas abstrações desnecessárias
+                e dificuldade de entendimento.
+            </p>
+
+        </section>
+        <section>
+            <p>Com base nesse cenário, assinale a alternativa correta:</p>
+
+            <ul>
+                <li class="fragment">A) Design Patterns devem ser aplicados apenas em sistemas legados</li>
+                <li class="fragment">B) O uso inadequado de padrões pode gerar overengineering</li>
+                <li class="fragment">C) Todo Design Pattern aumenta obrigatoriamente a complexidade</li>
+                <li class="fragment">D) Patterns não devem ser utilizados com orientação a objetos</li>
+            </ul>
+
+            <p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <h3>Questão Teórica 4 — Redução de Acoplamento</h3>
+            <p>
+                Durante a manutenção de um sistema legado, uma equipe percebeu que alterações em uma funcionalidade frequentemente impactavam
+                diversas outras partes da aplicação, evidenciando forte acoplamento entre componentes.
+                Como proposta de melhoria arquitetural, sugeriu-se a adoção de Design Patterns adequados.
+            </p>
+        </section>
+        <section>
+
+            <p>Nesse contexto, uma contribuição importante dos Design Patterns seria:</p>
+
+            <ul>
+                <li class="fragment">A) Reduzir o acoplamento e melhorar a manutenibilidade do código</li>
+                <li class="fragment">B) Eliminar completamente a necessidade de refatoração futura</li>
+                <li class="fragment">C) Garantir menor consumo de memória</li>
+                <li class="fragment">D) Substituir integralmente os princípios SOLID</li>
+            </ul>
+
+            <p class="fragment"><strong>Resposta:</strong> A</p>
+        </section>
+
+        <section data-background="#333">
+            <hr><h1>PRÁTICAS</h1>
+            <hr></section>
+
+        <section>
+            <p>Em sistemas de interface gráfica, é comum que <strong class="fragment highlight-red">componentes</strong> como botões, painéis e containers precisem ser tratados de forma uniforme, mesmo quando alguns elementos são individuais e outros <strong class="fragment highlight-red">agrupam</strong> vários componentes internos.</p>
+            <p>Esse cenário representa o uso adequado de qual padrão?</p>
+            <ul>
+                <li style="display: inline;" >A) Strategy</li>
+                <li style="display: inline;" >B) Adapter</li>
+                <li style="display: inline;" >C) Composite</li>
+                <li style="display: inline;" >D) Observer</li>
+            </ul>
+            <p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+
+            <ul>
+                <li class="fragment">DOM do navegador</li>
+                <li class="fragment">Pastas e arquivos em sistemas operacionais</li>
+                <li class="fragment">Menus com submenus em aplicações desktop/web</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Exemplo de Código — Composite (JavaScript)</h2>
+            <pre><code class="language-javascript">class Component {
+  render() {}
+}
+
+class Button extends Component {
+  render() { console.log('Button'); }
+}
+
+class Panel extends Component {
+  constructor() { super(); this.children = []; }
+  add(child) { this.children.push(child); }
+  render() { this.children.forEach(c => c.render()); }
+}</code></pre>
+        </section>
+
+
+        <section>
+            <h2>Exemplo de Código — Composite (PHP)</h2>
+            <pre><code class="language-php">interface Node {
+    public function render(): void;
+}
+
+class File implements Node {
+    public function render(): void { echo 'Arquivo'; }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Exemplo de Código — Composite Container (PHP)</h2>
+            <pre><code class="language-php">class Folder implements Node {
+    private array $children = [];
+
+    public function add(Node $node): void {
+        $this->children[] = $node;
+    }
+
+    public function render(): void {
+        foreach ($this->children as $child) $child->render();
+    }
+}</code></pre>
+        </section>
+
+
+        <section>
+
+            <p>Uma empresa precisa integrar seu sistema com uma API de pagamentos terceirizada cujo contrato é incompatível com a interface esperada pelo sistema atual. A equipe deseja realizar essa integração sem alterar o código legado.</p>
+            <p>Nesse contexto, o padrão mais apropriado é:</p>
+            <ul>
+                <li class="fragment" style="display: inline;">A) Factory</li>
+                <li class="fragment" style="display: inline;">B) Adapter</li>
+                <li class="fragment" style="display: inline;">C) Singleton</li>
+                <li class="fragment" style="display: inline;">D) Builder</li>
+            </ul>
+            <p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <h2>Exemplo de Código — Adapter (JavaScript)</h2>
+            <pre><code class="language-javascript">class StripeSDK {
+  makePayment() { return 'paid'; }
+}
+
+class StripeAdapter {
+  constructor(stripe) { this.stripe = stripe; }
+  pay() { return this.stripe.makePayment(); }
+}</code></pre>
+        </section>
+
+
+        <section>
+            <h2>Exemplo de Código — Adapter (Python)</h2>
+            <pre><code class="language-python">class LegacyPayment:
+    def pay_old(self):
+        return 'Pagamento legado'
+
+class PaymentAdapter:
+    def __init__(self, legacy):
+        self.legacy = legacy
+
+    def pay(self):
+        return self.legacy.pay_old()</code></pre>
+        </section>
+
+        <section>
+
+            <ul>
+                <li class="fragment" >Adaptador de tomada internacional</li>
+                <li class="fragment" >Wrapper para SDKs de terceiros</li>
+                <li class="fragment" >Camadas anti-corruption em integrações com legado</li>
+            </ul>
+        </section>
+
+        <section>
+
+            <p>Em uma plataforma de e-commerce, sempre que um pedido muda de status, diferentes módulos precisam ser notificados automaticamente, como envio de e-mail, atualização do estoque e geração de logs.</p>
+            <p>Qual padrão melhor atende esse cenário?</p>
+            <ul>
+                <li class="fragment" style="display: inline;">A) Observer</li>
+                <li class="fragment" style="display: inline;">B) Adapter</li>
+                <li class="fragment" style="display: inline;">C) Proxy</li>
+                <li class="fragment" style="display: inline;">D) Facade</li>
+            </ul>
+            <p class="fragment"><strong>Resposta:</strong> A</p>
+        </section>
+
+        <section>
+            <h2>Exemplo de Código — Observer Subject (Java)</h2>
+            <pre><code class="language-java">class Order {
+    private List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();
+
+    void addObserver(Observer o) { observers.add(o); }
+
+    void confirm() {
+        observers.forEach(Observer::update);
+    }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Exemplo de Código — Observer (Java)</h2>
+            <pre><code class="language-java">interface Observer {
+    void update();
+}
+
+class EmailNotifier implements Observer {
+    public void update() {
+        System.out.println("Email enviado");
+    }
+}</code></pre>
+        </section>
+
+        <section>
+            <ul>
+                <li class="fragment" style="">Eventos do DOM em JavaScript</li>
+                <li class="fragment" style="">Sistema de publish/subscribe</li>
+                <li class="fragment" style="">WebSockets / listeners de eventos</li>
+            </ul>
+        </section>
+
+        <section>
+            <p>Uma equipe adotou Design Patterns em um projeto de médio porte e observou maior padronização arquitetural, redução de acoplamento e maior facilidade de manutenção por novos integrantes.</p>
+            <p>Esse resultado demonstra que Design Patterns:</p>
+            <ul>
+                <li class="fragment" style=";">A) Servem apenas para melhorar performance</li>
+                <li class="fragment" style=";">B) Substituem documentação técnica</li>
+                <li class="fragment" style=";">C) Promovem boas práticas e comunicação arquitetural</li>
+                <li class="fragment" style=";">D) Eliminam bugs automaticamente</li>
+            </ul>
+            <p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+            <p>Um desenvolvedor aplicou Composite, Observer e Adapter em um CRUD simples sem qualquer necessidade arquitetural, tornando o sistema mais complexo e difícil de manter.</p>
+            <p>Esse cenário exemplifica:</p>
+            <ul>
+                <li class="fragment" style="display: inline;">A) Refatoração progressiva</li>
+                <li class="fragment" style="display: inline;">B) Overengineering</li>
+                <li class="fragment" style="display: inline;">C) Clean Architecture</li>
+                <li class="fragment" style="display: inline;">D) Alta coesão</li>
+            </ul>
+            <p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+
+        <section>
+            <p>Em um editor de design, formas individuais e grupos de formas devem responder ao mesmo comando de renderização.</p>
+            <ul>
+                <li class="fragment" style="display: inline;">A) Factory</li>
+                <li class="fragment" style="display: inline;">B) Composite</li>
+                <li class="fragment" style="display: inline;">C) Adapter</li>
+                <li class="fragment" style="display: inline;">D) Observer</li>
+            </ul>
+            <p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>O principal benefício do Composite é permitir:</p><ul>
+            <li class="fragment" style=";">A) Tratar objetos individuais e composições uniformemente</li>
+            <li class="fragment" style=";">B) Converter interfaces incompatíveis</li>
+            <li class="fragment" style=";">C) Criar objetos complexos passo a passo</li>
+            <li class="fragment" style=";">D) Garantir instância única</li></ul><p class="fragment"><strong>Resposta:</strong> A</p>
+        </section>
+
+        <section>
+            <p>Um sistema legado utiliza XML, mas uma nova biblioteca aceita apenas JSON. Deseja-se compatibilizar sem alterar nenhum dos lados.</p><ul>
+            <li class="fragment" style="display: inline;">A) Bridge</li>
+            <li class="fragment" style="display: inline;">B) Decorator</li>
+            <li class="fragment" style="display: inline;">C) Adapter</li>
+            <li class="fragment" style="display: inline;">D) Strategy</li></ul><p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+            <p>O Adapter é mais indicado quando:</p><ul>
+            <li class="fragment" style=";">A) Há necessidade de comunicação entre interfaces incompatíveis</li>
+            <li class="fragment" style=";">B) Deseja-se notificar múltiplos objetos</li>
+            <li class="fragment" style=";">C) É preciso encapsular algoritmos</li>
+            <li class="fragment" style=";">D) Quer-se criar hierarquias em árvore</li></ul><p class="fragment"><strong>Resposta:</strong> A</p>
+        </section>
+
+        <section>
+            <p>Qual cenário representa melhor o uso de Observer?</p><ul>
+            <li class="fragment" style=";">A) Converter dados CSV em JSON</li>
+            <li class="fragment" style=";">B) Notificar inscritos quando um canal publica vídeo</li>
+            <li class="fragment" style=";">C) Criar componentes compostos</li>
+            <li class="fragment" style=";">D) Instanciar objetos complexos</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>No padrão Observer, o objeto principal geralmente é chamado de:</p><ul>
+            <li class="fragment" style="display: inline;">A) Builder</li>
+            <li class="fragment" style="display: inline;">B) Subject</li>
+            <li class="fragment" style="display: inline;">C) Proxy</li>
+            <li class="fragment" style="display: inline;">D) Context</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>Design Patterns são considerados importantes porque:</p><ul>
+            <li class="fragment" style=";">A) Forçam uso de frameworks</li>
+            <li class="fragment" style=";">B) Representam soluções reutilizáveis para problemas recorrentes</li>
+            <li class="fragment" style=";">C) Eliminam necessidade de testes</li>
+            <li class="fragment" style=";">D) Reduzem custo de hospedagem</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>Qual problema pode surgir com uso excessivo de Design Patterns?</p><ul>
+            <li class="fragment" style="display: inline;">A) Redução de flexibilidade</li>
+            <li class="fragment" style="display: inline;">B) Overengineering</li>
+            <li class="fragment" style="display: inline;">C) Maior performance</li>
+            <li class="fragment" style="display: inline;">D) Menor reusabilidade</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>Uma estrutura de categorias e subcategorias de e-commerce pode ser modelada naturalmente com:</p><ul>
+            <li class="fragment" style="display: inline;">A) Observer</li>
+            <li class="fragment" style="display: inline;">B) Adapter</li>
+            <li class="fragment" style="display: inline;">C) Composite</li>
+            <li class="fragment" style="display: inline;">D) Singleton</li></ul><p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+            <p>Um wrapper para SDK de terceiros é frequentemente um exemplo de:</p><ul>
+            <li class="fragment" style="display: inline;">A) Composite</li>
+            <li class="fragment" style="display: inline;">B) Adapter</li>
+            <li class="fragment" style="display: inline;">C) Observer</li>
+            <li class="fragment" style="display: inline;">D) Factory</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>Eventos do DOM em JavaScript são um exemplo clássico de:</p><ul>
+            <li class="fragment" style="display: inline;">A) Adapter</li>
+            <li class="fragment" style="display: inline;">B) Composite</li>
+            <li class="fragment" style="display: inline;">C) Observer</li>
+            <li class="fragment" style="display: inline;">D) Builder</li></ul><p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+            <p>Ao mencionar “vamos usar um Adapter aqui”, uma equipe demonstra:</p><ul>
+            <li class="fragment" style=";">A) Acoplamento excessivo</li>
+            <li class="fragment" style=";">B) Vocabulário arquitetural compartilhado</li>
+            <li class="fragment" style=";">C) Dependência de framework</li>
+            <li class="fragment" style=";">D) Violação de SOLID</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>Qual estrutura de dados mais se relaciona conceitualmente ao Composite?</p><ul>
+            <li class="fragment" style=";">A) Fila</li>
+            <li class="fragment" style=";">B) Árvore</li>
+            <li class="fragment" style=";">C) HashMap</li>
+            <li class="fragment" style=";">D) Pilha</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>O Adapter ajuda principalmente a preservar:</p><ul>
+            <li class="fragment" style=";">A) Compatibilidade sem alterar código cliente</li>
+            <li class="fragment" style=";">B) Banco de dados relacional</li>
+            <li class="fragment" style=";">C) Estado global da aplicação</li>
+            <li class="fragment" style=";">D) Cache em memória</li></ul><p class="fragment"><strong>Resposta:</strong> A</p>
+        </section>
+
+        <section>
+            <p>Uma vantagem do Observer é:</p><ul>
+            <li class="fragment" style=";">A) Redução de acoplamento entre emissor e receptores</li>
+            <li class="fragment" style=";">B) Garantia de alta performance</li>
+            <li class="fragment" style=";">C) Conversão automática de interfaces</li>
+            <li class="fragment" style=";">D) Simplificação de queries SQL</li></ul><p class="fragment"><strong>Resposta:</strong> A</p>
+        </section>
+
+        <section>
+            <p>Patterns devem ser aplicados:</p><ul>
+            <li class="fragment" style=";">A) Sempre que possível</li>
+            <li class="fragment" style=";">B) Apenas quando resolvem um problema real de design</li>
+            <li class="fragment" style=";">C) Apenas em microsserviços</li>
+            <li class="fragment" style=";">D) Somente em Java</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>Qual dos cenários abaixo menos combina com Composite?</p><ul>
+            <li class="fragment" style="">A) Estrutura de menus hierárquicos</li>
+            <li class="fragment" style="">B) Sistema de arquivos</li>
+            <li class="fragment" style="">C) Renderização de componentes aninhados</li>
+            <li class="fragment" style="">D) Conversão de API SOAP para REST</li></ul><p class="fragment"><strong>Resposta:</strong> D</p>
+        </section>
+
+        <section>
+            <p>Qual analogia representa melhor o Adapter?</p><ul>
+            <li class="fragment" style="">A) Um filtro de e-mail</li>
+            <li class="fragment" style="">B) Um adaptador de tomada</li>
+            <li class="fragment" style="">C) Uma assinatura de newsletter</li>
+            <li class="fragment" style="">D) Uma pasta com arquivos</li></ul><p class="fragment"><strong>Resposta:</strong> B</p>
+        </section>
+
+        <section>
+            <p>Publish/Subscribe em mensageria se baseia fortemente em qual conceito?</p><ul>
+            <li class="fragment" style="display: inline;">A) Composite</li>
+            <li class="fragment" style="display: inline;">B) Adapter</li>
+            <li class="fragment" style="display: inline;">C) Observer</li>
+            <li class="fragment" style="display: inline;">D) Singleton</li></ul><p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+        <section>
+            <p>Qual alternativa relaciona corretamente Pattern e finalidade?</p><ul>
+            <li class="fragment">A) Composite → Notificar objetos</li>
+            <li class="fragment">B) Adapter → Organizar hierarquias</li>
+            <li class="fragment">C) Observer → Reagir a mudanças de estado</li>
+            <li class="fragment">D) Adapter → Garantir instância única</li></ul><p class="fragment"><strong>Resposta:</strong> C</p>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
