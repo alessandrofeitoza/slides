@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Aula: Gerenciamento de Logs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h2>Gerenciamento de Logs</h2>
+            <p>A "Caixa Preta"</p>
+        </section>
+
+        <section data-background-color="#3b82f6">
+            <h2 style="color: white;">Por que Logar?</h2>
+            <ul style="color: white;">
+                <li class="fragment"><strong>Visibilidade:</strong> O que acontece em produção?</li>
+                <li class="fragment"><strong>Auditoria:</strong> Histórico de ações críticas.</li>
+                <li class="fragment"><strong>Monitoramento:</strong> Identificar erros proativamente.</li>
+                <li class="fragment"><strong>Compliance:</strong> Requisitos legais (LGPD).</li>
+            </ul>
+        </section>
+
+        <section>
+            <div style="text-align: left;">
+                <h3><em>Compliance</em></h3>
+                <hr>
+                <p class="fragment">
+                    do Inglês, <em style="color: red;">to comply</em>
+                </p>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <strong><em> cumprir</em></strong> (no sentido de requisitos) <br>
+
+                    <strong><em> Requisito não funcional</em></strong>  <br>
+                </p>
+            </div>
+        </section>
+
+        <section data-background-color="#1e293b">
+            <h2 style="color: white;">Logs e Compliance</h2>
+            <p style="color: #94a3b8;">Por que o jurídico se importa?</p>
+            <p class="fragment">é o <strong>conjunto de regras</strong> e normas que uma empresa deve seguir. No mundo dos dados, os logs são a sua <strong>prova real</strong>.</p>
+        </section>
+
+        <section>
+            <div >
+                <ul>
+                    <li class="fragment">Quem acessou o quê?</li>
+                    <li class="fragment">Quando um dado foi alterado?</li>
+                    <li class="fragment">Por que um usuário foi deletado?</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h3>LGPD e o "Rastro" de Dados</h3>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="flex: 1; font-size: 0.7em; text-align: left;">
+                    <p>A <strong>Lei Geral de Proteção de Dados</strong> exige que empresas saibam o ciclo de vida dos dados pessoais.</p>
+                    <ul style="color: #dc2626;">
+                        <li class="fragment"><strong>Auditoria:</strong> Você precisa provar que o consentimento foi dado.</li>
+                        <li class="fragment"><strong>Incidentes:</strong> Em caso de vazamento, você deve reportar <em>o que</em> foi exposto.</li>
+                        <li class="fragment"><strong>Direito ao Esquecimento:</strong> O log deve registrar a exclusão, mas não pode manter o dado sensível.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="flex: 1; font-size: 0.7em; text-align: left;">
+                    <h3>Lembra da Renner (2021)?</h3>
+                </div>
+                <div class="fragment" style="flex: 1; background: #f1f5f9; padding: 20px; border-radius: 10px;">
+                    <h4 style="margin-top: 0;">Princípio da Responsabilização</h4>
+                    <p style="font-size: 0.6em;">"O agente deve demonstrar a adoção de medidas eficazes e capazes de comprovar a observância e o cumprimento das normas."</p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="../../../img/gifs/aqui-tem-coragem.gif">
+        </section>
+
+        <section>
+            <h3>Padrões de Mercado</h3>
+            <table style="font-size: 0.6em;">
+                <thead>
+                <tr style="background: #3b82f6; color: white;">
+                    <th>Sigla</th>
+                    <th>Onde se aplica</th>
+                    <th>Exigência de Log</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td><strong>PCI-DSS</strong></td>
+                    <td>Pagamentos / Cartão</td>
+                    <td>Trilha de auditoria para todo acesso a dados de cartões.</td>
+                </tr>
+                <tr class="fragment">
+                    <td><strong>HIPAA</strong></td>
+                    <td>Saúde (Health Techs)</td>
+                    <td>Logs estritos de quem visualizou prontuários médicos.</td>
+                </tr>
+                <tr class="fragment">
+                    <td><strong>SOC2</strong></td>
+                    <td>SaaS / Cloud</td>
+                    <td>Monitoramento de acessos para garantir segurança e disponibilidade.</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section data-background-color="#fef2f2">
+            <h3>O Dilema do Desenvolvedor</h3>
+            <p class="fragment">Se um dado sensível cai no log, o log se torna o <strong>vazamento</strong>.</p>
+
+            <img src="../../../img/gifs/cadeado.gif" alt="" width="60%">
+        </section>
+        
+        <section data-background-color="#fef2f2">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.7em; margin-top: 20px;">
+                <div style="padding: 15px; border: 2px dashed #ef4444;">
+                    <h4 style="color: #ef4444;">Risco de Compliance</h4>
+                    <p>Logar o payload completo da requisição incluindo a senha ou o CPF do cliente.</p>
+                </div>
+                <div style="padding: 15px; border: 2px solid #22c55e;">
+                    <h4 class="fragment" style="color: #22c55e;">Solução: Masking (Anonimizar)</h4>
+                    <p class="fragment">Substituir dados sensíveis antes de gravar: <br><code>"cpf": "***.456.***-01"</code></p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#333">
+            <hr>
+            <h2>E como "logar"?</h2>
+            <hr>
+        </section>
+
+        <section>
+            <h3>Log no PHP "Raiz" (Sem Framework)</h3>
+            <div style="font-size: 1em; text-align: left;">
+                <pre><code class="language-php">&lt;?php
+error_log("Usuário logado com sucesso!", 0);
+
+function writeLog($level, $message) {
+    $date = date('Y-m-d H:i:s');
+
+    $logEntry = "[$date] [$level] $message" . PHP_EOL;
+
+    file_put_contents(__DIR__ . '/app.log', $logEntry, FILE_APPEND);
+}
+</code></pre>
+            </div>
+        </section>
+
+        <section>
+
+                <pre><code class="language-php">&lt;?php
+try {
+    throw new Exception("Falha na conexão com o Banco");
+} catch (Exception $e) {
+    writeLog(
+        'ERROR',
+        $e->getMessage(),
+        "No arquivo ".__FILE__." na linha ".__LINE__
+    );
+}
+?&gt;</code></pre>
+        </section>
+
+        <section>
+            <h3>Níveis de Log (RFC 5424)</h3>
+            <table style="font-size: 0.7em;">
+                <thead>
+                <tr>
+                    <th>Nível</th>
+                    <th>Descrição</th>
+                    <th>Contexto</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment"><td>DEBUG</td><td>Detalhes técnicos</td><td>Desenvolvimento</td></tr>
+                <tr class="fragment"><td>INFO</td><td>Eventos normais</td><td>"User Logged"</td></tr>
+                <tr class="fragment" style="color: orange;"><td>WARNING</td><td>Anomalias leves</td><td>API lenta</td></tr>
+                <tr class="fragment" style="color: red;"><td>ERROR</td><td>Falha de fluxo</td><td>Erro 500</td></tr>
+                <tr class="fragment" style="background: #000; color: #fff;"><td>CRITICAL</td><td>Sistema parado</td><td>Banco offline</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section data-background-color="#f3f4f6">
+            <h3>Backend vs Frontend</h3>
+            <div style="display: flex; gap: 20px;">
+                <div style="flex: 1; padding: 10px; border: 1px solid #ccc;">
+                    <h4>Backend</h4>
+                    <p><small>Foco em infra, lógica e banco. Logs ficam no servidor ou agregadores.</small></p>
+                </div>
+                <div style="flex: 1; padding: 10px; border: 1px solid #ccc;">
+                    <h4>Frontend</h4>
+                    <p><small>Foco em UX e Erros de JS. Desafio: Capturar logs na máquina do cliente.</small></p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Qualidade do Log</h3>
+            <div style="text-align: left; font-size: 0.8em;">
+                <p style="color: green;"><strong>✅ Bom:</strong> <code>[ERROR] Payment fail. User #42. Reason: Timeout.</code></p>
+                <p style="color: red;"><strong>❌ Ruim:</strong> <code>[ERROR] Algo deu errado.</code></p>
+            </div>
+            <blockquote style="font-size: 0.7em; margin-top: 30px;">
+                "Se você loga tudo, você não tem nada. Se loga pouco, está cego."
+            </blockquote>
+        </section>
+
+        <section data-background-color="#ef4444">
+            <h2 style="color: white;">Cuidado: O que NÃO logar</h2>
+            <ul style="color: white;">
+                <li class="fragment">Senhas de usuários.</li>
+                <li class="fragment">Dados Sensíveis (CPF, Cartão).</li>
+                <li class="fragment">Logs em excesso (I/O excessivo).</li>
+                <li class="fragment">Informações que violem a LGPD.</li>
+            </ul>
+        </section>
+
+        <section>
+            <hr>
+            <h1>E AGORA?</h1>
+            <hr>
+        </section>
+        <section>
+            <h3>Logs Estruturados vs. Texto</h3>
+            <div style="display: flex; gap: 20px; font-size: 0.6em; text-align: left;">
+                <div class="fragment" style="flex: 1; padding: 15px; background: #fee2e2; border-radius: 8px;">
+                    <h4 style="color: #991b1b;">❌ Texto Simples (Unstructured)</h4>
+                    <pre><code>[2023-10-27] User 42 bought item 100</code></pre>
+                    <p>Difícil de filtrar, requer Regex complexo para análise de dados.</p>
+                </div>
+                <div class="fragment" style="flex: 1; padding: 15px; background: #dcfce7; border-radius: 8px;">
+                    <h4 style="color: #166534;">✅ JSON Estruturado</h4>
+                    <pre><code>{
+  "timestamp": "2023-10-27",
+  "user_id": 42,
+  "action": "purchase",
+  "item_id": 100
+}</code></pre>
+                    <p>Busca instantânea e agregação nativa em ferramentas modernas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background-color="#f8fafc">
+            <h3>O Pipeline de Log</h3>
+            <div style="font-size: 0.7em;">
+                <p>O log não "morre" no arquivo .log</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px;">
+                    <div class="fragment" style="border: 2px solid #3b82f6; padding: 10px;"><strong>1. Geração</strong><br><small>App (Winston/Monolog)</small></div>
+                    <span>➔</span>
+                    <div class="fragment" style="border: 2px solid #3b82f6; padding: 10px;"><strong>2. Coleta</strong><br><small>Agent (Filebeat)</small></div>
+                    <span>➔</span>
+                    <div class="fragment" style="border: 2px solid #3b82f6; padding: 10px;"><strong>3. Ingestão</strong><br><small>Processador (Logstash)</small></div>
+                    <span>➔</span>
+                    <div class="fragment" style="border: 2px solid #3b82f6; padding: 10px;"><strong>4. Dashboards</strong><br><small>Kibana / Grafana</small></div>
+                </div>
+            </div>
+        </section>
+
+        <section data-background-color="#4338ca">
+            <h3 style="color: white;">Correlation ID (Traceability)</h3>
+            <p style="color: white; font-size: 0.8em;">Como rastrear um erro em múltiplos serviços?</p>
+            <div style="background: white; color: black; padding: 20px; border-radius: 10px; font-size: 0.7em; text-align: left;">
+                <p class="fragment">1. <strong>Frontend</strong> gera um ID único: <code>req-789-abc</code></p>
+                <p class="fragment">2. <strong>API Auth</strong> recebe o ID e loga com ele.</p>
+                <p class="fragment">3. <strong>API Pedidos</strong> recebe o mesmo ID via Header.</p>
+                <hr>
+                <p class="fragment"><strong>Resultado:</strong> Você busca por <code>req-789-abc</code> e vê a jornada completa da requisição.</p>
+            </div>
+        </section>
+
+        <section>
+            <h3>Os 3 Pilares da Observabilidade</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 0.6em;">
+                <div class="fragment" style="background: #e0f2fe; padding: 20px;">
+                    <h4>Logs</h4>
+                    <p>Eventos imutáveis e detalhados. <strong>"O que aconteceu?"</strong></p>
+                </div>
+                <div class="fragment" style="background: #fef9c3; padding: 20px;">
+                    <h4>Metrics</h4>
+                    <p>Dados numéricos agregados. <strong>"Quantas vezes/Qual a carga?"</strong></p>
+                </div>
+                <div class="fragment" style="background: #ffedd5; padding: 20px;">
+                    <h4>Tracing</h4>
+                    <p>Caminho da requisição fim-a-fim. <strong>"Onde demorou?"</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Na Prática: Contexto é tudo</h3>
+            <div style="font-size: 0.5em; text-align: left;">
+                <p style="color: red; font-weight: bold;">❌ Ruim (Mudo):</p>
+                <pre class="fragment"><code class="language-javascript">try {
+  saveOrder(order);
+} catch (e) {
+  console.log("Erro ao salvar"); // O que falhou? Qual pedido?
+}</code></pre>
+
+                <p style="color: green; font-weight: bold; margin-top: 20px;">✅ Bom (Rastreável):</p>
+                <pre class="fragment"><code class="language-javascript">try {
+  saveOrder(order);
+} catch (error) {
+  logger.error("Falha ao processar pedido", {
+    order_id: order.id,
+    user_id: user.id,
+    reason: error.message,
+    stack: error.stack
+  });
+}</code></pre>
+            </div>
+        </section>
+
+        <section data-background-color="#0f172a">
+            <h2 style="color: white;">🚀 Desafio Prático</h2>
+            <ol style="color: white; font-size: 0.8em; text-align: left;">
+                <li class="fragment">Configurar um Logger (Winston/Monolog).</li>
+                <li class="fragment">Criar um Middleware para gerar <strong>Correlation ID</strong> em cada request.</li>
+                <li class="fragment">Simular um erro e capturá-lo no <strong>Sentry</strong> ou <strong>Papertrail</strong>.</li>
+                <li class="fragment">Verificar se o log contém os metadados necessários para o debug.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>Erros e Gargalos comuns</h3>
+            <ul>
+                <li class="fragment"><strong>I/O de Disco:</strong> Escrita síncrona trava o app.</li>
+                <li class="fragment"><strong>Falta de Rotação:</strong> Arquivos gigantes que lotam o HD.</li>
+                <li class="fragment"><strong>Logs Silenciosos:</strong> Catch sem log.</li>
+            </ul>
+        </section>
+
+        <section data-background-color="#4F5B93">
+            <h2 style="color: white;">Ecossistema PHP</h2>
+            <ul style="color: white;">
+                <li class="fragment"><strong>Monolog:</strong> O padrão (Laravel/Symfony).</li>
+                <li class="fragment"><strong>Sentry:</strong> Gestão de exceções.</li>
+                <li class="fragment"><strong>Papertrail:</strong> Centralização em nuvem.</li>
+            </ul>
+        </section>
+
+        <section data-background-color="#339933">
+            <h2 style="color: white;">Ecossistema Node.js</h2>
+            <ul style="color: white;">
+                <li class="fragment"><strong>Winston:</strong> Versátil e robusto.</li>
+                <li class="fragment"><strong>Pino:</strong> Focado em alta performance.</li>
+                <li class="fragment"><strong>Bunyan:</strong> Estrutura JSON nativa.</li>
+            </ul>
+        </section>
+
+        <section data-background-color="#1e293b">
+            <h2 style="color: white;">Dicas e Macetes</h2>
+            <ol style="color: white; font-size: 0.8em;">
+                <li class="fragment">Use <strong>JSON Estruturado</strong>.</li>
+                <li class="fragment">Implemente <strong>Correlation IDs</strong> (Rastreio).</li>
+                <li class="fragment">Centralize (ELK Stack ou Grafana Loki).</li>
+                <li class="fragment">Automatize alertas críticos.</li>
+            </ol>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
