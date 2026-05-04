@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Tech Challenge: Refactoring</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h1>Estruturas de Dados</h1>
+            <h3>Além do obvio</h3>
+        </section>
+
+        <section data-background="#111">
+            <hr>
+            <h4 style="background-color: #f39c12; color: #000;">Quando Arrays e Objetos não dão conta</h4>
+            <hr>
+        </section>
+
+        <section data-background="#333">
+            <div style="text-align: left;">
+                <h3>1. O Paradoxo do Array</h3>
+                <hr>
+                <p class="fragment">Arrays são ótimos para guardar coisas em ordem.</p>
+                <p class="fragment">Mas e quando precisamos <strong>encontrar</strong> algo rápido?</p>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h3>A Busca Lenta</h3>
+            <pre data-id="code-anim"><code class="javascript" data-trim data-line-numbers>
+const cpfsCadastrados = ["111.111.111-11", "222.222.222-22", ...]; // 1 milhão de itens
+
+// O JS vai olhar de gaveta em gaveta (Busca Linear)
+const existe = cpfsCadastrados.includes("999.999.999-99");
+    </code></pre>
+            <p class="fragment" style="color: #ff5e5e;">Se o item for o último, ele testou 1 milhão de vezes!</p>
+        </section>
+
+        <section data-background="../img/gifs/mindblown.gif">
+            <h2 style="background-color: white; color: black; display: inline-block; padding: 10px;">A Solução: SET</h2>
+        </section>
+
+        <section data-background="#2c3e50">
+            <h3>O que é um <span class="highlight-blue">Set</span>?</h3>
+            <ul>
+                <li class="fragment">É uma coleção de valores.</li>
+                <li class="fragment">A busca nele é quase instantânea.</li>
+                <li class="fragment">Estrutura mais "profissional"</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>E o pulo do gato?</h1>
+            <h2 class="fragment">Não aceita valores duplicados</h2>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Set na Prática</h3>
+            <pre data-id="code-anim"><code class="javascript" data-trim data-line-numbers="|1-2|4|6-7">
+// Passamos o array para o Set
+const cpfsSet = new Set(["111", "222", "111"]);
+
+console.log(cpfsSet); // Set(2) { '111', '222' } (removeu a cópia)
+
+// Busca ultra-rápida (O(1))
+console.log(cpfsSet.has("222")); // true
+    </code></pre>
+        </section>
+
+        <section data-background="#1a1a1a">
+            <h3>2. O Paradoxo do Objeto Literal</h3>
+            <p>Objetos `{}` são os dicionários do JS.</p>
+            <pre class="fragment"><code class="javascript" data-trim>
+const notas = {
+    "Joao": 8,
+    "Maria": 10
+};
+    </code></pre>
+            <p class="fragment highlight-red">Problema: As chaves de um objeto SÓ podem ser Strings ou Symbols.</p>
+        </section>
+
+        <section>
+            <p style="font-size: 3rem;">E se eu quiser usar um <strong>Objeto</strong> como Chave de outro <strong>Objeto</strong>?</p>
+        </section>
+
+        <section data-background="#27ae60">
+            <h3>Entra em cena o <span style="color: #000; background: yellow; padding: 0 10px;">MAP</span></h3>
+            <p>O Map é um Dicionário turbinado.</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1|3-4|6|8-9">
+const metadata = new Map();
+
+const botaoLogin = document.getElementById('btnLogin');
+const botaoSair = document.getElementById('btnSair');
+
+// A CHAVE É O ELEMENTO HTML, O VALOR É UM OBJETO DE DADOS!
+metadata.set(botaoLogin, { clicks: 0, lastClick: new Date() });
+
+console.log(metadata.get(botaoLogin));
+    </code></pre>
+        </section>
+
+        <section data-background="#333">
+            <h3>Por que a disciplina de Estrutura de Dados ama Maps e Sets?</h3>
+            <p class="fragment">Porque por debaixo dos panos, eles são <strong>Tabelas Hash</strong>.</p>
+            <p class="fragment">Eles não percorrem (iteram) os dados para achar a resposta. Eles usam matemática para calcular o endereço exato na memória.</p>
+        </section>
+
+        <section data-background="#8e44ad">
+            <h3>3. O Paradoxo das Strings Soltas</h3>
+            <p>O famoso "Magic String"</p>
+        </section>
+
+        <section>
+    <pre><code class="javascript" data-trim data-line-numbers="|1|3|5-7">
+let statusUsuario = "ATIVO";
+
+// 3 meses depois, em outro arquivo...
+function verificarPermissao(status) {
+    // ERRO DE DIGITAÇÃO!
+    if (status === "Ativo" || status === "ativo") { ... }
+}
+    </code></pre>
+            <p class="fragment highlight-red">Tratar regra de negócio com string solta é pedir para ter bug em produção.</p>
+        </section>
+
+        <section data-background="#2980b9">
+            <h3>A Solução: Enums (Enumerações)</h3>
+            <p>Criando um "cardápio" fixo de opções.</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1-5|7-8">
+// Object.freeze trava o objeto. Ninguém pode alterar as chaves/valores.
+const STATUS_USER = Object.freeze({
+    ATIVO: 'ATIVO',
+    INATIVO: 'INATIVO',
+    BANNED: 'BANNED'
+});
+
+let statusAtual = STATUS_USER.ATIVO;
+
+if (statusAtual === STATUS_USER.ATIVO) { ... }
+    </code></pre>
+        </section>
+
+        <section data-background="#c0392b">
+            <h3>4. Obsessão por Primitivos</h3>
+            <p>A "Primitive Obsession"</p>
+        </section>
+
+        <section>
+            <p style="font-size: 2.5rem;">Um CPF é uma <strong>String</strong>?</p>
+            <div class="fragment">
+                <p>String aceita isso:</p>
+                <pre><code class="javascript" data-trim>
+let cpf = "BATATA-DOCE"; // O JS não liga, é texto.
+        </code></pre>
+            </div>
+        </section>
+
+        <section data-background="#16a085">
+            <h3>Value Objects (VO)</h3>
+            <p>Dando "inteligência" ao dado bruto.</p>
+            <pre><code class="javascript" data-trim data-line-numbers="|1-7|9-10">
+class CPF {
+    constructor(numero) {
+        if (numero.length !== 11) throw new Error("CPF Inválido");
+        // Aqui teria a lógica real de validação
+        this.valor = numero;
+    }
+}
+
+// O sistema agora trabalha com a ESTRUTURA CPF, não com Strings soltas.
+const clienteCpf = new CPF("12345678901");
+    </code></pre>
+        </section>
+
+        <section data-background="#333">
+            <h3>Juntando as Peças (O Mundo Real)</h3>
+            <p>Como isso tudo vira uma <strong>Estrutura de Dados</strong> de verdade?</p>
+        </section>
+
+        <section data-auto-animate>
+    <pre data-id="code-final"><code class="javascript" data-trim data-line-numbers="|1-3|5-6|8-10">
+// 1. O Value Object (O que guardar)
+const cpf = new CPF("12345678901");
+
+// 2. O Enum (O Estado)
+const status = STATUS_USER.ATIVO;
+
+// 3. A Estrutura Avançada (Map) para acesso ultra rápido
+const bancoDeDados = new Map();
+
+bancoDeDados.set(cpf.valor, { cpf, status });
+    </code></pre>
+        </section>
+
+        <section data-background="../img/gifs/aqui-tem-coragem.gif" data-background-size="80%">
+            <div class="fragment" style="background: rgba(0,0,0,0.8); padding: 20px;">
+                <h3>Onde vamos usar isso no curso?</h3>
+                <ul>
+                    <li><strong>Nodes (Listas Encadeadas):</strong> São objetos que guardam Value Objects.</li>
+                    <li><strong>Grafos/Árvores:</strong> Usam Maps para conectar um nó ao outro.</li>
+                    <li><strong>Tabelas Hash:</strong> O princípio de funcionamento do Map e do Set.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <hr>
+            <h3>Dúvidas?</h3>
+            <p>Antes de passarmos para a nossa Atividade em Grupo!</p>
+            <hr>
+        </section>
+
+        <section>
+            <h1>DESAFIO: LEETCODE</h1>
+        </section>
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>HTML & CSS</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 0: CSS </h2>
+            <pre data-id="code-animation"><code class="css" data-trim data-line-numbers>
+    .card {
+        background-color: #3498db;
+        padding: 20px;
+        border: 1px solid #2980b9;
+    }
+    .button {
+        background-color: #3498db;
+    }
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 0: Design Tokens (Vars)</h2>
+            <pre data-id="code-animation"><code class="css" data-trim data-line-numbers="1-4|7,9">
+    :root {
+        --primary-color: #3498db;
+        --primary-dark: #2980b9;
+        --spacing-md: 1.25rem;
+    }
+    .card {
+        background-color: var(--primary-color);
+        padding: var(--spacing-md);
+        border: 1px solid var(--primary-dark);
+    }
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 1: HTML e CSS</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers>
+    <div id="header">
+        <div class="menu-item" style="float: left; margin-left: 20px;">
+            Home
+        </div>
+        <div class="menu-item" style="float: left; margin-left: 20px;">
+            Categorias
+        </div>
+    </div>
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 1: Semântica e Flex</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers="|3,4,5">
+    <header style="display: flex; align-items: center;">
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Categorias</li>
+            </ul>
+        </nav>
+    </header>
+    </code></pre>
+            <p><small>Melhoria: Tags semânticas (header/nav) e alinhamento via Flexbox (adeus float!).</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 2: HTML & Acessibilidade</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers>
+    <div class="btn-enviar" onclick="submitForm()">
+        <img src="check.png">
+        <span>Confirmar</span>
+    </div>
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 2: Semântica Real</h2>
+            <pre data-id="code-animation"><code class="html" data-trim data-line-numbers="1,2">
+    <button type="submit" aria-label="Confirmar envio">
+        <img src="check.png" alt="Ícone de check">
+        Confirmar
+    </button>
+    </code></pre>
+            <p><small>Melhoria: Uso de <code>&lt;button&gt;</code> (focável por teclado), <code>aria-label</code> e <code>alt</code> em imagens.</small></p>
+        </section>
+
+
+        <section data-background="#DDD">
+            <hr>
+            <h1>JAVASCRIPTO</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 3: JS: O que há de errado?</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+                function calc(a) {
+                  let r = 0;
+                  for (let i = 0; i < a.length; i++) {
+                    r += a[i];
+                  }
+                  return r;
+                }
+                </code></pre>
+            <aside class="notes">
+                Problema: Nomes de variáveis genéricos e falta de métodos funcionais (Clean Code).
+            </aside>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 3: JS Refatorado!</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="1,2">
+                function sumArrayElements(numbers) {
+                  return numbers.reduce((acc, curr) => acc + curr, 0);
+                }
+                </code></pre>
+            <p><small>Melhoria: Nomes semânticos e uso de <code>reduce</code>.</small></p>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title">Nível 4: JS O Desafio do If-Else</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers>
+                function getPrice(type) {
+                  if (type === 'apple') {
+                    return 1.5;
+                  } else if (type === 'banana') {
+                    return 1.0;
+                  } else if (type === 'cherry') {
+                    return 2.5;
+                  } else {
+                    return 0;
+                  }
+                }
+                </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h2 data-id="title" style="color: #42ffa1;">Nível 4: JS Object Literal</h2>
+            <pre data-id="code-animation"><code class="javascript" data-trim data-line-numbers="2-6|7">
+                function getPrice(type) {
+                  const prices = {
+                    apple: 1.5,
+                    banana: 1.0,
+                    cherry: 2.5
+                  };
+                  return prices[type] || 0;
+                }
+                </code></pre>
+        </section>
+
+        <section data-background="#b33939">
+            <h3>O Código "Ruim" na Vida Real</h3>
+            <p>Imagine um sistema de e-commerce processando pedidos.</p>
+        </section>
+
+        <section data-auto-animate>
+            <h3>A Armadilha das Strings Soltas</h3>
+            <pre data-id="code-enum"><code class="javascript" data-trim data-line-numbers="|2|4|6|10-12">
+function enviarEmailCliente(pedido) {
+    if (pedido.status === "Aguardando Pagamento") {
+        console.log("Por favor, pague o boleto.");
+    } else if (pedido.status === "pago") {
+        console.log("Seu pedido está sendo separado!");
+    } else if (pedido.status === "Cancelado") {
+        console.log("Que pena, pedido cancelado.");
+    }
+}
+
+// Em outra parte do sistema, um dev júnior cria o pedido:
+const meuPedido = { id: 123, status: "Pago" };
+enviarEmailCliente(meuPedido);
+    </code></pre>
+        </section>
+
+        <section data-background="#000">
+            <p style="font-size: 4rem;">O que acontece com <code>meuPedido</code>?</p>
+            <div class="fragment">
+                <h2 style="color: #ff5e5e;">NADA! 🐛</h2>
+                <p>O Dev digitou <strong>"Pago"</strong> (com 'P' maiúsculo), mas o `if` esperava <strong>"pago"</strong> (minúsculo).</p>
+                <p>O e-mail não é enviado e o cliente fica sem saber de nada.</p>
+            </div>
+        </section>
+
+        <section data-background="#333">
+            <h3>Por que não usar apenas Strings?</h3>
+            <ul>
+                <li class="fragment"><strong>Erros de digitação:</strong> O JavaScript não avisa se você digitar "Canselado" com 's'.</li>
+                <li class="fragment"><strong>Falta de Autocomplete:</strong> A sua IDE (VS Code) não sabe quais são os status possíveis. Você tem que adivinhar ou olhar a documentação.</li>
+                <li class="fragment"><strong>Pesadelo no Refatoramento:</strong> Se o chefe pedir para mudar "pago" para "pagamento_aprovado", você terá que buscar e substituir em 50 arquivos diferentes.</li>
+            </ul>
+        </section>
+
+        <section data-background="../img/gifs/mindblown.gif">
+            <h2 style="background-color: white; color: black; display: inline-block; padding: 10px;">A Solução: ENUM</h2>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Criando a nossa "Fonte da Verdade"</h3>
+            <pre data-id="code-enum2"><code class="javascript" data-trim data-line-numbers="|1|2-4|7">
+// Object.freeze impede que alguém modifique isso acidentalmente
+const STATUS_PEDIDO = Object.freeze({
+    AGUARDANDO: "AGUARDANDO_PAGAMENTO",
+    PAGO: "PAGO",
+    CANCELADO: "CANCELADO"
+});
+
+// Agora o VS Code vai dar AUTOCOMPLETE se você digitar STATUS_PEDIDO.
+    </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h3>O Código "Bom" e Seguro</h3>
+            <pre data-id="code-enum2"><code class="javascript" data-trim data-line-numbers="|2|4|6|10-12">
+function enviarEmailCliente(pedido) {
+    if (pedido.status === STATUS_PEDIDO.AGUARDANDO) {
+        console.log("Por favor, pague o boleto.");
+    } else if (pedido.status === STATUS_PEDIDO.PAGO) {
+        console.log("Seu pedido está sendo separado!");
+    } else if (pedido.status === STATUS_PEDIDO.CANCELADO) {
+        console.log("Que pena, pedido cancelado.");
+    }
+}
+
+// O dev não digita mais strings soltas!
+const meuPedido = { id: 123, status: STATUS_PEDIDO.PAGO };
+enviarEmailCliente(meuPedido);
+    </code></pre>
+        </section>
+
+        <section data-background="#16a085">
+            <h3>O que ganhamos com o Enum?</h3>
+            <hr>
+            <ul>
+                <li class="fragment"><strong>Segurança:</strong> Se o Dev digitar <code>STATUS_PEDIDO.PAGGO</code>, o código quebra na hora avisando que isso não existe (Fail Fast).</li>
+                <li class="fragment"><strong>Manutenção:</strong> Se precisar mudar o texto que vai pro banco, basta mudar <span class="highlight-blue">em um único lugar</span> (dentro do objeto STATUS_PEDIDO).</li>
+            </ul>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
