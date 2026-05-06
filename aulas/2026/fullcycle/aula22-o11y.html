@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Aula 22: Fundamentos de o11y - FullCycle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section data-background="#333">
+            <h3>Aula 22</h3>
+            <h1>Fundamentos de o11y</h1>
+            <p>Observabilidade na Era dos Sistemas Distribuídos</p>
+            <small>05 de Maio de 2026</small>
+        </section>
+
+        <section>
+            <h2>Onde estamos?</h2>
+            <p>Conectando com as aulas anteriores</p>
+        </section>
+
+        <section>
+            <h3>O Ciclo DevOps</h3>
+            <p class="fragment">Já quebramos silos, entendemos a cultura (Aula 16), e melhoramos o fluxo (Aula 17).</p>
+            <p class="fragment">Já "garantimos" a segurança e o deploy (Aulas 19-20).</p>
+            <p class="fragment">Já estamos de olho no que acontece, os logs (Aula 21).</p>
+        </section>
+
+        <section data-background="#333">
+
+            <p><strong>Agora:</strong> Como saber se o que deployamos está realmente saudável?</p>
+        </section>
+
+        <section>
+            <hr>
+            <h2>Monitoramento</h2>vs
+            <h2>Observability <small class="fragment">O11y</small> </h2>
+            <hr>
+        </section>
+
+        <section>
+            <h3>Cosias Diferentes</h3>
+            <ul>
+                <li class="fragment"><strong>Monitoramento:</strong> "O sistema está vivo?" (Reativo)</li>
+                <li class="fragment"><strong>Observabilidade:</strong> "Por que isso está acontecendo?" (Proativo/Investigativo)</li>
+            </ul>
+        </section>
+
+
+
+        <section>
+            <div style="text-align: left;">
+                <h3><em>Monitoramento</em></h3>
+                <hr>
+                <p class="fragment">
+                    processo de <strong>coletar</strong> métricas e eventos <strong>pré-definidos</strong> do sistema para detectar falhas conhecidas
+                    e <strong>disparar alertas</strong> rapidamente quando algo sai do esperado.
+                </p>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    do Latim, <em style="color: red;">monere + monitor</em>
+
+                    "Monitorar + Indicar" = "Monitoramento"
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <img src="img/o11y/monitoramento.png" alt="">
+        </section>
+        <section>
+            <div style="text-align: left;">
+                <h3><em>Observabilidade</em></h3>
+                <hr>
+                <p class="fragment">
+                    Capacidade de <strong>entender</strong> o que está acontecendo dentro de um sistema.
+                    E <strong>Explorar</strong> propriedades e padrões não definidos com antecedência.
+                </em>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    do Latim, <em style="color: red;">observare</em>
+                </p>
+
+                <p>
+                    <strong><em> ob-</em></strong> (diante de) <br>
+
+                    <strong><em> servare-</em></strong> ( guardar/salvar) <br>
+
+                    <small>"o -dade" é o sufixo que transforma o verbo em substantivo, ou seja, a qualidade de ser observável.</small>
+                </p>
+            </div>
+        </section>
+        
+        <section>
+            <img src="img/o11y/observabilidade.png" alt="">
+        </section>
+
+
+            <section data-background="#333">
+                <h2>Os 3 Pilares (MELT)</h2>
+                <p class="fragment">Metrics, Events, Logs, Traces</p>
+            </section>
+            <section>
+                <h3>0. Eventos</h3>
+                <p class="fragment"> Mudanças pontuais no sistema, como deploys, crashes ou alterações de configuração. </p>
+            </section>
+        <section data-background-size="90%" data-background="img/o11y/evento.png"></section>
+
+        <section>
+                <h3>1. Logs</h3>
+                <p class="fragment">O registro de eventos discretos. <em class="fragment">O "meu querido diário" do sistema.</em></p>
+                <small class="fragment">Dica: Fuja dos logs não estruturados. Lembra do JSON (aula anterior)!</small>
+            </section>
+            <section data-background-size="90%" data-background="img/o11y/log.png"></section>
+            <section>
+                <h3>2. Metrics</h3>
+                <p class="fragment">Dados agregados ao longo do tempo (CPU, Memória, Erros/Seg).</p>
+                <p class="fragment">Essencial para <strong>Dashboards</strong> e <strong>Alertas</strong>.</p>
+            </section>
+
+        <section data-background="img/metrics.png"></section>
+
+        <section>
+                <h3>3. Tracing <em class="fragment">(Rastreamento)</em></h3>
+                <p class="fragment">A jornada de uma requisição entre múltiplos microserviços.</p>
+                <p class="fragment">Onde está o gargalo? Onde a requisição morreu?</p>
+            </section>
+
+        <section data-background="img/ignition.png">
+
+        </section>
+
+            <section data-background="#333">
+                <h2>OpenTelemetry (OTel)</h2>
+                <p class="fragment">O padrão da indústria</p>
+            </section>
+            <section>
+                <h3>Por que OTel?</h3>
+                <p class="fragment">Evita o <em>Vendor Lock-in</em>. Você coleta os dados de um jeito e envia para onde quiser (Grafana, Datadog, New Relic).</p>
+            </section>
+            <section>
+                <h3>Instrumentação</h3>
+                <ul>
+                    <li class="fragment"><strong>Automática:</strong> Bibliotecas que já fazem o trabalho pra você.</li>
+                    <li class="fragment"><strong>Manual:</strong> Você define os pontos críticos de observação no código.</li>
+                </ul>
+            </section>
+
+            <section data-background="#333">
+                <h2>Cultura de Feedback</h2>
+            </section>
+            <section>
+                <h3>SLIs e SLOs</h3>
+                <ul>
+                    <li class="fragment"><strong>SLI:</strong> Indicador real (ex: Latência de 100ms).</li>
+                    <li class="fragment"><strong>SLO:</strong> O objetivo (ex: 99% das reqs < 200ms).</li>
+                </ul>
+            </section>
+            <section>
+                <h3>O Ciclo Completo</h3>
+                <p class="fragment">A observabilidade alimenta o backlog. Se algo está lento em produção, o time de engenharia sabe exatamente o que otimizar.</p>
+            </section>
+
+            <section data-background-color="#282a36">
+                <h2>Mão na Massa</h2>
+                <p class="fragment"> ecossistema OpenTelemetry</p>
+            </section>
+            <section>
+                <h3>O que vamos rodar?</h3>
+                <ul>
+                    <li><strong>App Exemplo:</strong> Gerador de tráfego e traces.</li>
+                    <li><strong>OTel Collector:</strong> O cérebro que recebe e exporta os dados.</li>
+                    <li><strong>Jaeger:</strong> Para enxergar os Traces (rastreamento).</li>
+                    <li><strong>Prometheus:</strong> Para armazenar as Métricas.</li>
+                </ul>
+            </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>
