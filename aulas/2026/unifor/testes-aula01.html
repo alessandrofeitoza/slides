@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Cronograma - Testes Automatizados e DevOps</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+    <style>
+        :root {
+            --primary: #00d084;
+            --secondary: #00a8ff;
+            --danger: #ff4d4f;
+            --warning: #f1c40f;
+        }
+
+        .reveal section {
+            text-align: left;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.05);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .timeline-item {
+            border-left: 5px solid var(--secondary);
+            padding-left: 20px;
+        }
+
+        .small {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .warning {
+            color: var(--warning);
+        }
+
+        .danger {
+            color: var(--danger);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        code {
+            color: #00d084;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <hr>
+            <h1>TESTES AUTOMATIZADOS E CONTINUOS</h1>
+            <p>Pós Graduação: Eng de Software com foco em devops</p>
+            <hr>
+        </section>
+
+        <section data-background="../../../img/gifs/quem-somos.gif">
+            <h2 style="text-align:center; background-color: #FFF; color: #333;">Quem somos nozes?</h2>
+            <br><br><br><br><br><br>
+        </section>
+
+
+
+        <section>
+            <h1>Automação de Testes em DevOps</h1>
+            <h3>Cronograma da Disciplina</h3>
+
+            <div class="box fragment">
+                <p>
+                    A ideia da disciplina é sair da visão tradicional de QA
+                    e entrar em uma visão moderna:
+                </p>
+
+                <h3 class="highlight">
+                    Testes como parte contínua da engenharia de software.
+                </h3>
+            </div>
+        </section>
+
+
+        <section>
+            <h2>Estratégia do Cronograma</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    <h3>08/05 → Fundamentos e Estratégia</h3>
+                </div>
+                <div class="timeline-item fragment">
+                    <h3>09/05 → UI e Testes E2E</h3>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>21/05 → APIs e Microserviços</h3>
+                </div>
+
+
+                <div class="timeline-item fragment">
+                    <h3>22/05 → Continuous Testing</h3>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>23/05 → Performance, Segurança e Observabilidade</h3>
+                </div>
+
+            </div>
+        </section>
+
+        <section >
+            <div style="display: flex; justify-content: space-between;;" class="fragment">
+                <div style="width: 50%">
+                    <h3>Alessandro Feitoza</h3>
+                    <hr>
+
+                    <ul style="font-size: 2rem; ">
+<!--                        <li class="fragment" style="color: #741b47;">Fortaleza, <strong>Ceará</strong></li>-->
+
+                        <li class="fragment">Professor de códigos e outras computarias</li>
+                        <li class="fragment">Programador/Dev/Severino</li>
+                        <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong> | <span style="color: #B45F06;"><strong>PHP</strong>este</span></li>
+
+                        <li class="fragment">
+									<span style="color: lightgreen;">
+										<strong>Bússola</strong> Social
+									</span>
+<!--                            /-->
+<!--                            <span style=" color: #416d31;">-->
+<!--										Digital <strong>College</strong>-->
+<!--									</span>-->
+                        </li>
+                    </ul>
+                </div>
+                <div style="width: 50%; float: right; text-align: right;">
+                    <img width="60%" src="../../../img/AlessandroFeitoza-2026-2.jpg" alt="">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Encontro 1 — Fundamentos e Estratégia</h2>
+            <h3 class="highlight">08/05</h3>
+
+            <ul>
+                <li class="fragment">O papel do QA no DevOps</li>
+                <li class="fragment">Fim do silo de testes</li>
+                <li class="fragment">Pirâmide vs Troféu de Testes</li>
+                <li class="fragment">Shift-Left e Shift-Right</li>
+                <li class="fragment">Testabilidade e desacoplamento</li>
+                <li class="fragment">SOLID aplicado à automação</li>
+            </ul>
+
+            <aside class="notes">
+                Explicar que o objetivo é mudar mindset.
+                QA não é mais uma etapa no final.
+            </aside>
+        </section>
+
+
+        <section data-background="#FFF">
+            <h2>Encontro 2 — UI e E2E</h2>
+            <h3 class="highlight">09/05</h3>
+
+            <ul>
+                <li class="fragment">Playwright ou Cypress</li>
+                <li class="fragment">Estratégias E2E</li>
+                <li class="fragment">Flakiness</li>
+                <li class="fragment">Page Object Model</li>
+                <li class="fragment">Screenplay Pattern</li>
+                <li class="fragment">Testes visuais</li>
+                <li class="fragment">Acessibilidade automatizada</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O Maior Problema do E2E</h2>
+
+            <div class="box fragment">
+                <h3 class="danger">Flaky Tests</h3>
+
+                <p>
+                    Testes que falham sem motivo aparente.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">Timeouts</li>
+                <li class="fragment">Dependência de ambiente</li>
+                <li class="fragment">Selectors frágeis</li>
+                <li class="fragment">Race conditions</li>
+            </ul>
+        </section>
+
+
+
+        <section data-background="#FFF">
+            <h2>Encontro 3 — APIs e Microserviços</h2>
+            <h3 class="highlight">21/05</h3>
+
+            <ul>
+                <li class="fragment">TDD na prática</li>
+                <li class="fragment">Testes de integração</li>
+                <li class="fragment">Mocks e isolamento</li>
+                <li class="fragment">Bancos e APIs externas</li>
+                <li class="fragment">Contratos entre serviços</li>
+                <li class="fragment">Pact / Consumer-Driven Contracts</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Problema dos Microserviços</h2>
+
+            <div class="box fragment">
+                <h3 class="danger">
+                    Quebras silenciosas de integração
+                </h3>
+
+                <p>
+                    Um serviço muda a resposta da API...
+                    e outro serviço quebra dias depois.
+                </p>
+            </div>
+
+            <div class="fragment">
+                <h3 class="highlight">
+                    Testes de contrato ajudam a prevenir isso.
+                </h3>
+            </div>
+        </section>
+
+        <section>
+            <h2>Intervalo Estratégico</h2>
+
+            <div class="box fragment">
+                <h3>Pausa para absorção</h3>
+
+                <p>
+                    Momento focado em prática assíncrona,
+                    revisão de conceitos e consolidação.
+                </p>
+            </div>
+        </section>
+
+        <section data-background="#FFF">
+            <h2>Encontro 4 — Continuous Testing</h2>
+            <h3 class="highlight">22/05</h3>
+
+            <ul>
+                <li class="fragment">Testes no CI/CD</li>
+                <li class="fragment">GitHub Actions</li>
+                <li class="fragment">GitLab CI</li>
+                <li class="fragment">Jenkins</li>
+                <li class="fragment">Quality Gates</li>
+                <li class="fragment">Execução paralela</li>
+                <li class="fragment">Performance do pipeline</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Quality Gates</h2>
+
+            <div class="box fragment">
+                <h3 class="highlight">
+                    “Não sobe para produção”
+                </h3>
+
+                <ul>
+                    <li class="fragment">Cobertura baixa</li>
+                    <li class="fragment">Falha de segurança</li>
+                    <li class="fragment">Lint quebrado</li>
+                    <li class="fragment">Teste falhando</li>
+                </ul>
+            </div>
+        </section>
+
+        <section data-background="#FFF">
+            <h2>Encontro 5 — Não Funcionais e Observabilidade</h2>
+            <h3 class="highlight">23/05</h3>
+
+            <ul>
+                <li class="fragment">Carga e performance</li>
+                <li class="fragment">K6 e JMeter</li>
+                <li class="fragment">DevSecOps</li>
+                <li class="fragment">SAST e DAST</li>
+                <li class="fragment">Chaos Engineering</li>
+                <li class="fragment">Observabilidade</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Chaos Engineering</h2>
+
+            <div class="box fragment">
+                <h3 class="danger">
+                    “Quebre o sistema de propósito.”
+                </h3>
+
+                <p>
+                    O objetivo é validar resiliência
+                    antes do problema real acontecer.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">Derrubar serviços</li>
+                <li class="fragment">Aumentar latência</li>
+                <li class="fragment">Simular falhas</li>
+                <li class="fragment">Testar recuperação</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Projeto Final</h2>
+
+            <div class="box fragment">
+                <h3 class="highlight">
+                    Pipeline completo de testes
+                </h3>
+
+                <p>
+                    A ideia é integrar múltiplos níveis:
+                </p>
+
+                <ul>
+                    <li class="fragment">Unitários</li>
+                    <li class="fragment">Integração</li>
+                    <li class="fragment">Contrato</li>
+                    <li class="fragment">E2E</li>
+                    <li class="fragment">Performance</li>
+                    <li class="fragment">Segurança</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h1>Objetivo Final</h1>
+
+            <div class="box fragment">
+                <h2 class="highlight">
+                    Construir software confiável,
+                    observável e sustentável.
+                </h2>
+            </div>
+
+            <div class="fragment">
+                <p class="small">
+                    Testes não são custo.
+                    São estratégia de engenharia.
+                </p>
+            </div>
+        </section>
+
+        <section data-background="#FFF">
+            <hr>
+            <h1>AULA 01</h1>
+            <hr>
+        </section>
+
+        <section>
+            <h2>Testes Automatizados e Contínuos</h2>
+            <p style="color: #bd93f9;">Aula 01: Fundamentos e Mindset DevOps</p>
+        </section>
+
+        <section>
+            <h2>Por que investir em testes?</h2>
+            <ul>
+                <li class="fragment">🐛 Evita bugs em produção</li>
+                <li class="fragment">💻 Facilita manutenção e refatoração</li>
+
+                <li class="fragment">📈 Reduz custos a longo prazo</li>
+                <li class="fragment">🧠 Documenta o comportamento esperado do sistema</li>
+                <li class="fragment">👥 Facilita o trabalho em equipe e onboarding</li>
+                <li class="fragment">🔄 Torna refatorações mais seguras</li>
+                <li class="fragment">🚨 Detecta falhas rapidamente</li>
+            </ul>
+        </section>
+        <section data-background="../../../2025/img/sprint.png">
+
+        </section>
+
+        <section data-background="../../../2025/img/sprint-2.png">
+
+        </section>
+
+        <section data-background-size="80%" data-background="../../../2025/img/sprint-3.png">
+
+        </section>
+
+
+        <section>
+            <h3>O Cenário DevOps</h3>
+            <ul>
+                <li class="fragment">Fim dos silos (Dev | QA | Ops)</li>
+                <li class="fragment">Feedback contínuo</li>
+                <li class="fragment"><strong>Time to Market</strong> vs <strong>Qualidade</strong></li>
+            </ul>
+        </section>
+
+
+        <section data-background="../../../2025/img/devops/cicd.png" data-background-size="80%">
+
+        </section>
+
+
+        <section>
+            <h3>Por que testar cedo? (Shift-Left)</h3>
+            <p>Quanto mais tarde um bug é encontrado, mais caro ele custa.</p>
+            <blockquote style="font-size: 0.8em; margin-top: 20px;">
+                "Encontrar um erro em produção pode ser 100x mais caro do que na fase de design." - Lei de Boehm
+            </blockquote>
+        </section>
+
+        <section>
+            <p>Custo para corrigir uma falha</p>
+
+            <img width="90%" src="../../../img/backend-security/custos-falhas.gif" alt="">
+
+            <p class="fragment" style="font-size: 1rem;">Retirado de relatório da IBM</p>
+        </section>
+
+
+        <section>
+            <h2>Estratégias</h2>
+            <hr>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h3 class="warning">Pirâmide</h3>
+
+                    <ul>
+                        <li>Mais testes unitários</li>
+                        <li>Poucos E2E</li>
+                        <li>Execução rápida</li>
+                        <li>Baixo custo</li>
+                    </ul>
+                </div>
+
+                <div class="fragment">
+                    <h3 class="highlight">Troféu</h3>
+
+                    <ul>
+                        <li>Foco em integração</li>
+                        <li>Menos mocks desnecessários</li>
+                        <li>Mais confiança real</li>
+                        <li>Popular no ecossistema frontend</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section data-background="#FFF">
+            <img src="../../../2025/img/tests/piramide.webp" alt="">
+        </section>
+        <section data-background="#FFF">
+            <img src="img/trophy.png" width="1000px" alt="">
+        </section>
+
+        <section>
+            <h2>Shift Left & Shift Right</h2>
+
+            <div class="box fragment">
+                <h3>Shift Left</h3>
+                <p>
+                    Encontrar problemas o mais cedo possível.
+                </p>
+            </div>
+
+            <div class="box fragment">
+                <h3>Shift Right</h3>
+                <p>
+                    Continuar validando comportamento em produção.
+                </p>
+            </div>
+
+            <div class="fragment">
+                <p class="small">
+                    Observabilidade, feature flags, chaos engineering,
+                    monitoramento e feedback contínuo.
+                </p>
+            </div>
+        </section>
+
+
+        <section data-background="../../../2025/img/devops/cicd.png" data-background-size="80%">
+
+        </section>
+
+        <section data-background="img/boxes.jpeg">
+
+        </section>
+
+
+
+        <section>
+            <h3>A Pirâmide de Testes</h3>
+            <div style="background: white; padding: 10px; border-radius: 10px; color: black;">
+                <p><strong>E2E (Topo)</strong>: Poucos e lentos</p>
+                <hr>
+                <p><strong>Integração (Meio)</strong>: Moderados</p>
+                <hr>
+                <p><strong>Unitários (Base)</strong>: Muitos e rápidos</p>
+            </div>
+            <p><small>Objetivo: ROI máximo e feedback rápido.</small></p>
+        </section>
+
+
+
+        <section data-background="piramide.jpeg" data-background-size="70%"></section>
+        <section>
+            <h3>Qualidade do Teste: Princípios FIRST</h3>
+            <ul>
+                <li><strong style="color: red;">F</strong>ast (Rápido)</li>
+                <li><strong style="color: red;">I</strong>ndependent (Isolado)</li>
+                <li><strong style="color: red;">R</strong>epeatable (Repetível)</li>
+                <li><strong style="color: red;">S</strong>elf-validating (Auto-validável)</li>
+                <li><strong style="color: red;">T</strong>imely (No tempo certo)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>TDD: Test-Driven Development</h3>
+            <ol>
+                <li style="color: #ff5555;"><strong>RED</strong>: Escreva um teste que falha</li>
+                <li style="color: #50fa7b;"><strong>GREEN</strong>: Escreva o código para passar</li>
+                <li style="color: #8be9fd;"><strong>REFACTOR</strong>: Melhore o código</li>
+            </ol>
+        </section>
+
+        <section data-background="#FFF">
+            <hr>
+            <h1>MÃO NA MASSA</h1>
+            <hr>
+        </section>
+
+        <section>
+            <section>
+                <h3>Mão na Massa! 🛠️</h3>
+                <p>Desafio: Motor de Descontos</p>
+                <ul style="font-size: 0.7em;">
+                    <li>Abaixo de R$ 100: 0% desconto</li>
+                    <li>R$ 100 a R$ 500: 10% desconto</li>
+                    <li>Acima de R$ 500: 15% desconto</li>
+                    <li>Negativos/Inválidos: Erro!</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Setup do Ambiente</h3>
+                <pre><code class="language-bash" data-trim>
+mkdir aula01-testes
+cd aula01-testes
+npm init -y
+npm install jest --save-dev
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Exemplo do Primeiro Teste (RED)</h3>
+                <pre><code class="language-javascript" data-trim>
+const calcularDesconto = require('./motor');
+
+test('Compra de R$ 50 não deve ter desconto', () => {
+    expect(calcularDesconto(50)).toBe(50);
+});
+                    </code></pre>
+            </section>
+        </section>
+
+<!--        <section>-->
+<!--            <h3>Próxima Aula (Amanhã)</h3>-->
+<!--            <p>Microserviços, APIs e Testes de Contrato.</p>-->
+<!--            <p><em>"A qualidade não é um ato, é um hábito." - Aristóteles</em></p>-->
+<!--        </section>-->
+
+    </div>
+</div>
+
+<script src="../../../dist/reveal.js"></script>
+<script src="../../../plugin/notes/notes.js"></script>
+<script src="../../../plugin/markdown/markdown.js"></script>
+<script src="../../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        autoPlayMedia: true,
+        slideNumber: true,
+        hash: true,
+        plugins: [ RevealNotes, RevealMarkdown, RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>

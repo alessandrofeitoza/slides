@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Cronograma - Testes Automatizados e DevOps</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+    <style>
+        /*:root {*/
+        /*    --primary: #00d084;*/
+        /*    --secondary: #00a8ff;*/
+        /*    --danger: #ff4d4f;*/
+        /*    --warning: #f1c40f;*/
+        /*}*/
+
+        /*.reveal section {*/
+        /*    text-align: left;*/
+        /*}*/
+
+        /*.reveal h1,*/
+        /*.reveal h2,*/
+        /*.reveal h3 {*/
+        /*    text-transform: none;*/
+        /*}*/
+
+        /*.highlight {*/
+        /*    color: var(--primary);*/
+        /*    font-weight: bold;*/
+        /*}*/
+
+        /*.box {*/
+        /*    background: rgba(255,255,255,0.05);*/
+        /*    border-left: 5px solid var(--primary);*/
+        /*    padding: 20px;*/
+        /*    margin-top: 20px;*/
+        /*    border-radius: 8px;*/
+        /*}*/
+
+        /*.timeline {*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    gap: 18px;*/
+        /*    margin-top: 30px;*/
+        /*}*/
+
+        /*.timeline-item {*/
+        /*    border-left: 5px solid var(--secondary);*/
+        /*    padding-left: 20px;*/
+        /*}*/
+
+        /*.small {*/
+        /*    font-size: 0.8em;*/
+        /*    opacity: 0.8;*/
+        /*}*/
+
+        /*.warning {*/
+        /*    color: var(--warning);*/
+        /*}*/
+
+        /*.danger {*/
+        /*    color: var(--danger);*/
+        /*}*/
+
+        /*.grid-2 {*/
+        /*    display: grid;*/
+        /*    grid-template-columns: 1fr 1fr;*/
+        /*    gap: 30px;*/
+        /*}*/
+
+        /*code {*/
+        /*    color: #00d084;*/
+        /*}*/
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <hr>
+            <h1>TESTES AUTOMATIZADOS E CONTINUOS</h1>
+            <p>Pós Graduação: Eng de Software com foco em devops</p>
+            <hr>
+        </section>
+
+
+        <section data-background="#FFF">
+            <hr>
+            <h1>AULA 02</h1>
+            <hr>
+        </section>
+
+
+        <section data-background="#FFF">
+            <h2>Encontro 2 — UI e E2E</h2>
+            <h3 class="highlight">09/05</h3>
+
+            <ul>
+                <li class="fragment">Cypress</li>
+                <li class="fragment">Estratégias E2E</li>
+                <li class="fragment">Flakiness</li>
+                <li class="fragment">Page Object Model</li>
+                <li class="fragment">Screenplay Pattern</li>
+                <li class="fragment">Testes visuais</li>
+                <li class="fragment">Acessibilidade automatizada</li>
+            </ul>
+        </section>
+
+        <section style="text-align: center;">
+            <h1>Testes E2E</h1>
+            <h3>Engenharia de Software & DevOps</h3>
+            <p>Aula 02: Automação com Cypress</p>
+            <small>Foco em Resiliência e Continuous Testing</small>
+        </section>
+
+        <section>
+            <h2>O que é Teste E2E?</h2>
+            <ul>
+                <li class="fragment">Validação do fluxo completo do usuário.</li>
+                <li class="fragment">Simula o comportamento humano no navegador.</li>
+                <li class="fragment">Testa a integração de <strong>todos</strong> os sistemas (Frontend, Backend, DB, APIs).</li>
+            </ul>
+        </section>
+
+        <section data-background="#FFF">
+            <h2>Cypress: A Nova Era</h2>
+            <ul>
+                <li class="fragment">Roda dentro do navegador (não usa Selenium/WebDriver).</li>
+                <li class="fragment">Acesso direto à rede, DOM e Storage.</li>
+                <li class="fragment"><strong>Time Travel:</strong> Debug visual passo a passo.</li>
+                <li class="fragment">Automatic Waiting (adeus `sleep(5000)`).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O que conseguimos testar?</h2>
+
+            <div class="grid-2">
+
+                <div>
+                    <ul>
+                        <li class="fragment">Login</li>
+                        <li class="fragment">Cadastro</li>
+                        <li class="fragment">CRUD</li>
+                        <li class="fragment">Fluxos completos</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <ul>
+                        <li class="fragment">Requisições HTTP</li>
+                        <li class="fragment">Cookies</li>
+                        <li class="fragment">LocalStorage</li>
+                        <li class="fragment">Responsividade</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Instalação</h2>
+
+            <pre><code class="language-bash">
+npm install cypress --save-dev
+  </code></pre>
+
+            <pre class="fragment"><code class="language-bash">
+npx cypress open
+  </code></pre>
+
+            <div class="fragment box">
+                <p>
+                    O Cypress irá criar automaticamente
+                    a estrutura inicial do projeto.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Estrutura Básica</h2>
+
+            <pre><code class="language-bash">
+cypress/
+ ├── e2e/
+ ├── fixtures/
+ ├── support/
+ └── downloads/
+  </code></pre>
+
+            <ul>
+                <li class="fragment"><code>e2e</code> → testes</li>
+                <li class="fragment"><code>fixtures</code> → dados mockados</li>
+                <li class="fragment"><code>support</code> → comandos auxiliares</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Primeiro Teste</h2>
+
+            <pre><code class="language-javascript">
+describe('Login', () => {
+
+  it('deve realizar login', () => {
+
+    cy.visit('/login')
+
+    cy.get('[data-cy=email]')
+      .type('admin@email.com')
+
+    cy.get('[data-cy=senha]')
+      .type('123456')
+
+    cy.get('[data-cy=submit]')
+      .click()
+
+    cy.contains('Dashboard')
+  })
+
+})
+  </code></pre>
+        </section>
+
+        <section>
+            <h2>Comandos Básicos</h2>
+
+            <pre><code class="language-javascript">
+cy.visit('/login')
+
+cy.get('[data-cy=email]')
+
+cy.click()
+
+cy.type('123456')
+
+cy.contains('Dashboard')
+  </code></pre>
+
+            <div class="fragment box">
+                <p>
+                    Cypress trabalha com encadeamento
+                    de comandos.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Assertions</h2>
+
+            <pre><code class="language-javascript">
+cy.get('[data-cy=message]')
+  .should(
+    'contain',
+    'Usuário criado'
+  )
+  </code></pre>
+
+            <pre class="fragment"><code class="language-javascript">
+cy.url()
+  .should(
+    'include',
+    '/dashboard'
+  )
+  </code></pre>
+        </section>
+
+        <section>
+            <h2>Interceptando Requisições</h2>
+
+            <pre><code class="language-javascript">
+cy.intercept(
+  'GET',
+  '/usuarios'
+).as('getUsuarios')
+
+cy.visit('/dashboard')
+
+cy.wait('@getUsuarios')
+  </code></pre>
+
+            <div class="fragment box">
+                <p>
+                    Muito útil para evitar waits fixos.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Modo Visual</h2>
+
+            <ul>
+                <li class="fragment">Executa passo a passo</li>
+                <li class="fragment">Mostra DOM em tempo real</li>
+                <li class="fragment">Permite inspecionar falhas</li>
+                <li class="fragment">Facilita debug</li>
+            </ul>
+
+            <div class="fragment box">
+                <p>
+                    Um dos maiores diferenciais do Cypress.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Problemas comuns em E2E</h2>
+
+            <ul>
+                <li class="fragment">Seletores frágeis</li>
+                <li class="fragment">Waits fixos</li>
+                <li class="fragment">Dependência entre testes</li>
+                <li class="fragment">Ambientes instáveis</li>
+                <li class="fragment">Flaky tests</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Cypress no CI/CD</h2>
+
+            <pre><code class="language-yaml">
+name: E2E
+
+on: [push]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: npm install
+
+      - run: npx cypress run
+  </code></pre>
+        </section>
+
+        <section>
+            <h2 style="text-align: center;">10 Boas Práticas (Cypress)</h2>
+        </section>
+
+        <section data-auto-animate>
+            <h3>1. Use Seletores Dedicados</h3>
+            <p>Não use classes CSS ou IDs que mudam com o design. Use atributos <code>data-*</code>.</p>
+            <pre><code class="javascript" data-trim>
+// ❌ RUIM (Fragil)
+cy.get('.btn-submit-login-v2').click()
+
+                </code></pre>
+        </section>
+        <section data-auto-animate>
+            <h3>1. Use Seletores Dedicados</h3>
+            <p>Não use classes CSS ou IDs que mudam com o design. Use atributos <code>data-*</code>.</p>
+            <pre><code class="javascript" data-trim>
+// ❌ RUIM (Fragil)
+cy.get('.btn-submit-login-v2').click()
+
+// ✅ BOM (Resiliente)
+cy.get('[data-cy="submit-button"]').click()
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>2. Login via API (Programático)</h3>
+            <p>Não use a UI para logar antes de cada teste. Use <code>cy.request()</code> para ganhar tempo.</p>
+            <pre><code class="javascript" data-trim>
+beforeEach(() => {
+  cy.request('POST', '/api/login', { user: 'admin', pass: '123' })
+    .then((res) => {
+      window.localStorage.setItem('token', res.body.token)
+    })
+})
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>3. Testes Atômicos e Isolados</h3>
+            <p>Um teste não deve depender do resultado do teste anterior.</p>
+            <div class="important">Regra: Cada teste deve ser capaz de rodar sozinho.</div>
+            <pre><code class="javascript" data-trim>
+it('deve criar um post', () => { ... })
+it('deve editar um post', () => {
+    // Em vez de depender do teste acima,
+    // crie o post via API no beforeEach
+})
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>4. Jamais use cy.wait(Número)</h3>
+            <p>Esperar 5 segundos é perda de tempo no CI/CD. Espere por elementos ou rotas.</p>
+            <pre><code class="javascript" data-trim>
+// ❌ RUIM
+cy.wait(5000)
+
+// ✅ BOM (Espera o elemento existir)
+cy.get('.loading-spinner').should('not.exist')
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>5. Use cy.intercept para Mockar</h3>
+            <p>Controle o backend para testar cenários de erro (Edge Cases).</p>
+            <pre><code class="javascript" data-trim>
+cy.intercept('GET', '/users', { statusCode: 500 }).as('getUsers')
+cy.visit('/dashboard')
+cy.wait('@getUsers')
+cy.contains('Erro ao carregar dados').should('be.visible')
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>6. Abstraia com Custom Commands</h3>
+            <p>Crie comandos para ações repetitivas, mas não exagere.</p>
+            <pre><code class="javascript" data-trim>
+// em cypress/support/commands.js
+Cypress.Commands.add('getByData', (selector) => {
+  return cy.get(`[data-cy=${selector}]`)
+})
+
+// No teste
+cy.getByData('username-input').type('admin')
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>7. Configure a baseUrl</h3>
+            <p>Nunca use URLs completas nos testes. Facilite a troca de ambiente (Dev/Staging/Prod).</p>
+            <pre><code class="javascript" data-trim>
+// cypress.config.js
+baseUrl: 'http://localhost:3000'
+
+// No teste
+cy.visit('/login') // Navega para localhost:3000/login
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>8. Use Aliases (@)</h3>
+            <p>Facilite a leitura e o reuso de elementos ou requisições.</p>
+            <pre><code class="javascript" data-trim>
+cy.get('[data-cy="user-row"]').first().as('firstUser')
+
+// ... outras ações ...
+
+cy.get('@firstUser').click()
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>9. Assertions de Estado</h3>
+            <p>Não teste apenas se o botão existe, mas se ele está habilitado/visível.</p>
+            <pre><code class="javascript" data-trim>
+cy.get('[data-cy="submit"]')
+  .should('be.visible')
+  .and('not.be.disabled')
+  .and('have.text', 'Salvar')
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>10. Artifacts para DevOps</h3>
+            <p>No pipeline, habilite gravação de vídeo e fotos em caso de falha.</p>
+            <pre><code class="javascript" data-trim>
+// cypress.config.js
+module.exports = {
+  video: true,
+  screenshotOnRunFailure: true,
+  trashAssetsBeforeRuns: true
+}
+                </code></pre>
+        </section>
+
+        <section style="text-align: center;">
+            <h2>Desafio Prático</h2>
+            <p>1. Instalar Cypress: <code>npm install cypress</code></p>
+            <p>2. Criar um fluxo de login usando as boas práticas.</p>
+            <p>3. Rodar em modo Headless: <code>npx cypress run</code></p>
+        </section>
+
+        <section>
+            <h2>O Maior Problema do E2E</h2>
+
+            <div class="box fragment">
+                <h3 class="danger">Flaky Tests</h3>
+
+                <p>
+                    Testes que falham sem motivo aparente.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">Timeouts</li>
+                <li class="fragment">Dependência de ambiente</li>
+                <li class="fragment">Selectors frágeis</li>
+                <li class="fragment">Race conditions</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #01</h2>
+            <h3 class="highlight">Evite seletores frágeis</h3>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h4 class="danger">Ruim</h4>
+
+                    <pre><code class="language-javascript">
+cy.get('.btn.btn-primary')
+cy.get('#login > div:nth-child(2)')
+      </code></pre>
+                </div>
+
+                <div class="fragment">
+                    <h4 class="highlight">Bom</h4>
+
+                    <pre><code class="language-javascript">
+cy.get('[data-cy=submit]')
+cy.get('[data-cy=email]')
+      </code></pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #02</h2>
+            <h3 class="highlight">Não use waits fixos</h3>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h4 class="danger">Ruim</h4>
+
+                    <pre><code class="language-javascript">
+cy.wait(5000)
+      </code></pre>
+                </div>
+
+                <div class="fragment">
+                    <h4 class="highlight">Bom</h4>
+
+                    <pre><code class="language-javascript">
+cy.intercept('GET', '/users')
+  .as('getUsers')
+
+cy.wait('@getUsers')
+      </code></pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #03</h2>
+            <h3 class="highlight">Teste comportamento, não implementação</h3>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h4 class="danger">Ruim</h4>
+
+                    <pre><code class="language-javascript">
+cy.window()
+  .its('store.state.user')
+      </code></pre>
+                </div>
+
+                <div class="fragment">
+                    <h4 class="highlight">Bom</h4>
+
+                    <pre><code class="language-javascript">
+cy.contains('Olá Alessandro')
+cy.contains('Dashboard')
+      </code></pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #04</h2>
+            <h3 class="highlight">Crie comandos customizados</h3>
+
+            <pre><code class="language-javascript">
+// commands.js
+
+Cypress.Commands.add(
+  'login',
+  (email, senha) => {
+
+    cy.visit('/login')
+
+    cy.get('[data-cy=email]')
+      .type(email)
+
+    cy.get('[data-cy=senha]')
+      .type(senha)
+
+    cy.get('[data-cy=submit]')
+      .click()
+  }
+)
+  </code></pre>
+
+            <pre class="fragment"><code class="language-javascript">
+cy.login(
+  'admin@email.com',
+  '123456'
+)
+  </code></pre>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #05</h2>
+            <h3 class="highlight">Evite dependência entre testes</h3>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h4 class="danger">Ruim</h4>
+
+                    <pre><code class="language-javascript">
+it('cria usuário')
+
+it('edita usuário criado')
+      </code></pre>
+                </div>
+
+                <div class="fragment">
+                    <h4 class="highlight">Bom</h4>
+
+                    <pre><code class="language-javascript">
+beforeEach(() => {
+  cy.criarUsuario()
+})
+      </code></pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #06</h2>
+            <h3 class="highlight">Use fixtures para dados</h3>
+
+            <pre><code class="language-javascript">
+// fixtures/usuario.json
+
+{
+  "email": "teste@email.com",
+  "senha": "123456"
+}
+  </code></pre>
+
+            <pre class="fragment"><code class="language-javascript">
+cy.fixture('usuario')
+  .then((usuario) => {
+
+    cy.login(
+      usuario.email,
+      usuario.senha
+    )
+  })
+  </code></pre>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #07</h2>
+            <h3 class="highlight">Faça assertions explícitas</h3>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h4 class="danger">Fraco</h4>
+
+                    <pre><code class="language-javascript">
+cy.get('.message')
+      </code></pre>
+                </div>
+
+                <div class="fragment">
+                    <h4 class="highlight">Melhor</h4>
+
+                    <pre><code class="language-javascript">
+cy.get('[data-cy=message]')
+  .should(
+    'contain',
+    'Usuário criado'
+  )
+      </code></pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #08</h2>
+            <h3 class="highlight">Isole chamadas externas</h3>
+
+            <pre><code class="language-javascript">
+cy.intercept(
+  'GET',
+  'https://api.externa.com/users',
+  {
+    statusCode: 200,
+    body: [
+      { nome: 'Alessandro' }
+    ]
+  }
+)
+  </code></pre>
+
+            <div class="fragment box">
+                <p>
+                    Evita testes instáveis por causa
+                    de APIs de terceiros.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #09</h2>
+            <h3 class="highlight">Page Object básico</h3>
+
+            <pre><code class="language-javascript">
+// login.page.js
+
+export class LoginPage {
+
+  visitar() {
+    cy.visit('/login')
+  }
+
+  preencherEmail(email) {
+    cy.get('[data-cy=email]')
+      .type(email)
+  }
+
+  preencherSenha(senha) {
+    cy.get('[data-cy=senha]')
+      .type(senha)
+  }
+
+  enviar() {
+    cy.get('[data-cy=submit]')
+      .click()
+  }
+}
+  </code></pre>
+        </section>
+
+        <section>
+            <h2>Boas Práticas com Cypress #10</h2>
+            <h3 class="highlight">Evite testes gigantes</h3>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h4 class="danger">Ruim</h4>
+
+                    <pre><code class="language-javascript">
+it('fluxo completo do sistema')
+      </code></pre>
+                </div>
+
+                <div class="fragment">
+                    <h4 class="highlight">Bom</h4>
+
+                    <pre><code class="language-javascript">
+it('login')
+it('cadastro')
+it('logout')
+it('editar perfil')
+      </code></pre>
+                </div>
+
+            </div>
+
+            <div class="fragment box">
+                <p>
+                    Testes menores falham menos,
+                    executam mais rápido e facilitam debug.
+                </p>
+            </div>
+        </section>
+        <section>
+            <h2>Testes Automatizados e Contínuos</h2>
+            <p style="color: #bd93f9;">Aula 01: Fundamentos e Mindset DevOps</p>
+        </section>
+
+        <section>
+            <h2>Por que investir em testes?</h2>
+            <ul>
+                <li class="fragment">🐛 Evita bugs em produção</li>
+                <li class="fragment">💻 Facilita manutenção e refatoração</li>
+
+                <li class="fragment">📈 Reduz custos a longo prazo</li>
+                <li class="fragment">🧠 Documenta o comportamento esperado do sistema</li>
+                <li class="fragment">👥 Facilita o trabalho em equipe e onboarding</li>
+                <li class="fragment">🔄 Torna refatorações mais seguras</li>
+                <li class="fragment">🚨 Detecta falhas rapidamente</li>
+            </ul>
+        </section>
+        <section data-background="../../../2025/img/sprint.png">
+
+        </section>
+
+        <section data-background="../../../2025/img/sprint-2.png">
+
+        </section>
+
+        <section data-background-size="80%" data-background="../../../2025/img/sprint-3.png">
+
+        </section>
+
+
+        <section>
+            <h3>O Cenário DevOps</h3>
+            <ul>
+                <li class="fragment">Fim dos silos (Dev | QA | Ops)</li>
+                <li class="fragment">Feedback contínuo</li>
+                <li class="fragment"><strong>Time to Market</strong> vs <strong>Qualidade</strong></li>
+            </ul>
+        </section>
+
+
+        <section data-background="../../../2025/img/devops/cicd.png" data-background-size="80%">
+
+        </section>
+
+
+        <section>
+            <h3>Por que testar cedo? (Shift-Left)</h3>
+            <p>Quanto mais tarde um bug é encontrado, mais caro ele custa.</p>
+            <blockquote style="font-size: 0.8em; margin-top: 20px;">
+                "Encontrar um erro em produção pode ser 100x mais caro do que na fase de design." - Lei de Boehm
+            </blockquote>
+        </section>
+
+        <section>
+            <p>Custo para corrigir uma falha</p>
+
+            <img width="90%" src="../../../img/backend-security/custos-falhas.gif" alt="">
+
+            <p class="fragment" style="font-size: 1rem;">Retirado de relatório da IBM</p>
+        </section>
+
+
+        <section>
+            <h2>Estratégias</h2>
+            <hr>
+
+            <div class="grid-2">
+
+                <div class="fragment">
+                    <h3 class="warning">Pirâmide</h3>
+
+                    <ul>
+                        <li>Mais testes unitários</li>
+                        <li>Poucos E2E</li>
+                        <li>Execução rápida</li>
+                        <li>Baixo custo</li>
+                    </ul>
+                </div>
+
+                <div class="fragment">
+                    <h3 class="highlight">Troféu</h3>
+
+                    <ul>
+                        <li>Foco em integração</li>
+                        <li>Menos mocks desnecessários</li>
+                        <li>Mais confiança real</li>
+                        <li>Popular no ecossistema frontend</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section data-background="#FFF">
+            <img src="../../../2025/img/tests/piramide.webp" alt="">
+        </section>
+        <section data-background="#FFF">
+            <img src="img/trophy.png" width="1000px" alt="">
+        </section>
+
+        <section>
+            <h2>Shift Left & Shift Right</h2>
+
+            <div class="box fragment">
+                <h3>Shift Left</h3>
+                <p>
+                    Encontrar problemas o mais cedo possível.
+                </p>
+            </div>
+
+            <div class="box fragment">
+                <h3>Shift Right</h3>
+                <p>
+                    Continuar validando comportamento em produção.
+                </p>
+            </div>
+
+            <div class="fragment">
+                <p class="small">
+                    Observabilidade, feature flags, chaos engineering,
+                    monitoramento e feedback contínuo.
+                </p>
+            </div>
+        </section>
+
+
+        <section data-background="../../../2025/img/devops/cicd.png" data-background-size="80%">
+
+        </section>
+
+        <section data-background="img/boxes.jpeg">
+
+        </section>
+
+        
+
+        <section>
+            <h3>A Pirâmide de Testes</h3>
+            <div style="background: white; padding: 10px; border-radius: 10px; color: black;">
+                <p><strong>E2E (Topo)</strong>: Poucos e lentos</p>
+                <hr>
+                <p><strong>Integração (Meio)</strong>: Moderados</p>
+                <hr>
+                <p><strong>Unitários (Base)</strong>: Muitos e rápidos</p>
+            </div>
+            <p><small>Objetivo: ROI máximo e feedback rápido.</small></p>
+        </section>
+
+
+
+        <section data-background="piramide.jpeg" data-background-size="70%"></section>
+        <section>
+            <h3>Qualidade do Teste: Princípios FIRST</h3>
+            <ul>
+                <li><strong style="color: red;">F</strong>ast (Rápido)</li>
+                <li><strong style="color: red;">I</strong>ndependent (Isolado)</li>
+                <li><strong style="color: red;">R</strong>epeatable (Repetível)</li>
+                <li><strong style="color: red;">S</strong>elf-validating (Auto-validável)</li>
+                <li><strong style="color: red;">T</strong>imely (No tempo certo)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>TDD: Test-Driven Development</h3>
+            <ol>
+                <li style="color: #ff5555;"><strong>RED</strong>: Escreva um teste que falha</li>
+                <li style="color: #50fa7b;"><strong>GREEN</strong>: Escreva o código para passar</li>
+                <li style="color: #8be9fd;"><strong>REFACTOR</strong>: Melhore o código</li>
+            </ol>
+        </section>
+
+        <section data-background="#FFF">
+            <hr>
+            <h1>MÃO NA MASSA</h1>
+            <hr>
+        </section>
+
+        <section>
+            <section>
+                <h3>Mão na Massa! 🛠️</h3>
+                <p>Desafio: Motor de Descontos</p>
+                <ul style="font-size: 0.7em;">
+                    <li>Abaixo de R$ 100: 0% desconto</li>
+                    <li>R$ 100 a R$ 500: 10% desconto</li>
+                    <li>Acima de R$ 500: 15% desconto</li>
+                    <li>Negativos/Inválidos: Erro!</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Setup do Ambiente</h3>
+                <pre><code class="language-bash" data-trim>
+mkdir aula01-testes
+cd aula01-testes
+npm init -y
+npm install jest --save-dev
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Exemplo do Primeiro Teste (RED)</h3>
+                <pre><code class="language-javascript" data-trim>
+const calcularDesconto = require('./motor');
+
+test('Compra de R$ 50 não deve ter desconto', () => {
+    expect(calcularDesconto(50)).toBe(50);
+});
+                    </code></pre>
+            </section>
+        </section>
+
+<!--        <section>-->
+<!--            <h3>Próxima Aula (Amanhã)</h3>-->
+<!--            <p>Microserviços, APIs e Testes de Contrato.</p>-->
+<!--            <p><em>"A qualidade não é um ato, é um hábito." - Aristóteles</em></p>-->
+<!--        </section>-->
+
+    </div>
+</div>
+
+<script src="../../../dist/reveal.js"></script>
+<script src="../../../plugin/notes/notes.js"></script>
+<script src="../../../plugin/markdown/markdown.js"></script>
+<script src="../../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        autoPlayMedia: true,
+        slideNumber: true,
+        hash: true,
+        plugins: [ RevealNotes, RevealMarkdown, RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>
