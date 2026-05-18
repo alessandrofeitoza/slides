@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>IA: Análise de Falhas e Performance - Masterclass</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/monokai.css">
+
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --danger: #ff2e63;
+            --success: #08f7af;
+            --bg-card: rgba(255, 255, 255, 0.07);
+        }
+
+        .reveal { font-family: 'Inter', sans-serif; background-color: #050505; }
+        .reveal h1, .reveal h2, .reveal h3 { color: #fff; text-transform: none; font-weight: 800; letter-spacing: -1px; }
+        .reveal h1 { font-size: 2.5em; text-shadow: 0 0 20px var(--primary); }
+        .reveal .highlight { color: var(--primary); }
+        .reveal .accent { color: var(--secondary); }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: var(--bg-card); padding: 30px; border-radius: 15px; border-left: 5px solid var(--primary); text-align: left; }
+        .card h4 { margin-top: 0; color: var(--primary); }
+
+        .status-bar { display: flex; justify-content: space-around; background: #111; padding: 10px; font-size: 0.5em; border-top: 1px solid #333; position: fixed; bottom: 0; width: 100%; }
+
+        pre { box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; width: 100% !important; }
+        code { padding: 15px !important; border-radius: 8px !important; }
+
+        /* Badge Estilizado */
+        .badge { background: var(--secondary); color: white; padding: 5px 15px; border-radius: 50px; font-size: 0.4em; vertical-align: middle; text-transform: uppercase; }
+
+        .fragment.blur { filter: blur(5px); transition: all 0.3s ease; }
+        .fragment.blur.visible { filter: blur(0); }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section data-background="linear-gradient(45deg, #050505 0%, #111 100%)">
+            <h3 class="highlight">Aula 24</h3>
+            <h1>IA para Análise de Falhas e Performance</h1>
+            <p style="opacity: 0.6">SRE, Observabilidade e Diagnóstico Assistido</p>
+            <div style="margin-top: 40px;">
+                <span class="badge">Nem toda IA</span>
+                <span class="badge" style="background: var(--primary); color: black;">mas sempre uma IA</span>
+            </div>
+        </section>
+
+        <section>
+                <h2><span class="danger">O Problema Real</span></h2>
+                <p>No mercado, falhas não avisam. O custo do minuto parado é medido em milhares de reais.</p>
+                <div class="grid">
+                    <div class="card fragment">
+                        <h4>Gargalos de Infra</h4>
+                        <ul>
+                            <li>CPU Steal (Cloud)</li>
+                            <li>I/O Wait (DB)</li>
+                            <li>OOM Killer (K8s)</li>
+                        </ul>
+                    </div>
+                    <div class="card fragment">
+                        <h4>Gargalos de App</h4>
+                        <ul>
+                            <li>Deadlocks SQL</li>
+                            <li>Race Conditions</li>
+                            <li>Event Loop Blocking</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Métricas que a IA ajuda a baixar</h3>
+                <div class="grid">
+                    <div class="card fragment" style="border-color: var(--success);">
+                        <h2 style="color: var(--success);">MTTR</h2>
+                        <p>Mean Time To Resolution <small>(Tempo Médio de Solução)</small> </p>
+                    </div>
+                    <div class="card fragment" style="border-color: var(--primary);">
+                        <h2 style="color: var(--primary);">MTTD</h2>
+                        <p>Mean Time To Detection <small>(Tempo Médio de Detecção)</small> </p>
+                    </div>
+                </div>
+                <blockquote class="fragment" style="margin-top: 30px; font-size: 0.8em;">
+                    "A IA não resolve o problema, ela reduz o tempo de <strong>hipótese</strong>."
+                </blockquote>
+            </section>
+
+
+        <section>
+                <h2><span class="highlight">A IA como Copiloto SRE</span></h2>
+                <p>Como transformar um Log ruidoso em uma solução acionável.</p>
+            </section>
+
+            <section>
+                <h3>Exemplo: Exception Laravel / PHP</h3>
+                <pre><code class="language-php" data-line-numbers>
+[2024-05-14 18:22:10] production.ERROR:
+SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded;
+try restarting transaction (Connection: mysql, SQL: update `orders`
+set `status` = 'processed' where `id` = 99283)
+                </code></pre>
+                <div class="card fragment" style="border-color: var(--secondary);">
+                    <p><strong>Hipótese Gerada por IA:</strong> Transação longa aberta em outro Worker está segurando o Row Lock do ID 99283. Verifique o <code>PaymentGatewayJob</code>.</p>
+                </div>
+            </section>
+
+            <section>
+                <h3>Exemplo: Memory Leak Node.js</h3>
+                <pre><code class="language-javascript" data-line-numbers>
+<--- Last few GCs --->
+[1422:0x559e210] 30221 ms: Mark-sweep 2042.1 (2050.2) -> 2038.5 (2050.7) MB
+[1422:0x559e210] 31250 ms: Mark-sweep 2040.5 (2050.7) -> 2039.2 (2051.1) MB
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed
+                </code></pre>
+                <p class="small">IA identifica imediatamente: <strong>Heap Exhaustion</strong>. Possível closure acumulando objetos no escopo global.</p>
+            </section>
+
+
+        <section>
+                <h2><span class="accent">Engenharia de Prompt Técnico</span></h2>
+                <p>Pare de perguntar como um iniciante. Pergunte como um Arquiteto.</p>
+            </section>
+
+            <section>
+                <h3>O Framework de Prompt SRE</h3>
+                <div class="card" style="border: none; background: #111;">
+                    <ol>
+                        <li class="fragment highlight"><strong>Contexto:</strong> Stack (Node v20, K8s, Redis).</li>
+                        <li class="fragment highlight"><strong>Input:</strong> Log bruto ou Stack Trace.</li>
+                        <li class="fragment highlight"><strong>Sintomas:</strong> "API lenta apenas em rotas de escrita".</li>
+                        <li class="fragment highlight"><strong>Constraints:</strong> "Não sugira aumentar recursos de hardware".</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section>
+                <h3>Prompt de Ouro (Copie e Use)</h3>
+                <pre><code class="language-markdown">
+Atue como um Engenheiro de Performance. Analise o log abaixo.
+1. Identifique a Causa Raiz Provável.
+2. Explique o impacto no Event Loop/Threads.
+3. Sugira uma correção imediata e uma estrutural.
+
+Log: {{COLAR_LOG_AQUI}}
+                </code></pre>
+            </section>
+
+
+        <section>
+                <h2><span class="success">Deep Dive: IA e Performance</span></h2>
+            </section>
+
+            <section>
+                <h3>O Inimigo Silencioso:</h3>
+                <div class="grid">
+                    <pre><code class="language-php">
+// Código Ruim
+$posts = Post::all();
+foreach($posts as $post) {
+    echo $post->author->name;
+}
+                    </code></pre>
+                    <div class="card">
+                        <p class="fragment">N+1 Queries</p>
+                        <h4 class="fragment">Análise IA</h4>
+                        <p class="fragment small">"Detectei 100 queries SQL para 100 posts. Use Eager Loading."</p>
+                        <pre class="fragment"><code class="language-php">
+$posts = Post::with('author')->get();
+                        </code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Gargalos de Infra com IA</h3>
+                <ul>
+                    <li>Análise de <strong>Thread Dumps</strong>.</li>
+                    <li>Interpretação de gráficos de <strong>Flame Graphs</strong>.</li>
+                    <li>Sugestão de tuning de <code>sysctl</code> e <code>nginx.conf</code>.</li>
+                </ul>
+
+            </section>
+
+
+        <section>
+            <h2><span class="danger">Limitações e Riscos</span></h2>
+            <div class="grid">
+                <div class="card" style="border-color: var(--danger);">
+                    <h4>Alucinações</h4>
+                    <p class="small">IA pode inventar flags de configuração que não existem no PostgreSQL.</p>
+                </div>
+                <div class="card" style="border-color: var(--danger);">
+                    <h4>Segurança</h4>
+                    <p class="small">Nunca envie PII (Dados Pessoais) ou chaves de API nos logs para a IA.</p>
+                </div>
+            </div>
+            <p style="margin-top: 40px;"><em>"Confie, mas valide com a documentação oficial."</em></p>
+        </section>
+
+        <section data-background="var(--secondary)">
+            <h2>Desafio Final: War Room</h2>
+            <p><strong>Cenário:</strong> O banco de dados MySQL subiu para 100% de CPU. O Redis está respondendo com 2s de latência.</p>
+            <div class="card" style="background: rgba(0,0,0,0.3); border: 2px white solid;">
+                <ol>
+                    <li>Cole os logs no modelo de IA.</li>
+                    <li>Identifique se o problema é o <strong>Slow Query</strong> ou <strong>Connection Pool</strong>.</li>
+                    <li>Apresente a solução em 10 minutos.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="center">
+            <h1>Obrigado!</h1>
+            <p>IA + Engenharia = <span class="highlight">O Futuro da Senioridade</span></p>
+            <p class="small">Dúvidas? Vamos ao debate.</p>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: 'c/t',
+        transition: 'slide',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,540 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Revisão SM1 - Estrutura de Dados</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/dracula.css">
+
+    <style>
+        :root {
+            --r-main-font-size: 30px;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+        }
+
+        .reveal section {
+            text-align: left;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 2.3rem
+        }
+
+        code {
+            color: #8be9fd;
+        }
+
+        .small {
+            font-size: 24px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Revisão SM2</h1>
+            <h3>Estrutura de Dados</h3>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">Pilhas e Filas</li>
+                    <li class="fragment">Listas e Ordenação</li>
+                    <li class="fragment">Árvores e Algoritmos Avançados</li>
+                    <li class="fragment">Questões extras para prática</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pilhas e Filas</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment"><strong>Pilha:</strong> LIFO → Last In, First Out</li>
+                    <li class="fragment"><strong>Fila:</strong> FIFO → First In, First Out</li>
+                    <li class="fragment">Pilha trabalha com topo</li>
+                    <li class="fragment">Fila trabalha com início e fim</li>
+                </ul>
+            </div>
+
+            <aside class="notes">
+                exemplos do mundo real:
+                - Pilha de pratos
+                - Fila de banco
+            </aside>
+        </section>
+
+        <section>
+            <h2>Questão — Pilha</h2>
+
+            <div class="box small">
+                <p><strong></strong> Uma estrutura de dados é um modo particular de armazenamento e organização de dados em um computador.</p>
+
+                <p>Selecione a alternativa que mostra o princípio de funcionamento de uma pilha em estrutura de dados.</p>
+
+                <ul>
+                    <li class="fragment">A) LIFO</li>
+                    <li class="fragment">B) FIFO</li>
+                    <li class="fragment">C) FEFO</li>
+                    <li class="fragment">D) LEFO</li>
+                    <li class="fragment">E) FILA</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> A) LIFO
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — FIFO</h2>
+
+            <div class="box small">
+                <p> A sigla FIFO refere-se a estruturas de dados do tipo fila.</p>
+
+                <p>Como é o funcionamento em uma FIFO?</p>
+
+                <ul>
+                    <li class="fragment">A) O primeiro objeto inserido é o último a ser removido</li>
+                    <li class="fragment">B) O primeiro objeto inserido é também o primeiro a ser removido</li>
+                    <li class="fragment">C) O último objeto inserido é o primeiro a ser removido</li>
+                    <li class="fragment">D) O programador define a ordem</li>
+                    <li class="fragment">E) FIFO e LIFO possuem as mesmas características</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Primeiro a entrar é o primeiro a sair.
+            </div>
+        </section>
+        <section>
+            <h2>Questão — Pilha</h2>
+
+            <div class="box small">
+                <p>Uma estrutura de dados do tipo Pilha segue qual princípio de organização?</p>
+
+                <ul>
+                    <li class="fragment">A) FIFO (First-In, First-Out)</li>
+                    <li class="fragment">B) Random Access</li>
+                    <li class="fragment">C) LIFO (Last-In, First-Out)</li>
+                    <li class="fragment">D) Ordenação Alfabética Obrigatória</li>
+                    <li class="fragment">E) Priority Queue</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) LIFO
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Fila de Impressão</h2>
+
+            <div class="box small">
+                <p>O primeiro documento enviado para uma impressora deve ser o primeiro a ser impresso.</p>
+
+                <p>Esse comportamento caracteriza qual estrutura?</p>
+
+                <ul>
+                    <li class="fragment">A) Pilha</li>
+                    <li class="fragment">B) Vetor</li>
+                    <li class="fragment">C) Fila</li>
+                    <li class="fragment">D) Árvore</li>
+                    <li class="fragment">E) Nenhuma das alternativas</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Fila (FIFO)
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Pilha x Fila</h2>
+
+            <div class="box small">
+                <p>Se inserirmos os elementos A, B e C:</p>
+
+                <ul>
+                    <li class="fragment">Na primeira estrutura, o primeiro elemento removido é A</li>
+                    <li class="fragment">Na segunda estrutura, o primeiro elemento removido é C</li>
+                </ul>
+
+                <p>Quais são essas estruturas respectivamente?</p>
+
+                <ul>
+                    <li class="fragment">A) Pilha e Fila</li>
+                    <li class="fragment">B) Fila e Deque</li>
+                    <li class="fragment">C) Fila e Pilha</li>
+                    <li class="fragment">D) Lista Circular e Pilha</li>
+                    <li class="fragment">E) Fila e Árvore Binária</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Fila e Pilha
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Histórico do Navegador</h2>
+
+            <div class="box small">
+                <p>Qual estrutura é ideal para implementar o botão “Voltar” de um navegador?</p>
+
+                <ul>
+                    <li class="fragment">A) Fila</li>
+                    <li class="fragment">B) Matriz</li>
+                    <li class="fragment">C) Pilha</li>
+                    <li class="fragment">D) Vetor</li>
+                    <li class="fragment">E) Nenhuma das alternativas</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Pilha
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Bubble Sort</h2>
+
+            <div class="box small">
+                <p>No Bubble Sort, qual é o procedimento básico?</p>
+
+                <ul>
+                    <li class="fragment">A) Divide o array ao meio</li>
+                    <li class="fragment">B) Compara elementos adjacentes e realiza trocas</li>
+                    <li class="fragment">C) Escolhe elemento aleatório</li>
+                    <li class="fragment">D) Remove os elementos da memória</li>
+                    <li class="fragment">E) Usa árvore AVL</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Comparar adjacentes e trocar
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Complexidade</h2>
+
+            <div class="box small">
+                <p>Avalie as afirmativas:</p>
+
+                <ul>
+                    <li class="fragment">1 - Quick Sort executa em O(n log n)</li>
+                    <li class="fragment">2 - Selection Sort executa em O(n)</li>
+                    <li class="fragment">3 - Algoritmos abaixo de O(n log n) não usam comparação</li>
+                </ul>
+
+                <ul>
+                    <li class="fragment">A) Somente a 1 está correta</li>
+                    <li class="fragment">B) Somente 1 e 2</li>
+                    <li class="fragment">C) Somente 2 e 3</li>
+                    <li class="fragment">D) Somente 3</li>
+                    <li class="fragment">E) Todas</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> A) Apenas a 1 está correta
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Busca Binária</h2>
+
+            <div class="box small">
+                <p>Para que a Busca Binária funcione corretamente:</p>
+
+                <ul>
+                    <li class="fragment">A) Os dados devem ser apenas positivos</li>
+                    <li class="fragment">B) Os dados devem estar ordenados</li>
+                    <li class="fragment">C) A lista deve ter potência de 2</li>
+                    <li class="fragment">D) Deve usar pilha</li>
+                    <li class="fragment">E) Deve estar na nuvem</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Dados ordenados
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Dividir e Conquistar</h2>
+
+            <div class="box small">
+                <p>A técnica Dividir e Conquistar consiste em:</p>
+
+                <ul>
+                    <li class="fragment">A) Ignorar metade dos dados</li>
+                    <li class="fragment">B) Somar todos os valores</li>
+                    <li class="fragment">C) Dividir o problema em subproblemas menores</li>
+                    <li class="fragment">D) Utilizar apenas um loop</li>
+                    <li class="fragment">E) Duplicar o problema</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Dividir em subproblemas menores
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Nó Raiz</h2>
+
+            <div class="box small">
+                <p>Em uma árvore, o nó do topo é chamado de:</p>
+
+                <ul>
+                    <li class="fragment">A) Interior</li>
+                    <li class="fragment">B) Terminal</li>
+                    <li class="fragment">C) Raiz</li>
+                    <li class="fragment">D) Exterior</li>
+                    <li class="fragment">E) Filho</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Raiz
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão — Algoritmos Avançados</h2>
+
+            <div class="box small">
+                <p>Sobre algoritmos avançados em Estruturas de Dados:</p>
+
+                <ul>
+                    <li class="fragment">A) Hash serve apenas para ordenação</li>
+                    <li class="fragment">B) Árvores binárias facilitam busca, inserção e remoção</li>
+                    <li class="fragment">C) Grafos representam apenas estruturas lineares</li>
+                    <li class="fragment">D) Algoritmos avançados sempre são mais lentos</li>
+                    <li class="fragment">E) Busca binária funciona em dados desordenados</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Árvores binárias facilitam operações
+            </div>
+        </section>
+
+        <section>
+            <h1>EXTRAS</h1>
+        </section>
+
+        <section>
+            <h2>Questão Extra 01 — Pilha</h2>
+
+            <div class="box">
+                <p>Qual estrutura segue o princípio <strong>LIFO</strong>?</p>
+
+                <ul>
+                    <li class="fragment">A) Fila</li>
+                    <li class="fragment">B) Árvore</li>
+                    <li class="fragment">C) Pilha</li>
+                    <li class="fragment">D) Lista</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Pilha
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 02 — Fila</h2>
+
+            <div class="box">
+                <p>Uma impressora deve imprimir os documentos na ordem em que foram enviados.</p>
+
+                <p>Qual estrutura é a mais adequada?</p>
+
+                <ul>
+                    <li class="fragment">A) Pilha</li>
+                    <li class="fragment">B) Fila</li>
+                    <li class="fragment">C) Árvore</li>
+                    <li class="fragment">D) Grafo</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Fila
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 03 — Desfazer/Refazer</h2>
+
+            <div class="box">
+                <p>Qual estrutura é normalmente utilizada para implementar funcionalidades de “Desfazer”?</p>
+
+                <ul>
+                    <li class="fragment">A) Fila</li>
+                    <li class="fragment">B) Vetor</li>
+                    <li class="fragment">C) Pilha</li>
+                    <li class="fragment">D) Matriz</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Pilha
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 01 — Bubble Sort</h2>
+
+            <div class="box">
+                <p>No Bubble Sort, o algoritmo organiza os elementos através de:</p>
+
+                <ul>
+                    <li class="fragment">A) Divisão recursiva</li>
+                    <li class="fragment">B) Comparações entre elementos adjacentes</li>
+                    <li class="fragment">C) Uso obrigatório de árvores</li>
+                    <li class="fragment">D) Busca binária</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Comparações entre elementos adjacentes
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 02 — Busca Binária</h2>
+
+            <div class="box">
+                <p>Para que a Busca Binária funcione corretamente, os dados precisam estar:</p>
+
+                <ul>
+                    <li class="fragment">A) Duplicados</li>
+                    <li class="fragment">B) Em pilha</li>
+                    <li class="fragment">C) Ordenados</li>
+                    <li class="fragment">D) Em árvore AVL</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Ordenados
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 03 — Complexidade</h2>
+
+            <div class="box">
+                <p>A notação Big-O é utilizada para:</p>
+
+                <ul>
+                    <li class="fragment">A) Definir linguagens de programação</li>
+                    <li class="fragment">B) Medir complexidade de algoritmos</li>
+                    <li class="fragment">C) Criar filas e pilhas</li>
+                    <li class="fragment">D) Armazenar dados em árvore</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Medir complexidade de algoritmos
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 01 — Árvores</h2>
+
+            <div class="box">
+                <p>Como é chamado o nó principal de uma árvore?</p>
+
+                <ul>
+                    <li class="fragment">A) Filho</li>
+                    <li class="fragment">B) Folha</li>
+                    <li class="fragment">C) Raiz</li>
+                    <li class="fragment">D) Terminal</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Raiz
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 02 — Árvores Binárias</h2>
+
+            <div class="box">
+                <p>Uma árvore binária de busca facilita principalmente operações de:</p>
+
+                <ul>
+                    <li class="fragment">A) Impressão gráfica</li>
+                    <li class="fragment">B) Busca, inserção e remoção</li>
+                    <li class="fragment">C) Compactação de imagens</li>
+                    <li class="fragment">D) Controle de filas</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) Busca, inserção e remoção
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Extra 03 — Dividir e Conquistar</h2>
+
+            <div class="box">
+                <p>A técnica “Dividir e Conquistar” consiste em:</p>
+
+                <ul>
+                    <li class="fragment">A) Ignorar metade do problema</li>
+                    <li class="fragment">B) Resolver tudo com um único loop</li>
+                    <li class="fragment">C) Dividir o problema em partes menores</li>
+                    <li class="fragment">D) Utilizar apenas vetores</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Dividir o problema em partes menores
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        transition: 'convex',
+        slideNumber: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Padrões GRASP - ARA-0110</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+
+    <style>
+        :root {
+            --r-main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --r-heading-color: #00ffcc;
+            --r-link-color: #00ffcc;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+        }
+        .reveal pre {
+            width: 100%;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+        }
+        .code-label {
+            font-size: 0.6em;
+            color: #888;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .grid-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .column {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section data-background="linear-gradient(135deg, #0f2027, #203a43, #2c5364)">
+            <h1>Padrões GRASP</h1>
+            <p>Atribuição de Responsabilidades com Qualidade</p>
+            <hr>
+            <p><small>Disciplina: <strong>ARA-0110: Padrões de Projeto</strong></small></p>
+        </section>
+
+        <section>
+            <h2>O que é GRASP?</h2>
+            <p><em>General Responsibility Assignment Software Patterns</em></p>
+            <ul>
+                <li class="fragment">Não são "receitas", são <strong>princípios</strong>.</li>
+                <li class="fragment">Foco em decidir: <strong>Qual objeto faz o quê?</strong></li>
+                <li class="fragment">Complementares os padrões GoF (Design Patterns).</li>
+            </ul>
+        </section>
+
+        <section data-background="#FFF">
+            <h3>Termos principais</h3>
+            <hr>
+            <ul>
+                <li class="fragment">Especialista na Informação</li>
+                <li class="fragment">Criador/Creator</li>
+                <li class="fragment">Controlador
+                </li>
+                <li class="fragment">Baixo Acoplamento</li>
+                <li class="fragment">Alta Coesão</li>
+                <li class="fragment">Polimorfismo</li>
+                <li class="fragment">Fabricação Pura</li>
+                <li class="fragment">Indireção</li>
+                <li class="fragment">Variações Protegidas</li>
+            </ul>
+        </section>
+
+            <section>
+                <h2>1. Especialista na Informação</h2>
+                <p>Atribua a responsabilidade à classe que possui a informação necessária para realizá-la.</p>
+            </section>
+            <section>
+                <h3>Exemplo: Cálculo de Total</h3>
+                <span class="code-label">Java</span>
+                <pre><code class="language-java" data-trim data-noescape>
+public class Venda {
+    private List&lt;Item&gt; itens;
+
+    // A Venda é a especialista, pois conhece seus itens
+    public double getTotal() {
+        double total = 0;
+        for(Item i : itens) {
+            total += i.getSubtotal(); 
+        }
+        return total;
+    }
+}
+                    </code></pre>
+            </section>
+
+        <section data-auto-animate>
+                    <pre  data-id="code-animation"><code class="language-java" data-trim data-line-numbers>
+public class Livro {
+    private String titulo;
+    private int totalExemplares;
+    private int exemplaresEmprestados;
+
+    public Livro(String titulo, int total) {
+        this.titulo = titulo;
+        this.totalExemplares = total;
+    }
+
+    public boolean podeSerEmprestado() {
+        return exemplaresEmprestados < totalExemplares;
+    }
+
+    public void registrarEmprestimo() {
+        if (podeSerEmprestado()) {
+            exemplaresEmprestados++;
+        } else {
+            throw new IllegalStateException("Não há exemplares disponíveis!");
+        }
+    }
+}
+                    </code></pre>
+        </section>
+        <section data-auto-animate>
+                    <pre  data-id="code-animation"><code class="language-java" data-trim data-line-numbers="|7,8">
+public class Livro {
+    public Livro(String titulo, int total) {
+        this.titulo = titulo;
+        this.totalExemplares = total;
+    }
+
+    // A responsabilidade está aqui porque Livro é o Especialista
+    // sobre sua própria quantidade e estado.
+    public boolean podeSerEmprestado() {
+        return exemplaresEmprestados < totalExemplares;
+    }
+
+    public void registrarEmprestimo() {
+        if (podeSerEmprestado()) {
+            exemplaresEmprestados++;
+        } else {
+            throw new IllegalStateException("Não há exemplares disponíveis!");
+        }
+    }
+}
+                    </code></pre>
+        </section>
+            <section>
+                <h2>2. Criador (Creator)</h2>
+                <p>Quem deve criar o objeto A? A classe B, se:</p>
+                <ul>
+                    <li>B agrega ou contém A.</li>
+                    <li>B utiliza A de forma muito próxima.</li>
+                    <li>B possui os dados de inicialização de A.</li>
+                </ul>
+            </section>
+            <section>
+                    <pre><code class="language-java" data-trim>
+public class Pedido {
+    private List&lt;LinhaItem&gt; itens;
+
+    // Pedido é o Criador natural de LinhaItem
+    public void adicionarItem(Produto p, int qtd) {
+        itens.add(new LinhaItem(p, qtd));
+    }
+}
+                    </code></pre>
+            </section>
+
+        <section data-auto-animate=>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="font-size: 0.7em;">
+                    <p><strong>Quem cria o Story?</strong></p>
+                    <ul>
+                        <li>O <b>User</b> contém a lista de Stories.</li>
+                        <li>O <b>User</b> registra as instâncias.</li>
+                        <li>O <b>User</b> tem os dados (autor).</li>
+                    </ul>
+                </div>
+                <pre class="fragment" data-id="code-animation"><code class="language-java" data-trim data-line-numbers="">
+public class User {
+    private List&lt;Story&gt; stories;
+
+}
+        </code></pre>
+            </div>
+        </section>
+        <section data-auto-animate=>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="font-size: 0.7em;">
+                    <p><strong>Quem cria o Story?</strong></p>
+                    <ul>
+                        <li>O <b>User</b> contém a lista de Stories.</li>
+                        <li>O <b>User</b> registra as instâncias.</li>
+                        <li>O <b>User</b> tem os dados (autor).</li>
+                    </ul>
+                </div>
+                <pre data-id="code-animation"><code class="language-java" data-trim data-line-numbers="">
+public class User {
+    private List&lt;Story&gt; stories;
+
+    public void publishStory(String url) {
+    }
+}
+        </code></pre>
+            </div>
+        </section>
+        <section data-auto-animate=>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="font-size: 0.7em;">
+                    <p><strong>Quem cria o Story?</strong></p>
+                    <ul>
+                        <li>O <b>User</b> contém a lista de Stories.</li>
+                        <li>O <b>User</b> registra as instâncias.</li>
+                        <li>O <b>User</b> tem os dados (autor).</li>
+                    </ul>
+                </div>
+                <pre data-id="code-animation"><code class="language-java" data-trim data-line-numbers="">
+public class User {
+    private List&lt;Story&gt; stories;
+
+    public void publishStory(String url) {
+        // Criador em ação
+        Story s = new Story(url, this.name);
+        stories.add(s);
+    }
+}
+        </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Controlador</h2>
+            <p>Objeto que recebe eventos da interface e coordena as operações.</p>
+            <div class="grid-container">
+                <div class="column">
+                    <ul>
+                        <li>Desacopla a UI da lógica.</li>
+                        <li>Representa o "sistema" ou o "caso de uso".</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="grid-container">
+                <div class="column">
+                    <ul>
+                        <li>Desacopla a UI da lógica.</li>
+                        <li>Representa o "sistema" ou o "caso de uso".</li>
+                    </ul>
+                </div>
+                <div class="column">
+                        <pre><code class="language-java" data-trim>
+public class ComprarProdHandler {
+    // Coordena a lógica de negócio
+    public void concluirPedido() {
+        carrinho.validar();
+        pagamento.processar();
+        estoque.baixar();
+    }
+}
+                        </code></pre>
+                </div>
+            </div>
+        </section>
+
+            <section>
+                <h2>4. Baixo Acoplamento</h2>
+                <p>Minimize as dependências entre classes. Facilita a manutenção e reuso.</p>
+            </section>
+            <section>
+                <h2>5. Alta Coesão</h2>
+                <p>Mantenha as responsabilidades de uma classe focadas e relacionadas. Evite "Classes Deus".</p>
+            </section>
+
+        <section>
+            <h2>6. Polimorfismo</h2>
+            <p>Trate variações de comportamento baseadas no tipo sem usar switch/case ou if/else excessivos.</p>
+            <pre><code class="language-java" data-trim>
+public interface FormaPagamento {
+    void pagar(double valor);
+}
+
+public class Cartao implements FormaPagamento {
+    public void pagar(double v) { /* lógica cartão */ }
+}
+
+public class Pix implements FormaPagamento {
+    public void pagar(double v) { /* lógica pix */ }
+}
+                </code></pre>
+        </section>
+
+        <section>
+            <h2>7. Fabricação Pura</h2>
+            <p>Criar uma classe que não representa um conceito do domínio para manter Coesão e Baixo Acoplamento.</p>
+            <p><strong>Exemplo:</strong> Classes DAO (Data Access Object).</p>
+            <pre><code class="language-java" data-trim>
+// Venda não deve saber SQL. Criamos uma classe técnica:
+public class VendaDAO {
+    public void salvar(Venda v) {
+        // conexão DB e Insert...
+    }
+}
+                </code></pre>
+        </section>
+
+        <section>
+            <h2>8. Indireção</h2>
+            <p>Atribui a responsabilidade a um objeto intermediário para mediar entre outros componentes.</p>
+            <p><small>Muito comum em implementações de Adaptadores.</small></p>
+        </section>
+
+        <section>
+            <h2>9. Variações Protegidas</h2>
+            <p>Proteja os elementos internos de variações de outros elementos através de interfaces.</p>
+            <p><em>"Encapsule o que varia."</em></p>
+        </section>
+
+        <section data-background="#283e51">
+            <h2>Boa sorte!</h2>
+            <p><small>ARA-0110 | Padrões de Projeto</small></p>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: 'c/t',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>

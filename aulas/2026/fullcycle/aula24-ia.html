@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+
+    <title>Uso de IA para Análise de Falhas e Performance</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+
+    <style>
+        :root {
+            --primary: #42affa;
+            --danger: #ff5c5c;
+            --success: #52d273;
+        }
+
+        .reveal {
+            font-size: 30px;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+        }
+
+        .reveal section {
+            text-align: left;
+        }
+
+        .reveal pre {
+            width: 100%;
+            border-radius: 16px;
+            font-size: 0.65em;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .highlight {
+            color: var(--primary);
+        }
+
+        .danger {
+            color: var(--danger);
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        .small {
+            font-size: 0.7em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 24px;
+            border-radius: 18px;
+        }
+
+        blockquote {
+            border-left: 6px solid var(--primary);
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section class="center">
+            <h1>Uso de IA para Análise de Falhas e Performance</h1>
+
+            <p class="fragment">Observabilidade</p>
+            <p class="fragment">Troubleshooting</p>
+            <p class="fragment">Performance</p>
+            <p class="fragment">Debugging Assistido por IA</p>
+        </section>
+
+        <section>
+            <h2>Objetivos da Aula</h2>
+
+            <ul>
+                <li class="fragment">Uso de IA para troubleshooting</li>
+                <li class="fragment">Análise de logs</li>
+                <li class="fragment">Interpretação de stack traces</li>
+                <li class="fragment">Observabilidade</li>
+                <li class="fragment">Análise de métricas</li>
+                <li class="fragment">Identificação de gargalos</li>
+                <li class="fragment">Debugging assistido por IA</li>
+                <li class="fragment">Otimização de performance</li>
+                <li class="fragment">Engenharia de prompt</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Cronograma Sugerido</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Bloco</th>
+                    <th>Tempo</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>O Problema Real</td>
+                    <td>40 min</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>IA como Assistente Técnico</td>
+                    <td>60 min</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Engenharia de Prompt</td>
+                    <td>40 min</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>IA e Performance</td>
+                    <td>50 min</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Limitações da IA</td>
+                    <td>30 min</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Desafio Final</td>
+                    <td>40 min</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Bloco 1 — O Problema Real</h2>
+
+            <ul>
+                <li class="fragment">Sistemas lentos</li>
+                <li class="fragment">APIs instáveis</li>
+                <li class="fragment">Timeout</li>
+                <li class="fragment">Deadlocks</li>
+                <li class="fragment">Memory leak</li>
+                <li class="fragment">CPU alta</li>
+                <li class="fragment">Concorrência</li>
+                <li class="fragment">Falhas intermitentes</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Perguntas para Debate</h2>
+
+            <ul>
+                <li class="fragment">Quanto tempo um time perde debugando?</li>
+                <li class="fragment">Como vocês investigam problemas hoje?</li>
+                <li class="fragment">IA reduz senioridade?</li>
+                <li class="fragment">Quem valida o diagnóstico?</li>
+                <li class="fragment">Como reduzir MTTR?</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Conceitos Fundamentais</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Observabilidade</h3>
+
+                    <ul class="small">
+                        <li>Logs</li>
+                        <li>Tracing</li>
+                        <li>Métricas</li>
+                        <li>Profiling</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Operação</h3>
+
+                    <ul class="small">
+                        <li>APM</li>
+                        <li>MTTR</li>
+                        <li>Alertas</li>
+                        <li>Monitoramento</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Cenário Fictício</h2>
+
+            <div class="card">
+
+                <p class="fragment">
+                    Um e-commerce começa a falhar após campanha promocional.
+                </p>
+
+                <ul>
+                    <li class="fragment">API responde lentamente</li>
+                    <li class="fragment">Banco congestionado</li>
+                    <li class="fragment">Redis sobrecarregado</li>
+                    <li class="fragment">Workers travando</li>
+                    <li class="fragment">Timeout em pagamentos</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Bloco 2 — IA como Assistente Técnico</h2>
+
+            <ul>
+                <li class="fragment">Interpretação de logs</li>
+                <li class="fragment">Análise de stack traces</li>
+                <li class="fragment">Geração de hipóteses</li>
+                <li class="fragment">Troubleshooting</li>
+                <li class="fragment">Análise de queries lentas</li>
+                <li class="fragment">Análise de exceptions</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Análise de Logs</h2>
+
+            <pre><code class="language-bash">[ERROR] SQLSTATE[40001]:
+Deadlock found when trying to get lock</code></pre>
+
+            <h3 class="fragment">Perguntas para IA</h3>
+
+            <ul>
+                <li class="fragment">O que significa?</li>
+                <li class="fragment">Como reproduzir?</li>
+                <li class="fragment">Possíveis causas?</li>
+                <li class="fragment">Como resolver?</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Stack Trace Analysis</h2>
+
+            <pre><code class="language-js">TypeError:
+Cannot read properties of undefined</code></pre>
+
+            <pre><code class="language-php">Call to member function save() on null</code></pre>
+
+            <pre><code class="language-sql">Lock wait timeout exceeded</code></pre>
+        </section>
+
+        <section>
+            <h2>Ferramentas Modernas</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>IA</h3>
+
+                    <ul class="small">
+                        <li>ChatGPT</li>
+                        <li>Claude</li>
+                        <li>Gemini</li>
+                        <li>Cursor</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Observabilidade</h3>
+
+                    <ul class="small">
+                        <li>Grafana</li>
+                        <li>Sentry</li>
+                        <li>Datadog</li>
+                        <li>New Relic</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Bloco 3 — Engenharia de Prompt</h2>
+
+            <h3 class="danger">Prompt Ruim</h3>
+
+            <pre><code class="language-text">me ajuda nesse erro</code></pre>
+
+            <h3 class="success fragment">Prompt Bom</h3>
+
+            <pre class="fragment"><code class="language-text">Estou usando Laravel 12 com MySQL.
+
+Após aumento de carga:
+- timeout
+- deadlock
+- workers simultâneos
+
+Erro:
+SQLSTATE[40001]
+
+Quais possíveis causas?
+Como investigar?
+Como reduzir?</code></pre>
+        </section>
+
+        <section>
+            <h2>Boas Práticas de Prompt</h2>
+
+            <ul>
+                <li class="fragment">Dar contexto técnico</li>
+                <li class="fragment">Informar stack</li>
+                <li class="fragment">Enviar logs reais</li>
+                <li class="fragment">Explicar comportamento esperado</li>
+                <li class="fragment">Perguntar hipóteses</li>
+                <li class="fragment">Validar tecnicamente respostas</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Exercício em Grupo</h2>
+
+            <div class="card">
+
+                <h3>Objetivo</h3>
+
+                <ul>
+                    <li class="fragment">Analisar logs</li>
+                    <li class="fragment">Criar prompts técnicos</li>
+                    <li class="fragment">Usar IA</li>
+                    <li class="fragment">Gerar hipótese</li>
+                    <li class="fragment">Validar solução</li>
+                    <li class="fragment">Apresentar diagnóstico</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Bloco 4 — IA e Performance</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Backend</h3>
+
+                    <ul class="small">
+                        <li>SQL</li>
+                        <li>Cache</li>
+                        <li>Filas</li>
+                        <li>Complexidade</li>
+                        <li>Lazy Loading</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Frontend</h3>
+
+                    <ul class="small">
+                        <li>Renderização</li>
+                        <li>Bundle size</li>
+                        <li>Waterfall</li>
+                        <li>Re-render</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Infraestrutura</h2>
+
+            <ul>
+                <li class="fragment">CPU spike</li>
+                <li class="fragment">Memória</li>
+                <li class="fragment">Containers</li>
+                <li class="fragment">Autoscaling</li>
+                <li class="fragment">IO</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Código Ruim</h2>
+
+            <pre><code class="language-php">foreach ($users as $user) {
+    echo $user->orders()->count();
+}</code></pre>
+
+            <h3 class="fragment">Problema</h3>
+
+            <ul>
+                <li class="fragment">N+1 Query</li>
+                <li class="fragment">Múltiplas consultas</li>
+                <li class="fragment">Baixa performance</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Código Melhorado</h2>
+
+            <pre><code class="language-php">$users = User::with('orders')->get();
+
+foreach ($users as $user) {
+    echo $user->orders->count();
+}</code></pre>
+
+            <p class="fragment success">
+                Redução massiva de queries.
+            </p>
+        </section>
+
+        <section>
+            <h2>Estudos de Caso</h2>
+
+            <ul>
+                <li class="fragment">Fila travada em produção</li>
+                <li class="fragment">Redis congestionado</li>
+                <li class="fragment">CPU em 100%</li>
+                <li class="fragment">Memory leak em Node.js</li>
+                <li class="fragment">Deadlock em Laravel</li>
+                <li class="fragment">Timeout em APIs externas</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Bloco 5 — Limitações da IA</h2>
+
+            <ul>
+                <li class="fragment">Hallucination</li>
+                <li class="fragment">Diagnósticos errados</li>
+                <li class="fragment">Soluções inseguras</li>
+                <li class="fragment">Antipatterns</li>
+                <li class="fragment">Dependência excessiva</li>
+                <li class="fragment">Falta de contexto</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Debate Técnico</h2>
+
+            <blockquote class="fragment">
+                IA acelera troubleshooting,
+                mas entendimento técnico ainda é obrigatório.
+            </blockquote>
+
+            <blockquote class="fragment">
+                Quem valida a resposta da IA?
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>Atividade Final</h2>
+
+            <div class="card">
+
+                <h3>Desafio</h3>
+
+                <ul>
+                    <li class="fragment">Logs</li>
+                    <li class="fragment">Traces</li>
+                    <li class="fragment">Gráfico de CPU</li>
+                    <li class="fragment">Código problemático</li>
+                    <li class="fragment">Stack traces</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Objetivo do Grupo</h2>
+
+            <ol>
+                <li class="fragment">Investigar</li>
+                <li class="fragment">Usar IA</li>
+                <li class="fragment">Gerar hipótese</li>
+                <li class="fragment">Validar tecnicamente</li>
+                <li class="fragment">Propor solução</li>
+                <li class="fragment">Apresentar relatório</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Resultado Esperado</h2>
+
+            <ul>
+                <li class="fragment">Usar IA como copiloto técnico</li>
+                <li class="fragment">Acelerar troubleshooting</li>
+                <li class="fragment">Interpretar métricas</li>
+                <li class="fragment">Identificar gargalos</li>
+                <li class="fragment">Melhorar performance</li>
+                <li class="fragment">Escrever prompts melhores</li>
+                <li class="fragment">Validar respostas criticamente</li>
+            </ul>
+        </section>
+
+        <section class="center">
+            <h1>Encerramento</h1>
+
+            <blockquote class="fragment">
+                IA não substitui engenharia.
+                IA amplifica capacidade técnica.
+            </blockquote>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide'
+    });
+</script>
+
+</body>
+</html>
