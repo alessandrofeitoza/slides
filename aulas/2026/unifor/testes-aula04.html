@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Aula 03 - Testes de APIs e Microserviços</title>
+    <title>Aula 04 - Testes Continuos</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -34,7 +34,7 @@
         }
 
         .reveal h1 {
-            font-size: 3.2rem;
+            font-size: 4.2rem;
             color: white;
             text-transform: uppercase;
             line-height: 1.1;
@@ -42,7 +42,7 @@
 
         .reveal h2 {
             color: var(--primary);
-            font-size: 2.2rem;
+            font-size: 3.2rem;
             margin-bottom: 25px;
             text-transform: uppercase;
             border-left: 6px solid var(--primary);
@@ -56,7 +56,7 @@
 
         .reveal p,
         .reveal li {
-            font-size: 1.5rem;
+            font-size: 2rem;
             line-height: 1.5;
         }
 
@@ -74,121 +74,7 @@
         }
 
         .success {
-    <div class="slides">
 
-        <section style="text-align: center;">
-            <h1>Continuous Testing</h1>
-            <h3>O Core da Cultura DevOps</h3>
-            <p class="accent">Aula 04 - 22/05</p>
-            <small>Integrando a qualidade à esteira de entrega contínua</small>
-        </section>
-
-        <section>
-            <h2>Automação vs. Teste Contínuo</h2>
-            <ul>
-                <li><strong>Teste Automatizado:</strong> Escrever um script que executa um teste sem intervenção humana. <span class="accent">(Foco na técnica)</span></li>
-                <li class="fragment"><strong>Teste Contínuo:</strong> Executar esses testes de forma ininterrupta como parte do pipeline de liberação. <span class="accent">(Foco no processo)</span></li>
-                <li class="fragment">Objetivo principal: Fornecer <span class="important">feedback instantâneo</span> sobre os riscos de negócio de um commit.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>A Anatomia de um Pipeline de CI</h2>
-            <p>Cada alteração de código dispara um ciclo automático:</p>
-            <ol>
-                <li><strong>Build:</strong> Compilação e empacotamento.</li>
-                <li><strong>Testes Unitários:</strong> Feedback em segundos.</li>
-                <li><strong>Análise Estática:</strong> Qualidade de código e segurança (Lint/SonarQube).</li>
-                <li><strong>Testes de Integração/API:</strong> Validação de contratos.</li>
-                <li><strong>Deployment (Staging):</strong> Liberação em ambiente controlado.</li>
-            </ol>
-        </section>
-
-        <section>
-            <h2>Quality Gates: Os Guardiões</h2>
-            <p>Um portão de qualidade define as regras para o código avançar para produção:</p>
-            <div style="background: #44475a; padding: 15px; border-radius: 8px;">
-                <ul>
-                    <li>❌ Falha em qualquer teste automatizado.</li>
-                    <li>❌ Cobertura de código inferior a 85%.</li>
-                    <li>❌ Presença de credenciais ou senhas expostas (Hardcoded Secrets).</li>
-                    <li>❌ Vulnerabilidades críticas de dependências (CVEs).</li>
-                </ul>
-            </div>
-        </section>
-
-        <section>
-            <h2>Estratégia de Otimização: Paralelismo</h2>
-            <p>Pipelines lentos matam a produtividade do time de engenharia.</p>
-            <ul>
-                <li>Se sua suíte de testes demora 1 hora para rodar, os devs vão odiar o CI.</li>
-                <li><strong>Solução DevOps:</strong> Dividir os testes para rodarem em paralelo em múltiplos containers/máquinas (Múltiplos Runners).</li>
-            </ul>
-        </section>
-
-        <section style="text-align: center;">
-            <h2>Mão na Massa! 🛠️</h2>
-            <h3>Criando um Pipeline no GitHub Actions</h3>
-            <p>Vamos configurar o ambiente para que o GitHub rode o comando <code>npm test</code> a cada Pull Request.</p>
-        </section>
-
-        <section>
-            <h3>Estrutura de Pastas do Projeto</h3>
-            <p>Para o GitHub Actions funcionar, precisamos criar uma pasta oculta na raiz do projeto:</p>
-            <pre><code class="bash" data-trim>
-meu-projeto/
-├── .github/
-│   └── workflows/
-│       └── ci.yml   &lt;-- O pipeline vive aqui!
-├── app.js
-├── app.test.js
-└── package.json
-                </code></pre>
-        </section>
-
-        <section>
-            <h3>O Arquivo de Configuração (ci.yml)</h3>
-            <pre><code class="yaml" data-trim>
-name: Pipeline de Testes Continuos
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  testar-aplicacao:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Baixar codigo do repositorio
-      uses: actions/checkout@v3
-
-    - name: Configurar o Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-node: 18
-
-    - name: Instalar Dependencias
-      run: npm install
-
-    - name: Executar os Testes Automatizados
-      run: npm test -- --coverage
-                </code></pre>
-        </section>
-
-        <section>
-            <h2>Desafio de Hoje 🚀</h2>
-            <ol>
-                <li>Criar a pasta <code>.github/workflows/</code> no seu repositório do trabalho.</li>
-                <li>Adicionar o arquivo <code>ci.yml</code>.</li>
-                <li>Subir um commit propositalmente <span class="important">quebrando um teste</span> e ver o GitHub Actions bloquear o avanço.</li>
-                <li>Consertar o teste e ver a esteira ficar verde (Sucesso).</li>
-            </ol>
-        </section>
-
-    </div>
             color: var(--secondary);
             font-weight: bold;
         }
@@ -316,6 +202,8 @@ jobs:
 <div class="reveal">
     <div class="slides">
 
+
+
         <section style="text-align: center;">
             <h1>Continuous Testing</h1>
             <h3>O Core da Cultura DevOps</h3>
@@ -328,31 +216,120 @@ jobs:
             <ul>
                 <li><strong>Teste Automatizado:</strong> Escrever um script que executa um teste sem intervenção humana. <span class="accent">(Foco na técnica)</span></li>
                 <li class="fragment"><strong>Teste Contínuo:</strong> Executar esses testes de forma ininterrupta como parte do pipeline de liberação. <span class="accent">(Foco no processo)</span></li>
-                <li class="fragment">Objetivo principal: Fornecer <span class="important">feedback instantâneo</span> sobre os riscos de negócio de um commit.</li>
             </ul>
         </section>
+
+        <section>
+           <h3>Objetivo principal</h3>
+            Fornecer <span class="important">feedback instantâneo</span> sobre os riscos de negócio de um commit.
+             <div class="highlight-box">
+                 <p>O teste contínuo é a espinha dorsal do DevOps, garantindo que cada mudança seja validada automaticamente, reduzindo riscos e acelerando a entrega de valor.</p>
+             </div>
+
+        </section>
+
+        <section data-background-color="#FFF" data-background="../../2025/img/ides/devops.png" data-background-size="60%">
+
+        </section>
+
+        <section>
+            <h1>O custo de um bug</h1>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    <h3 style="font-size: 3rem">Durante o desenvolvimento</h3>
+                    <p>Corrigir leva minutos.</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3 style="font-size: 3rem">Após merge</h3>
+                    <p>Pode impactar o time inteiro.</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3 style="font-size: 3rem">Em produção</h3>
+                    <p class="danger">
+                        Pode custar dinheiro, clientes e REPUTAÇÃO. <span style="font-size: 5rem;" class="fragment">🐃</span>
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Shift Left Testing</h2>
+
+            <div class="card">
+                <p class="big-text">
+                    Encontrar problemas mais cedo no ciclo de desenvolvimento.
+                </p>
+            </div>
+
+            <div class="architecture-box">
+
+                <div class="service fragment">
+                    <h4>Codar</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Testar</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Deploy</h4>
+                </div>
+
+            </div>
+
+            <div class="highlight-box fragment">
+                <p>
+                    Quanto mais tarde o bug aparece,
+                    mais caro ele fica.
+                </p>
+            </div>
+        </section>
+
+
+        <section data-background-color="#FFF" data-background="../../2025/img/ides/devops.png" data-background-size="60%">
+
+        </section>
+
+
+
 
         <section>
             <h2>A Anatomia de um Pipeline de CI</h2>
             <p>Cada alteração de código dispara um ciclo automático:</p>
             <ol>
-                <li><strong>Build:</strong> Compilação e empacotamento.</li>
-                <li><strong>Testes Unitários:</strong> Feedback em segundos.</li>
-                <li><strong>Análise Estática:</strong> Qualidade de código e segurança (Lint/SonarQube).</li>
-                <li><strong>Testes de Integração/API:</strong> Validação de contratos.</li>
-                <li><strong>Deployment (Staging):</strong> Liberação em ambiente controlado.</li>
+                <li class="fragment"><strong>Build:</strong> Compilação e empacotamento.</li>
+                <li class="fragment"><strong>Análise Estática:</strong> Qualidade de código e segurança (Lint/SonarQube/PHPcsFixer).</li>
+                <li class="fragment"><strong>Testes Unitários:</strong> Feedback em segundos.</li>
+                <li class="fragment"><strong>Testes de Integração/API:</strong> Validação de contratos.</li>
+                <li class="fragment"><strong>Deployment (Staging):</strong> Liberação em ambiente controlado.</li>
             </ol>
         </section>
 
-        <section>
+        <section data-auto-animate>
             <h2>Quality Gates: Os Guardiões</h2>
-            <p>Um portão de qualidade define as regras para o código avançar para produção:</p>
+            <p>Pode parar</p>
+        </section>
+
+        <section data-auto-animate data-background="img/joao.jpg" data-background-size="80%"></section>
+
+        <section data-auto-animate>
+            <h2>Quality Gates: Os Guardiões</h2>
+            <p>Pode parar</p>
             <div style="background: #44475a; padding: 15px; border-radius: 8px;">
                 <ul>
-                    <li>❌ Falha em qualquer teste automatizado.</li>
-                    <li>❌ Cobertura de código inferior a 85%.</li>
-                    <li>❌ Presença de credenciais ou senhas expostas (Hardcoded Secrets).</li>
-                    <li>❌ Vulnerabilidades críticas de dependências (CVEs).</li>
+                    <li class="fragment">❌ Falha em qualquer teste automatizado.</li>
+                    <li class="fragment">❌ Cobertura de código inferior a 85%.</li>
+                    <li class="fragment">❌ Presença de credenciais ou senhas expostas (Hardcoded Secrets).</li>
+                    <li class="fragment">❌ Vulnerabilidades críticas de dependências (CVEs).</li>
                 </ul>
             </div>
         </section>
@@ -361,15 +338,23 @@ jobs:
             <h2>Estratégia de Otimização: Paralelismo</h2>
             <p>Pipelines lentos matam a produtividade do time de engenharia.</p>
             <ul>
-                <li>Se sua suíte de testes demora 1 hora para rodar, os devs vão odiar o CI.</li>
-                <li><strong>Solução DevOps:</strong> Dividir os testes para rodarem em paralelo em múltiplos containers/máquinas (Múltiplos Runners).</li>
+                <li class="fragment">Se a suíte de testes demora 1 hora para rodar, os devs vão odiar o CI.</li>
             </ul>
+        </section>
+
+        <section>
+            <h3>Solução Sagaz:</h3>
+            <div class="fragment">Dividir os testes para rodarem em paralelo em múltiplos containers/máquinas (Múltiplos Runners).</div>
+
         </section>
 
         <section style="text-align: center;">
             <h2>Mão na Massa! 🛠️</h2>
-            <h3>Criando um Pipeline no GitHub Actions</h3>
-            <p>Vamos configurar o ambiente para que o GitHub rode o comando <code>npm test</code> a cada Pull Request.</p>
+            <h4>Criando um Pipeline no GitHub Actions</h4>
+        </section>
+
+        <section data-background="img/git.svg" data-background-size="50%">
+
         </section>
 
         <section>
@@ -379,11 +364,50 @@ jobs:
 meu-projeto/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml   &lt;-- O pipeline vive aqui!
+│       └── ci.yml   &lt;-- Aqui o bunito
 ├── app.js
 ├── app.test.js
 └── package.json
                 </code></pre>
+        </section>
+
+        <section>
+            <h2>Fluxo do Pipeline</h2>
+
+            <div class="architecture-box">
+
+                <div class="service fragment">
+                    <h4>Git Push</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>CI</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Testes</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Deploy</h4>
+                </div>
+
+            </div>
+
+            <div class="card fragment">
+                <ul>
+                    <li>Automático</li>
+                    <li>Repetível</li>
+                    <li>Auditável</li>
+                    <li>Escalável</li>
+                </ul>
+            </div>
         </section>
 
         <section>
@@ -419,13 +443,132 @@ jobs:
         </section>
 
         <section>
-            <h2>Desafio de Hoje 🚀</h2>
+            <h2>Primeiro Desafio de Hoje </h2>
             <ol>
+                <li>Criar uma organização</li>
                 <li>Criar a pasta <code>.github/workflows/</code> no seu repositório do trabalho.</li>
                 <li>Adicionar o arquivo <code>ci.yml</code>.</li>
-                <li>Subir um commit propositalmente <span class="important">quebrando um teste</span> e ver o GitHub Actions bloquear o avanço.</li>
-                <li>Consertar o teste e ver a esteira ficar verde (Sucesso).</li>
+                <li>Configurar o github</li>
+                <li>Botar os testes de ontem pra rodarem</li>
             </ol>
+        </section>
+
+        <section>
+            <hr>
+            <h1>E agora josé?</h1>
+            <hr>
+        </section>
+
+        <section>
+            <h2>O pior cenário</h2>
+
+            <div class="card">
+                <ul>
+                    <li class="fragment">❌ Testes ignorados</li>
+                    <li class="fragment">❌ Pipeline vermelho há semanas</li>
+                    <li class="fragment">❌ Deploy direto na sexta-feira</li>
+                    <li class="fragment">❌ Time sem confiança</li>
+                    <li class="fragment">❌ "Na minha máquina funciona"</li>
+                </ul>
+            </div>
+
+            <div class="quote fragment">
+                Um pipeline desacreditado perde totalmente o valor.
+            </div>
+        </section>
+
+        <section>
+            <h2>Coverage não é tudo</h2>
+
+            <pre><code class="javascript" data-trim>
+it('deve funcionar', () => {
+    expect(true).toBe(true);
+});
+</code></pre>
+
+            <div class="highlight-box fragment">
+                <p class="danger">
+                    100% de coverage não significa qualidade.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">Cobertura mede execução</li>
+                <li class="fragment">Não mede qualidade do teste</li>
+                <li class="fragment">Não mede cenários reais</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O que normalmente roda no CI?</h2>
+
+            <div class="two-columns">
+
+                <div class="card fragment">
+                    <h3>Qualidade</h3>
+
+                    <ul>
+                        <li>Lint</li>
+                        <li>Formatadores</li>
+                        <li>Análise estática</li>
+                        <li>Coverage</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Segurança</h3>
+
+                    <ul>
+                        <li>Dependências vulneráveis</li>
+                        <li>Secrets expostos</li>
+                        <li>SAST</li>
+                        <li>Scanners</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Fluxo Real no GitHub</h2>
+
+            <div class="card">
+                <ol>
+                    <li class="fragment">Developer abre Pull Request</li>
+                    <li class="fragment">GitHub Actions dispara</li>
+                    <li class="fragment">Pipeline executa</li>
+                    <li class="fragment">Testes falham</li>
+                    <li class="fragment">Merge é bloqueado</li>
+                </ol>
+            </div>
+
+            <div class="highlight-box fragment">
+                <p class="success">
+                    O problema é detectado antes de chegar em produção.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Métricas importantes</h2>
+
+            <ul>
+                <li class="fragment">Tempo médio do pipeline</li>
+                <li class="fragment">Tempo médio de feedback</li>
+                <li class="fragment">Taxa de falha</li>
+                <li class="fragment">Cobertura de testes</li>
+                <li class="fragment">Frequência de deploy</li>
+                <li class="fragment">Lead Time</li>
+            </ul>
+
+            <div class="quote fragment">
+                Times de alta performance medem continuamente sua entrega.
+            </div>
+        </section>
+
+        <section>
+            <h2>Primeiro Desafio de Hoje </h2>
+
         </section>
 
     </div>
