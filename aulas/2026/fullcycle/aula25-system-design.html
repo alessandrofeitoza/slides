@@ -1,0 +1,714 @@
+
+        <!DOCTYPE html>
+
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Aula 25 - Introdução a System Design</title>
+
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+
+            <style>
+                :root {
+                    --primary: #00dc82;
+                    --secondary: #00a8ff;
+                    --danger: #ff4d6d;
+                    --dark: #0d1117;
+                    --card: #161b22;
+                    --text: #e6edf3;
+                    --muted: #8b949e;
+                }
+
+                body {
+                    background: var(--dark);
+                }
+
+                .reveal {
+                    font-family: Inter, system-ui, sans-serif;
+                    color: var(--text);
+                }
+
+                .reveal h1,
+                .reveal h2,
+                .reveal h3 {
+                    text-transform: none;
+                    letter-spacing: -1px;
+                }
+
+                .reveal h1 {
+                    font-size: 3.2rem;
+                    color: white;
+                }
+
+                .reveal h2 {
+                    color: var(--primary);
+                    margin-bottom: 20px;
+                }
+
+                .reveal h3 {
+                    color: var(--secondary);
+                }
+
+                .reveal p,
+                .reveal li {
+                    font-size: 1.1rem;
+                    line-height: 1.6;
+                }
+
+                .reveal strong {
+                    color: white;
+                }
+
+                .hero {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    height: 100%;
+                    text-align: left;
+                    gap: 20px;
+                }
+
+                .hero-title {
+                    font-size: 4.2rem;
+                    font-weight: 800;
+                    line-height: 1.1;
+                }
+
+                .hero-subtitle {
+                    font-size: 1.4rem;
+                    color: var(--muted);
+                    max-width: 900px;
+                }
+
+                .badge {
+                    display: inline-block;
+                    padding: 10px 18px;
+                    border-radius: 999px;
+                    background: rgba(0,220,130,0.15);
+                    border: 1px solid rgba(0,220,130,0.4);
+                    color: var(--primary);
+                    font-size: 0.9rem;
+                    margin-bottom: 20px;
+                }
+
+                .grid-2 {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 30px;
+                    margin-top: 30px;
+                }
+
+                .grid-3 {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 25px;
+                    margin-top: 30px;
+                }
+
+                .card {
+                    background: var(--card);
+                    border: 1px solid rgba(255,255,255,0.08);
+                    border-radius: 22px;
+                    padding: 24px;
+                    text-align: left;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+                }
+
+                .card h3 {
+                    margin-top: 0;
+                }
+
+                .quote {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    line-height: 1.5;
+                    color: white;
+                    max-width: 1100px;
+                    margin: auto;
+                }
+
+                .muted {
+                    color: var(--muted);
+                }
+
+                .highlight {
+                    color: var(--primary);
+                    font-weight: bold;
+                }
+
+                .danger {
+                    color: var(--danger);
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                    font-size: 0.9rem;
+                }
+
+                table th,
+                table td {
+                    border: 1px solid rgba(255,255,255,0.08);
+                    padding: 14px;
+                    text-align: left;
+                }
+
+                table th {
+                    background: rgba(255,255,255,0.05);
+                }
+
+                .pillars {
+                    display: flex;
+                    gap: 20px;
+                    justify-content: center;
+                    margin-top: 40px;
+                }
+
+                .pillar {
+                    flex: 1;
+                    background: linear-gradient(135deg, #111827, #1f2937);
+                    border-radius: 20px;
+                    padding: 30px;
+                    border: 1px solid rgba(255,255,255,0.08);
+                }
+
+                .big-number {
+                    font-size: 4rem;
+                    font-weight: 800;
+                    color: var(--primary);
+                }
+
+                .code-wrapper {
+                    text-align: left;
+                    font-size: 0.8rem;
+                }
+
+                .section-title {
+                    font-size: 3rem;
+                    font-weight: 800;
+                    margin-bottom: 20px;
+                }
+
+                .architecture-flow {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 20px;
+                    margin-top: 40px;
+                    flex-wrap: wrap;
+                }
+
+                .node {
+                    background: #1e293b;
+                    border: 1px solid rgba(255,255,255,0.1);
+                    padding: 18px 26px;
+                    border-radius: 18px;
+                    font-weight: bold;
+                }
+
+                .arrow {
+                    font-size: 2rem;
+                    color: var(--primary);
+                }
+
+                .small {
+                    font-size: 0.8rem;
+                }
+
+                .footer {
+                    position: absolute;
+                    bottom: 15px;
+                    right: 30px;
+                    color: var(--muted);
+                    font-size: 0.7rem;
+                }
+            </style>
+
+        </head>
+        <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+                    <div class="hero">
+                        <div class="badge">FullCycle • System Design • Aula 25</div>
+                        <div class="hero-title">
+                            Pensando Sistemas:<br>
+                            Introdução a <span class="highlight">System Design</span>
+                        </div>
+                        <div class="hero-subtitle">
+                            Arquitetura moderna, escalabilidade, distribuição, trade-offs e pensamento sistêmico.
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>O momento em que o código deixa de ser suficiente</h2>
+
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h3>Quando tudo começa a quebrar</h3>
+                            <ul>
+                                <li class="fragment">Banco sobrecarregado</li>
+                                <li class="fragment">Deploys perigosos</li>
+                                <li class="fragment">Timeouts</li>
+                                <li class="fragment">Fila congestionada</li>
+                                <li class="fragment">Logs caóticos</li>
+                            </ul>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Pergunta central</h3>
+                            <div class="quote">
+                                “Como desenhar software que sobreviva ao crescimento?”
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="notes">
+                        Mostrar arquitetura Netflix/Uber/Spotify.
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>O que é System Design?</h2>
+
+                    <div class="grid-3">
+                        <div class="card fragment">
+                            <h3>Escala</h3>
+                            <p>Como o sistema cresce sem colapsar.</p>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Distribuição</h3>
+                            <p>Como componentes se comunicam.</p>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Evolução</h3>
+                            <p>Como o software continua mudando.</p>
+                        </div>
+                    </div>
+
+                    <div class="quote fragment" style="margin-top:40px;">
+                        Arquitetura não é sobre tecnologia.<br>
+                        É sobre decisões.
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Engenharia vs Arquitetura</h2>
+
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h3>Engenharia de Software</h3>
+                            <ul>
+                                <li class="fragment">Implementação</li>
+                                <li class="fragment">Código</li>
+                                <li class="fragment">Testes</li>
+                                <li class="fragment">Manutenção</li>
+                            </ul>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Arquitetura</h3>
+                            <ul>
+                                <li class="fragment">Escalabilidade</li>
+                                <li class="fragment">Distribuição</li>
+                                <li class="fragment">Resiliência</li>
+                                <li class="fragment">Evolução</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="quote">
+                        “Software ruim quebra no código.<br>
+                        Software grande quebra na arquitetura.”
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Trade-offs</h2>
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Decisão</th>
+                            <th>Ganha</th>
+                            <th>Perde</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="fragment">
+                            <td>Cache</td>
+                            <td>Performance</td>
+                            <td>Consistência</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Microserviços</td>
+                            <td>Escala</td>
+                            <td>Complexidade</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>NoSQL</td>
+                            <td>Distribuição</td>
+                            <td>Joins</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Alta disponibilidade</td>
+                            <td>Resiliência</td>
+                            <td>Custo</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section data-background="#FFF">
+                    <hr>
+                    <h1>O que se dev saber pra dizer que sabe</h1>
+                    <hr>
+                </section>
+
+                <section>
+                    <h2>Monolito vs Microserviços</h2>
+
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h3>Monolito</h3>
+                            <ul>
+                                <li class="fragment">Mais simples</li>
+                                <li class="fragment">Deploy fácil</li>
+                                <li class="fragment">Menos infraestrutura</li>
+                            </ul>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Microserviços</h3>
+                            <ul>
+                                <li class="fragment">Escala independente</li>
+                                <li class="fragment">Autonomia</li>
+                                <li class="fragment">Mais complexidade operacional</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="quote fragment" style="margin-top:40px;">
+                        Muitas empresas quebram tentando resolver problemas que ainda não possuem.
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Escalabilidade</h1>
+                    <p class="muted">O sistema aguenta crescer?</p>
+                </section>
+
+                <section>
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h2>Scale Up</h2>
+                            <p>Mais CPU, RAM, SSD.</p>
+                            <ul>
+                                <li class="fragment">Mais simples</li>
+                                <li class="fragment">Rápido inicialmente</li>
+                                <li class="fragment danger">Possui limite físico</li>
+                            </ul>
+                        </div>
+
+                        <div class="card fragment">
+                            <h2>Scale Out</h2>
+                            <p>Mais máquinas.</p>
+                            <ul>
+                                <li class="fragment">Distribuição</li>
+                                <li class="fragment">Resiliência</li>
+                                <li class="fragment danger">Complexidade distribuída</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Disponibilidade</h2>
+
+                    <div class="pillars">
+                        <div class="pillar fragment">
+                            <div class="big-number">99%</div>
+                            <p>~3.65 dias offline/ano</p>
+                        </div>
+
+                        <div class="pillar fragment">
+                            <div class="big-number">99.9%</div>
+                            <p>~8.7 horas offline/ano</p>
+                        </div>
+
+                        <div class="pillar fragment">
+                            <div class="big-number">99.99%</div>
+                            <p>~52 minutos offline/ano</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Latência vs Throughput</h2>
+
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h3>Latência</h3>
+                            <p>Quanto tempo demora.</p>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Throughput</h3>
+                            <p>Quantas operações consegue processar.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>CAP Theorem</h2>
+
+                    <div class="pillars">
+                        <div class="pillar fragment">
+                            <h3>Consistency</h3>
+                        </div>
+
+                        <div class="pillar fragment">
+                            <h3>Availability</h3>
+                        </div>
+
+                        <div class="pillar fragment">
+                            <h3>Partition Tolerance</h3>
+                        </div>
+                    </div>
+
+                    <div class="quote fragment" style="margin-top:50px;">
+                        Você não consegue maximizar os três ao mesmo tempo.
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Building Blocks</h2>
+
+                    <div class="architecture-flow">
+                        <div class="node fragment">DNS</div>
+                        <div class="arrow fragment">→</div>
+                        <div class="node fragment">Load Balancer</div>
+                        <div class="arrow fragment">→</div>
+                        <div class="node fragment">API Gateway</div>
+                        <div class="arrow fragment">→</div>
+                        <div class="node fragment">Serviços</div>
+                        <div class="arrow fragment">→</div>
+                        <div class="node fragment">Banco</div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Cache</h2>
+
+                    <div class="quote">
+                        “Existem apenas duas coisas difíceis na computação:<br>
+                        invalidar cache e dar nomes.”
+                    </div>
+
+                    <div class="grid-3" style="margin-top:40px;">
+                        <div class="card fragment">
+                            <h3>Browser</h3>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>CDN</h3>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Redis</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Comunicação Assíncrona</h2>
+
+                    <div class="architecture-flow">
+                        <div class="node fragment">Producer</div>
+                        <div class="arrow fragment">→</div>
+                        <div class="node fragment">Broker</div>
+                        <div class="arrow fragment">→</div>
+                        <div class="node fragment">Consumer</div>
+                    </div>
+
+                    <div class="grid-2" style="margin-top:40px;">
+                        <div class="card fragment">
+                            <h3>RabbitMQ</h3>
+                            <p>Filas e jobs.</p>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Kafka</h3>
+                            <p>Streaming e eventos massivos.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Observabilidade</h2>
+
+                    <div class="grid-3">
+                        <div class="card fragment">
+                            <h3>Logs</h3>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Métricas</h3>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Tracing</h3>
+                        </div>
+                    </div>
+
+                    <div class="quote fragment" style="margin-top:50px;">
+                        Sistemas distribuídos sem observabilidade viram caixa-preta.
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Framework de resolução</h2>
+
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h3>1. Requisitos</h3>
+                            <p>Funcionais e não funcionais.</p>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>2. Alto nível</h3>
+                            <p>Componentes principais.</p>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>3. Gargalos</h3>
+                            <p>Banco, rede, concorrência.</p>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>4. Evolução</h3>
+                            <p>Como escalar no futuro.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Estudo de Caso</h2>
+
+                    <div class="section-title">Sistema de Encurtador de URLs</div>
+
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h3>Problemas</h3>
+                            <ul>
+                                <li class="fragment">Milhões de acessos</li>
+                                <li class="fragment">Redirecionamento rápido</li>
+                                <li class="fragment">Analytics</li>
+                            </ul>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Soluções</h3>
+                            <ul>
+                                <li class="fragment">Redis</li>
+                                <li class="fragment">CDN</li>
+                                <li class="fragment">Fila assíncrona</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Exercício em Grupo</h2>
+
+                    <div class="grid-3">
+                        <div class="card fragment">
+                            <h3>Comentários</h3>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Delivery</h3>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Chat realtime</h3>
+                        </div>
+                    </div>
+
+                    <div class="quote fragment" style="margin-top:50px;">
+                        Discutam:
+                        escalabilidade, banco, cache, filas e gargalos.
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Insights de mercado</h2>
+
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h3>Empresas valorizam</h3>
+                            <ul>
+                                <li class="fragment">Pensamento crítico</li>
+                                <li class="fragment">Trade-offs</li>
+                                <li class="fragment">Abstração</li>
+                                <li class="fragment">Comunicação técnica</li>
+                            </ul>
+                        </div>
+
+                        <div class="card fragment">
+                            <h3>Empresas NÃO valorizam tanto</h3>
+                            <ul>
+                                <li class="fragment">Decorar framework</li>
+                                <li class="fragment">Decorar comando</li>
+                                <li class="fragment">Tutorial-copy-paste</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="quote">
+                        “Querer usar arquitetura de Big Tech sem ter problema de Big Tech.”
+                    </div>
+                </section>
+
+                <section>
+                    <div class="hero">
+                        <div class="hero-title">
+                            Programadores escrevem código.<br>
+                            Engenheiros constroem sistemas.<br>
+                            <span class="highlight">Arquitetos constroem evolução.</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+
+        <script>
+            Reveal.initialize({
+                hash: true,
+                slideNumber: true,
+                transition: 'slide',
+                backgroundTransition: 'fade',
+                plugins: [ RevealHighlight ]
+            });
+        </script>
+
+        </body>
+        </html>

@@ -1,0 +1,1329 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+
+    <title>Aula 03 - Testes de APIs e Microserviços</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+    <style>
+        :root {
+            --primary: #00E5FF;
+            --secondary: #00FF88;
+            --danger: #FF5C8A;
+            --warning: #FFD166;
+            --dark: #0A0F1C;
+            --gray: #AAB4C3;
+        }
+
+        body {
+            background: linear-gradient(135deg, #050816 0%, #0d1326 100%);
+        }
+
+        .reveal {
+            font-family: "Inter", "Segoe UI", sans-serif;
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal h1 {
+            font-size: 3.2rem;
+            color: white;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .reveal h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            border-left: 6px solid var(--primary);
+            padding-left: 18px;
+        }
+
+        .reveal h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .reveal p,
+        .reveal li {
+            font-size: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .reveal strong {
+            color: white;
+        }
+
+        .accent {
+            color: var(--primary);
+        }
+
+        .danger {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .success {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .warning {
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .slide-center {
+            text-align: center !important;
+        }
+
+        .big-text {
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .reveal pre {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            font-size: 0.72em;
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(0,229,255,0.12);
+            border: 1px solid rgba(0,229,255,0.4);
+            color: var(--primary);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            border-left: 3px solid var(--primary);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+        }
+
+        .quote {
+            font-size: 1.3rem;
+            color: #dbe7ff;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin-top: 30px;
+        }
+
+        .mini-title {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,255,136,0.08));
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px;
+            border-radius: 14px;
+            margin-top: 20px;
+        }
+
+        .architecture-box {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .service {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .service h4 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            align-self: center;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 0.7rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section class="slide-center">
+            <div class="pill">TESTES</div>
+            <div class="pill">APIs</div>
+            <div class="pill">MICROSSERVIÇOS</div>
+
+            <h1>
+                Testes de APIs<br>
+                e Microserviços
+            </h1>
+
+            <p class="big-text accent">
+                Aula 03 — Testes Automatizados e Resiliência Distribuída
+            </p>
+
+            <div class="card">
+                <p>
+                    Como garantir qualidade em sistemas distribuídos,
+                    desacoplados e com múltiplas integrações?
+                </p>
+            </div>
+
+            <div class="footer">
+                Full Cycle • Qualidade • DevOps • CI/CD
+            </div>
+        </section>
+
+        <section>
+            <h2>Recapitulando</h2>
+
+            <div class="two-columns">
+
+                <div class="card fragment">
+                    <div class="mini-title">Já vimos</div>
+
+                    <ul>
+                        <li class="fragment">Pirâmide de testes</li>
+                        <li class="fragment">Testes E2E</li>
+                        <li class="fragment">Cypress</li>
+                        <li class="fragment">Fluxo real do usuário</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <div class="mini-title">Hoje</div>
+
+                    <ul>
+                        <li class="fragment">Testes unitários</li>
+                        <li class="fragment">Testes de APIs REST</li>
+                        <li class="fragment">Testes de microserviços</li>
+                        <li class="fragment">Mocks e stubs</li>
+                        <li class="fragment">Testes de contrato</li>
+                        <li class="fragment">Integração com CI/CD</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="quote fragment">
+                “O maior problema de sistemas distribuídos não é código.<br>
+                É comunicação.”
+            </div>
+        </section>
+
+        <section>
+            <h2>Antes de continuar...</h2>
+
+            <div class="card">
+                <p class="big-text">
+                    Ainda não vimos <span class="accent">Testes Unitários</span>.
+                </p>
+
+                <p class="fragment">
+                    Então vamos entender rapidamente onde eles entram
+                    antes de avançar ainda mais em APIs e microserviços.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O que é um Teste Unitário?</h2>
+
+            <div class="highlight-box">
+                <p class="fragment big-text">
+                    Um teste unitário valida uma <strong>pequena unidade</strong> do sistema
+                    de forma isolada.
+                </p>
+            </div>
+
+            <ul style="margin-top: 25px;">
+                <li class="fragment">Uma função</li>
+                <li class="fragment">Um método</li>
+                <li class="fragment">Uma regra de negócio</li>
+                <li class="fragment">Uma classe</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Objetivo Principal</h2>
+
+            <div class="quote">
+                Garantir que a regra de negócio funcione corretamente
+                sem depender do resto do sistema.
+            </div>
+
+            <div class="two-columns" style="margin-top: 30px;">
+
+                <div class="card fragment">
+                    <h3>Não depende de</h3>
+
+                    <ul>
+                        <li>Banco</li>
+                        <li>Internet</li>
+                        <li>API externa</li>
+                        <li>Frontend</li>
+                        <li>Docker</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Normalmente testa</h3>
+
+                    <ul>
+                        <li>Cálculos</li>
+                        <li>Validações</li>
+                        <li>Transformações</li>
+                        <li>Fluxos internos</li>
+                        <li>Regras de negócio</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo sem teste</h2>
+
+            <pre><code class="javascript" data-trim>
+function calcularDesconto(valor, percentual) {
+    if (percentual > 50) {
+        throw new Error('Desconto inválido');
+    }
+
+    return valor - (valor * percentual / 100);
+}
+</code></pre>
+
+            <div class="highlight-box fragment">
+                <p>
+                    Como garantir que essa regra nunca vai quebrar?
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Agora com Teste Unitário</h2>
+
+            <pre><code class="javascript" data-trim>
+describe('calcularDesconto', () => {
+  it('deve aplicar desconto corretamente', () => {
+     const resultado = calcularDesconto(100, 10);
+
+     expect(resultado).toBe(90);
+  });
+});
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Testando Cenários de Erro</h2>
+
+            <pre><code class="javascript" data-trim>
+describe('calcularDesconto', () => {
+    it('deve lançar erro para desconto inválido', () => {
+        expect(() => {
+            calcularDesconto(100, 80);
+        }).toThrow('Desconto inválido');
+    });
+});
+</code></pre>
+
+            <div class="card fragment">
+                <p>
+                    Bons testes validam:
+                </p>
+
+                <ul>
+                    <li class="fragment">Cenário feliz</li>
+                    <li class="fragment">Cenário de erro</li>
+                    <li class="fragment">Casos extremos</li>
+                </ul>
+            </div>
+        </section>
+
+        <section data-background="#FFF" style="font-size: 5rem;">
+            <p>O teste não garante não ter bugs</p>
+            <small class="fragment">Garante que eles foram encontrados</small>
+        </section>
+
+        <section>
+            <h2>Por que Testes Unitários são importantes?</h2>
+
+            <ul>
+                <li class="fragment">
+                    Detectam bugs rapidamente
+                </li>
+
+                <li class="fragment">
+                    Ajudam no refactor
+                </li>
+
+                <li class="fragment">
+                    Dão confiança para alterar código
+                </li>
+
+                <li class="fragment">
+                    Melhoram arquitetura
+                </li>
+
+                <li class="fragment">
+                    Servem como documentação viva
+                </li>
+            </ul>
+
+            <div class="quote fragment">
+                Código sem teste normalmente fica “frágil”.
+            </div>
+        </section>
+
+        <section>
+            <h2>Problema comum</h2>
+
+            <div class="card fragment">
+                <h3>Funções gigantes</h3>
+
+                <pre><code class="javascript" data-trim>
+async function finalizarCompra() {
+
+    // consulta banco
+    // chama gateway
+    // envia email
+    // atualiza estoque
+    // gera nota fiscal
+    // envia webhook
+}
+</code></pre>
+
+            </div>
+
+            <div class="highlight-box fragment">
+                <p class="danger">
+                    Quanto mais acoplado o código, mais difícil testar.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Código mais testável</h2>
+
+            <pre><code class="javascript" data-trim>
+function calcularFrete(peso) {
+
+    if (peso <= 1) {
+        return 10;
+    }
+
+    return 20;
+}
+</code></pre>
+
+            <div class="card fragment">
+                <p>
+                    Funções pequenas e previsíveis são:
+                </p>
+
+                <ul>
+                    <li class="fragment">Mais fáceis de testar</li>
+                    <li class="fragment">Mais fáceis de manter</li>
+                    <li class="fragment">Mais fáceis de entender</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Unitário vs API vs E2E</h2>
+
+            <div class="two-columns">
+
+                <div class="card fragment">
+                    <h3>Unitário</h3>
+
+                    <ul>
+                        <li>Mais rápido</li>
+                        <li>Mais isolado</li>
+                        <li>Mais barato</li>
+                        <li>Foco em regra</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>API / E2E</h3>
+
+                    <ul>
+                        <li>Mais próximo da realidade</li>
+                        <li>Mais lento</li>
+                        <li>Mais caro</li>
+                        <li>Foco em integração</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Stack comum em Node.js</h2>
+
+            <div class="card">
+                <div class="pill">Jest</div>
+                <div class="pill">Vitest</div>
+                <div class="pill">Mocha</div>
+                <div class="pill">Chai</div>
+            </div>
+
+            <pre><code class="bash" data-trim>
+npm install jest --save-dev
+</code></pre>
+
+            <pre><code class="json" data-trim>
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Resumo</h2>
+
+            <div class="highlight-box">
+
+                <ul>
+                    <li class="fragment">
+                        Teste unitário valida pequenas partes do sistema
+                    </li>
+
+                    <li class="fragment">
+                        Deve ser rápido e isolado
+                    </li>
+
+                    <li class="fragment">
+                        Ajuda a evoluir o sistema com segurança
+                    </li>
+
+                    <li class="fragment">
+                        É a base da qualidade de software
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="quote fragment">
+                Testes não existem para provar que o sistema funciona.<br>
+                Eles existem para detectar quando ele quebra.
+            </div>
+        </section>
+
+        <section>
+            <h2>Testes de Integração</h2>
+
+            <div class="card">
+                <p class="big-text">
+                    Validam se diferentes partes do sistema
+                    funcionam corretamente juntas.
+                </p>
+            </div>
+
+            <div class="highlight-box fragment">
+                <p>
+                    Aqui começamos a sair do isolamento puro.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O que um teste de integração valida?</h2>
+
+            <ul>
+                <li class="fragment">Controller + Service</li>
+                <li class="fragment">Service + Banco</li>
+                <li class="fragment">API + ORM</li>
+                <li class="fragment">Fila + Worker</li>
+                <li class="fragment">Microserviço + Mensageria</li>
+            </ul>
+
+            <div class="quote fragment">
+                O foco deixa de ser “uma função” e passa a ser
+                “a comunicação entre módulos”.
+            </div>
+        </section>
+
+        <section>
+            <h2>Fluxo comum</h2>
+
+            <div class="architecture-box">
+
+                <div class="service fragment">
+                    <h4>Request HTTP</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Controller</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Service</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Banco/API</h4>
+                </div>
+
+            </div>
+
+            <div class="highlight-box fragment">
+                <p>
+                    O teste verifica se essas peças se conversam corretamente.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Diferença Principal</h2>
+
+            <div class="two-columns">
+
+                <div class="card fragment">
+                    <h3>Teste Unitário</h3>
+
+                    <ul>
+                        <li>Isolado</li>
+                        <li>Sem banco</li>
+                        <li>Sem API</li>
+                        <li>Muito rápido</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Teste de Integração</h3>
+
+                    <ul>
+                        <li>Integra componentes</li>
+                        <li>Pode acessar banco</li>
+                        <li>Pode subir servidor</li>
+                        <li>Mais próximo da realidade</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo de Cenário</h2>
+
+            <div class="card">
+
+                <p class="fragment">
+                    Um usuário faz cadastro:
+                </p>
+
+                <ol>
+                    <li class="fragment">Request chega na API</li>
+                    <li class="fragment">Controller recebe dados</li>
+                    <li class="fragment">Service valida</li>
+                    <li class="fragment">ORM salva no banco</li>
+                    <li class="fragment">API retorna resposta</li>
+                </ol>
+
+            </div>
+
+            <div class="highlight-box fragment">
+                <p>
+                    O teste de integração valida esse fluxo.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo com Supertest</h2>
+
+            <pre><code class="javascript" data-trim>
+const request = require('supertest');
+const app = require('./app');
+
+describe('POST /usuarios', () => {
+
+    it('deve criar usuário', async () => {
+
+        const response = await request(app)
+            .post('/usuarios')
+            .send({
+                nome: 'Alessandro',
+                email: 'teste@email.com'
+            });
+
+        expect(response.statusCode)
+            .toBe(201);
+
+    });
+
+});
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>O que está sendo testado aqui?</h2>
+
+            <ul>
+                <li class="fragment">Rota HTTP</li>
+                <li class="fragment">Controller</li>
+                <li class="fragment">Validações</li>
+                <li class="fragment">Integração com service</li>
+                <li class="fragment">Resposta da API</li>
+            </ul>
+
+            <div class="quote fragment">
+                Já é muito mais próximo do comportamento real do sistema.
+            </div>
+        </section>
+
+        <section>
+            <h2>Banco real ou fake?</h2>
+
+            <div class="two-columns">
+
+                <div class="card fragment">
+                    <h3>Banco Fake</h3>
+
+                    <ul>
+                        <li>Mais rápido</li>
+                        <li>Mais simples</li>
+                        <li>Menos realista</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Banco Real</h3>
+
+                    <ul>
+                        <li>Mais confiável</li>
+                        <li>Mais lento</li>
+                        <li>Mais próximo da produção</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="highlight-box fragment">
+                <p class="warning">
+                    Muitos times usam SQLite em memória nos testes.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Problema comum</h2>
+
+            <div class="card">
+
+<pre><code class="javascript" data-trim>
+it('deve cadastrar usuário', async () => {
+
+    // depende da internet
+    // depende do banco
+    // depende da API externa
+    // depende do Redis
+    // depende do RabbitMQ
+
+});
+</code></pre>
+
+            </div>
+
+            <div class="highlight-box fragment">
+                <p class="danger">
+                    Testes lentos e frágeis quebram pipelines.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Integração em Microserviços</h2>
+
+            <div class="architecture-box">
+
+                <div class="service fragment">
+                    <h4>API Gateway</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Auth Service</h4>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Payment Service</h4>
+                </div>
+
+            </div>
+
+            <div class="card fragment">
+                <ul>
+                    <li>Timeouts</li>
+                    <li>Falhas de rede</li>
+                    <li>Payload inválido</li>
+                    <li>Mensagens inconsistentes</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas práticas</h2>
+
+            <ul>
+                <li class="fragment">
+                    Testes devem ser independentes
+                </li>
+
+                <li class="fragment">
+                    Evite depender de internet
+                </li>
+
+                <li class="fragment">
+                    Use massa de dados previsível
+                </li>
+
+                <li class="fragment">
+                    Limpe banco após cada teste
+                </li>
+
+                <li class="fragment">
+                    Não teste tudo via E2E
+                </li>
+
+                <li class="fragment">
+                    Integração ≠ produção completa
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Resumo</h2>
+
+            <div class="highlight-box">
+
+                <ul>
+                    <li class="fragment">
+                        Testes de integração validam comunicação entre módulos
+                    </li>
+
+                    <li class="fragment">
+                        São mais realistas que unitários
+                    </li>
+
+                    <li class="fragment">
+                        São mais rápidos que E2E
+                    </li>
+
+                    <li class="fragment">
+                        São essenciais para APIs e microserviços
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="quote fragment">
+                Em sistemas distribuídos, integração é onde muitos bugs nascem.
+            </div>
+        </section>
+
+        <section>
+            <hr>
+            <h1>Próximo nivel</h1>
+            <hr>
+        </section>
+
+        <section>
+            <h2>O Problema dos Microserviços</h2>
+
+            <div class="architecture-box">
+
+                <div class="service fragment">
+                    <h4>Serviço A</h4>
+                    <p>Usuários</p>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Serviço B</h4>
+                    <p>Pagamentos</p>
+                </div>
+
+                <div class="arrow fragment">→</div>
+
+                <div class="service fragment">
+                    <h4>Serviço C</h4>
+                    <p>Notificações</p>
+                </div>
+
+            </div>
+
+            <div class="highlight-box fragment">
+                <ul>
+                    <li class="fragment">Mais serviços = mais pontos de falha</li>
+                    <li class="fragment">A rede agora faz parte do sistema</li>
+                    <li class="fragment">Timeouts, retry e latência entram no jogo</li>
+                    <li class="fragment">Um deploy pode quebrar outro time</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Onde os testes entram?</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    <h3>Teste Unitário</h3>
+                    <p>Valida regras de negócio isoladas.</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>Teste de API</h3>
+                    <p>Valida contratos HTTP, payloads e respostas.</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>Teste E2E</h3>
+                    <p>Valida o fluxo completo do usuário.</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>Teste de Contrato</h3>
+                    <p>Garante compatibilidade entre serviços independentes.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Honeycomb Testing</h2>
+
+            <div class="card">
+                <p class="big-text">
+                    Em microserviços, o maior valor normalmente está nos
+                    <span class="accent">testes de integração e API</span>.
+                </p>
+            </div>
+
+            <ul style="margin-top: 30px;">
+                <li class="fragment">Precisamos validar fronteiras</li>
+                <li class="fragment">Precisamos validar contratos</li>
+                <li class="fragment">Precisamos validar comunicação HTTP/gRPC</li>
+                <li class="fragment">Precisamos validar comportamento distribuído</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Problema Real do CI/CD</h2>
+
+            <div class="card fragment">
+                <h3>Imagine isso:</h3>
+
+                <ul>
+                    <li class="fragment">Banco de dados</li>
+                    <li class="fragment">RabbitMQ</li>
+                    <li class="fragment">Redis</li>
+                    <li class="fragment">API de pagamentos</li>
+                    <li class="fragment">API de autenticação</li>
+                    <li class="fragment">API de terceiros</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box fragment">
+                <p class="danger">
+                    Subir tudo isso em cada pipeline é lento, caro e instável.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Mocks vs Stubs</h2>
+
+            <div class="two-columns">
+
+                <div class="card fragment">
+                    <h3>Stub</h3>
+
+                    <p>
+                        Retorna uma resposta fixa e previsível.
+                    </p>
+
+                    <pre><code class="javascript" data-trim>
+axios.get.mockResolvedValue({
+  data: {
+    nome: 'Alessandro'
+  }
+});
+            </code></pre>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Mock</h3>
+
+                    <p>
+                        Além de responder, também valida comportamento.
+                    </p>
+
+                    <pre><code class="javascript" data-trim>
+expect(axios.get)
+  .toHaveBeenCalledTimes(1);
+            </code></pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo de API</h2>
+
+            <pre><code class="javascript" data-trim>
+const express = require('express');
+const axios = require('axios');
+
+const app = express();
+
+app.get('/usuario/:id', async (req, res) => {
+
+  try {
+
+    const resposta = await axios.get(
+      `https://api.github.com/users/${req.params.id}`
+    );
+
+    return res.json({
+      nome: resposta.data.name,
+      bio: resposta.data.bio
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+      erro: 'Falha externa'
+    });
+
+  }
+
+});
+
+module.exports = app;
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Testando sem acessar API real</h2>
+
+            <pre><code class="javascript" data-trim>
+const request = require('supertest');
+const axios = require('axios');
+
+const app = require('./app');
+
+jest.mock('axios');
+
+describe('GET /usuario/:id', () => {
+
+  it('deve retornar usuário formatado', async () => {
+
+    axios.get.mockResolvedValue({
+      data: {
+        name: 'Linus',
+        bio: 'Linux creator'
+      }
+    });
+
+    const response = await request(app)
+      .get('/usuario/1');
+
+    expect(response.statusCode)
+      .toBe(200);
+
+    expect(response.body)
+      .toEqual({
+        nome: 'Linus',
+        bio: 'Linux creator'
+      });
+
+  });
+
+});
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>O que estamos validando?</h2>
+
+            <ul>
+                <li class="fragment">Status HTTP</li>
+                <li class="fragment">Formato do payload</li>
+                <li class="fragment">Mapeamento de dados</li>
+                <li class="fragment">Tratamento de erro</li>
+                <li class="fragment">Integração entre camadas</li>
+            </ul>
+
+            <div class="highlight-box fragment">
+                <p class="success">
+                    Tudo isso sem depender da internet.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Testando Cenários de Erro</h2>
+
+            <pre><code class="javascript" data-trim>
+it('deve retornar erro quando API externa falhar', async () => {
+
+  axios.get.mockRejectedValue(
+    new Error('timeout')
+  );
+
+  const response = await request(app)
+    .get('/usuario/1');
+
+  expect(response.statusCode)
+    .toBe(500);
+
+  expect(response.body)
+    .toEqual({
+      erro: 'Falha externa'
+    });
+
+});
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Testes de Contrato</h2>
+
+            <div class="two-columns">
+
+                <div class="card fragment">
+                    <h3>Consumer</h3>
+
+                    <ul>
+                        <li class="fragment">Define expectativas</li>
+                        <li class="fragment">Payload esperado</li>
+                        <li class="fragment">Status esperado</li>
+                        <li class="fragment">Headers esperados</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Provider</h3>
+
+                    <ul>
+                        <li class="fragment">Valida compatibilidade</li>
+                        <li class="fragment">Garante não quebrar contratos</li>
+                        <li class="fragment">Protege deploys</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="quote fragment">
+                Times conseguem evoluir APIs sem precisar subir tudo junto.
+            </div>
+        </section>
+
+        <section>
+            <h2>Pact e Consumer Driven Contract</h2>
+
+            <pre><code class="bash" data-trim>
+npm install @pact-foundation/pact --save-dev
+</code></pre>
+
+            <div class="card fragment">
+                <ul>
+                    <li class="fragment">O consumidor gera um contrato</li>
+                    <li class="fragment">O provider valida esse contrato</li>
+                    <li class="fragment">Evita que mudanças silenciosas quebrem produção</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Pipeline Ideal</h2>
+
+            <pre><code class="yaml" data-trim>
+name: ci
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+
+      - run: npm install
+
+      - run: npm test
+</code></pre>
+
+            <div class="highlight-box fragment">
+                <p>
+                    Todo push executa testes automaticamente.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Boas Práticas</h2>
+
+            <ul>
+                <li class="fragment">Não dependa de internet no CI</li>
+                <li class="fragment">Teste cenários felizes e de erro</li>
+                <li class="fragment">Evite mocks excessivos</li>
+                <li class="fragment">Use dados previsíveis</li>
+                <li class="fragment">Mantenha testes rápidos</li>
+                <li class="fragment">Não misture E2E com teste de API</li>
+                <li class="fragment">Teste contratos críticos</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Exercício da Aula</h2>
+
+            <div class="card">
+                <ol>
+                    <li class="fragment">
+                        Criar uma API simples com Express
+                    </li>
+
+                    <li class="fragment">
+                        Consumir uma API externa
+                    </li>
+
+                    <li class="fragment">
+                        Criar testes com Supertest
+                    </li>
+
+                    <li class="fragment">
+                        Mockar chamadas externas com Jest
+                    </li>
+
+                    <li class="fragment">
+                        Criar cenários de erro
+                    </li>
+                </ol>
+            </div>
+
+        </section>
+
+        <section class="slide-center">
+
+            <h1>Próxima Aula</h1>
+
+            <p class="big-text accent">
+                Observabilidade, Logs e Tracing
+            </p>
+
+            <div class="card">
+                <p>
+                    Como debugar sistemas distribuídos sem enlouquecer.
+                </p>
+            </div>
+
+        </section>
+
+    </div>
+</div>
+<script src="../../../dist/reveal.js"></script>
+<script src="../../../plugin/notes/notes.js"></script>
+<script src="../../../plugin/markdown/markdown.js"></script>
+<script src="../../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        backgroundTransition: 'fade',
+
+        plugins: [
+            RevealHighlight,
+            RevealNotes
+        ]
+    });
+</script>
+
+</body>
+</html>
