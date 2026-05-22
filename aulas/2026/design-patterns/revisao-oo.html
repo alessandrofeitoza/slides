@@ -1,11 +1,11 @@
-```html
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ARA-0110 - GRASP</title>
+    <title>Revisão SM2</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/dracula.css">
@@ -159,7 +159,7 @@ const total = produtos
         <section>
             <h2>Comparando Paradigmas</h2>
 
-            <table>
+            <table style="font-size: 2rem">
                 <thead>
                 <tr>
                     <th>Paradigma</th>
@@ -190,23 +190,43 @@ const total = produtos
             </table>
         </section>
 
-        <section>
+        <section data-auto-animate>
+            <h2>Pilar: Encapsulamento</h2>
+
+            <pre class="fragment"><code class="language-php">
+class Conta {
+  private float $saldo = 0;
+
+  public function setSaldo(float $valor): void
+  {
+    $this->saldo = $valor;
+  }
+
+  public function getSaldo(): float
+  {
+    return $this->saldo;
+  }
+}
+  </code></pre>
+        </section>        <section data-auto-animate>
             <h2>Pilar: Encapsulamento</h2>
 
             <pre class="fragment"><code class="language-javascript">
 class Conta {
-  #saldo = 0;
+  private float $saldo = 0;
 
-  depositar(valor) {
-    if (valor <= 0) {
-      throw new Error('Valor inválido');
+  public function depositar(float $valor): void
+  {
+    if ($valor <= 0) {
+      throw new Exception('Valor inválido');
     }
 
-    this.#saldo += valor;
+    $this->saldo += $valor;
   }
 
-  obterSaldo() {
-    return this.#saldo;
+  public function obterSaldo(): float
+  {
+    return $this->saldo;
   }
 }
   </code></pre>
@@ -353,6 +373,10 @@ class UsuarioController
   </code></pre>
         </section>
 
+
+        <section data-background-size="80%" data-background="../../2025/img/padroes/mvc.webp"></section>
+
+
         <section>
             <h2>Repository Pattern</h2>
 
@@ -379,260 +403,421 @@ interface UsuarioRepository
         </section>
 
         <section>
-            <h2>GRASP</h2>
-
-            <p class="fragment">
-                General Responsibility Assignment Software Patterns
-            </p>
+            <h1>REVISÃO</h1>
         </section>
 
         <section>
-            <h2>Padrões GRASP</h2>
+            <h2>Questão — MVC</h2>
 
-            <ol>
-                <li class="fragment">Information Expert</li>
-                <li class="fragment">Creator</li>
-                <li class="fragment">Controller</li>
-                <li class="fragment">Low Coupling</li>
-                <li class="fragment">High Cohesion</li>
-                <li class="fragment">Polymorphism</li>
-                <li class="fragment">Pure Fabrication</li>
-                <li class="fragment">Indirection</li>
-                <li class="fragment">Protected Variations</li>
-            </ol>
+            <div class="box small">
+                <p>
+                    Na arquitetura MVC, qual componente é responsável
+                    por representar os dados e regras de negócio?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) View</li>
+                    <li class="fragment">B) Servlet</li>
+                    <li class="fragment">C) Controller</li>
+                    <li class="fragment">D) Model</li>
+                    <li class="fragment">E) Front Controller</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> D) Model
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Information Expert</h2>
+            <h2>Questão — Pilares OO</h2>
 
-            <blockquote class="fragment">
-                “A responsabilidade deve ficar com quem possui a informação.”
-            </blockquote>
+            <div class="box small">
+                <p>
+                    Assinale a alternativa que representa corretamente
+                    os pilares da orientação a objetos:
+                </p>
 
-            <pre class="fragment"><code class="language-javascript">
-class Pedido {
-  constructor(itens) {
-    this.itens = itens;
-  }
+                <ul>
+                    <li class="fragment">
+                        A) Herança, Polimorfismo,
+                        Encapsulamento e Modularização
+                    </li>
 
-  calcularTotal() {
-    return this.itens.reduce((t, item) => {
-      return t + item.preco;
-    }, 0);
-  }
-}
-  </code></pre>
+                    <li class="fragment">
+                        B) Abstração, Herança,
+                        Polimorfismo e Encapsulamento
+                    </li>
+
+                    <li class="fragment">
+                        C) Classes, Objetos,
+                        Métodos e Atributos
+                    </li>
+
+                    <li class="fragment">
+                        D) Acoplamento, Coesão,
+                        Herança e Polimorfismo
+                    </li>
+
+                    <li class="fragment">
+                        E) Interfaces, Classes,
+                        Objetos e Pacotes
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                B) Abstração, Herança, Polimorfismo e Encapsulamento
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Creator</h2>
+            <h2>Questão — Controller</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class Pedido {
-  constructor() {
-    this.itens = [];
-  }
+            <div class="box small">
+                <p>
+                    Em um sistema de e-commerce,
+                    existe uma classe ControladorPedido
+                    responsável por receber requisições
+                    de abertura, cancelamento e finalização.
+                </p>
 
-  adicionarProduto(nome, preco) {
-    const item = new ItemPedido(nome, preco);
+                <p>
+                    Segundo o GRASP, qual padrão está sendo aplicado?
+                </p>
 
-    this.itens.push(item);
-  }
-}
-  </code></pre>
+                <ul>
+                    <li class="fragment">A) Polimorfismo</li>
+                    <li class="fragment">B) Indireção</li>
+                    <li class="fragment">C) Fabrication</li>
+                    <li class="fragment">D) Controlador</li>
+                    <li class="fragment">E) Especialista</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> D) Controlador
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Controller</h2>
+            <h2>Questão — Baixo Acoplamento</h2>
 
-            <pre class="fragment"><code class="language-php">
-class PedidoController
-{
-    public function finalizar(Request $request)
-    {
-        $pedidoService = new PedidoService();
+            <div class="box small">
+                <p>
+                    Qual alternativa representa corretamente
+                    o princípio de baixo acoplamento?
+                </p>
 
-        $pedidoService->finalizar($request->all());
+                <ul>
+                    <li class="fragment">
+                        A) Classes devem possuir o maior número possível de dependências
+                    </li>
 
-        return response()->json([
-            'success' => true
-        ]);
-    }
-}
-  </code></pre>
+                    <li class="fragment">
+                        B) Objetos devem conhecer detalhadamente outros objetos
+                    </li>
+
+                    <li class="fragment">
+                        C) O sistema deve minimizar dependências excessivas
+                    </li>
+
+                    <li class="fragment">
+                        D) Toda lógica deve ficar em uma única classe
+                    </li>
+
+                    <li class="fragment">
+                        E) Métodos devem ter múltiplas responsabilidades
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                C) O sistema deve minimizar dependências excessivas
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Low Coupling</h2>
+            <h2>Questão — Encapsulamento</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class AuthService {
-  constructor(repository) {
-    this.repository = repository;
-  }
-}
-  </code></pre>
+            <div class="box small">
+                <p>
+                    Sobre orientação a objetos:
+                </p>
+
+                <ol>
+                    <li class="fragment">
+                        Objetos representam entidades
+                        com estado e comportamento
+                    </li>
+
+                    <li class="fragment">
+                        Classes são instâncias de objetos
+                    </li>
+
+                    <li class="fragment">
+                        Encapsulamento permite esconder
+                        detalhes internos
+                    </li>
+                </ol>
+
+                <p class="fragment">
+                    Assinale a alternativa correta:
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Apenas 1</li>
+                    <li class="fragment">B) Apenas 2</li>
+                    <li class="fragment">C) Apenas 1 e 3</li>
+                    <li class="fragment">D) Apenas 2 e 3</li>
+                    <li class="fragment">E) Todas</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Apenas 1 e 3
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — High Cohesion</h2>
+            <h2>Questão — Alta Coesão</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class EmailService {
-  enviar(destinatario, mensagem) {
-    console.log('Enviando email');
-  }
-}
-  </code></pre>
+            <div class="box small">
+                <p>
+                    Sobre alta coesão:
+                </p>
+
+                <ol>
+                    <li class="fragment">
+                        Classes devem possuir responsabilidades relacionadas
+                    </li>
+
+                    <li class="fragment">
+                        Classes coesas tendem a ser mais reutilizáveis
+                    </li>
+
+                    <li class="fragment">
+                        Uma única classe deve centralizar tudo
+                    </li>
+                </ol>
+
+                <ul>
+                    <li class="fragment">A) Apenas 1</li>
+                    <li class="fragment">B) Apenas 2</li>
+                    <li class="fragment">C) Apenas 1 e 2</li>
+                    <li class="fragment">D) Apenas 3</li>
+                    <li class="fragment">E) Todas</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Apenas 1 e 2
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Polymorphism</h2>
+            <h2>Questão — Chain of Responsibility</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class Frete {
-  calcular() {}
-}
+            <div class="box small">
+                <p>
+                    Supervisor aprova até R$ 1.000,
+                    gerente até R$ 5.000 e diretor
+                    valores acima disso.
+                </p>
 
-class Sedex extends Frete {
-  calcular() {
-    return 50;
-  }
-}
+                <p>
+                    Cada nível pode encaminhar a solicitação
+                    para o próximo.
+                </p>
 
-class PAC extends Frete {
-  calcular() {
-    return 20;
-  }
-}
-  </code></pre>
+                <p>
+                    Qual padrão resolve esse problema?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Strategy</li>
+                    <li class="fragment">B) Mediator</li>
+                    <li class="fragment">C) Chain of Responsibility</li>
+                    <li class="fragment">D) State</li>
+                    <li class="fragment">E) Command</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                C) Chain of Responsibility
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Pure Fabrication</h2>
+            <h2>Questão — Observer</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class Logger {
-  info(message) {
-    console.log(message);
-  }
-}
-  </code></pre>
+            <div class="box small">
+                <p>
+                    Um sistema da bolsa precisa atualizar
+                    simultaneamente gráficos e informações textuais.
+                </p>
+
+                <p>
+                    Qual padrão é mais apropriado?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Strategy</li>
+                    <li class="fragment">B) State</li>
+                    <li class="fragment">C) Iterator</li>
+                    <li class="fragment">D) Observer</li>
+                    <li class="fragment">E) Mediator</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> D) Observer
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Indirection</h2>
+            <h2>Questão — Overengineering</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class PaymentGateway {
-  pagar(valor) {}
-}
+            <div class="box small">
+                <p>
+                    Um desenvolvedor aplicou muitos patterns
+                    em um sistema simples.
+                </p>
 
-class StripeGateway extends PaymentGateway {
-  pagar(valor) {
-    console.log('Pagamento Stripe');
-  }
-}
-  </code></pre>
+                <p>
+                    O projeto ficou complexo e difícil de manter.
+                </p>
+
+                <p>
+                    Qual o problema?
+                </p>
+
+                <ul>
+                    <li class="fragment">
+                        A) Patterns só funcionam em legado
+                    </li>
+
+                    <li class="fragment">
+                        B) Uso inadequado gera complexidade desnecessária
+                    </li>
+
+                    <li class="fragment">
+                        C) Todo pattern aumenta complexidade
+                    </li>
+
+                    <li class="fragment">
+                        D) Patterns não funcionam com OO
+                    </li>
+
+                    <li class="fragment">
+                        E) Nenhuma das alternativas
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                B) Uso inadequado gera complexidade desnecessária
+            </div>
         </section>
 
         <section>
-            <h2>GRASP — Protected Variations</h2>
+            <h2>Questão — Information Expert</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class EmailProvider {
-  enviar() {}
-}
+            <div class="box small">
+                <p>
+                    Em um sistema de vendas, a classe Pedido
+                    possui uma lista de ItemPedido.
+                </p>
 
-class GmailProvider extends EmailProvider {}
-class OutlookProvider extends EmailProvider {}
-  </code></pre>
+                <p>
+                    Onde deve ficar o método calcularTotal()?
+                </p>
+
+                <ul>
+                    <li class="fragment">
+                        A) Produto
+                    </li>
+
+                    <li class="fragment">
+                        B) ItemPedido
+                    </li>
+
+                    <li class="fragment">
+                        C) Pedido
+                    </li>
+
+                    <li class="fragment">
+                        D) CalculadoraDePedido
+                    </li>
+
+                    <li class="fragment">
+                        E) Cliente
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> C) Pedido
+            </div>
         </section>
 
         <section>
-            <h2>GRASP + SOLID</h2>
+            <h2>Questão — Iterator</h2>
 
-            <ul>
-                <li class="fragment">Baixo acoplamento ajuda no DIP</li>
-                <li class="fragment">Alta coesão ajuda no SRP</li>
-                <li class="fragment">Polimorfismo ajuda no OCP</li>
-                <li class="fragment">Protected Variations protege arquitetura</li>
-            </ul>
+            <div class="box small">
+                <p>
+                    Qual padrão permite percorrer uma coleção
+                    sem conhecer sua estrutura interna?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Observer</li>
+                    <li class="fragment">B) Mediator</li>
+                    <li class="fragment">C) Template Method</li>
+                    <li class="fragment">D) Command</li>
+                    <li class="fragment">E) Iterator</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> E) Iterator
+            </div>
         </section>
 
         <section>
-            <h2>Exemplo Real Completo</h2>
+            <h2>Questão — EntityManager</h2>
 
-            <pre class="fragment"><code class="language-javascript">
-class PedidoController {
-  constructor(service) {
-    this.service = service;
-  }
+            <div class="box small">
+                <p>
+                    Qual a principal responsabilidade
+                    do EntityManager na JPA?
+                </p>
 
-  finalizar(req) {
-    return this.service.finalizar(req.body);
-  }
-}
+                <ul>
+                    <li class="fragment">A) Gerenciar HTTP</li>
+                    <li class="fragment">B) Renderizar JSP</li>
+                    <li class="fragment">
+                        C) Controlar persistência das entidades
+                    </li>
+                    <li class="fragment">D) Compilar Java</li>
+                    <li class="fragment">E) Gerenciar Docker</li>
+                </ul>
+            </div>
 
-class PedidoService {
-  constructor(repository, gateway) {
-    this.repository = repository;
-    this.gateway = gateway;
-  }
-
-  finalizar(data) {
-    const pedido = new Pedido(data.itens);
-
-    this.gateway.pagar(pedido.total());
-
-    this.repository.salvar(pedido);
-  }
-}
-  </code></pre>
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                C) Controlar persistência das entidades
+            </div>
         </section>
 
         <section>
-            <h2>Exercício</h2>
-
-            <p class="fragment">
-                Refatore o código abaixo usando GRASP.
-            </p>
-
-            <pre class="fragment"><code class="language-javascript">
-class Sistema {
-  salvarUsuario() {}
-  enviarEmail() {}
-  calcularFrete() {}
-  gerarPdf() {}
-  autenticar() {}
-}
-  </code></pre>
-        </section>
-
-        <section>
-            <h2>Debate</h2>
-
-            <ul>
-                <li class="fragment">GRASP ainda é relevante?</li>
-                <li class="fragment">Frameworks escondem responsabilidades?</li>
-                <li class="fragment">Repository ainda faz sentido?</li>
-                <li class="fragment">Como aplicar GRASP no frontend?</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Encerramento</h2>
-
-            <ul>
-                <li class="fragment">Paradigmas ajudam a pensar software</li>
-                <li class="fragment">OO depende de boas responsabilidades</li>
-                <li class="fragment">GRASP melhora arquitetura</li>
-                <li class="fragment">Código limpo nasce de boas decisões</li>
-            </ul>
-
-            <h3 class="fragment">
-                “Arquitetura boa reduz sofrimento futuro.”
-            </h3>
+            <hr>
+            <h1>Pronto</h1>
+            <hr>
         </section>
 
     </div>
@@ -651,4 +836,4 @@ class Sistema {
 
 </body>
 </html>
-```
+

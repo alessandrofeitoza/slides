@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+
+    <title>Aula 03 - Testes de APIs e Microserviços</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+    <style>
+        :root {
+            --primary: #00E5FF;
+            --secondary: #00FF88;
+            --danger: #FF5C8A;
+            --warning: #FFD166;
+            --dark: #0A0F1C;
+            --gray: #AAB4C3;
+        }
+
+        body {
+            background: linear-gradient(135deg, #050816 0%, #0d1326 100%);
+        }
+
+        .reveal {
+            font-family: "Inter", "Segoe UI", sans-serif;
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal h1 {
+            font-size: 3.2rem;
+            color: white;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .reveal h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            border-left: 6px solid var(--primary);
+            padding-left: 18px;
+        }
+
+        .reveal h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .reveal p,
+        .reveal li {
+            font-size: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .reveal strong {
+            color: white;
+        }
+
+        .accent {
+            color: var(--primary);
+        }
+
+        .danger {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .success {
+    <div class="slides">
+
+        <section style="text-align: center;">
+            <h1>Continuous Testing</h1>
+            <h3>O Core da Cultura DevOps</h3>
+            <p class="accent">Aula 04 - 22/05</p>
+            <small>Integrando a qualidade à esteira de entrega contínua</small>
+        </section>
+
+        <section>
+            <h2>Automação vs. Teste Contínuo</h2>
+            <ul>
+                <li><strong>Teste Automatizado:</strong> Escrever um script que executa um teste sem intervenção humana. <span class="accent">(Foco na técnica)</span></li>
+                <li class="fragment"><strong>Teste Contínuo:</strong> Executar esses testes de forma ininterrupta como parte do pipeline de liberação. <span class="accent">(Foco no processo)</span></li>
+                <li class="fragment">Objetivo principal: Fornecer <span class="important">feedback instantâneo</span> sobre os riscos de negócio de um commit.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>A Anatomia de um Pipeline de CI</h2>
+            <p>Cada alteração de código dispara um ciclo automático:</p>
+            <ol>
+                <li><strong>Build:</strong> Compilação e empacotamento.</li>
+                <li><strong>Testes Unitários:</strong> Feedback em segundos.</li>
+                <li><strong>Análise Estática:</strong> Qualidade de código e segurança (Lint/SonarQube).</li>
+                <li><strong>Testes de Integração/API:</strong> Validação de contratos.</li>
+                <li><strong>Deployment (Staging):</strong> Liberação em ambiente controlado.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Quality Gates: Os Guardiões</h2>
+            <p>Um portão de qualidade define as regras para o código avançar para produção:</p>
+            <div style="background: #44475a; padding: 15px; border-radius: 8px;">
+                <ul>
+                    <li>❌ Falha em qualquer teste automatizado.</li>
+                    <li>❌ Cobertura de código inferior a 85%.</li>
+                    <li>❌ Presença de credenciais ou senhas expostas (Hardcoded Secrets).</li>
+                    <li>❌ Vulnerabilidades críticas de dependências (CVEs).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Estratégia de Otimização: Paralelismo</h2>
+            <p>Pipelines lentos matam a produtividade do time de engenharia.</p>
+            <ul>
+                <li>Se sua suíte de testes demora 1 hora para rodar, os devs vão odiar o CI.</li>
+                <li><strong>Solução DevOps:</strong> Dividir os testes para rodarem em paralelo em múltiplos containers/máquinas (Múltiplos Runners).</li>
+            </ul>
+        </section>
+
+        <section style="text-align: center;">
+            <h2>Mão na Massa! 🛠️</h2>
+            <h3>Criando um Pipeline no GitHub Actions</h3>
+            <p>Vamos configurar o ambiente para que o GitHub rode o comando <code>npm test</code> a cada Pull Request.</p>
+        </section>
+
+        <section>
+            <h3>Estrutura de Pastas do Projeto</h3>
+            <p>Para o GitHub Actions funcionar, precisamos criar uma pasta oculta na raiz do projeto:</p>
+            <pre><code class="bash" data-trim>
+meu-projeto/
+├── .github/
+│   └── workflows/
+│       └── ci.yml   &lt;-- O pipeline vive aqui!
+├── app.js
+├── app.test.js
+└── package.json
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>O Arquivo de Configuração (ci.yml)</h3>
+            <pre><code class="yaml" data-trim>
+name: Pipeline de Testes Continuos
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  testar-aplicacao:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Baixar codigo do repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar o Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-node: 18
+
+    - name: Instalar Dependencias
+      run: npm install
+
+    - name: Executar os Testes Automatizados
+      run: npm test -- --coverage
+                </code></pre>
+        </section>
+
+        <section>
+            <h2>Desafio de Hoje 🚀</h2>
+            <ol>
+                <li>Criar a pasta <code>.github/workflows/</code> no seu repositório do trabalho.</li>
+                <li>Adicionar o arquivo <code>ci.yml</code>.</li>
+                <li>Subir um commit propositalmente <span class="important">quebrando um teste</span> e ver o GitHub Actions bloquear o avanço.</li>
+                <li>Consertar o teste e ver a esteira ficar verde (Sucesso).</li>
+            </ol>
+        </section>
+
+    </div>
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .warning {
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .slide-center {
+            text-align: center !important;
+        }
+
+        .big-text {
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .reveal pre {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            font-size: 0.72em;
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(0,229,255,0.12);
+            border: 1px solid rgba(0,229,255,0.4);
+            color: var(--primary);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            border-left: 3px solid var(--primary);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+        }
+
+        .quote {
+            font-size: 1.3rem;
+            color: #dbe7ff;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin-top: 30px;
+        }
+
+        .mini-title {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,255,136,0.08));
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px;
+            border-radius: 14px;
+            margin-top: 20px;
+        }
+
+        .architecture-box {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .service {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .service h4 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            align-self: center;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 0.7rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section style="text-align: center;">
+            <h1>Continuous Testing</h1>
+            <h3>O Core da Cultura DevOps</h3>
+            <p class="accent">Aula 04 - 22/05</p>
+            <small>Integrando a qualidade à esteira de entrega contínua</small>
+        </section>
+
+        <section>
+            <h2>Automação vs. Teste Contínuo</h2>
+            <ul>
+                <li><strong>Teste Automatizado:</strong> Escrever um script que executa um teste sem intervenção humana. <span class="accent">(Foco na técnica)</span></li>
+                <li class="fragment"><strong>Teste Contínuo:</strong> Executar esses testes de forma ininterrupta como parte do pipeline de liberação. <span class="accent">(Foco no processo)</span></li>
+                <li class="fragment">Objetivo principal: Fornecer <span class="important">feedback instantâneo</span> sobre os riscos de negócio de um commit.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>A Anatomia de um Pipeline de CI</h2>
+            <p>Cada alteração de código dispara um ciclo automático:</p>
+            <ol>
+                <li><strong>Build:</strong> Compilação e empacotamento.</li>
+                <li><strong>Testes Unitários:</strong> Feedback em segundos.</li>
+                <li><strong>Análise Estática:</strong> Qualidade de código e segurança (Lint/SonarQube).</li>
+                <li><strong>Testes de Integração/API:</strong> Validação de contratos.</li>
+                <li><strong>Deployment (Staging):</strong> Liberação em ambiente controlado.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Quality Gates: Os Guardiões</h2>
+            <p>Um portão de qualidade define as regras para o código avançar para produção:</p>
+            <div style="background: #44475a; padding: 15px; border-radius: 8px;">
+                <ul>
+                    <li>❌ Falha em qualquer teste automatizado.</li>
+                    <li>❌ Cobertura de código inferior a 85%.</li>
+                    <li>❌ Presença de credenciais ou senhas expostas (Hardcoded Secrets).</li>
+                    <li>❌ Vulnerabilidades críticas de dependências (CVEs).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Estratégia de Otimização: Paralelismo</h2>
+            <p>Pipelines lentos matam a produtividade do time de engenharia.</p>
+            <ul>
+                <li>Se sua suíte de testes demora 1 hora para rodar, os devs vão odiar o CI.</li>
+                <li><strong>Solução DevOps:</strong> Dividir os testes para rodarem em paralelo em múltiplos containers/máquinas (Múltiplos Runners).</li>
+            </ul>
+        </section>
+
+        <section style="text-align: center;">
+            <h2>Mão na Massa! 🛠️</h2>
+            <h3>Criando um Pipeline no GitHub Actions</h3>
+            <p>Vamos configurar o ambiente para que o GitHub rode o comando <code>npm test</code> a cada Pull Request.</p>
+        </section>
+
+        <section>
+            <h3>Estrutura de Pastas do Projeto</h3>
+            <p>Para o GitHub Actions funcionar, precisamos criar uma pasta oculta na raiz do projeto:</p>
+            <pre><code class="bash" data-trim>
+meu-projeto/
+├── .github/
+│   └── workflows/
+│       └── ci.yml   &lt;-- O pipeline vive aqui!
+├── app.js
+├── app.test.js
+└── package.json
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>O Arquivo de Configuração (ci.yml)</h3>
+            <pre><code class="yaml" data-trim>
+name: Pipeline de Testes Continuos
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  testar-aplicacao:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Baixar codigo do repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar o Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-node: 18
+
+    - name: Instalar Dependencias
+      run: npm install
+
+    - name: Executar os Testes Automatizados
+      run: npm test -- --coverage
+                </code></pre>
+        </section>
+
+        <section>
+            <h2>Desafio de Hoje 🚀</h2>
+            <ol>
+                <li>Criar a pasta <code>.github/workflows/</code> no seu repositório do trabalho.</li>
+                <li>Adicionar o arquivo <code>ci.yml</code>.</li>
+                <li>Subir um commit propositalmente <span class="important">quebrando um teste</span> e ver o GitHub Actions bloquear o avanço.</li>
+                <li>Consertar o teste e ver a esteira ficar verde (Sucesso).</li>
+            </ol>
+        </section>
+
+    </div>
+</div>
+<script src="../../../dist/reveal.js"></script>
+<script src="../../../plugin/notes/notes.js"></script>
+<script src="../../../plugin/markdown/markdown.js"></script>
+<script src="../../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        backgroundTransition: 'fade',
+
+        plugins: [
+            RevealHighlight,
+            RevealNotes
+        ]
+    });
+</script>
+
+</body>
+</html>
