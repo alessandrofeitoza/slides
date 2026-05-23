@@ -549,25 +549,143 @@ it('deve funcionar', () => {
             </div>
         </section>
 
-        <section>
-            <h2>Métricas importantes</h2>
+        <section data-background="../../../img/gifs/trena.gif">
+            <h2 style="background-color: #333">Métricas importantes</h2>
 
-            <ul>
-                <li class="fragment">Tempo médio do pipeline</li>
-                <li class="fragment">Tempo médio de feedback</li>
-                <li class="fragment">Taxa de falha</li>
-                <li class="fragment">Cobertura de testes</li>
-                <li class="fragment">Frequência de deploy</li>
-                <li class="fragment">Lead Time</li>
+            <ul >
+                <li style="background-color: #333" class="fragment">Tempo médio do pipeline</li>
+                <li style="background-color: #333" class="fragment">Tempo médio de feedback</li>
+                <li style="background-color: #333" class="fragment">Taxa de falha</li>
+                <li style="background-color: #333" class="fragment">Cobertura de testes</li>
+                <li style="background-color: #333" class="fragment">Frequência de deploy</li>
+                <li style="background-color: #333" class="fragment">Lead Time</li>
             </ul>
+        </section>
+        
+        <section>
+            <img src="img/badges.png" alt="">
+        </section>
 
-            <div class="quote fragment">
-                Times de alta performance medem continuamente sua entrega.
+        <section>
+            <h2>Segundo Desafio de Hoje</h2>
+
+            <div class="card">
+
+                <ol>
+                    <li class="fragment">
+                        Gerar relatório de coverage
+                    </li>
+
+                    <li class="fragment">
+                        Criar conta no Codecov
+                    </li>
+
+                    <li class="fragment">
+                        Integrar com GitHub
+                    </li>
+
+                    <li class="fragment">
+                        Adicionar badge no README
+                    </li>
+
+                </ol>
+
+            </div>
+        </section>
+
+        <section style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
+            <div class="two-columns">
+            <div>
+                <img width="100%" src="img/security.gif" alt="">
+            </div>
+            <div>
+                <h2>E a segurança</h2>
+            </div>
             </div>
         </section>
 
         <section>
-            <h2>Primeiro Desafio de Hoje </h2>
+            <h2>Secrets nunca deveriam subir</h2>
+
+            <pre><code class="env" data-trim>
+DB_PASSWORD=123456
+AWS_SECRET_ACCESS_KEY=...
+OPENAI_API_KEY=...
+</code></pre>
+
+            <div class="highlight-box fragment">
+                <p class="danger">
+                    Um commit pode vazar credenciais para sempre.
+                </p>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Security Gate</h2>
+
+            <pre><code class="yaml" data-trim>
+- name: Scan Secrets
+  uses: gitleaks/gitleaks-action@v2
+</code></pre>
+
+            <div class="card fragment">
+                <p>
+                    Se detectar segredo exposto:
+                </p>
+
+                <ul>
+                    <li class="fragment">Pipeline falha</li>
+                    <li class="fragment">Merge bloqueado</li>
+                    <li class="fragment">Deploy cancelado</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Dependências também quebram sistemas</h2>
+
+            <pre><code class="bash" data-trim>
+npm audit
+</code></pre>
+
+            <div class="card fragment">
+                <ul>
+                    <li>CVEs</li>
+                    <li>Pacotes vulneráveis</li>
+                    <li>RCE</li>
+                    <li>Supply Chain Attack</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>O clássico git add .</h2>
+
+            <pre><code class="bash" data-trim>
+git add .
+git commit -m "ops"
+</code></pre>
+
+            <div class="quote fragment">
+                E junto vai o .env...
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Commits também importam</h2>
+
+            <pre><code class="bash" data-trim>
+feat: adiciona login
+fix: corrige timeout
+</code></pre>
+
+            <div class="quote fragment">
+                Histórico limpo melhora manutenção e automação.
+            </div>
 
         </section>
 
