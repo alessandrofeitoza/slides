@@ -1,0 +1,1285 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+
+    <title>Big O — Complexidade de Algoritmos</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../dist/theme/black.css">
+
+    <link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+
+    <style>
+        :root {
+            --primary: #00d8ff;
+            --secondary: #7c4dff;
+            --danger: #ff5252;
+            --success: #00c853;
+            --warning: #ffd600;
+        }
+
+        .reveal {
+            font-family: "Inter", "Segoe UI", sans-serif;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+            letter-spacing: -1px;
+        }
+
+        .reveal h1 {
+            font-size: 2.8em;
+        }
+
+        .reveal h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .reveal section img {
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.05);
+            border-left: 6px solid var(--primary);
+            padding: 24px;
+            border-radius: 14px;
+            margin-top: 20px;
+        }
+
+        .box.small {
+            font-size: 0.8em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .danger {
+            color: var(--danger);
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        .warning {
+            color: var(--warning);
+        }
+
+        table {
+            font-size: 0.7em !important;
+        }
+
+        .big-number {
+            font-size: 2.4em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        code {
+            border-radius: 10px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .timeline div {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            width: 18%;
+            text-align: center;
+            font-size: 0.7em;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .bad {
+            border-left: 6px solid var(--danger);
+        }
+
+        .good {
+            border-left: 6px solid var(--success);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h1>Notação Big O</h1>
+
+            <h3>Complexidade Temporal e Espacial</h3>
+
+
+            <!-- imagem:
+                 gráfico de crescimento de algoritmos -->
+        </section>
+        <section data-background="img/complexidade.png">
+            <div class="box fragment" style="background-color: #333">
+                <p>
+                    Algoritmos se comportam diferente
+                    conforme os dados crescem.
+                </p>
+            </div>
+
+            <!-- imagem:
+                 gráfico de crescimento de algoritmos -->
+        </section>
+
+        <section>
+            <h2>O Problema</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Um código funciona bem na máquina do dev
+                </p>
+
+                <p class="fragment highlight">
+                    ...mas na produção, papoca!
+                </p>
+            </div>
+        </section>
+
+        <section>
+
+            <div class="grid-2" style="margin-top: 40px;">
+                <div class="card fragment">
+                    <h3>100 registros</h3>
+                    <p>rápido</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>10 milhões</h3>
+                    <p class="danger">caos e gritaria</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>O que é Big O?</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Big O mede como um algoritmo cresce
+                    conforme o tamanho da entrada aumenta.
+                </p>
+
+                <p class="fragment">
+                    Não em segundos exatos,
+                </p>
+
+                <p class="fragment highlight">
+                    mas a tendência de crescimento.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Por que isso importa?</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <ul>
+                        <li class="fragment">APIs lentas</li>
+                        <li class="fragment">Consultas pesadas</li>
+                        <li class="fragment">Filas gigantes</li>
+                        <li class="fragment">Escalabilidade</li>
+                        <li class="fragment">Cloud mais cara</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">Uso excessivo de CPU</li>
+                        <li class="fragment">Consumo de memória</li>
+                        <li class="fragment">Timeouts</li>
+                        <li class="fragment">Travamentos</li>
+                        <li class="fragment">Experiência ruim</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Complexidade Temporal vs Espacial</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Mede</th>
+                    <th>Exemplo</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>Temporal</td>
+                    <td>qtd de operações</td>
+                    <td>Tempo para processar dados</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Espacial</td>
+                    <td>Memória utilizada</td>
+                    <td>Quantidade de RAM consumida</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+        <section data-background="img/xadrez.jpg"></section>
+
+        <section>
+            <h2>Big O no Dia a Dia</h2>
+
+            <div class="grid-3">
+                <div class="card fragment">
+                    <h3>O(1)</h3>
+                    <p>Pegar item da mochila</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>O(n)</h3>
+                    <p>Procurar nome numa lista</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>O(log n)</h3>
+                    <p>Buscar capítulo no índice do livro</p>
+                </div>
+            </div>
+
+            <!-- imagem:
+                 lista telefônica / índice de livro -->
+        </section>
+
+        <section>
+            <h2>Ranking das Complexidades</h2>
+
+            <div class="timeline">
+                <div class="fragment success">O(1)</div>
+                <div class="fragment success">O(log n)</div>
+                <div class="fragment warning">O(n)</div>
+                <div class="fragment warning">O(n log n)</div>
+            </div>
+            <div class="timeline">
+                <div class="fragment danger">O(n²)</div>
+                <div class="fragment danger">O(2ⁿ)</div>
+                <div class="fragment danger">O(n!)</div>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Visualizando o Crescimento</h2>
+
+            <div class="box">
+                <img src="img/chart.png" alt="Big O Chart">
+            </div>
+
+            <!-- imagem:
+                 gráfico clássico de complexidades -->
+        </section>
+
+        <section>
+            <h2>O(1) — Complexidade Constante</h2>
+
+            <pre><code class="language-javascript">
+const nomes = ["Ana", "Carlos", "Maria"];
+
+console.log(nomes[1]);
+</code></pre>
+
+            <div class="box">
+                <p class="fragment">
+                    Não importa se existem 3 itens...
+                </p>
+
+                <p class="fragment highlight">
+                    ...ou 3 milhões.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O(log n) — Logarítmico</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    A cada passo, metade dos dados é descartada.
+                </p>
+
+                <p class="fragment">
+                    Extremamente eficiente.
+                </p>
+            </div>
+
+
+
+        </section>
+
+        <section>
+            <h2>O(log n) — Logarítmico</h2>
+
+            <pre><code class="language-javascript">
+function buscaBinaria(lista, alvo) {
+    let inicio = 0;
+    let fim = lista.length - 1;
+
+    while (inicio <= fim) {
+        const meio = Math.floor((inicio + fim) / 2);
+
+        if (lista[meio] === alvo) {
+            return meio;
+        }
+
+        if (lista[meio] < alvo) {
+            inicio = meio + 1;
+        } else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Busca Binária</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>1.000 itens</h3>
+                    <p>~10 operações</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>1.000.000 itens</h3>
+                    <p>~20 operações</p>
+                </div>
+
+            </div>
+
+            <div class="box fragment">
+                <p>
+                    Crescimento extremamente controlado.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O(n) — Linear</h2>
+
+            <pre><code class="language-php">
+$usuarios = ["Ana", "Carlos", "Maria"];
+
+foreach ($usuarios as $usuario) {
+    echo $usuario;
+}
+</code></pre>
+
+            <div class="box">
+                <p class="fragment">
+                    Quanto mais dados...
+                </p>
+
+                <p class="fragment highlight">
+                    ...mais trabalho proporcional.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O(n) no Mundo Real</h2>
+
+            <div class="grid-2">
+
+                <div class="card">
+                    <h3>Backend</h3>
+                    <ul>
+                        <li class="fragment">Percorrer usuários</li>
+                        <li class="fragment">Ler arquivos</li>
+                        <li class="fragment">Processar filas</li>
+                        <li class="fragment">Enviar notificações</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li class="fragment">Renderizar listas</li>
+                        <li class="fragment">Filtros simples</li>
+                        <li class="fragment">Busca em arrays</li>
+                        <li class="fragment">Loops de componentes</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O(n log n) — Quase Ideal</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Muito comum em algoritmos eficientes de ordenação.
+                </p>
+
+                <p class="fragment highlight">
+                    Cresce bem mesmo com muitos dados.
+                </p>
+            </div>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Merge Sort</h3>
+                    <p>divide e conquista</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Quick Sort</h3>
+                    <p>caso médio</p>
+                </div>
+
+            </div>
+
+            <!-- imagem:
+                 animação/ilustração de sorting -->
+        </section>
+
+        <section>
+            <h2>Ordenação na Vida Real</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    E-commerce
+                </p>
+
+                <p class="fragment">
+                    Produtos por preço
+                </p>
+
+                <p class="fragment">
+                    Marketplace
+                </p>
+
+                <p class="fragment">
+                    Ranking e dashboards
+                </p>
+            </div>
+
+            <div class="box fragment">
+                <p>
+                    Ordenar rápido é requisito de produto.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O(n²) — Quadrático</h2>
+
+            <pre><code class="language-javascript">
+for (const a of usuarios) {
+    for (const b of usuarios) {
+        console.log(a, b);
+    }
+}
+</code></pre>
+
+            <div class="box">
+                <p class="fragment">
+                    Cada item compara com todos.
+                </p>
+
+                <p class="fragment danger">
+                    Crescimento perigoso.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O(n²) Visualmente</h2>
+
+            <div class="grid-3">
+
+                <div class="card fragment">
+                    <div class="big-number">10</div>
+                    <p>100 operações</p>
+                </div>
+
+                <div class="card fragment">
+                    <div class="big-number">100</div>
+                    <p>10.000 operações</p>
+                </div>
+
+                <div class="card fragment">
+                    <div class="big-number">1000</div>
+                    <p>1.000.000 operações</p>
+                </div>
+
+            </div>
+
+            <div class="box fragment">
+                <p>
+                    O crescimento explode rapidamente.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Onde O(n²) Aparece?</h2>
+
+            <div class="grid-2">
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">Nested foreach</li>
+                        <li class="fragment">Comparações duplicadas</li>
+                        <li class="fragment">Relacionamentos mal pensados</li>
+                        <li class="fragment">Busca repetida</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">N+1 query</li>
+                        <li class="fragment">Loops com banco</li>
+                        <li class="fragment">Processamento duplicado</li>
+                        <li class="fragment">Código legado</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <hr>
+            <h1>O que diabé N+1 Query?</h1>
+            <hr>
+
+        </section>
+        <section>
+            <h2>N+1 Query</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Um dos problemas de performance mais comuns em ORMs.
+                </p>
+
+                <p class="fragment danger">
+                    Parece inocente...
+                    mas escala muito mal.
+                </p>
+            </div>
+
+            <!-- imagem:
+                 banco + várias setas -->
+        </section>
+
+        <section>
+            <h2>Cenário</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>User</h3>
+                    <p>possui vários Posts</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Relação</h3>
+                    <p>hasMany()</p>
+                </div>
+
+            </div>
+
+            <pre><code class="language-php">
+User
+ └── Posts
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Exemplo com N+1</h2>
+
+            <pre><code class="language-php">
+$users = User::all();
+
+foreach ($users as $user) {
+    echo $user->posts->count();
+}
+</code></pre>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Qual o BO aqui?
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O que o ORM Faz?</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Primeiro:
+                </p>
+
+                <pre class="fragment"><code class="language-sql">
+select * from users;
+</code></pre>
+
+                <p class="fragment">
+                    Depois, para cada usuário:
+                </p>
+
+                <pre class="fragment"><code class="language-sql">
+select * from posts where user_id = 1;
+select * from posts where user_id = 2;
+select * from posts where user_id = 3;
+...
+</code></pre>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Por que se chama N+1?</h2>
+
+            <div class="timeline">
+                <div class="fragment">1 query</div>
+                <div class="fragment">+</div>
+                <div class="fragment">N queries</div>
+            </div>
+
+            <div class="box fragment">
+                <p>
+                    1 consulta principal
+                    +
+                    N consultas relacionadas.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo Real</h2>
+
+            <div class="grid-3">
+
+                <div class="card fragment">
+                    <div class="big-number">100</div>
+                    <p>usuários</p>
+                </div>
+
+                <div class="card fragment">
+                    <div class="big-number">1</div>
+                    <p>query inicial</p>
+                </div>
+
+                <div class="card fragment">
+                    <div class="big-number">100</div>
+                    <p>queries extras</p>
+                </div>
+
+            </div>
+
+            <div class="box fragment">
+                <p class="danger">
+                    Total: 101 queries.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Impacto</h2>
+
+            <div class="grid-2">
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">Mais latência</li>
+                        <li class="fragment">Mais conexão com DB</li>
+                        <li class="fragment">Maior custo</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">API lenta</li>
+                        <li class="fragment">Timeout</li>
+                        <li class="fragment">Escala ruim</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Solução — Eager Loading</h2>
+
+            <pre><code class="language-php">
+$users = User::with('posts')->get();
+
+foreach ($users as $user) {
+    echo $user->posts->count();
+}
+</code></pre>
+
+            <div class="box">
+                <p class="fragment success">
+                    Carregamos os relacionamentos antes.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Agora o Banco Faz Isso</h2>
+
+            <pre class="fragment"><code class="language-sql">
+select * from users;
+</code></pre>
+
+            <pre class="fragment"><code class="language-sql">
+select * from posts
+where user_id in (1,2,3,4...);
+</code></pre>
+
+            <div class="box fragment">
+                <p>
+                    Apenas duas consultas.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Antes vs Depois</h2>
+
+            <div class="comparison">
+
+                <div class="box bad fragment">
+                    <h3>N+1</h3>
+                    <p>1 + N queries</p>
+                    <p>escala mal</p>
+                    <p>latência alta</p>
+                </div>
+
+                <div class="box good fragment">
+                    <h3>Eager Loading</h3>
+                    <p>2 queries</p>
+                    <p>escala melhor</p>
+                    <p>mais eficiente</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Relação com Big O</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    O problema N+1 normalmente aparece
+                    como comportamento próximo de O(n).
+                </p>
+
+                <p class="fragment">
+                    E pode piorar ainda mais
+                    quando combinado com loops aninhados.
+                </p>
+
+                <p class="fragment highlight">
+                    ORM não elimina complexidade.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O(2ⁿ) — Exponencial</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    O número de possibilidades dobra constantemente.
+                </p>
+
+                <p class="fragment danger">
+                    Crescimento brutal.
+                </p>
+            </div>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Backtracking</h3>
+                    <p>força bruta</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>IA/Search</h3>
+                    <p>exploração massiva</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O(n!) — Fatorial</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Todas as permutações possíveis.
+                </p>
+
+                <p class="fragment">
+                    Um dos cenários mais caros.
+                </p>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>n</th>
+                    <th>n!</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>5</td>
+                    <td>120</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>10</td>
+                    <td>3.628.800</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>15</td>
+                    <td>1.307.674.368.000</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="box fragment">
+                <p class="danger">
+                    O crescimento fica impraticável rapidamente.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Complexidade Espacial</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Não basta ser rápido.
+                </p>
+
+                <p class="fragment">
+                    O algoritmo também precisa usar memória de forma inteligente.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo Espacial</h2>
+
+            <pre><code class="language-php">
+$dados = [];
+
+foreach ($usuarios as $usuario) {
+    $dados[] = processar($usuario);
+}
+</code></pre>
+
+            <div class="box">
+                <p class="fragment">
+                    Quanto maior o array...
+                </p>
+
+                <p class="fragment highlight">
+                    ...maior o consumo de RAM.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tempo vs Memória</h2>
+
+            <div class="comparison">
+
+                <div class="box bad fragment">
+                    <h3>Menos RAM</h3>
+                    <p>mais processamento</p>
+                </div>
+
+                <div class="box good fragment">
+                    <h3>Mais RAM</h3>
+                    <p>menos processamento</p>
+                </div>
+
+            </div>
+
+            <div class="box fragment">
+                <p>
+                    Engenharia é troca de decisões.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Big O em Sistemas Reais</h2>
+
+            <div class="grid-3">
+
+                <div class="card">
+                    <h3>Backend</h3>
+                    <ul>
+                        <li class="fragment">ORM</li>
+                        <li class="fragment">Queries</li>
+                        <li class="fragment">Cache</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li class="fragment">DOM</li>
+                        <li class="fragment">render</li>
+                        <li class="fragment">filtros</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Infra</h3>
+                    <ul>
+                        <li class="fragment">batch</li>
+                        <li class="fragment">fila</li>
+                        <li class="fragment">custo cloud</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section><section>
+        <h2>Problema Real — O(n²)</h2>
+
+        <pre><code class="language-php">
+foreach ($usuarios as $usuario) {
+    foreach ($pedidos as $pedido) {
+        if ($pedido->usuario_id === $usuario->id) {
+            $usuario->pedidos[] = $pedido;
+        }
+    }
+}
+</code></pre>
+
+        <div class="box">
+            <p class="fragment">
+                Dois loops percorrendo tudo.
+            </p>
+
+            <p class="fragment danger">
+                Escala muito mal.
+            </p>
+        </div>
+    </section>
+
+        <section>
+            <h2>Refatorando para O(n)</h2>
+
+            <pre><code class="language-php">
+$indice = [];
+
+foreach ($pedidos as $pedido) {
+    $indice[$pedido->usuario_id][] = $pedido;
+}
+
+foreach ($usuarios as $usuario) {
+    $usuario->pedidos = $indice[$usuario->id] ?? [];
+}
+</code></pre>
+
+            <div class="box">
+                <p class="fragment">
+                    Criamos indexação.
+                </p>
+
+                <p class="fragment success">
+                    Mais memória, muito menos tempo.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Antes vs Depois</h2>
+
+            <div class="comparison">
+
+                <div class="box bad fragment">
+                    <h3>O(n²)</h3>
+                    <p>loop dentro de loop</p>
+                    <p>comparações repetidas</p>
+                    <p>lentidão crescente</p>
+                </div>
+
+                <div class="box good fragment">
+                    <h3>O(n)</h3>
+                    <p>indexação</p>
+                    <p>lookup rápido</p>
+                    <p>escala melhor</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Big O e Banco de Dados</h2>
+
+            <div class="grid-2">
+
+                <div class="card">
+                    <h3 class="danger">Problema</h3>
+                    <ul>
+                        <li class="fragment">N+1 Query</li>
+                        <li class="fragment">consulta em loop</li>
+                        <li class="fragment">joins ruins</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="success">Melhoria</h3>
+                    <ul>
+                        <li class="fragment">eager loading</li>
+                        <li class="fragment">índices</li>
+                        <li class="fragment">cache</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- imagem:
+                 explain/query plan -->
+        </section>
+
+        <section>
+            <h2>Big O e Frontend</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Renderizações excessivas</li>
+                    <li class="fragment">Filtros em listas enormes</li>
+                    <li class="fragment">Loops desnecessários</li>
+                    <li class="fragment">DOM pesado</li>
+                    <li class="fragment">Virtualização</li>
+                </ul>
+
+            </div>
+
+            <div class="box fragment">
+                <p>
+                    Frontend também sofre com complexidade.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pegadinhas da Big O</h2>
+
+            <div class="grid-2">
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">Não mede benchmark</li>
+                        <li class="fragment">Não mede segundos exatos</li>
+                        <li class="fragment">Constantes ainda importam</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">Pior caso</li>
+                        <li class="fragment">Caso médio</li>
+                        <li class="fragment">Melhor caso</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Nem Sempre a Melhor Big O Vence</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Algoritmos teoricamente melhores
+                    podem ter implementação mais complexa.
+                </p>
+
+                <p class="fragment">
+                    Legibilidade e manutenção importam.
+                </p>
+
+                <p class="fragment highlight">
+                    Engenharia é equilíbrio.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Como Pensar em Big O</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Existe loop?</li>
+                    <li class="fragment">Existe loop dentro de loop?</li>
+                    <li class="fragment">Existe busca repetida?</li>
+                    <li class="fragment">Posso indexar?</li>
+                    <li class="fragment">Posso reduzir operações?</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Checklist de Performance</h2>
+
+            <div class="grid-2">
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">Analisar queries</li>
+                        <li class="fragment">Evitar N+1</li>
+                        <li class="fragment">Usar cache</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <ul>
+                        <li class="fragment">Medir memória</li>
+                        <li class="fragment">Evitar repetição</li>
+                        <li class="fragment">Pensar em escala</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Resumo</h2>
+
+            <div class="timeline">
+                <div class="fragment">O(1)</div>
+                <div class="fragment">O(log n)</div>
+                <div class="fragment">O(n)</div>
+                <div class="fragment">O(n log n)</div>
+                <div class="fragment">O(n²)</div>
+                <div class="fragment">O(2ⁿ)</div>
+                <div class="fragment">O(n!)</div>
+            </div>
+
+            <div class="box fragment">
+                <p>
+                    Quanto mais à direita...
+                </p>
+
+                <p class="danger">
+                    maior o custo de crescer.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Mensagem Final</h2>
+
+            <div class="box center">
+                <p class="fragment">
+                    Bons algoritmos não são apenas rápidos.
+                </p>
+
+                <p class="fragment">
+                    Eles são escaláveis.
+                </p>
+
+                <p class="fragment highlight">
+                    E sistemas escaláveis custam menos,
+                    performam melhor e sobrevivem ao crescimento.
+                </p>
+            </div>
+
+            <!-- imagem:
+                 foguete / crescimento / escala -->
+        </section>
+
+    </div>
+</div>
+
+<script src="../../../dist/reveal.js"></script>
+<script src="../../../plugin/highlight/highlight.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>

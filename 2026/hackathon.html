@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+
+    <title>Aula 03 - Testes de APIs e Microserviços</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+    <style>
+        :root {
+            --primary: #00E5FF;
+            --secondary: #00FF88;
+            --danger: #FF5C8A;
+            --warning: #FFD166;
+            --dark: #0A0F1C;
+            --gray: #AAB4C3;
+        }
+
+        body {
+            background: linear-gradient(135deg, #050816 0%, #0d1326 100%);
+        }
+
+        .reveal {
+            font-family: "Inter", "Segoe UI", sans-serif;
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal h1 {
+            font-size: 3.2rem;
+            color: white;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .reveal h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            border-left: 6px solid var(--primary);
+            padding-left: 18px;
+        }
+
+        .reveal h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .reveal p,
+        .reveal li {
+            font-size: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .reveal strong {
+            color: white;
+        }
+
+        .accent {
+            color: var(--primary);
+        }
+
+        .danger {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .success {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .warning {
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .slide-center {
+            text-align: center !important;
+        }
+
+        .big-text {
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .reveal pre {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            font-size: 0.72em;
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(0,229,255,0.12);
+            border: 1px solid rgba(0,229,255,0.4);
+            color: var(--primary);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            border-left: 3px solid var(--primary);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+        }
+
+        .quote {
+            font-size: 1.3rem;
+            color: #dbe7ff;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin-top: 30px;
+        }
+
+        .mini-title {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,255,136,0.08));
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px;
+            border-radius: 14px;
+            margin-top: 20px;
+        }
+
+        .architecture-box {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .service {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .service h4 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            align-self: center;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 0.7rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h2>MVP Express</h2>
+            <h3>14h às 16h</h3>
+
+            <div class="box">
+                <p class="fragment">
+                    Objetivo:
+                    transformar ideias em um MVP inicial e um pitch apresentável
+                    em apenas <strong>1 hora</strong>.
+                </p>
+
+                <ul>
+                    <li class="fragment">Escopo reduzido</li>
+                    <li class="fragment">Execução guiada</li>
+                    <li class="fragment">Erre Rápido / Corrija Rápido</li>
+                    <li class="fragment">Entrega demonstrável</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="box small">
+                <p class="fragment">
+                    Bloco único de construção e validação.
+                </p>
+            </div>
+
+            <div class="columns">
+                <div style="width:48%">
+                    <h4 class="fragment">O que construir?</h4>
+                    <ul>
+                        <li class="fragment">Problema definido</li>
+                        <li class="fragment">Solução clara</li>
+                        <li class="fragment">Protótipo simples</li>
+                        <li class="fragment">Fluxo ou demonstração</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- imagem sugerida: equipes trabalhando / hackathon -->
+        </section>
+
+        <section>
+
+            <div style="width:48%">
+                <h4 class="fragment">Mentalidade</h4>
+                <ul>
+                    <li class="fragment">Nada de produto completo</li>
+                    <li class="fragment">Nada de perfeccionismo</li>
+                    <li class="fragment">MVP demonstrável</li>
+                    <li class="fragment">Pitch já sendo pensado</li>
+                </ul>
+            </div>
+
+            <!-- imagem sugerida: equipes trabalhando / hackathon -->
+        </section>
+
+        <section>
+            <h2>Regra do MVP Express</h2>
+
+            <blockquote class="fragment">
+                “A gente só preicsa provar que a ideia funciona.”
+            </blockquote>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">Focar no essencial</li>
+                    <li class="fragment">Entregar algo visível (e testável)</li>
+                    <li class="fragment">Validar a ideia</li>
+                    <li class="fragment">Pensar como startup (errar rapido)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="box small">
+                <h1 >
+                    Feature Freeze:
+                    <small class="fragment">nada de novas funcionalidades.</small>
+                </h1>
+                <hr>
+            </div>
+
+            <ul>
+                <li class="fragment">Organizar apresentação</li>
+                <li class="fragment">Escolher quem fala</li>
+                <li class="fragment">Preparar demo</li>
+                <li class="fragment">Ensaiar rapidamente</li>
+            </ul>
+
+            <!-- imagem sugerida: apresentação / ensaio -->
+        </section>
+
+        <section>
+            <h2>Estrutura do Pitch</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">1. Qual problema existe?</li>
+                    <li class="fragment">2. Qual solução criamos?</li>
+                    <li class="fragment">3. Como funciona?</li>
+                    <li class="fragment">4. Qual o diferencial?</li>
+                    <li class="fragment">5. O que estamos demonstrando?</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h3>Apresentações Express</h3>
+
+            <div class="box">
+                <p class="fragment">
+                    Cada grupo apresenta seu MVP e recebe feedback.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">5 min de pitch</li>
+                <li class="fragment">1min à 2 de feedback</li>
+            </ul>
+
+            <!-- imagem sugerida: palco / pitch -->
+        </section>
+
+        <section>
+            <hr>
+            <h3>DICAS & MACETES</h3>
+            <hr>
+        </section>
+        <section>
+            <h2>Startup Enxuta</h2>
+
+            <div class="card">
+                <h3 class="fragment">Lean Startup</h3>
+
+                <ul>
+                    <li class="fragment">Construir</li>
+                    <li class="fragment">Medir</li>
+                    <li class="fragment">Aprender</li>
+                </ul>
+            </div>
+
+            <div class="quote fragment">
+                Quanto mais cedo errar, mais barato fica corrigir.
+            </div>
+        </section>
+
+        <section>
+            <h2>O Maior Erro</h2>
+
+            <div class="card">
+                <h3 class="danger fragment">
+                    Construir antes de validar
+                </h3>
+
+                <ul>
+                    <li class="fragment">Muito código</li>
+                    <li class="fragment">Pouco aprendizado</li>
+                    <li class="fragment">Escopo gigante</li>
+                    <li class="fragment">Entrega atrasada</li>
+                </ul>
+            </div>
+
+            <div class="quote fragment">
+                Startup não falha por falta de código.<br>
+                A gente tem IA pra fazer isso
+            </div>
+        </section>
+
+        <section>
+            <h2>Como Validar Rápido?</h2>
+
+            <div class="two-columns">
+                <div class="card">
+                    <h3 class="fragment">Validação Boa</h3>
+                    <ul>
+                        <li class="fragment">Conversar com usuários</li>
+                        <li class="fragment">Mostrar protótipo</li>
+                        <li class="fragment">Testar hipótese</li>
+                        <li class="fragment">Coletar feedback</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="fragment">Validação Fraca</h3>
+                    <ul>
+                        <li class="fragment">“Minha mãe gostou”</li>
+                        <li class="fragment">“Achei legal”</li>
+                        <li class="fragment">Suposição sem teste</li>
+                        <li class="fragment">Codar no escuro</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Valide Hipóteses</h2>
+
+            <div class="card">
+                <p class="fragment">
+                    Toda startup nasce de hipóteses.
+                </p>
+
+                <ul>
+                    <li class="fragment">Existe um problema?</li>
+                    <li class="fragment">Alguém realmente sente essa dor?</li>
+                    <li class="fragment">Nossa solução ajuda?</li>
+                    <li class="fragment">Vale a pena continuar?</li>
+                </ul>
+            </div>
+
+            <div class="quote fragment">
+                Não defendam a solução.<br>
+                Testem a hipótese.
+            </div>
+        </section>
+
+        <section>
+            <h2>Ferramentas Rápidas</h2>
+
+            <div class="card">
+                <div class="pill fragment">Figma</div>
+                <div class="pill fragment">Canva</div>
+                <div class="pill fragment">Lovable</div>
+                <div class="pill fragment">Bolt</div>
+                <div class="pill fragment">ChatGPT</div>
+                <div class="pill fragment">Google Forms</div>
+                <div class="pill fragment">Whimsical</div>
+            </div>
+
+            <div class="quote fragment">
+                Ferramenta não é o MVP.<br>
+                Ela apenas acelera a validação.
+            </div>
+        </section>
+
+        <section>
+            <h2>Nem Todo MVP é Código</h2>
+
+            <div class="two-columns">
+                <div class="card">
+                    <h3 class="fragment">Pode ser:</h3>
+                    <ul>
+                        <li class="fragment">Wireframe</li>
+                        <li class="fragment">Landing page</li>
+                        <li class="fragment">Fluxo navegável</li>
+                        <li class="fragment">Demo simulada</li>
+                        <li class="fragment">Mockup</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="fragment">O que importa:</h3>
+                    <ul>
+                        <li class="fragment">Ser demonstrável</li>
+                        <li class="fragment">Gerar conversa</li>
+                        <li class="fragment">Receber feedback</li>
+                        <li class="fragment">Validar valor</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Bora pra mão na massa!</h2>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/notes/notes.js"></script>
+<script src="../plugin/markdown/markdown.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+</script>
+
+
+</body>
+</html>
