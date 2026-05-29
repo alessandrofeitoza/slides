@@ -1,0 +1,1390 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+
+    <title>Estrangulando o legado - PHP Velho Oeste 2026</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../dist/reset.css">
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+
+    <style>
+        :root {
+            --bg: #DEDEDE;
+            --card: #121a30;
+            --card2: #18233f;
+            --text: #f4f7fb;
+            --muted: #98a6c3;
+            --primary: #6ea8fe;
+            --danger: #ff6b6b;
+            --success: #37d67a;
+            --border: rgba(255,255,255,.08);
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: uppercase;
+            color: #e27507; /* Dourado Churchilliano */
+        }
+
+        .reveal {
+            font-family: Inter, system-ui, sans-serif;
+            color: var(--text);
+            font-size: 42px;
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal section {
+            padding: 40px;
+        }
+
+        body {
+            line-height: normal;
+            background:
+                    radial-gradient(circle at top right,#1b2750 0%,#0b1020 40%),
+                    #0b1020;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: -.03em;
+        }
+
+        h2 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: -.02em;
+        }
+
+        h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        p, li {
+            font-size: 2.2rem;
+            line-height: 1.45;
+        }
+
+        ul {
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        li {
+            margin: 18px 0;
+        }
+
+        .hero {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .subtitle {
+            font-size: 1.7rem;
+            color: var(--muted);
+            margin-top: 20px;
+        }
+
+        .speaker {
+            margin-top: 50px;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .box {
+            background: rgba(18,26,48,.85);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .quote {
+            margin-top: 40px;
+            border-left: 6px solid var(--primary);
+            padding-left: 25px;
+            font-size: 2rem;
+            line-height: normal;
+            font-style: italic;
+            color: #dce7ff;
+        }
+
+
+        .media-placeholder {
+            margin-top: 35px;
+            height: 260px;
+            border: 2px dashed rgba(255,255,255,.18);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 1.1rem;
+            background: rgba(255,255,255,.02);
+        }
+
+        .big-center {
+            text-align: center;
+        }
+
+        .huge {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .danger {
+            color: var(--danger);
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        code {
+            font-size: 1.8rem !important;
+            line-height: normal;
+        }
+
+        .reveal pre {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,.35);
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        /*hr {*/
+        /*    border: none;*/
+        /*    border-top: 2px solid var(--border);*/
+        /*    margin: 30px 0;*/
+        /*}*/
+
+        .diagram {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:35px;
+            margin-top:80px;
+            flex-wrap:wrap;
+        }
+
+        .diagram.split {
+            gap:60px;
+        }
+
+        .node {
+            min-width:220px;
+            padding:28px 34px;
+            border-radius:24px;
+            font-size:1.4rem;
+            font-weight:700;
+            text-align:center;
+            border:1px solid rgba(255,255,255,.08);
+            box-shadow:0 20px 50px rgba(0,0,0,.25);
+        }
+
+        .user {
+            background:#1b2750;
+        }
+
+        .gateway {
+            background:#26355f;
+        }
+
+        .legacy {
+            background:#4a2b2b;
+        }
+
+        .modern {
+            background:#1f4b36;
+        }
+
+        .arrow {
+            font-size:3rem;
+            font-weight:800;
+            color:var(--primary);
+        }
+
+        .branch {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <div style="margin-top: 71%; font-size: 1rem;"> 🐘🏜️🤠 <small style="color: #999;">PHP Velho Oeste <strong style="float: right">@alessandro_feitoza</strong> </small> </div>
+        <section>
+            <div class="hero">
+
+                <h1>Estrangulando<br>o legado</h1>
+
+                <h3>modernizando aplicações PHP sem desligar o sistema</h3>
+
+
+                <hr style="border-color: white">
+                <p class="subtitle">
+
+                PHP Velho Oeste 2026
+                </p>
+
+<!--                <div class="media-placeholder">-->
+<!--                    IMAGEM HERO<br>-->
+<!--                    figueira estranguladora OU legado + moderno coexistindo-->
+<!--                </div>-->
+
+            </div>
+        </section>
+
+        <section >
+            <div style="display: flex;" class="fragment">
+                <div style="width: 50%">
+                    <h3>Alessandro Feitoza</h3>
+                    <hr>
+
+                    <ul style="font-size: 2rem; ">
+                        <li class="fragment" style="color: indianred;">Fortaleza, <strong>Ceará</strong></li>
+
+                        <li class="fragment">Professor de códigos e outras <strong>computarias</strong></li>
+                        <li class="fragment">Programador/Dev/Severino</li>
+                        <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong> | <span class="fragment" style="color: #B45F06;"><strong>PHP</strong>este</span></li>
+                        <li class="fragment">
+                            <span style="color: lightgreen;">
+                                <strong>Bússola</strong> Social
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div style="width: 50%">
+                    <img width="60%" src="../img/AlessandroFeitoza-2026-2.jpg" alt="">
+                </div>
+            </div>
+        </section>
+
+        <section style="align-items: flex-start; margin-top: 0;">
+            <h3 style="text-align: left;">Agenda</h3>
+            <hr>
+            <ul>
+                <li class="fragment">Contextualização</li>
+                <li class="fragment">O problema: há um elefante na sala</li>
+                <li class="fragment">O jeito errado VS O jeito menos errado</li>
+                <li class="fragment">Exemplos Práticos</li>
+            </ul>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- ABERTURA -->
+        <!-- ====================================================== -->
+
+        <section class="big-center">
+            <h3>Quem aqui já mexeu em produção?</h3>
+            <h3 class="fragment">E quem já mexeu sem ter nenhum tipo de medo?</h3>
+        </section>
+
+        <section>
+
+            <h2>Talvez algo assim...</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">arquivo_final.php</li>
+                    <li class="fragment">arquivo_final_agora_vai.php</li>
+                    <li class="fragment">arquivo_final_v2.php</li>
+                    <li class="fragment">arquivo_final_v2_corrigido.php</li>
+                    <li class="fragment">arquivo_final_v2_corrigido_agora_vai.php</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <section data-background="img/strangler/remote-ssh.webp" data-background-size="80%">
+            <img src="img/strangler/akon.jpg" class="fragment" alt="Akon dizendo irmão não mexe nisso">
+        </section>
+
+        <section>
+
+            <h2>Porque normalmente...</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">ninguém entende tudo</li>
+                    <li class="fragment">há efeitos colaterais</li>
+                    <li class="fragment">existem regras escondidas</li>
+                    <li class="fragment">o deploy parece loteria</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <section class="big-center">
+
+            <h1>Todo mundo<br>tem legado</h1>
+
+        </section>
+
+        <section>
+            <hr>
+            <h1>E o que diabos é isso de legado?</h1>
+            <hr>
+        </section>
+
+        <section data-background="#FFF">
+            <div style="text-align: left;">
+                <h2><em>Legado</em></h2>
+                <hr>
+                <p class="fragment" style="color: #333">
+                    do Latim, <em style="color: red;">Legatum</em>
+                </p>
+                <p class="fragment" style="margin-top: 10px; color: #FFF; background-color: #333; padding: 10px">
+                    <em>"algo deixado em testamento"</em> <br>
+
+                    Deriva de <strong><em> legare</em></strong> ( delegar / encarregar) <br>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <div class="quote" style="font-size: 3.5rem">
+                Mas no software, <span class="fragment">como definimos quando algo é <strong>LEGADO</strong>?</span>
+            </div>
+        </section>
+
+        <section data-background="img/strangler/escobar.gif" data-background-size="100%">
+            <ul style="">
+                <li class="fragment" style="font-size: 2.8rem;background-color: #FFF; color: #B45F06">É por que ele usa PHP < 7?</li>
+                <li class="fragment" style="font-size: 2.8rem;background-color: #FFF; color: #B45F06">É porque foi feito há 5 anos?</li>
+                <li class="fragment" style="font-size: 2.8rem;background-color: #FFF; color: #B45F06">É porque é um monolito?</li>
+            </ul>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- LEGADO EXISTE -->
+        <!-- ====================================================== -->
+
+
+        <section>
+
+            <h2>E normalmente ele tem...</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Alguns* anos de produção</li>
+                    <li class="fragment">regras críticas</li>
+                    <li class="fragment">dependências antigas</li>
+                    <li class="fragment">deploy manual</li>
+                    <li class="fragment">muito medo envolvido</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <section class="big-center">
+
+            <h1>Todo mundo<br>tem legado</h1>
+
+        </section>
+
+
+        <section class="big-center" data-background="img/strangler/escobar2.gif" data-background-size="100%">
+            <br><br><br><br><br><br><br><br>
+            <h1 class="success" style="background-color: #FFF">
+                Mas Sistema legado<br>
+                dá dinheiro
+            </h1>
+
+        </section>
+
+        <section>
+
+            <div class="quote" style="font-size: 3rem">
+                Se está há 10 anos no ar,<br>
+                talvez ele não seja tão ruim assim.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>O legado normalmente...</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">sustenta negócio</li>
+                    <li class="fragment">gera receita</li>
+                    <li class="fragment">resolve problemas reais</li>
+                    <li class="fragment">sobreviveu ao tempo</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- PROBLEMA REAL -->
+        <!-- ====================================================== -->
+
+        <section class="big-center">
+
+            <h1>Então qual é<br>o problema?</h1>
+
+        </section>
+
+        <section>
+
+            <h2>O problema não é o legado</h2>
+
+            <div class="box" style="display: flex; justify-content: space-between">
+
+                <ul >
+                    <li class="fragment">é depender de poucas pessoas</li>
+                    <li class="fragment">é o medo de alterar</li>
+                    <li class="fragment">é arquitetura impedir evolução</li>
+                    <li class="fragment">é não conseguir digivolver</li>
+                </ul>
+
+                <div>
+                    <img src="img/strangler/pikachu.jpeg" width="200px" alt="" class="fragment">
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="big-center">
+
+            <h1>
+                O sistema<br>
+                continua vivo
+            </h1>
+
+            <h3 class="fragment">
+                mas o time para
+            </h3>
+
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- ATO 2 — O ERRO CLÁSSICO -->
+        <!-- ====================================================== -->
+
+        <section class="big-center">
+            <h1>Então surge<br>a ideia...</h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="danger">
+                “Simbora reescrever tudo” <span style="font-size: 3rem" class="fragment">com IA</span>
+            </h1>
+            <div style="float: right; font-style: italic; font-size: 2.4rem" class="fragment">
+                <small>Qualquer Dev desde que o mundo é mundo</small>
+            </div>
+        </section>
+
+        <section>
+            <h3>O famoso</h3>
+            <h2>Big Bang Rewrite</h2>
+
+            <div class="media-placeholder" style="height: 400px; background: url('img/strangler/post-its.png')">
+            </div>
+        </section>
+
+        <section>
+            <h2>Normalmente a promessa é:</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">“vamos fazer do jeito certo agora”</li>
+                    <li class="fragment">“vamos usar tecnologia nova”</li>
+                    <li class="fragment">“vamos resolver tudo”</li>
+                    <li class="fragment">“em poucos meses termina”</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>Mas aí...</h1>
+            <img src="img/strangler/opentowork.png" alt="" class="fragment">
+        </section>
+
+        <section>
+            <div class="box">
+                <ul>
+                    <li class="fragment">meses sem entregar valor</li>
+                    <li class="fragment">duas versões do sistema</li>
+                    <li class="fragment">regras esquecidas</li>
+                    <li class="fragment">retrabalho</li>
+                    <li class="fragment">burnout</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center" data-background="img/strangler/chaos.gif" data-background-size="80%">
+            <h1 class="danger" style="background-color: #FFF">
+                caos
+            </h1>
+            <br><br><br><br><br><br><br><br><br><br>
+        </section>
+
+        <section>
+            <div class="quote" style="font-size: 3rem">
+                E o legado continua lá.
+            </div>
+
+            <br><br><br><br>
+            <span style="float: right" class="fragment">pagando as contas</span>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                E geralmente<br>
+                o problema não é<br>
+                tecnologia.
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="danger">
+                É logística.
+            </h1>
+        </section>
+
+        <section>
+            <h2>Porque existe um detalhe...</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">o negócio continua funcionando</li>
+                    <li class="fragment">o cliente continua usando</li>
+                    <li class="fragment">o financeiro continua dependendo</li>
+                    <li class="fragment">e produção não pode parar</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Então talvez<br>
+                a pergunta certa<br>
+                não seja...
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="danger">
+                “como reescrever?”
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <hr>
+            <h1 class="success">
+                “como evoluir<br>
+                sem desligar?”
+            </h1>
+            <hr>
+            <h3 class="fragment">Strangler Fig Pattern</h3>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- ATO 3 — STRANGLER PATTERN -->
+        <!-- ====================================================== -->
+
+        <section data-background="img/strangler/arvore2.jpg" data-background-size="60%">
+            <p class="fragment" style="font-size: 3rem; background-color: #DDD; color: #333">Gameleira / Abraço da Morte</p>
+
+            <div class="box fragment">
+                <p>
+                    O sistema novo cresce aos poucos
+                    ao redor do sistema antigo.
+
+                    <span class="fragment">Até sufocar o antigo</span>
+                </p>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Sem desligar<br>
+                produção
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Sem migração<br>
+                traumática
+            </h1>
+        </section>
+        
+        <section class="big-center">
+            <h1>
+                Sem parar de entregar valor
+            </h1>
+        </section>
+
+
+        <section>
+            <div class="box">
+                <ul>
+                    <li class="fragment">a árvore original continua viva</li>
+                    <li class="fragment">a nova cresce ao redor</li>
+                    <li class="fragment">a substituição é gradual</li>
+                    <li class="fragment">até a antiga deixar de ser necessária</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <div class="quote">
+                Substituindo um comportamento por vez
+            </div>
+        </section>
+
+        <section>
+            <h2><span style="color:var(--primary)">Martin Fowler - 2004</span></h2>
+
+            <div>
+                <img src="img/strangler/fowler.jpeg" alt="">
+                <p>Transformar, Coexistir, Eliminar</p>
+            </div>
+
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- AUTO ANIMATE — STRANGLER PATTERN -->
+        <!-- ====================================================== -->
+
+        <section data-auto-animate>
+
+            <h2>Antes</h2>
+
+            <div class="diagram">
+
+                <div class="node user" data-id="user">
+                    Usuário
+                </div>
+
+                <div class="arrow" data-id="a1">
+                    →
+                </div>
+
+                <div class="node legacy" data-id="legacy">
+                    Sistema Legado
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-auto-animate>
+
+            <h2>Primeira mudança</h2>
+
+            <div class="diagram">
+
+                <div class="node user" data-id="user">
+                    Usuário
+                </div>
+
+                <div class="arrow" data-id="a1">
+                    →
+                </div>
+
+                <div class="node gateway" data-id="gateway">
+                    Gateway
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="node legacy" data-id="legacy">
+                    Sistema Legado
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-auto-animate>
+
+            <h2>Estrangulamento começa</h2>
+
+            <div class="diagram split">
+
+                <div class="node user" data-id="user">
+                    Usuário
+                </div>
+
+                <div class="arrow" data-id="a1">
+                    →
+                </div>
+
+                <div class="node gateway" data-id="gateway">
+                    Gateway
+                </div>
+
+                <div class="branch" style="margin-left: 300px">
+
+                    <div class="arrow">
+                        ↙
+                    </div>
+
+                    <div class="node legacy" data-id="legacy">
+                        Legado
+                    </div>
+
+                </div>
+
+                <div class="branch">
+
+                    <div class="arrow">
+                        ↘
+                    </div>
+
+                    <div class="node modern" data-id="modern">
+                        Novo módulo
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-auto-animate>
+
+            <h2>Convivência</h2>
+
+            <div class="diagram split">
+
+                <div class="node user" data-id="user">
+                    Usuário
+                </div>
+
+                <div class="arrow" data-id="a1">
+                    →
+                </div>
+
+                <div class="node gateway" data-id="gateway">
+                    Nginx / Gateway
+                </div>
+
+                <div class="branch" style="margin-left: 300px;">
+
+                    <div class="arrow">
+                        ↙
+                    </div>
+
+                    <div class="node legacy" data-id="legacy">
+                        PHP 5<br>
+                        Legado
+                    </div>
+
+                </div>
+
+                <div class="branch">
+
+                    <div class="arrow">
+                        ↘
+                    </div>
+
+                    <div class="node modern" data-id="modern">
+                        PHP 8 / Laravel
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p class="subtitle" style="margin-top:40px">
+                O usuário nem percebe.
+            </p>
+
+        </section>
+        <section>
+            <h2>Estratégia incremental</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">clientes → novo</li>
+                    <li class="fragment">financeiro → legado</li>
+                    <li class="fragment">relatórios → legado</li>
+                    <li class="fragment">migração gradual</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center" data-background="img/strangler/tio-ben.gif">
+            <br><br><br><br><br><br><br><br><br><br><br><br>
+            <p style="font-size: 3.5rem; color: #e27507; font-weight: bold; background-color: #FFF">
+                Com pequenos passos vem pequenos riscos
+            </p>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- ATO 4 — PHP NA PRÁTICA -->
+        <!-- ====================================================== -->
+
+        <section class="big-center" data-background="img/strangler/kamen.gif">
+            <br><br><br><br><br><br><br><br><br><br><br>
+            <h1 style="background-color: #FFF">
+                E o PHP hein
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Imagine um sistema...
+            </h1>
+        </section>
+
+        <section>
+            <h2>Cenário bem realista</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">PHP 5.x</li>
+                    <li class="fragment">sem Composer</li>
+                    <li class="fragment">mysql_query</li>
+                    <li class="fragment">deploy via FTP</li>
+                    <li class="fragment">sem testes</li>
+                    <li class="fragment">não pode parar</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Talvez algo assim...
+            </h1>
+        </section>
+
+        <section>
+    <pre><code class="language-php">
+include('conexao.php');
+
+$sql = mysql_query(
+    "SELECT * FROM clientes"
+);
+
+while ($cliente = mysql_fetch_assoc($sql)) {
+    echo $cliente['nome'];
+}
+    </code></pre>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Quem nunca?
+            </h1>
+        </section>
+
+        <section>
+    <pre><code class="language-php">
+class ClienteController {
+  public function salvar() {
+    $sql = "
+        INSERT INTO clientes (nome, email)
+        VALUES ('{$this->nome}', '{$this->email}')
+    ";
+
+    mysqli_query(Conexao::con(), $sql);
+
+    header("location: /clientes?success=1");
+  }
+}
+    </code></pre>
+        </section>
+
+        <section data-background="img/strangler/fullstack.jpg" data-background-size="90%">
+
+        </section>
+
+        <section class="big-center">
+            <h1 class="danger">
+                E aí nasce
+                <br>
+                o medo.
+            </h1>
+        </section>
+
+        <section>
+            <h2>Porque normalmente...</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">ninguém entende tudo</li>
+                    <li class="fragment">há dependências escondidas</li>
+                    <li class="fragment">side effects inesperados</li>
+                    <li class="fragment">regras invisíveis</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section class="big-center">
+            <h1>
+                Mas o Strangler
+                <br>
+                muda a pergunta.
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="success">
+                Não é:
+                <br>
+                “vamos trocar tudo?”
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                É:
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="success">
+                “qual módulo
+                <br>
+                precisamos migrar?” <span class="fragment">e por que?</span>
+            </h1>
+        </section>
+
+        <section>
+            <h2>Exemplo</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">clientes → candidato ideal</li>
+                    <li class="fragment">financeiro → ainda legado</li>
+                    <li class="fragment">pedidos → depois</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Então nasce
+                <br>
+                o primeiro módulo novo
+            </h1>
+        </section>
+
+        <section>
+    <pre><code class="language-php">
+Route::get('/clientes', function () {
+    return Cliente::all();
+});
+    </code></pre>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Só clientes mudou.
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="success">
+                O resto continua vivo.
+            </h1>
+        </section>
+
+        <section data-background="img/strangler/camadas.png">
+
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Mas existe
+                <br>
+                um detalhe...
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Quem decide
+                <br>
+                quem responde?
+            </h1>
+        </section>
+
+        <section>
+            <h2>Reverse Proxy</h2>
+
+            <div class="media-placeholder">
+                DIAGRAMA<br>
+                nginx no meio
+            </div>
+        </section>
+
+        <section>
+    <pre><code class="language-nginx">
+location /clientes {
+    proxy_pass http://novo-sistema;
+}
+
+location / {
+    proxy_pass http://legado;
+}
+    </code></pre>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                O usuário nem percebe.
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Mas a arquitetura
+                <br>
+                mudou.
+            </h1>
+        </section>
+
+        <section>
+            <div class="media-placeholder">
+                DIAGRAMA FINAL<br>
+                usuário → nginx → legado + novo sistema
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                E o mais interessante...
+            </h1>
+        </section>
+
+        <section>
+            <h2>Convivência tecnológica</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">PHP antigo</li>
+                    <li class="fragment">PHP moderno</li>
+                    <li class="fragment">Laravel</li>
+                    <li class="fragment">procedural</li>
+                    <li class="fragment">Docker</li>
+                    <li class="fragment">tudo coexistindo</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="media-placeholder">
+                LOGOS / CONTAINERS<br>
+                PHP 5 + PHP 8 + Docker + Laravel
+            </div>
+        </section>
+
+        <section class="big-center">
+            <div class="quote">
+                Você não precisa
+                escolher entre
+                legado ou moderno.
+                <br><br>
+                Pode existir os dois.
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- ATO 5 — BENEFÍCIOS, RISCOS E FECHAMENTO -->
+        <!-- ====================================================== -->
+
+        <section class="big-center">
+            <h1>
+                E o que
+                <br>
+                ganhamos com isso?
+            </h1>
+        </section>
+
+        <section>
+            <h2>Benefícios imediatos</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">menos risco</li>
+                    <li class="fragment">deploy menor</li>
+                    <li class="fragment">rollback simples</li>
+                    <li class="fragment">entrega contínua</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Pequeno deploy.
+                <br>
+                Pequeno impacto.
+            </h1>
+        </section>
+
+        <section>
+            <div class="media-placeholder">
+                IMAGEM<br>
+                evolução gradual / timeline / migração incremental
+            </div>
+        </section>
+
+        <section>
+            <h2>Também ganhamos</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">aprendizado incremental</li>
+                    <li class="fragment">menor medo</li>
+                    <li class="fragment">feedback rápido</li>
+                    <li class="fragment">redução gradual da dívida técnica</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <div class="quote">
+                Você paga a dívida técnica
+                <br>
+                em parcelas.
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- CUIDADOS -->
+        <!-- ====================================================== -->
+
+        <section class="big-center">
+            <h1>
+                Mas existe
+                <br>
+                um perigo...
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="danger">
+                Migrar rápido demais
+            </h1>
+        </section>
+
+        <section>
+            <h2>Problemas comuns</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">módulos acoplados</li>
+                    <li class="fragment">integrações quebradas</li>
+                    <li class="fragment">regras esquecidas</li>
+                    <li class="fragment">migração sem observabilidade</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="media-placeholder">
+                IMAGEM<br>
+                logs vermelhos / dashboards / incidente
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Antes de migrar
+            </h1>
+        </section>
+
+        <section>
+            <h2>Você precisa de:</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">logs</li>
+                    <li class="fragment">monitoramento</li>
+                    <li class="fragment">métricas</li>
+                    <li class="fragment">rollback</li>
+                    <li class="fragment">visibilidade</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1 class="danger">
+                Senão você só
+                <br>
+                move o caos.
+            </h1>
+        </section>
+
+        <section>
+            <div class="media-placeholder">
+                IMAGEM<br>
+                grafana / observabilidade / tracing
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- QUANDO NÃO USAR -->
+        <!-- ====================================================== -->
+
+        <section class="big-center">
+            <h1>
+                E nem tudo precisa
+                <br>
+                de Strangler Pattern
+            </h1>
+        </section>
+
+        <section>
+            <h2>Talvez não faça sentido quando:</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">o sistema é pequeno</li>
+                    <li class="fragment">há pouco risco</li>
+                    <li class="fragment">baixa complexidade</li>
+                    <li class="fragment">reescrever é barato</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Não é
+                <br>
+                bala de prata.
+            </h1>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- FECHAMENTO -->
+        <!-- ====================================================== -->
+
+        <section class="big-center">
+            <h1>
+                Porque no fim...
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="success">
+                O legado não é
+                <br>
+                o inimigo.
+            </h1>
+        </section>
+
+        <section>
+            <div class="media-placeholder">
+                IMAGEM HERO FINAL<br>
+                legado coexistindo com moderno / arquitetura evolutiva
+            </div>
+        </section>
+
+        <section class="big-center">
+            <div class="quote">
+                Talvez o melhor sistema
+                <br>
+                não seja o mais moderno.
+            </div>
+        </section>
+
+        <section class="big-center">
+            <div class="quote">
+                Talvez seja o que consegue
+                <br>
+                evoluir sem parar o negócio.
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Modernização
+                <br>
+                não é revolução.
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1 class="success">
+                É logística.
+            </h1>
+        </section>
+
+        <section class="big-center">
+            <h1>
+                Obrigado.
+            </h1>
+
+            <h3>
+                Alessandro Feitoza
+            </h3>
+
+            <div class="media-placeholder">
+                QR CODE / LINKEDIN / GITHUB / FOTO
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'fade',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>DDD — Introdução ao Domain Driven Design</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+
+	<style>
+		:root{
+			--primary:#42afff;
+			--danger:#ff5e5e;
+			--dark:#111;
+			--card:#1d1d1d;
+			--border:#333;
+		}
+
+		.reveal {
+			font-family: Inter, Segoe UI, sans-serif;
+		}
+
+		.highlight {
+			color: var(--primary);
+			font-weight: bold;
+		}
+
+		.alert {
+			color: var(--danger);
+			font-weight: bold;
+		}
+
+		.box{
+			background:var(--card);
+			border:1px solid var(--border);
+			border-radius:14px;
+			padding:20px;
+			margin-top:20px;
+		}
+
+		.small{
+			font-size:.72em;
+		}
+
+		.grid2{
+			display:grid;
+			grid-template-columns:1fr 1fr;
+			gap:25px;
+			margin-top:20px;
+		}
+
+		.card{
+			background:#202020;
+			border:1px solid #333;
+			border-radius:14px;
+			padding:20px;
+		}
+
+		.card h4{
+			color:var(--primary);
+			margin-bottom:15px;
+		}
+
+		.fragment.blur {
+			filter: blur(5px);
+		}
+
+		.fragment.blur.visible {
+			filter:none;
+		}
+
+		.domain-box{
+			background:#13202e;
+			border-left:5px solid var(--primary);
+			padding:18px;
+			border-radius:8px;
+		}
+
+		.infra-box{
+			background:#2a1d1d;
+			border-left:5px solid var(--danger);
+			padding:18px;
+			border-radius:8px;
+		}
+
+		.pill{
+			display:inline-block;
+			padding:10px 18px;
+			border-radius:30px;
+			background:#2b2b2b;
+			border:1px solid #444;
+			margin:6px;
+			font-size:.6em;
+		}
+
+		code{
+			background:#111;
+			padding:2px 8px;
+			border-radius:6px;
+			color:#8ed0ff;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="reveal">
+	<div class="slides">
+
+		<!-- CAPA -->
+
+		<section data-background-gradient="linear-gradient(to bottom, #111, #1d2735)">
+			<h3>Arquitetura e Modelagem</h3>
+			<h1 class="highlight">DDD</h1>
+			<h3>Domain Driven Design</h3>
+
+			<div class="fragment box">
+				<p>Modelando software a partir do <b>negócio</b>.</p>
+			</div>
+
+			<aside class="notes">
+				Pergunte:
+				Quem já trabalhou em um sistema onde o código parecia
+				não ter relação nenhuma com o problema real?
+			</aside>
+		</section>
+
+		<!-- O PROBLEMA -->
+
+		<section>
+			<h3>Por que DDD existe?</h3>
+
+			<div class="grid2">
+
+				<div class="card fragment">
+					<h4>Sistemas Tradicionais</h4>
+					<ul style="font-size:.75em;">
+						<li>Código focado em CRUD</li>
+						<li>Regras espalhadas</li>
+						<li>Classes anêmicas</li>
+						<li>Negócio perdido</li>
+					</ul>
+				</div>
+
+				<div class="card fragment">
+					<h4>Consequências</h4>
+					<ul style="font-size:.75em;">
+						<li>Acoplamento</li>
+						<li>Manutenção cara</li>
+						<li>Bug recorrente</li>
+						<li>Baixa evolução</li>
+					</ul>
+				</div>
+
+			</div>
+
+		</section>
+
+		<!-- COMPLEXIDADE -->
+
+
+
+		<!-- DOMINIO -->
+
+		<section>
+			<h3>O que é <span class="highlight">Domínio</span>?</h3>
+
+			<div class="fragment domain-box">
+				<h4>Domínio</h4>
+				<p style="font-size:.8em;">
+					Área de conhecimento e regras do negócio
+					que o software precisa representar.
+				</p>
+			</div>
+
+			<div class="fragment" style="margin-top:30px;">
+				<div class="pill">Financeiro</div>
+				<div class="pill">Logística</div>
+				<div class="pill">Saúde</div>
+				<div class="pill">Marketplace</div>
+				<div class="pill">Educação</div>
+			</div>
+		</section>
+
+		<!-- DOMINIO VS TECNOLOGIA -->
+
+		<section>
+			<h3>Como é amigo?</h3>
+
+			<div style="display:flex; gap:40px; margin-top:30px;">
+
+				<div class="fragment domain-box" style="flex:1;">
+					<h4>Domínio</h4>
+					<ul style="font-size:.7em;">
+						<li>Pedido</li>
+						<li>Pagamento</li>
+						<li>Desconto</li>
+						<li>Cliente</li>
+					</ul>
+				</div>
+
+				<div class="fragment infra-box" style="flex:1;">
+					<h4>Infra</h4>
+					<ul style="font-size:.7em;">
+						<li>Laravel</li>
+						<li>Docker</li>
+						<li>Redis</li>
+						<li>MySQL</li>
+					</ul>
+				</div>
+
+			</div>
+
+			<p class="fragment" style="margin-top:30px;">
+				Framework muda, a surda muda.<br>
+				<span class="highlight">Mas a regra de negócio permanece.</span>
+			</p>
+		</section>
+
+		<!-- ERIC EVANS -->
+
+		<section>
+			<h3>Origem do DDD</h3>
+
+			<div class="box fragment">
+				<h4 class="highlight">Eric Evans — 2003</h4>
+				<p style="font-size:.8em;">
+					Livro:
+					<i>Domain-Driven Design: Tackling Complexity in the Heart of Software</i>
+				</p>
+			</div>
+
+			<p class="fragment" style="margin-top:30px;">
+				O foco:
+			</p>
+
+			<h3 class="fragment highlight">
+				Colocar o domínio no centro do desenvolvimento
+			</h3>
+		</section>
+
+		<!-- UBIQUITOUS -->
+
+		<section data-background-color="#121a22">
+			<h2>Linguagem Ubíqua</h2>
+			<p class="highlight">Ubiquitous Language</p>
+		</section>
+
+		<section>
+			<h3>O problema da comunicação</h3>
+
+			<div class="grid2">
+
+				<div class="card fragment">
+					<h4>Negócio fala:</h4>
+					<p style="font-size:.7em;">
+						Cliente, compra, desconto,
+						entrega, inadimplência
+					</p>
+				</div>
+
+				<div class="card fragment">
+					<h4>TI fala:</h4>
+					<p style="font-size:.7em;">
+						DTO, CRUD, endpoint,
+						tabela, cache
+					</p>
+				</div>
+
+			</div>
+
+			<p class="fragment alert" style="margin-top:35px;">
+				Traduções geram erro.
+			</p>
+		</section>
+
+		<section>
+			<h3>Linguagem Ubíqua</h3>
+
+			<div class="box fragment">
+				<p>
+					Desenvolvedores e especialistas
+					usam o <span class="highlight">mesmo vocabulário</span>.
+				</p>
+			</div>
+
+			<ul style="margin-top:25px; font-size:.75em;">
+				<li class="fragment">Nome das classes</li>
+				<li class="fragment">Eventos</li>
+				<li class="fragment">Endpoints</li>
+				<li class="fragment">Conversas</li>
+				<li class="fragment">Documentação</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Exemplo Ruim</h3>
+
+			<div class="box fragment">
+<pre><code>
+OrderProcessorService
+GenericValidation
+DataManager
+</code></pre>
+			</div>
+
+			<p class="fragment alert">
+				Nome técnico e genérico.
+			</p>
+		</section>
+
+		<section>
+			<h3>Exemplo Melhor</h3>
+
+			<div class="box fragment">
+<pre><code>
+CarrinhoDeCompras
+Checkout
+CupomDeDesconto
+PedidoPago
+</code></pre>
+			</div>
+
+			<p class="fragment highlight">
+				O código começa a falar negócio.
+			</p>
+		</section>
+
+		<!-- FECHAMENTO PARTE 1 -->
+
+		<section data-background-gradient="linear-gradient(to bottom, #111, #15253a)">
+			<h2>Até aqui...</h2>
+
+			<div class="box">
+				<ul style="font-size:.75em;">
+					<li class="fragment">DDD resolve complexidade</li>
+					<li class="fragment">Domínio é o centro</li>
+					<li class="fragment">Tecnologia é suporte</li>
+					<li class="fragment">Linguagem Ubíqua conecta negócio e código</li>
+				</ul>
+			</div>
+
+			<h3 class="fragment highlight" style="margin-top:30px;">
+				Parte 2 → Bounded Context + Context Map
+			</h3>
+		</section>
+
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+
+<script>
+	Reveal.initialize({
+		hash:true,
+		slideNumber:'c/t',
+		transition:'slide'
+	});
+</script>
+
+</body>
+</html>
