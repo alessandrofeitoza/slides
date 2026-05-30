@@ -283,6 +283,146 @@
             opacity:.35;
             transform: scale(.85);
         }
+
+        .grid-2 {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:28px;
+            margin-top:50px;
+        }
+
+        .mini-card {
+            background:rgba(18,26,48,.85);
+            border:1px solid rgba(255,255,255,.08);
+            border-radius:24px;
+            padding:35px;
+            text-align:center;
+        }
+
+        .mini-card h3 {
+            font-size:2.4rem;
+            margin-bottom:18px;
+        }
+
+        .mini-card p {
+            font-size:1.4rem;
+        }
+
+        .terminal {
+            background:#08111f;
+            border-radius:20px;
+            padding:40px;
+            font-family:monospace;
+            margin-top:40px;
+        }
+
+        .terminal p {
+            margin:18px 0;
+            color:#5ef2a3;
+        }
+
+        .grid-3 {
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:26px;
+            margin-top:50px;
+        }
+
+        .promise-card {
+            background:var(--card);
+            border-radius:22px;
+            padding:35px;
+            text-align:center;
+            font-size:2rem;
+        }
+
+        .promise-card p {
+            margin-top:15px;
+            font-size:2rem;
+        }
+
+        .stamp-wall {
+            display:flex;
+            flex-wrap:wrap;
+            gap:25px;
+            margin-top:60px;
+        }
+
+        .stamp {
+            border:3px solid var(--danger);
+            color:var(--danger);
+            padding:18px 26px;
+            border-radius:18px;
+            font-weight:800;
+            transform:rotate(-4deg);
+        }
+
+        .stamp-success {
+            border:3px solid var(--success);
+            color:var(--success);
+            padding:18px 26px;
+            border-radius:18px;
+            font-weight:800;
+            transform:rotate(-4deg);
+        }
+
+        .swap-title {
+            position:relative;
+            height:220px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .swap-title h1 {
+            position:absolute;
+            background:#FFF;
+            color:#111;
+            padding:20px 40px;
+            border-radius:16px;
+        }
+
+        .incident-grid {
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:28px;
+            margin-top:45px;
+        }
+
+        .incident-card {
+            background:#2b1720;
+            border:1px solid rgba(255,90,90,.18);
+            border-radius:22px;
+            padding:35px;
+            text-align:center;
+        }
+
+        .incident-card span {
+            display:block;
+            font-size:2.8rem;
+            color:#ff6b6b;
+            margin-bottom:18px;
+        }
+
+        .incident-card p {
+            font-size:2rem;
+        }
+
+        .check-wall {
+            margin-top:50px;
+        }
+
+        .check {
+            background: #555e55;
+            border-radius:18px;
+            padding:18px 30px;
+            margin:18px 0;
+            font-size:2rem;
+        }
+
+        .bad {
+            border-left:6px solid var(--success);
+        }
     </style>
 </head>
 
@@ -338,6 +478,21 @@
             </div>
         </section>
 
+        <section data-background="#333">
+            <div style="display: flex;text-align: left;">
+                <div>
+                    <h2>Por que dessa palestra?</h2>
+                    <hr>
+                    <p class="fragment"> PHP tem 30+ e ele não é o problema. <strong class="fragment highlight-red">O problema é o problema!</strong></p>
+                    <hr>
+                    <div class="fragment">
+                        <strong>Lei de Conway: </strong>
+                        <em style="font-size: 1.6rem">"Qualquer organização que projeta um sistema (definido amplamente) produzirá um design cuja estrutura é uma cópia da estrutura de comunicação da organização."</em>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section style="align-items: flex-start; margin-top: 0;">
             <h3 style="text-align: left;">Agenda</h3>
             <hr>
@@ -381,18 +536,31 @@
             <img src="img/strangler/akon.jpg" class="fragment" alt="Akon dizendo irmão não mexe nisso">
         </section>
 
-        <section>
+        <section data-background="#DDD">
 
             <h2>Porque normalmente...</h2>
 
-            <div class="box">
+            <div class="grid-2">
 
-                <ul>
-                    <li class="fragment">ninguém entende tudo</li>
-                    <li class="fragment">há efeitos colaterais</li>
-                    <li class="fragment">existem regras escondidas</li>
-                    <li class="fragment">o deploy parece loteria</li>
-                </ul>
+                <div class="mini-card fragment">
+                    <h3>🤷</h3>
+                    <p style="font-size: 2rem">ninguém entende tudo</p>
+                </div>
+
+                <div class="mini-card fragment">
+                    <h3>⚠️</h3>
+                    <p style="font-size: 2rem">há efeitos colaterais</p>
+                </div>
+
+                <div class="mini-card fragment">
+                    <h3>🕵️</h3>
+                    <p style="font-size: 2rem">regras escondidas</p>
+                </div>
+
+                <div class="mini-card fragment">
+                    <h3>🎲</h3>
+                    <p style="font-size: 2rem">deploy parece loteria</p>
+                </div>
 
             </div>
 
@@ -407,7 +575,7 @@
 
         <section>
             <hr>
-            <h1>E o que diabos é isso de legado?</h1>
+            <h1>Mas o que diabos é isso de legado?</h1>
             <hr>
         </section>
 
@@ -498,19 +666,21 @@
         </section>
 
         <section>
+
             <h2>O legado normalmente...</h2>
 
-            <div class="box">
+            <div class="terminal">
 
-                <ul>
-                    <li class="fragment">sustenta negócio</li>
-                    <li class="fragment">gera receita</li>
-                    <li class="fragment">resolve problemas reais</li>
-                    <li class="fragment">sobreviveu ao tempo</li>
-                    <li class="fragment">acertou*</li>
-                </ul>
+                <p class="fragment">[SUCCESS] Sustenta o negócio</p>
+                <p class="fragment">[SUCCESS] Gera Receita</p>
+                <p class="fragment">[SUCCESS] Resolve Problemas reais</p>
+                <p class="fragment">[SUCCESS] Sobreviveu ao tempo</p>
+                <p class="fragment">[SUCCESS] Acertou*</p>
+
             </div>
+
         </section>
+
 
         <!-- ====================================================== -->
         <!-- PROBLEMA REAL -->
@@ -566,7 +736,7 @@
 
         <section class="big-center">
             <h1 class="danger">
-                “Simbora reescrever tudo” <span style="font-size: 3rem" class="fragment">com IA</span>
+                “Simbora reescrever tudo” <span style="font-size: 3rem" class="fragment"></span>
             </h1>
             <div style="float: right; font-style: italic; font-size: 2.4rem" class="fragment">
                 <small>Qualquer Dev desde que o mundo é mundo</small>
@@ -581,17 +751,39 @@
             </div>
         </section>
 
-        <section>
+        <section data-background="#FFF">
+
             <h2>Normalmente a promessa é:</h2>
 
-            <div class="box">
-                <ul>
-                    <li class="fragment">“vamos fazer do jeito certo agora”</li>
-                    <li class="fragment">“vamos usar tecnologia nova”</li>
-                    <li class="fragment">“vamos resolver tudo”</li>
-                    <li class="fragment">“em poucos meses termina”</li>
-                </ul>
+            <div class="grid-3">
+
+                <div class="promise-card fragment">
+                    ✔️
+                    <p>vamos fazer<br>do jeito certo</p>
+                </div>
+
+                <div class="promise-card fragment">
+                    🚀
+                    <p>tecnologias<br>novas</p>
+                </div>
+
+                <div class="promise-card fragment">
+                    🔥
+                    <p>resolver<br>tudo</p>
+                </div>
+
+                <div class="promise-card fragment">
+                    ⏳
+                    <p>em poucos<br>meses</p>
+                </div>
+
+                <div class="promise-card fragment">
+                    🤖
+                    <p>IA vai<br>acelerar</p>
+                </div>
+
             </div>
+
         </section>
 
         <section class="big-center">
@@ -696,26 +888,6 @@
   </code></pre>
         </section>
 
-        <section data-auto-animate>
-                <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.8rem;" class="hljs php" data-trim data-line-numbers="">
-// .blade.php
-// O novo legado!
-&lt;table&gt;
-    &lt;?php
-        $clients = App\Models\Client::all();
-
-        foreach ($clients as $item) {
-            $qtd_compras = $item->compras()->count();
-
-            echo "&lt;tr&gt;
-                &lt;td&gt;{$item->nome}&lt;/td&gt;
-                &lt;td&gt;{$qtd_compras}&lt;/td&gt;
-            &lt;/tr&gt;";
-        }
-    ?&gt;
-&lt;/table&gt;
-  </code></pre>
-        </section>
 
 
         <section>
@@ -741,17 +913,31 @@
             </h1>
         </section>
 
+
         <section>
+
             <h2>Porque existe um detalhe...</h2>
 
-            <div class="box">
-                <ul>
-                    <li class="fragment">o negócio continua funcionando</li>
-                    <li class="fragment">o cliente continua usando</li>
-                    <li class="fragment">o financeiro continua dependendo</li>
-                    <li class="fragment">e produção não pode parar</li>
-                </ul>
+            <div class="stamp-wall">
+
+                <div class="stamp fragment">
+                    o negócio continua funcionando
+                </div>
+
+                <div class="stamp fragment">
+                    o cliente continua usando
+                </div>
+
+                <div class="stamp fragment">
+                    o financeiro continua dependendo
+                </div>
+
+                <div class="stamp fragment">
+                    e produção não pode parar
+                </div>
+
             </div>
+
         </section>
 
         <section class="big-center">
@@ -764,7 +950,7 @@
 
         <section class="big-center">
             <h1 class="danger">
-                “como reescrever?”
+                “como reescrever?” e sim
             </h1>
         </section>
 
@@ -906,7 +1092,7 @@
         <section data-background="img/strangler/tree.png"></section>
 
         <section class="big-center">
-            <div class="quote">
+            <div class="quote" style="font-size: 3rem">
                 Substituindo um comportamento por vez
             </div>
         </section>
@@ -1097,11 +1283,25 @@
         <!-- ATO 4 — PHP NA PRÁTICA -->
         <!-- ====================================================== -->
 
-        <section class="big-center" data-background="img/strangler/kamen.gif">
-            <br><br><br><br><br><br><br><br><br><br><br>
-            <h1 style="background-color: #FFF">
-                E o PHP hein
-            </h1>
+        <section
+                class="big-center"
+                data-background="img/strangler/kamen.gif">
+
+            <div class="swap-title" style="padding-top: 400px">
+                <h1
+                        class="fragment fade-out"
+                        data-fragment-index="0">
+                    E o PHP hein?
+                </h1>
+
+                <h1
+                        class="fragment fade-in"
+                        data-fragment-index="0">
+                    Vai morrer?
+                </h1>
+
+            </div>
+
         </section>
 
         <section class="big-center">
@@ -1401,17 +1601,20 @@ location / {
         </section>
 
 
-        <section>
-            <h2>Benefícios imediatos</h2>
 
-            <div class="box">
-                <ul>
-                    <li class="fragment">menos risco</li>
-                    <li class="fragment">deploy menor/melhor</li>
-                    <li class="fragment">rollback simples</li>
-                    <li class="fragment">entrega contínua</li>
-                </ul>
+        <section>
+        <h2>Benefícios imediatos</h2>
+
+
+            <div class="stamp-wall">
+
+                <div class="fragment stamp-success">menos risco</div>
+                <div class="fragment stamp-success">deploy menor/melhor</div>
+                <div class="fragment stamp-success">rollback simples</div>
+                <div class="fragment stamp-success">entrega contínua</div>
+
             </div>
+
         </section>
 
         <section class="big-center">
@@ -1464,16 +1667,33 @@ location / {
         </section>
 
         <section>
+
             <h2>Problemas comuns</h2>
 
-            <div class="box">
-                <ul>
-                    <li class="fragment">módulos acoplados</li>
-                    <li class="fragment">integrações quebradas</li>
-                    <li class="fragment">regras esquecidas</li>
-                    <li class="fragment">migração sem observabilidade</li>
-                </ul>
+            <div class="incident-grid">
+
+                <div class="incident-card fragment">
+                    <span>⚠</span>
+                    <p>módulos<br>acoplados</p>
+                </div>
+
+                <div class="incident-card fragment">
+                    <span>✖</span>
+                    <p>integrações<br>quebradas</p>
+                </div>
+
+                <div class="incident-card fragment">
+                    <span>?</span>
+                    <p>regras<br>esquecidas</p>
+                </div>
+
+                <div class="incident-card fragment">
+                    <span>📉</span>
+                    <p>sem<br>observabilidade</p>
+                </div>
+
             </div>
+
         </section>
 
         <section data-background="img/strangler/symfony.jpeg" data-background-size="90%"></section>
@@ -1487,16 +1707,16 @@ location / {
         <section>
             <h2>Você precisa de:</h2>
 
-            <div class="box">
-                <ul>
-                    <li class="fragment">logs</li>
-                    <li class="fragment">monitoramento</li>
-                    <li class="fragment">métricas</li>
-                    <li class="fragment">rollback</li>
-                    <li class="fragment">visibilidade</li>
-                </ul>
+            <div class="check-wall">
+                <div class="check bad fragment">🗹 logs</div>
+                <div class="check bad fragment">🗹 monitoramento</div>
+                <div class="check bad fragment">🗹 métricas</div>
+                <div class="check bad fragment">🗹 rollback</div>
+                <div class="check bad fragment">🗹 visibilidade</div>
+                <div class="check bad fragment">🗹 Cobertura de Testes</div>
             </div>
         </section>
+
 
         <section class="big-center">
             <h1 class="danger">
@@ -1535,14 +1755,20 @@ location / {
             </div>
         </section>
 
-        <section class="big-center">
-            <img src="../img/gifs/lobisomem.gif" alt="">
+        <section >
+            <div style="justify-content: center; display: flex;">
+            <div>
+                <img src="../img/gifs/lobisomem.gif" width="100%" alt="">
+            </div>
 
-            <h1>
-                Não é
-                <br>
-                bala de prata.
-            </h1>
+            <div style="text-align: center; padding-left: 20px">
+                <h2>
+                    Não é
+                    <br>
+                    bala de prata.
+                </h2>
+            </div>
+            </div>
         </section>
 
         <!-- ====================================================== -->
@@ -1563,15 +1789,8 @@ location / {
             </h1>
         </section>
 
-        <section>
-            <div class="media-placeholder">
-                IMAGEM HERO FINAL<br>
-                legado coexistindo com moderno / arquitetura evolutiva
-            </div>
-        </section>
-
         <section class="big-center">
-            <div class="quote">
+            <div class="quote" style="font-size: 3rem">
                 Talvez o melhor sistema
                 <br>
                 não seja o mais moderno.
@@ -1579,7 +1798,7 @@ location / {
         </section>
 
         <section class="big-center">
-            <div class="quote">
+            <div class="quote" style="font-size: 3rem">
                 Talvez seja o que consegue
                 <br>
                 evoluir sem parar o negócio.
@@ -1587,17 +1806,27 @@ location / {
         </section>
 
         <section class="big-center">
-            <h1>
-                Modernização
+            <h2>
+                Modernizar Software
                 <br>
-                não é revolução.
+                não é HYPE.
+            </h2>
+
+            <h1 class="success fragment">
+                É logística.
             </h1>
         </section>
 
-        <section class="big-center">
-            <h1 class="success">
-                É logística.
-            </h1>
+        <section data-background="img/strangler/background.jpg">
+            <br><br><br><br><br><br><br><br><br>
+            <h1 class="fragment">Qual legado você quer deixar?</h1>
+        </section>
+
+        <section data-background="#333" class="big-center">
+            <p style="font-size: 5rem;">
+                Bom<span class="fragment">, como dizia minha ex:</span>  <br>
+                <span class="fragment" style="font-size: 8rem;">Terminamos</span>
+            </p>
         </section>
 
 
@@ -1607,36 +1836,57 @@ location / {
 
 
                 <li>
-                    <a href="https://martinfowler.com/bliki/StranglerFigApplication.html">
-                        Artigo: Strangler Fig Pattern <br><small>Martin Fowler (2004)</small>
+                    <a style="; color: white; " href="https://martinfowler.com/bliki/StranglerFigApplication.html">
+                        Artigo: Strangler Fig Pattern <br><small style="font-size: 1rem">Martin Fowler (2004)</small>
                     </a>
                 </li>
                 <li>
-                    <a href="https://medium.com/@navidbarsalari/incremental-migration-evolving-without-breaking-production-edf679769918">
-                        Artigo: Incremental migration withour breaking production<br><small>Navid Barsalari (2025)</small>
+                    <a style="; color: white; " href="https://medium.com/@navidbarsalari/incremental-migration-evolving-without-breaking-production-edf679769918">
+                        Artigo: Incremental migration withour breaking production<br><small style="font-size: 1rem">Navid Barsalari (2025)</small>
                     </a>
                 </li>
+                <li>
+                    <a style="; color: white; " href="https://martinfowler.com/bliki/ConwaysLaw.html/">
+                        Artigo: Conways Law<br><small style="font-size: 1rem"> Martin Fowler (2022)</small>
+                    </a>
+                </li>
+
                  <li>
-                    <a href="https://www.amazon.com.br/Arquitetura-Software-Trade-off-Arquiteturas-Distribu%C3%ADdas/dp/8550819840">
-                        Livro: Arch de Software: as partes dificeis<br><small>Neal Ford e outros (2024)</small>
+                    <a style="; color: white; " href="https://www.amazon.com.br/Arquitetura-Software-Trade-off-Arquiteturas-Distribu%C3%ADdas/dp/8550819840">
+                        Livro: Arch de Software: as partes dificeis<br><small style="font-size: 1rem">Neal Ford e outros (2024)</small>
                     </a>
                 </li>
             </ul>
         </section>
 
         <section class="big-center">
-            <h1>
-                Obrigado.
-            </h1>
+            <h2>Valeu o Boi,<br> valeu o Vaqueiro</h2>
 
-            <h3>
-                Alessandro Feitoza
-            </h3>
+            <br>
 
-            <div class="media-placeholder">
-                QR CODE / LINKEDIN / GITHUB / FOTO
+            <div style="display: flex; justify-content: center;">
+                <div style="text-align: left; font-size: 2.3rem; width: 50%">
+                    <br>
+                    @alessandro_feitoza
+                    <br><br>
+
+
+                    Linkedin: <br> /in/AlessandroFeitoza
+
+
+                </div>
+                <div style="width: 50%">
+                    <img width="60%" src="img/strangler/qrcode.png" alt="">
+                    <br>
+                    <strong>slides.feitoza.tec.br</strong>
+                </div>
             </div>
+
+            <br><br>
+            
         </section>
+
+
 
     </div>
 </div>
