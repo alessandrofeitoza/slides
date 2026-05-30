@@ -238,6 +238,51 @@
             align-items:center;
             gap:18px;
         }
+
+        .fragment.blur {
+            filter: blur(5px);
+        }
+        .fragment.blur.visible {
+            filter: none;
+        }
+
+        .tree-scene {
+            position: relative;
+            height: 340px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-top:40px;
+        }
+
+        .tree {
+            position:absolute;
+            transition: all .6s ease;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,.25));
+        }
+
+        .legacy-tree {
+            font-size:7rem;
+        }
+
+        .strangler-tree {
+            font-size:4rem;
+            transform: translateX(90px) translateY(40px);
+        }
+
+        .strangler-tree.big {
+            font-size:7rem;
+            opacity:.9;
+        }
+
+        .strangler-tree.giant {
+            font-size:9rem;
+        }
+
+        .legacy-tree.wrapped {
+            opacity:.35;
+            transform: scale(.85);
+        }
     </style>
 </head>
 
@@ -297,10 +342,10 @@
             <h3 style="text-align: left;">Agenda</h3>
             <hr>
             <ul>
-                <li class="fragment">Contextualização</li>
-                <li class="fragment">O problema: há um elefante na sala</li>
-                <li class="fragment">O jeito errado VS O jeito menos errado</li>
-                <li class="fragment">Exemplos Práticos</li>
+                <li class="fragment">Problematização</li>
+                <li class="fragment">Contexto de solução</li>
+                <li class="fragment">Exemplo de transformação</li>
+                <li class="fragment">O pulo do gato</li>
             </ul>
         </section>
 
@@ -320,11 +365,11 @@
             <div class="box">
 
                 <ul>
-                    <li class="fragment">arquivo_final.php</li>
-                    <li class="fragment">arquivo_final_agora_vai.php</li>
-                    <li class="fragment">arquivo_final_v2.php</li>
-                    <li class="fragment">arquivo_final_v2_corrigido.php</li>
-                    <li class="fragment">arquivo_final_v2_corrigido_agora_vai.php</li>
+                    <li class="fragment custom blur">arquivo_final.php</li>
+                    <li class="fragment custom blur">arquivo_final_agora_vai.php</li>
+                    <li class="fragment custom blur">arquivo_final_v2.php</li>
+                    <li class="fragment custom blur">arquivo_final_v2_corrigido.php</li>
+                    <li class="fragment custom blur">arquivo_final_v2_corrigido_agora_vai.php</li>
                 </ul>
 
             </div>
@@ -400,36 +445,44 @@
         <!-- ====================================================== -->
 
 
-        <section>
+        <section data-auto-animate>
 
-            <h2>E normalmente ele tem...</h2>
+            <h2>coisas pra ficar de olho...</h2>
 
             <div class="box">
 
                 <ul>
-                    <li class="fragment">Alguns* anos de produção</li>
-                    <li class="fragment">regras críticas</li>
-                    <li class="fragment">dependências antigas</li>
-                    <li class="fragment">deploy manual</li>
-                    <li class="fragment">muito medo envolvido</li>
+                    <li>Alguns* anos de produção</li>
+                    <li>dependências antigas</li>
+                    <li>muito medo envolvido</li>
                 </ul>
-
             </div>
+        </section>
+        <section data-auto-animate>
 
+            <h2>coisas pra ficar de olho...</h2>
+
+            <div class="box">
+                <ul>
+                    <li>Alguns* anos de produção</li>
+                    <li>regras críticas</li>
+                    <li>dependências antigas</li>
+                    <li>deploy manual</li>
+                    <li>muito medo envolvido</li>
+                </ul>
+            </div>
         </section>
 
 
         <section class="big-center">
-
             <h1>Todo mundo<br>tem legado</h1>
-
         </section>
 
 
         <section class="big-center" data-background="img/strangler/escobar2.gif" data-background-size="100%">
             <br><br><br><br><br><br><br><br>
             <h1 class="success" style="background-color: #FFF">
-                Mas Sistema legado<br>
+                Mas, Sistema legado<br>
                 dá dinheiro
             </h1>
 
@@ -445,7 +498,6 @@
         </section>
 
         <section>
-
             <h2>O legado normalmente...</h2>
 
             <div class="box">
@@ -455,10 +507,9 @@
                     <li class="fragment">gera receita</li>
                     <li class="fragment">resolve problemas reais</li>
                     <li class="fragment">sobreviveu ao tempo</li>
+                    <li class="fragment">acertou*</li>
                 </ul>
-
             </div>
-
         </section>
 
         <!-- ====================================================== -->
@@ -478,10 +529,10 @@
             <div class="box" style="display: flex; justify-content: space-between">
 
                 <ul >
-                    <li class="fragment">é depender de poucas pessoas</li>
-                    <li class="fragment">é o medo de alterar</li>
-                    <li class="fragment">é arquitetura impedir evolução</li>
-                    <li class="fragment">é não conseguir digivolver</li>
+                    <li class="fragment custom blur">é depender de poucas pessoas</li>
+                    <li class="fragment custom blur">é o medo de alterar</li>
+                    <li class="fragment custom blur">é arquitetura impedir evolução</li>
+                    <li class="fragment custom blur">é não conseguir digivolver</li>
                 </ul>
 
                 <div>
@@ -567,6 +618,106 @@
             <br><br><br><br><br><br><br><br><br><br>
         </section>
 
+
+        <section data-auto-animate>
+                <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.8rem;" class="hljs php" data-trim data-line-numbers="">
+// .phtml
+&lt;table&gt;
+    &lt;?php
+        $con = include 'conexao.php';
+        $clients = mysqli_query($con, "SELECT * FROM tb_clients";
+
+        while ($item = mysql_fetch_assoc($clients)) {
+            echo "&lt;tr&gt;
+                &lt;td&gt;{$item['nome']}&lt;/td&gt;
+            &lt;/tr&gt;";
+        }
+    ?&gt;
+&lt;/table&gt;
+  </code></pre>
+        </section>
+
+        <section data-auto-animate>
+                <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.8rem;" class="hljs php" data-trim data-line-numbers="">
+// .blade.php
+&lt;table&gt;
+    &lt;?php
+        $clients = App\Models\Client::all();
+
+        foreach ($clients as $item) {
+            echo "&lt;tr&gt;
+                &lt;td&gt;{$item->nome}&lt;/td&gt;
+            &lt;/tr&gt;";
+        }
+    ?&gt;
+&lt;/table&gt;
+  </code></pre>
+        </section>
+
+        <section data-auto-animate>
+                <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.8rem;" class="hljs php" data-trim data-line-numbers="">
+// .blade.php
+&lt;table&gt;
+    &lt;?php
+        $clients = App\Models\Client::all();
+
+        foreach ($clients as $item) {
+            $qtd_compras = $item->compras()->count();
+
+            echo "&lt;tr&gt;
+                &lt;td&gt;{$item->nome}&lt;/td&gt;
+                &lt;td&gt;{$qtd_compras}&lt;/td&gt;
+            &lt;/tr&gt;";
+        }
+    ?&gt;
+&lt;/table&gt;
+  </code></pre>
+        </section>
+
+        <section data-auto-animate>
+                <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.8rem;" class="hljs php" data-trim data-line-numbers="">
+// .blade.php
+// O novo legado!
+&lt;table&gt;
+    &lt;?php
+        $clients = App\Models\Client::all();
+
+        foreach ($clients as $item) {
+            // N+1 Query
+            $qtd_compras = $item->compras()->count();
+
+            echo "&lt;tr&gt;
+                &lt;td&gt;{$item->nome}&lt;/td&gt;
+                &lt;td&gt;{$qtd_compras}&lt;/td&gt;
+            &lt;/tr&gt;";
+        }
+    ?&gt;
+&lt;/table&gt;
+  </code></pre>
+        </section>
+
+        <section data-auto-animate>
+                <pre data-id="code-animation"><code style="max-height: 600px; font-size: 1.8rem;" class="hljs php" data-trim data-line-numbers="">
+// .blade.php
+// O novo legado!
+&lt;table&gt;
+    &lt;?php
+        $clients = App\Models\Client::all();
+
+        foreach ($clients as $item) {
+            $qtd_compras = $item->compras()->count();
+
+            echo "&lt;tr&gt;
+                &lt;td&gt;{$item->nome}&lt;/td&gt;
+                &lt;td&gt;{$qtd_compras}&lt;/td&gt;
+            &lt;/tr&gt;";
+        }
+    ?&gt;
+&lt;/table&gt;
+  </code></pre>
+        </section>
+
+
         <section>
             <div class="quote" style="font-size: 3rem">
                 E o legado continua lá.
@@ -619,12 +770,12 @@
 
         <section class="big-center">
             <hr>
-            <h1 class="success">
+            <h3 style="font-size: 3rem;" class="success">
                 “como evoluir<br>
                 sem desligar?”
-            </h1>
+            </h3>
             <hr>
-            <h3 class="fragment">Strangler Fig Pattern</h3>
+            <h2 class="fragment">Strangler Fig Pattern</h2>
         </section>
 
         <!-- ====================================================== -->
@@ -632,7 +783,8 @@
         <!-- ====================================================== -->
 
         <section data-background="img/strangler/arvore2.jpg" data-background-size="60%">
-            <p class="fragment" style="font-size: 3rem; background-color: #DDD; color: #333">Gameleira / Abraço da Morte</p>
+            <p class="fragment fade-in-then-out" style="font-size: 3rem; background-color: #DDD; color: #333">Fig (Figueira)</p>
+            <p class="fragment fade-up" style="font-size: 3rem; background-color: #DDD; color: #333">Gameleira / Abraço da Morte</p>
 
             <div class="box fragment">
                 <p>
@@ -665,16 +817,93 @@
         </section>
 
 
-        <section>
-            <div class="box">
-                <ul>
-                    <li class="fragment">a árvore original continua viva</li>
-                    <li class="fragment">a nova cresce ao redor</li>
-                    <li class="fragment">a substituição é gradual</li>
-                    <li class="fragment">até a antiga deixar de ser necessária</li>
-                </ul>
+        <!-- ====================================================== -->
+        <!-- AUTO ANIMATE — FIGUEIRA / STRANGLER -->
+        <!-- ====================================================== -->
+
+        <section data-auto-animate>
+
+            <h2>A árvore original</h2>
+
+            <div class="tree-scene">
+
+                <div class="tree legacy-tree" data-id="legacy-tree">
+                    🌳
+                </div>
+
             </div>
+
+            <div class="quote">
+                a árvore original continua viva
+            </div>
+
         </section>
+
+        <section data-auto-animate>
+
+            <h2>Algo começa a mudar...</h2>
+
+            <div class="tree-scene">
+
+                <div class="tree legacy-tree" data-id="legacy-tree">
+                    🌳
+                </div>
+
+                <div class="tree strangler-tree" data-id="new-tree">
+                    🌱
+                </div>
+
+            </div>
+
+            <div class="quote">
+                a nova cresce ao redor
+            </div>
+
+        </section>
+
+        <section data-auto-animate>
+
+            <h2>Coexistência</h2>
+
+            <div class="tree-scene">
+
+                <div class="tree legacy-tree wrapped"
+                     data-id="legacy-tree">
+                    🌳
+                </div>
+
+                <div class="tree strangler-tree big"
+                     data-id="new-tree">
+                    🌿
+                </div>
+
+            </div>
+
+            <div class="quote">
+                a substituição é gradual
+            </div>
+
+        </section>
+
+        <section data-auto-animate>
+
+            <h2>Até que...</h2>
+
+            <div class="tree-scene">
+
+                <div class="tree strangler-tree giant"
+                     data-id="new-tree">
+                    🌲
+                </div>
+
+            </div>
+
+            <div class="quote">
+                até a antiga deixar de ser necessária
+            </div>
+
+        </section>
+        <section data-background="img/strangler/tree.png"></section>
 
         <section class="big-center">
             <div class="quote">
@@ -943,6 +1172,23 @@ class ClienteController {
 
         </section>
 
+        <section>
+            <pre><code class="language-js">
+$.ajax({
+    url: "/clientes",
+    success: function(clientes) {
+
+        clientes.forEach(function(cliente) {
+            $("#lista").append(
+                "<li>" + cliente.nome + "</li>"
+            );
+        });
+
+    }
+});
+            </code></pre>
+        </section>
+
         <section class="big-center">
             <h1 class="danger">
                 E aí nasce
@@ -956,10 +1202,10 @@ class ClienteController {
 
             <div class="box">
                 <ul>
-                    <li class="fragment">ninguém entende tudo</li>
-                    <li class="fragment">há dependências escondidas</li>
-                    <li class="fragment">side effects inesperados</li>
-                    <li class="fragment">regras invisíveis</li>
+                    <li class="fragment custom blur">ninguém entende tudo</li>
+                    <li class="fragment custom blur">há dependências escondidas</li>
+                    <li class="fragment custom blur">side effects inesperados</li>
+                    <li class="fragment custom blur">regras invisíveis</li>
                 </ul>
             </div>
         </section>
@@ -1000,7 +1246,7 @@ class ClienteController {
 
             <div class="box">
                 <ul>
-                    <li class="fragment">clientes → candidato ideal</li>
+                    <li class="fragment highlight-red">clientes → candidato ideal</li>
                     <li class="fragment">financeiro → ainda legado</li>
                     <li class="fragment">pedidos → depois</li>
                 </ul>
@@ -1035,7 +1281,7 @@ Route::get('/clientes', function () {
             </h1>
         </section>
 
-        <section data-background="img/strangler/camadas.png">
+        <section data-background-size="35%" data-background="img/strangler/camadas.png">
 
         </section>
 
@@ -1055,13 +1301,7 @@ Route::get('/clientes', function () {
             </h1>
         </section>
 
-        <section>
-            <h2>Reverse Proxy</h2>
-
-            <div class="media-placeholder">
-                DIAGRAMA<br>
-                nginx no meio
-            </div>
+        <section data-background="img/strangler/proxy.png">
         </section>
 
         <section>
@@ -1090,11 +1330,13 @@ location / {
             </h1>
         </section>
 
-        <section>
-            <div class="media-placeholder">
-                DIAGRAMA FINAL<br>
-                usuário → nginx → legado + novo sistema
-            </div>
+        <section data-background="img/strangler/camadas2.png" data-background-size="50%" data-auto-animate>
+        </section>
+        <section data-background="img/strangler/camadas3.png" data-background-size="50%" data-auto-animate>
+        </section>
+        <section data-background="img/strangler/camadas4.png" data-background-size="48%" data-auto-animate>
+        </section>
+        <section data-background="img/strangler/camadas5.png" data-background-size="45%" data-auto-animate>
         </section>
 
         <section class="big-center">
@@ -1110,7 +1352,7 @@ location / {
                 <ul>
                     <li class="fragment">PHP antigo</li>
                     <li class="fragment">PHP moderno</li>
-                    <li class="fragment">Laravel</li>
+                    <li class="fragment">Laravel/Symfony/etc</li>
                     <li class="fragment">procedural</li>
                     <li class="fragment">Docker</li>
                     <li class="fragment">tudo coexistindo</li>
@@ -1118,11 +1360,16 @@ location / {
             </div>
         </section>
 
-        <section>
-            <div class="media-placeholder">
-                LOGOS / CONTAINERS<br>
-                PHP 5 + PHP 8 + Docker + Laravel
-            </div>
+        <section data-background="#FFF">
+            <img class="fragment" src="img/strangler/php5.png" width="250px" alt="">
+            <img class="fragment" src="img/strangler/php8.png" width="250px" alt="">
+            <img class="fragment" src="img/strangler/docker.png" width="250px" alt="">
+            <img class="fragment" src="img/strangler/jquery.png" width="250px" alt="">
+            <img class="fragment" src="img/strangler/react.png" width="250px" alt="">
+
+            <hr>
+            <p class="fragment" style="color: #333">mas aí virou suruba<span class="fragment">, só que organizada</span></p>
+
         </section>
 
         <section class="big-center">
@@ -1135,6 +1382,12 @@ location / {
             </div>
         </section>
 
+        <section>
+            <p>Na psicologia chamamos isso de </p>
+            <h1>Terapia Dialética</h1>
+            <hr>
+            <p class="fragment"><em>Buscar o equilibrio entre Aceitação e Mudança</em></p>
+        </section>
         <!-- ====================================================== -->
         <!-- ATO 5 — BENEFÍCIOS, RISCOS E FECHAMENTO -->
         <!-- ====================================================== -->
@@ -1147,13 +1400,14 @@ location / {
             </h1>
         </section>
 
+
         <section>
             <h2>Benefícios imediatos</h2>
 
             <div class="box">
                 <ul>
                     <li class="fragment">menos risco</li>
-                    <li class="fragment">deploy menor</li>
+                    <li class="fragment">deploy menor/melhor</li>
                     <li class="fragment">rollback simples</li>
                     <li class="fragment">entrega contínua</li>
                 </ul>
@@ -1168,12 +1422,7 @@ location / {
             </h1>
         </section>
 
-        <section>
-            <div class="media-placeholder">
-                IMAGEM<br>
-                evolução gradual / timeline / migração incremental
-            </div>
-        </section>
+        <section data-background="img/strangler/timeline.png" data-background-size="100%"></section>
 
         <section>
             <h2>Também ganhamos</h2>
@@ -1183,14 +1432,14 @@ location / {
                     <li class="fragment">aprendizado incremental</li>
                     <li class="fragment">menor medo</li>
                     <li class="fragment">feedback rápido</li>
-                    <li class="fragment">redução gradual da dívida técnica</li>
+                    <li class="fragment">redução gradual do débito técnico</li>
                 </ul>
             </div>
         </section>
 
         <section class="big-center">
             <div class="quote">
-                Você paga a dívida técnica
+                Você paga o débito técnico
                 <br>
                 em parcelas.
             </div>
@@ -1227,12 +1476,7 @@ location / {
             </div>
         </section>
 
-        <section>
-            <div class="media-placeholder">
-                IMAGEM<br>
-                logs vermelhos / dashboards / incidente
-            </div>
-        </section>
+        <section data-background="img/strangler/symfony.jpeg" data-background-size="90%"></section>
 
         <section class="big-center">
             <h1>
@@ -1262,12 +1506,9 @@ location / {
             </h1>
         </section>
 
-        <section>
-            <div class="media-placeholder">
-                IMAGEM<br>
-                grafana / observabilidade / tracing
-            </div>
-        </section>
+
+        <section data-background="img/strangler/kibana.png" data-background-size="90%"></section>
+        <section data-background="img/strangler/grafana.png" data-background-size="90%"></section>
 
         <!-- ====================================================== -->
         <!-- QUANDO NÃO USAR -->
@@ -1286,15 +1527,17 @@ location / {
 
             <div class="box">
                 <ul>
-                    <li class="fragment">o sistema é pequeno</li>
-                    <li class="fragment">há pouco risco</li>
-                    <li class="fragment">baixa complexidade</li>
-                    <li class="fragment">reescrever é barato</li>
+                    <li class="fragment custom blur">o sistema é pequeno</li>
+                    <li class="fragment custom blur">há pouco risco</li>
+                    <li class="fragment custom blur">baixa complexidade</li>
+                    <li class="fragment custom blur">reescrever é barato</li>
                 </ul>
             </div>
         </section>
 
         <section class="big-center">
+            <img src="../img/gifs/lobisomem.gif" alt="">
+
             <h1>
                 Não é
                 <br>
@@ -1355,6 +1598,30 @@ location / {
             <h1 class="success">
                 É logística.
             </h1>
+        </section>
+
+
+        <section>
+            <h2>Referências</h2>
+            <ul>
+
+
+                <li>
+                    <a href="https://martinfowler.com/bliki/StranglerFigApplication.html">
+                        Artigo: Strangler Fig Pattern <br><small>Martin Fowler (2004)</small>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://medium.com/@navidbarsalari/incremental-migration-evolving-without-breaking-production-edf679769918">
+                        Artigo: Incremental migration withour breaking production<br><small>Navid Barsalari (2025)</small>
+                    </a>
+                </li>
+                 <li>
+                    <a href="https://www.amazon.com.br/Arquitetura-Software-Trade-off-Arquiteturas-Distribu%C3%ADdas/dp/8550819840">
+                        Livro: Arch de Software: as partes dificeis<br><small>Neal Ford e outros (2024)</small>
+                    </a>
+                </li>
+            </ul>
         </section>
 
         <section class="big-center">
