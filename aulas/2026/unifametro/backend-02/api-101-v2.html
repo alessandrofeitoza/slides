@@ -1,0 +1,1112 @@
+
+		<!doctype html>
+
+		<html lang="pt-br">
+
+		<head>
+			<meta charset="utf-8">
+
+
+			<title>API 101</title>
+
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+			<link rel="stylesheet" href="../../../../dist/reset.css">
+			<link rel="stylesheet" href="../../../../dist/reveal.css">
+			<link rel="stylesheet" href="../../../../dist/theme/black.css">
+
+			<style>
+
+				:root{
+					--bg:#020617;
+					--bg-soft:#0f172a;
+					--primary:#3b82f6;
+					--text:#f8fafc;
+					--muted:#94a3b8;
+				}
+
+				.reveal{
+					font-family: Inter, system-ui, sans-serif;
+					color: var(--text);
+					font-size: 34px;
+				}
+
+				.reveal .slides section{
+					text-align:center;
+				}
+
+				h1,h2,h3{
+					font-weight:800 !important;
+					letter-spacing:-2px;
+				}
+
+				.hero{
+					font-size:5rem;
+					font-weight:900;
+					letter-spacing:-4px;
+				}
+
+				.big{
+					font-size:7rem;
+					font-weight:900;
+				}
+
+				.muted{
+					color:var(--muted);
+				}
+
+				.glow{
+					text-shadow:
+							0 0 30px rgba(59,130,246,.5),
+							0 0 60px rgba(59,130,246,.4);
+				}
+
+				.journey{
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					gap:40px;
+					margin-top:120px;
+				}
+
+				.node{
+
+					width:180px;
+					height:180px;
+
+					border-radius:50%;
+
+					display:flex;
+					align-items:center;
+					justify-content:center;
+
+					background:rgba(255,255,255,.05);
+
+					border:2px solid rgba(255,255,255,.08);
+
+					backdrop-filter:blur(20px);
+
+					font-weight:bold;
+
+				}
+
+				.gradient-slide{
+
+					background:
+							radial-gradient(circle at top left,#1e293b 0%,transparent 35%),
+							radial-gradient(circle at bottom right,#172554 0%,transparent 35%);
+
+				}
+
+				.timeline{
+
+					display:flex;
+					justify-content:center;
+					align-items:center;
+					gap:20px;
+
+					font-size:2rem;
+
+					margin-top:100px;
+
+				}
+
+				.timeline span{
+					opacity:.4;
+				}
+
+				.timeline strong{
+					color:#60a5fa;
+				}
+
+			</style>
+
+
+		</head>
+
+		<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+
+				<section class="gradient-slide">
+
+					<div class="hero glow">
+						API 101
+					</div>
+
+					<p class="muted">
+						Redes para Desenvolvedores
+					</p>
+
+				</section>
+
+				<section data-background-color="#000000">
+
+					<div class="hero glow">
+						ENTER
+					</div>
+
+				</section>
+
+				<section>
+
+					<h1>
+						O que aconteceu?
+					</h1>
+
+				</section>
+
+				<section>
+
+					<div class="hero">
+						Nada?
+					</div>
+
+				</section>
+
+				<section>
+
+					<div class="hero">
+						Ou muita coisa?
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>
+						Vamos investigar.
+					</h2>
+
+				</section>
+
+				<section>
+
+					<div class="timeline">
+
+						<span class="fragment">URL</span>
+
+						<span class="fragment">→</span>
+
+						<span class="fragment">DNS</span>
+
+						<span class="fragment">→</span>
+
+						<span class="fragment">IP</span>
+
+						<span class="fragment">→</span>
+
+						<span class="fragment">HTTPS</span>
+
+						<span class="fragment">→</span>
+
+						<span class="fragment">REQUEST</span>
+
+						<span class="fragment">→</span>
+
+						<strong class="fragment">RESPONSE</strong>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h1>
+						Tudo começa aqui
+					</h1>
+
+				</section>
+
+				<section data-background-color="#020617">
+
+					<div class="hero glow">
+						google.com
+					</div>
+
+				</section>
+
+				<section>
+
+					<div class="hero">
+						Mas...
+					</div>
+
+				</section>
+
+				<section>
+
+					<h1>
+						Como o computador encontra o Google?
+					</h1>
+
+				</section>
+
+				<section>
+
+					<div class="journey">
+
+						<div class="node fragment">
+							Você
+						</div>
+
+						<div class="node fragment">
+							?
+						</div>
+
+						<div class="node fragment">
+							Google
+						</div>
+
+					</div>
+
+				</section>
+				<!-- ===================================================== -->
+
+				<!-- PARTE 2 - URL, DNS E IP -->
+
+				<!-- ===================================================== -->
+
+				<section>
+
+
+					<div class="hero glow">
+						URL
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:3rem;">
+						https://google.com
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:2.5rem;">
+
+						<span class="fragment">https://</span>
+
+						<span class="fragment">google.com</span>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:5rem;">
+						google.com
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Humanos gostam de nomes.
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Computadores não.
+					</h2>
+
+
+				</section>
+
+				<section data-background-color="#000000">
+
+
+					<div class="hero">
+						IP
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="hero glow">
+						142.250.218.14
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:4rem;">
+
+						google.com
+
+						<div class="fragment">
+							↓
+						</div>
+
+						<div class="fragment glow">
+							142.250.218.14
+						</div>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h1>
+						Quem faz essa tradução?
+					</h1>
+
+
+				</section>
+
+				<section data-background-color="#020617">
+
+
+					<div class="hero glow">
+						DNS
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:2.5rem;">
+
+						google.com
+
+						<div>
+							↓
+						</div>
+
+						<div>
+							DNS
+						</div>
+
+						<div>
+							↓
+						</div>
+
+						<div>
+							142.250.218.14
+						</div>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						O DNS é a agenda telefônica da internet.
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<svg width="900" height="300">
+
+						<circle
+								cx="120"
+								cy="150"
+								r="70"
+								fill="#1e293b"
+								stroke="#3b82f6"
+								stroke-width="4"/>
+
+						<text
+								x="120"
+								y="160"
+								fill="white"
+								text-anchor="middle"
+								font-size="28">
+							Você
+						</text>
+
+						<circle
+								cx="450"
+								cy="150"
+								r="70"
+								fill="#1e293b"
+								stroke="#3b82f6"
+								stroke-width="4"/>
+
+						<text
+								x="450"
+								y="160"
+								fill="white"
+								text-anchor="middle"
+								font-size="28">
+							DNS
+						</text>
+
+						<circle
+								cx="780"
+								cy="150"
+								r="70"
+								fill="#1e293b"
+								stroke="#3b82f6"
+								stroke-width="4"/>
+
+						<text
+								x="780"
+								y="160"
+								fill="white"
+								text-anchor="middle"
+								font-size="28">
+							Google
+						</text>
+
+						<line
+								x1="190"
+								y1="150"
+								x2="380"
+								y2="150"
+								stroke="#60a5fa"
+								stroke-width="5"/>
+
+						<line
+								x1="520"
+								y1="150"
+								x2="710"
+								y2="150"
+								stroke="#60a5fa"
+								stroke-width="5"/>
+
+					</svg>
+
+
+				</section>
+
+				<section>
+
+
+					<h1>
+						Sem DNS...
+					</h1>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:2rem;line-height:2;">
+
+						142.250.218.14
+
+						<br>
+
+						172.217.29.78
+
+						<br>
+
+						31.13.71.36
+
+						<br>
+
+						151.101.65.140
+
+						<br>
+
+						104.18.33.45
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Felizmente...
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:3rem;line-height:2;">
+
+						google.com
+
+						<br>
+
+						github.com
+
+						<br>
+
+						youtube.com
+
+						<br>
+
+						openai.com
+
+					</div>
+
+
+				</section>
+
+				<section data-background-color="#020617">
+
+
+					<div class="hero glow">
+						Endereço encontrado.
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="timeline">
+
+						<span>URL</span>
+
+						<span>→</span>
+
+						<strong>DNS</strong>
+
+						<span>→</span>
+
+						<span>IP</span>
+
+						<span>→</span>
+
+						<span>HTTPS</span>
+
+						<span>→</span>
+
+						<span>REQUEST</span>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h1>
+						Agora precisamos conversar.
+					</h1>
+
+
+				</section>
+
+
+				<!-- ===================================================== -->
+
+				<!-- PARTE 3 - PROTOCOLOS, HTTP E HTTPS -->
+
+				<!-- ===================================================== -->
+
+				<section>
+
+
+					<h1>
+						Endereço encontrado.
+					</h1>
+
+
+				</section>
+
+				<section>
+
+
+					<h1>
+						E agora?
+					</h1>
+
+
+				</section>
+
+				<section>
+
+
+					<h1 class="hero">
+						Conversar.
+					</h1>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="display:flex;justify-content:space-around;align-items:center;">
+
+						<div class="node fragment">
+							Browser
+						</div>
+
+						<div class="node fragment">
+							API
+						</div>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Como dois computadores conversam?
+					</h2>
+
+
+				</section>
+
+				<section data-background-color="#020617">
+
+
+					<div class="hero glow">
+						PROTOCOLO
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Um conjunto de regras.
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:3rem;">
+
+						Português
+
+						<span class="fragment">
+        ≠
+    </span>
+
+						<span class="fragment">
+        Japonês
+    </span>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Computadores também precisam falar a mesma língua.
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="hero glow">
+						HTTP
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:5rem;">
+						HyperText Transfer Protocol
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="hero">
+						HTTP
+					</div>
+
+					<div class="fragment">
+
+						<div style="font-size:4rem;margin-top:50px;">
+							↓
+						</div>
+
+						<div style="font-size:2rem;">
+							Como pedir e receber informações
+						</div>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<svg width="900" height="300">
+
+						<rect
+								x="50"
+								y="90"
+								width="220"
+								height="120"
+								rx="20"
+								fill="#1e293b"
+								stroke="#3b82f6"
+								stroke-width="4"/>
+
+						<text
+								x="160"
+								y="160"
+								fill="white"
+								text-anchor="middle"
+								font-size="28">
+							Browser
+						</text>
+
+						<rect
+								x="630"
+								y="90"
+								width="220"
+								height="120"
+								rx="20"
+								fill="#1e293b"
+								stroke="#3b82f6"
+								stroke-width="4"/>
+
+						<text
+								x="740"
+								y="160"
+								fill="white"
+								text-anchor="middle"
+								font-size="28">
+							API
+						</text>
+
+						<line
+								x1="270"
+								y1="120"
+								x2="630"
+								y2="120"
+								stroke="#60a5fa"
+								stroke-width="6"/>
+
+						<line
+								x1="630"
+								y1="180"
+								x2="270"
+								y2="180"
+								stroke="#22c55e"
+								stroke-width="6"/>
+
+						<text
+								x="450"
+								y="105"
+								fill="#60a5fa"
+								text-anchor="middle"
+								font-size="24">
+							Request
+						</text>
+
+						<text
+								x="450"
+								y="220"
+								fill="#22c55e"
+								text-anchor="middle"
+								font-size="24">
+							Response
+						</text>
+
+					</svg>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="hero">
+						http://
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h1>
+						Funciona.
+					</h1>
+
+
+				</section>
+
+				<section>
+
+
+					<h1>
+						Mas tem um problema.
+					</h1>
+
+
+				</section>
+
+				<section data-background-color="#000000">
+
+
+					<div class="hero">
+						Tudo fica visível.
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:2rem;">
+
+						login=alessandro
+
+						<br><br>
+
+						senha=123456
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Qualquer pessoa no caminho pode enxergar.
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="hero glow">
+						HTTPS
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:5rem;">
+
+						HTTP
+
+						<span class="fragment">
+        +
+    </span>
+
+						<span class="fragment">
+        Segurança
+    </span>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:8rem;">
+						🔒
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Os dados são criptografados.
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<div style="font-size:3rem;">
+
+						senha=123456
+
+					</div>
+
+					<div class="fragment">
+
+						<div style="font-size:4rem;margin:40px 0;">
+							↓
+						</div>
+
+						<div style="font-size:2rem;">
+							x7A9#Lm2PqR8...
+						</div>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="hero">
+						80
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Porta padrão do HTTP
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="hero glow">
+						443
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>
+						Porta padrão do HTTPS
+					</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<div class="timeline">
+
+						<span>URL</span>
+
+						<span>→</span>
+
+						<span>DNS</span>
+
+						<span>→</span>
+
+						<span>IP</span>
+
+						<span>→</span>
+
+						<strong>HTTPS</strong>
+
+						<span>→</span>
+
+						<span>REQUEST</span>
+
+						<span>→</span>
+
+						<span>RESPONSE</span>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h1>
+						Agora podemos enviar uma mensagem.
+					</h1>
+
+
+				</section>
+
+
+			</div>
+
+		</div>
+
+		<script src="../../../../dist/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+				hash:true,
+				transition:"fade",
+				backgroundTransition:"fade"
+			});
+
+		</script>
+
+		</body>
+		</html>
+

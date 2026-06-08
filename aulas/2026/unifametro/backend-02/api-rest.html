@@ -1,0 +1,1826 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Aula 01 - Arquitetura e Construção de APIs Modernas</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../../dist/theme/white.css">
+
+    <link rel="stylesheet" href="../../../../plugin/highlight/monokai.css">
+
+    <style>
+
+        :root{
+            --primary:#0f172a;
+            --secondary:#334155;
+            --accent:#2563eb;
+            --box:#f1f5f9;
+        }
+
+        .reveal {
+            font-size: 30px;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3{
+            color:var(--primary);
+            text-transform:none;
+        }
+
+        .box{
+            background:var(--box);
+            border-radius:16px;
+            padding:30px;
+            margin-top:20px;
+        }
+
+        .small{
+            font-size:0.85em;
+        }
+
+        .highlight{
+            color:var(--accent);
+            font-weight:bold;
+        }
+
+        .center{
+            text-align:center;
+        }
+
+        .columns{
+            display:flex;
+            gap:30px;
+        }
+
+        .col{
+            flex:1;
+        }
+
+        code{
+            border-radius:12px;
+            font-size: 2rem;
+            line-height: 2rem;
+        }
+
+        .big-number{
+            font-size:3em;
+            font-weight:bold;
+            color:var(--accent);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+
+            <h1>Arquitetura e Construção de APIs Modernas</h1>
+
+            <p>
+                Pós-graduação em Desenvolvimento Fullstack
+            </p>
+
+            <div class="box">
+                <strong>Aula 01</strong><br>
+                Projeto e Arquitetura de APIs
+            </div>
+
+        </section>
+        <section>
+
+            <h2>Objetivos da Aula</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Projetar APIs profissionais</li>
+                    <li class="fragment">Aplicar boas práticas REST</li>
+                    <li class="fragment">Conhecer modelos de maturidade</li>
+                    <li class="fragment">Projetar contratos consistentes</li>
+                    <li class="fragment">Aplicar SOLID no backend</li>
+                    <li class="fragment">Implementar autenticação moderna</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>O que é uma API?</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Uma API é um contrato entre sistemas.
+                </p>
+
+                <p class="fragment">
+                    Ela define regras claras para comunicação.
+                </p>
+
+                <p class="fragment">
+                    Quanto melhor o contrato, menor o acoplamento.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>APIs estão em todo lugar</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Netflix</li>
+                    <li class="fragment">Nubank</li>
+                    <li class="fragment">Uber</li>
+                    <li class="fragment">iFood</li>
+                    <li class="fragment">WhatsApp</li>
+                    <li class="fragment">ERP corporativos</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>O problema das APIs mal projetadas</h2>
+
+            <pre><code>
+POST /createUser
+POST /saveUser
+POST /registerUser
+POST /newUser
+</code></pre>
+
+            <div class="box fragment">
+                O problema não é funcionar.
+                <br>
+                O problema é manter.
+            </div>
+
+        </section>
+
+
+        <section>
+
+            <h2>O que significa REST?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Representational State Transfer</li>
+                    <li class="fragment">Separação cliente-servidor</li>
+                    <li class="fragment">Stateless</li>
+                    <li class="fragment">Cache</li>
+                    <li class="fragment">Recursos identificados por URI</li>
+                    <li class="fragment">Interface uniforme</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>REST não é CRUD</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Um dos maiores equívocos do mercado.
+                </p>
+
+                <p class="fragment">
+                    CRUD é uma implementação.
+                </p>
+
+                <p class="fragment">
+                    REST é um conjunto de restrições arquiteturais.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Recursos e não ações</h2>
+
+            <div class="columns">
+
+                <div class="col">
+
+                    <h3>Evite</h3>
+
+                    <pre><code>
+POST /createUser
+POST /deleteUser
+POST /updateUser
+</code></pre>
+
+                </div>
+
+                <div class="col">
+
+                    <h3>Prefira</h3>
+
+                    <pre><code>
+POST /users
+DELETE /users/1
+PATCH /users/1
+</code></pre>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Métodos HTTP</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Método</th>
+                    <th>Objetivo</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>GET</td>
+                    <td>Consultar</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>POST</td>
+                    <td>Criar</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>PUT</td>
+                    <td>Substituir</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>PATCH</td>
+                    <td>Atualizar parcialmente</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>DELETE</td>
+                    <td>Remover</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+        <section>
+
+            <h2>Questão</h2>
+
+            <div class="box">
+
+                <p>
+                    Alterar apenas o telefone de um usuário.
+                </p>
+
+                <ul>
+                    <li class="fragment">GET</li>
+                    <li class="fragment">POST</li>
+                    <li class="fragment">PATCH</li>
+                    <li class="fragment">DELETE</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Status Codes</h2>
+
+            <pre><code>
+200 OK
+201 Created
+204 No Content
+
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+
+500 Internal Server Error
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Quando uma API se torna madura?</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Nem toda API que utiliza HTTP é realmente REST.
+                </p>
+
+                <p class="fragment">
+                    Leonard Richardson propôs um modelo para medir a maturidade de APIs.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Richardson Maturity Model</h2>
+
+            <div class="center">
+
+                <div class="big-number">0 → 3</div>
+
+                <p class="fragment">Nível 0 — RPC</p>
+                <p class="fragment">Nível 1 — Recursos</p>
+                <p class="fragment">Nível 2 — HTTP Correto</p>
+                <p class="fragment">Nível 3 — HATEOAS</p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Nível 0 — RPC</h2>
+
+            <pre><code>
+POST /createUser
+POST /deleteUser
+POST /updateUser
+</code></pre>
+
+            <div class="box fragment">
+                HTTP é apenas um meio de transporte.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Nível 1 — Recursos</h2>
+
+            <pre><code>
+/users
+/orders
+/products
+</code></pre>
+
+            <div class="box fragment">
+                Os recursos passam a ser identificados por URLs.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Nível 2 — Uso correto do HTTP</h2>
+
+            <pre><code>
+GET /users
+POST /users
+PATCH /users/1
+DELETE /users/1
+</code></pre>
+
+            <div class="box fragment">
+                Aqui encontramos a maioria das APIs modernas.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Nível 3 — HATEOAS</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    A resposta da API informa quais ações podem ser executadas.
+                </p>
+
+                <p class="fragment">
+                    O cliente navega pela API através dos links retornados.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo de HATEOAS</h2>
+
+            <pre><code class="json">
+{
+  "id": 10,
+  "nome": "João",
+  "_links": {
+    "self": "/users/10",
+    "orders": "/users/10/orders",
+    "delete": "/users/10"
+  }
+}
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Vale a pena usar HATEOAS?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Pouco utilizado em APIs corporativas</li>
+                    <li class="fragment">Comum em APIs públicas complexas</li>
+                    <li class="fragment">Importante conhecer para entender REST completo</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Idempotência</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Uma operação idempotente pode ser executada várias vezes sem alterar o resultado final.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo</h2>
+
+            <pre><code>
+DELETE /users/10
+DELETE /users/10
+DELETE /users/10
+</code></pre>
+
+            <div class="box fragment">
+                O usuário continua removido.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Quais métodos são idempotentes?</h2>
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>Método</th>
+                    <th>Idempotente?</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>GET</td>
+                    <td>Sim</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>PUT</td>
+                    <td>Sim</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>DELETE</td>
+                    <td>Sim</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>POST</td>
+                    <td>Não</td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section>
+
+            <h2>Por que isso importa?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Retries automáticos</li>
+                    <li class="fragment">Falhas de rede</li>
+                    <li class="fragment">Balanceadores de carga</li>
+                    <li class="fragment">Sistemas distribuídos</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Versionamento de APIs</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    APIs evoluem.
+                </p>
+
+                <p class="fragment">
+                    Clientes antigos precisam continuar funcionando.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Estratégias de Versionamento</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">URL</li>
+                    <li class="fragment">Header</li>
+                    <li class="fragment">Content Negotiation</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Versionamento por URL</h2>
+
+            <pre><code>
+/api/v1/users
+/api/v2/users
+</code></pre>
+
+            <div class="box fragment">
+                Estratégia mais simples e mais utilizada.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Versionamento por Header</h2>
+
+            <pre><code>
+Accept: application/vnd.company.v2+json
+</code></pre>
+
+            <div class="box fragment">
+                Mantém URLs limpas, mas aumenta a complexidade.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Quando criar uma nova versão?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Mudança de contrato</li>
+                    <li class="fragment">Remoção de campos</li>
+                    <li class="fragment">Mudança de comportamento</li>
+                    <li class="fragment">Quebra de compatibilidade</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>OpenAPI First</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Primeiro definimos o contrato.
+                </p>
+
+                <p class="fragment">
+                    Depois implementamos o código.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Abordagem Tradicional</h2>
+
+            <div class="box">
+
+<pre><code>
+Implementar
+↓
+Testar
+↓
+Documentar
+</code></pre>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>OpenAPI First</h2>
+
+            <div class="box">
+
+<pre><code>
+Definir contrato
+↓
+Validar
+↓
+Implementar
+↓
+Gerar documentação
+</code></pre>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo OpenAPI</h2>
+
+            <pre><code class="yaml">
+paths:
+  /users:
+    get:
+      summary: Listar usuários
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Benefícios do OpenAPI First</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Menos ambiguidades</li>
+                    <li class="fragment">Integração facilitada</li>
+                    <li class="fragment">Documentação automática</li>
+                    <li class="fragment">Mocks automáticos</li>
+                    <li class="fragment">SDKs gerados automaticamente</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Discussão</h2>
+
+            <div class="box">
+
+                <p>
+                    Sua empresa possui APIs nível 2 ou nível 3 do modelo Richardson?
+                </p>
+
+                <p class="fragment">
+                    O contrato é pensado antes ou depois da implementação?
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>O problema dos CRUDs que envelhecem mal</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Controllers enormes</li>
+                    <li class="fragment">Regras espalhadas</li>
+                    <li class="fragment">Queries duplicadas</li>
+                    <li class="fragment">Alto acoplamento</li>
+                    <li class="fragment">Dificuldade para testar</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Quando o projeto começa a crescer</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    O problema raramente é criar funcionalidades.
+                </p>
+
+                <p class="fragment">
+                    O problema é continuar evoluindo sem quebrar tudo.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Entidades não são contratos</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    O banco de dados pertence ao backend.
+                </p>
+
+                <p class="fragment">
+                    O contrato pertence aos consumidores da API.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Problema comum</h2>
+
+            <pre><code class="json">
+{
+  "id": 1,
+  "nome": "João",
+  "senha": "123456",
+  "created_at": "2025-01-01",
+  "updated_at": "2025-02-01"
+}
+</code></pre>
+
+            <div class="box fragment">
+                Nem tudo que existe na entidade deve ser exposto.
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>DTOs</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Data Transfer Object
+                </p>
+
+                <p class="fragment">
+                    Objeto responsável por transportar dados entre camadas.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo de DTO</h2>
+
+            <pre><code class="json">
+{
+  "id": 1,
+  "nome": "João"
+}
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Benefícios dos DTOs</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Segurança</li>
+                    <li class="fragment">Controle de exposição</li>
+                    <li class="fragment">Versionamento facilitado</li>
+                    <li class="fragment">Contratos estáveis</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Arquitetura em Camadas</h2>
+
+            <div class="center">
+
+<pre><code>
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+Database
+</code></pre>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Por que criar camadas?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Separação de responsabilidades</li>
+                    <li class="fragment">Maior manutenibilidade</li>
+                    <li class="fragment">Facilidade de testes</li>
+                    <li class="fragment">Menor acoplamento</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Controller</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Recebe requisições</li>
+                    <li class="fragment">Valida entrada</li>
+                    <li class="fragment">Invoca casos de uso</li>
+                    <li class="fragment">Retorna respostas</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>O que NÃO deve existir em Controllers?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Queries SQL</li>
+                    <li class="fragment">Regras de negócio</li>
+                    <li class="fragment">Integrações externas</li>
+                    <li class="fragment">Processamentos complexos</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo ruim</h2>
+
+            <pre><code class="php">
+public function store(Request $request)
+{
+    $user = User::create(...);
+
+    Mail::send(...);
+
+    Log::info(...);
+
+    return response()->json(...);
+}
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Service Layer</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Onde vivem os casos de uso.
+                </p>
+
+                <p class="fragment">
+                    Onde vivem as regras de negócio.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplos de regras de negócio</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Calcular desconto</li>
+                    <li class="fragment">Validar crédito</li>
+                    <li class="fragment">Liberar acesso premium</li>
+                    <li class="fragment">Gerar pontuação</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Repository Layer</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Persistência</li>
+                    <li class="fragment">Consultas</li>
+                    <li class="fragment">Abstração do banco</li>
+                    <li class="fragment">Reutilização de queries</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Responsabilidades</h2>
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>Camada</th>
+                    <th>Responsabilidade</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr class="fragment">
+                    <td>Controller</td>
+                    <td>HTTP</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Service</td>
+                    <td>Negócio</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Repository</td>
+                    <td>Persistência</td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section>
+
+            <h2>Exercício</h2>
+
+            <div class="box">
+
+                <p>
+                    "Calcular desconto para cliente VIP"
+                </p>
+
+                <p class="fragment">
+                    Controller?
+                </p>
+
+                <p class="fragment">
+                    Service?
+                </p>
+
+                <p class="fragment">
+                    Repository?
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>SOLID</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Cinco princípios para reduzir acoplamento.
+                </p>
+
+                <p class="fragment">
+                    Tornam sistemas mais fáceis de evoluir.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>S — Single Responsibility Principle</h2>
+
+            <div class="box">
+
+                <p>
+                    Uma classe deve possuir apenas um motivo para mudar.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Violação do SRP</h2>
+
+            <pre><code class="php">
+class UserService
+{
+    public function createUser(){}
+    public function sendEmail(){}
+    public function exportPdf(){}
+    public function generateReport(){}
+}
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>O — Open Closed Principle</h2>
+
+            <div class="box">
+
+                <p>
+                    Aberto para extensão.
+                </p>
+
+                <p>
+                    Fechado para modificação.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>L — Liskov Substitution Principle</h2>
+
+            <div class="box">
+
+                <p>
+                    Subtipos devem poder substituir seus tipos base.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>I — Interface Segregation Principle</h2>
+
+            <div class="box">
+
+                <p>
+                    Interfaces pequenas são melhores que interfaces gigantes.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>D — Dependency Inversion Principle</h2>
+
+            <div class="box">
+
+                <p>
+                    Dependa de abstrações.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo</h2>
+
+            <pre><code class="php">
+class UserService
+{
+    public function __construct(
+        UserRepositoryInterface $repository
+    ) {}
+}
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Não faça isso</h2>
+
+            <pre><code class="php">
+class UserService
+{
+    public function __construct(
+        MySqlUserRepository $repository
+    ) {}
+}
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Dependency Injection</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Objetos recebem dependências.
+                </p>
+
+                <p class="fragment">
+                    Objetos não criam dependências.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Benefícios da DI</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Menos acoplamento</li>
+                    <li class="fragment">Maior testabilidade</li>
+                    <li class="fragment">Facilidade para trocar implementações</li>
+                    <li class="fragment">Código mais limpo</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Discussão</h2>
+
+            <div class="box">
+
+                <p>
+                    Em qual camada sua equipe costuma cometer mais erros?
+                </p>
+
+                <p class="fragment">
+                    Controller?
+                </p>
+
+                <p class="fragment">
+                    Service?
+                </p>
+
+                <p class="fragment">
+                    Repository?
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Segurança em APIs</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Uma API funcional não é necessariamente uma API segura.
+                </p>
+
+                <p class="fragment">
+                    Segurança deve fazer parte do projeto desde o início.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Autenticação × Autorização</h2>
+
+            <div class="columns">
+
+                <div class="col">
+
+                    <div class="box">
+
+                        <h3>Autenticação</h3>
+
+                        <p class="fragment">
+                            Quem é você?
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="box">
+
+                        <h3>Autorização</h3>
+
+                        <p class="fragment">
+                            O que você pode fazer?
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplos</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Login com usuário e senha</li>
+                    <li class="fragment">Login social</li>
+                    <li class="fragment">MFA</li>
+                    <li class="fragment">Permissões por perfil</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>JWT</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    JSON Web Token
+                </p>
+
+                <p class="fragment">
+                    Um dos mecanismos mais utilizados para autenticação em APIs.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Estrutura do JWT</h2>
+
+            <pre><code>
+HEADER
+.
+PAYLOAD
+.
+SIGNATURE
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo de Payload</h2>
+
+            <pre><code class="json">
+{
+  "sub": 123,
+  "name": "João",
+  "role": "admin"
+}
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Importante</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    JWT não criptografa informações.
+                </p>
+
+                <p class="fragment">
+                    JWT apenas assina informações.
+                </p>
+
+                <p class="fragment">
+                    Nunca coloque dados sensíveis no payload.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Fluxo JWT</h2>
+
+            <pre><code>
+Login
+ ↓
+Validação
+ ↓
+Geração do Token
+ ↓
+Cliente armazena
+ ↓
+Requisições autenticadas
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Problemas comuns com JWT</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Expiração muito longa</li>
+                    <li class="fragment">Payload excessivo</li>
+                    <li class="fragment">Armazenamento inseguro</li>
+                    <li class="fragment">Ausência de refresh token</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>OAuth 2.0</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Framework de autorização.
+                </p>
+
+                <p class="fragment">
+                    Utilizado por Google, GitHub, Microsoft e diversos provedores.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Quando usar OAuth?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Login com Google</li>
+                    <li class="fragment">Login com GitHub</li>
+                    <li class="fragment">Integrações entre sistemas</li>
+                    <li class="fragment">Delegação de acesso</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Rate Limiting</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Controle da quantidade de requisições.
+                </p>
+
+                <p class="fragment">
+                    Protege recursos e reduz abusos.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo</h2>
+
+            <pre><code>
+100 requisições
+por minuto
+por usuário
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Por que limitar?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Ataques automatizados</li>
+                    <li class="fragment">Bots</li>
+                    <li class="fragment">Consumo excessivo</li>
+                    <li class="fragment">Custos de infraestrutura</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Observabilidade</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Não basta desenvolver.
+                </p>
+
+                <p class="fragment">
+                    Precisamos entender o comportamento da aplicação.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Os 3 pilares</h2>
+
+            <div class="columns">
+
+                <div class="col">
+
+                    <div class="box">
+                        Logs
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="box">
+                        Métricas
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="box">
+                        Traces
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Logs</h2>
+
+            <pre><code>
+Usuário autenticado
+
+Pedido criado
+
+Pagamento aprovado
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Métricas</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Tempo de resposta</li>
+                    <li class="fragment">CPU</li>
+                    <li class="fragment">Memória</li>
+                    <li class="fragment">Quantidade de requisições</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Traces</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Permitem acompanhar o fluxo completo de uma requisição.
+                </p>
+
+                <p class="fragment">
+                    Essencial em sistemas distribuídos.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Documentação</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    APIs sem documentação geram dependência de pessoas.
+                </p>
+
+                <p class="fragment">
+                    APIs documentadas geram autonomia.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Swagger / OpenAPI</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Documentação automática</li>
+                    <li class="fragment">Testes rápidos</li>
+                    <li class="fragment">Contrato centralizado</li>
+                    <li class="fragment">Facilidade para integrações</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Exemplo de Endpoint</h2>
+
+            <pre><code>
+GET /users
+
+200 OK
+
+[
+  {
+    "id": 1,
+    "nome": "João"
+  }
+]
+</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Estudo de Caso</h2>
+
+            <div class="box">
+
+                <h3>Plataforma de Cursos</h3>
+
+                <ul>
+                    <li class="fragment">Usuários</li>
+                    <li class="fragment">Cursos</li>
+                    <li class="fragment">Matrículas</li>
+                    <li class="fragment">Certificados</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Desafio</h2>
+
+            <div class="box">
+
+                <p>
+                    Modele os endpoints da plataforma.
+                </p>
+
+                <ul>
+                    <li class="fragment">Recursos</li>
+                    <li class="fragment">Verbos HTTP</li>
+                    <li class="fragment">Status Codes</li>
+                    <li class="fragment">Autenticação</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Dinâmica em Grupo</h2>
+
+            <div class="box">
+
+                <p>
+                    Cada equipe deve projetar uma API para:
+                </p>
+
+                <ul>
+                    <li class="fragment">Uber</li>
+                    <li class="fragment">Netflix</li>
+                    <li class="fragment">iFood</li>
+                    <li class="fragment">Nubank</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Critérios de Avaliação</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">Organização dos recursos</li>
+                    <li class="fragment">Uso correto do HTTP</li>
+                    <li class="fragment">Consistência dos contratos</li>
+                    <li class="fragment">Segurança</li>
+                    <li class="fragment">Escalabilidade</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>O que aprendemos hoje?</h2>
+
+            <div class="box">
+
+                <ul>
+                    <li class="fragment">REST além do CRUD</li>
+                    <li class="fragment">Richardson Maturity Model</li>
+                    <li class="fragment">HATEOAS</li>
+                    <li class="fragment">Versionamento</li>
+                    <li class="fragment">OpenAPI First</li>
+                    <li class="fragment">SOLID</li>
+                    <li class="fragment">JWT</li>
+                    <li class="fragment">Arquitetura em camadas</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>Para a próxima aula</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Construiremos uma API completa.
+                </p>
+
+                <p class="fragment">
+                    Aplicando autenticação, testes e integração com banco de dados.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h1>Obrigado!</h1>
+
+            <div class="box">
+                Perguntas?
+            </div>
+
+        </section>
+    </div>
+</div>
+
+        <script src="../../../../dist/reveal.js"></script>
+
+        <script>
+
+            Reveal.initialize({
+                hash:true,
+                transition:"fade",
+                backgroundTransition:"fade"
+            });
+
+        </script>
+
+</body>
+</html>

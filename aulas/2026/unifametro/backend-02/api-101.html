@@ -1,0 +1,1478 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>API 101</title>
+
+		<link rel="stylesheet" href="../../../../dist/reset.css">
+		<link rel="stylesheet" href="../../../../dist/reveal.css">
+		<link rel="stylesheet" href="../../../../dist/theme/white.css">
+
+		<link rel="stylesheet" href="../../../../plugin/highlight/monokai.css">
+
+		<style>
+			:root{
+				--primary:#0f172a;
+				--secondary:#334155;
+				--accent:#2563eb;
+				--accent-soft:#dbeafe;
+				--surface:#f8fafc;
+				--border:#e2e8f0;
+			}
+
+			.reveal{
+				font-family: Inter, system-ui, sans-serif;
+				font-size: 32px;
+			}
+
+			.reveal h1{
+				font-size:2.6em;
+				color:var(--primary);
+				font-weight:800;
+			}
+
+			.reveal h2{
+				color:var(--primary);
+				font-weight:800;
+				margin-bottom:40px;
+			}
+
+			.reveal h3{
+				color:var(--secondary);
+			}
+
+			.box{
+				background: #333;
+				color: white;
+				border:1px solid var(--border);
+				border-radius:24px;
+				padding:35px;
+				box-shadow:
+						0 10px 30px rgba(0,0,0,.05);
+			}
+
+			.hero{
+				font-size:5rem;
+				font-weight:900;
+				color:var(--accent);
+			}
+
+			.big-number{
+				font-size:6rem;
+				font-weight:900;
+				color:var(--accent);
+			}
+
+			.columns{
+				display:flex;
+				gap:30px;
+			}
+
+			.col{
+				flex:1;
+			}
+
+			.card{
+				color: white;
+				background: #333;
+				border-radius:20px;
+				padding:25px;
+				border:1px solid var(--border);
+				box-shadow:
+						0 5px 20px rgba(0,0,0,.05);
+			}
+
+			.highlight{
+				color:var(--accent);
+				font-weight:700;
+			}
+
+			.gradient-slide{
+				background:
+						radial-gradient(circle at top left,#dbeafe 0%,transparent 40%),
+						radial-gradient(circle at bottom right,#e0e7ff 0%,transparent 40%);
+			}
+
+			.reveal pre{
+				border-radius:20px;
+				overflow:hidden;
+				box-shadow:0 15px 40px rgba(0,0,0,.12);
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>API 101</h1>
+					<p class="fragment" style="font-size: 4rem;"> Apenas uma<strong> revisão</strong> </p>
+				</section>
+
+
+				<section><h2>Quem sou eu?</h2></section>
+
+				<section>
+					<div style="display: flex;">
+						<div>
+							<h3>Alessandro Feitoza</h3>
+
+							<ul style="font-size: 2rem">
+								<li class="fragment">Professor de códigos e outras computarias</li>
+								<li class="fragment">Programador/Dev/Severino</li>
+							</ul>
+						</div>
+						<div>
+							<img width="60%" src="../../../../img/AlessandroFeitoza-2026-2.jpg" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+
+					<h1>
+						Onde estamos?
+					</h1>
+
+				</section>
+
+
+				<section>
+					<h2>A Jornada Backend da Pós-Graduação</h2>
+
+					<div class="box">
+						<p>
+							A formação foi estruturada para acompanhar a evolução natural
+							de um desenvolvedor backend moderno.
+						</p>
+
+						<h3>Entender → Construir → Escalar</h3>
+
+						<ul>
+							<li class="fragment">Disciplina 01: compreender os fundamentos</li>
+							<li class="fragment">Disciplina 02: construir APIs profissionais</li>
+							<li class="fragment">Disciplina 03: preparar sistemas para crescer</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Visão Geral da Trilha</h2>
+
+					<div class="box">
+						<table style="width:100%;">
+							<thead>
+							<tr>
+								<th>Disciplina</th>
+								<th>Foco Principal</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr class="fragment">
+								<td>Backend 01</td>
+								<td>Fundamentos do Desenvolvimento Backend</td>
+							</tr>
+							<tr class="fragment">
+								<td>Backend 02</td>
+								<td>Arquitetura e Construção de APIs Modernas</td>
+							</tr>
+							<tr class="fragment">
+								<td>Backend 03</td>
+								<td>Arquiteturas Escaláveis e Sistemas Distribuídos</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section>
+					<h2>Disciplina 01</h2>
+
+					<h3>Fundamentos do Desenvolvimento Backend</h3>
+
+					<div class="box">
+						<p><strong>Objetivo:</strong> entender como funciona o backend e seu papel dentro de uma aplicação moderna.</p>
+
+						<ul>
+							<li class="fragment">Backend vs Frontend</li>
+							<li class="fragment">SSR, CSR e aplicações híbridas</li>
+							<li class="fragment">MVC e organização de código</li>
+							<li class="fragment">Introdução a APIs REST</li>
+							<li class="fragment">Introdução a Arquitetura de software*</li>
+							<li class="fragment">Banco de dados*</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>O Resultado da Disciplina 01</h2>
+
+					<div class="box">
+						<ul>
+							<li class="fragment">O que acontece quando uma requisição chega ao servidor?</li>
+							<li class="fragment">Como uma API se comunica com o frontend?</li>
+							<li class="fragment">Como os dados são persistidos?</li>
+							<li class="fragment">Como uma aplicação é organizada?</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Disciplina 02</h2>
+
+					<h3>Arquitetura e Construção de APIs Modernas</h3>
+
+				</section>
+				<section>
+					<div class="box">
+						<p><strong>Objetivo:</strong></p>
+
+						<ul>
+							<li class="fragment">Boas práticas REST</li>
+							<li class="fragment">Versionamento</li>
+							<li class="fragment">DTOs e validações</li>
+							<li class="fragment">JWT</li>
+							<li class="fragment">Swagger/OpenAPI</li>
+							<li class="fragment">Service Layer</li>
+							<li class="fragment">Repository Pattern</li>
+							<li class="fragment">SOLID</li>
+							<li class="fragment">Testes e qualidade</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Projeto da Disciplina 02</h2>
+
+					<div class="box">
+						<h3 style="color: white">Construção de uma API Profissional</h3>
+
+						<ul>
+							<li class="fragment">Autenticação com JWT</li>
+							<li class="fragment">Persistência em banco de dados</li>
+							<li class="fragment">Validações e tratamento de erros</li>
+							<li class="fragment">Documentação OpenAPI</li>
+							<li class="fragment">Testes unitários</li>
+							<li class="fragment">Testes de integração</li>
+						</ul>
+
+					</div>
+				</section>
+
+				<section>
+					<h2>O Resultado da Disciplina 02</h2>
+
+					<div class="box">
+						<p>Ao final:</p>
+
+						<ul>
+							<li class="fragment">Projetar APIs modernas</li>
+							<li class="fragment">Aplicar padrões arquiteturais</li>
+							<li class="fragment">Implementar autenticação e autorização</li>
+							<li class="fragment">Criar aplicações testáveis</li>
+							<li class="fragment">Desenvolver projetos próximos da realidade do mercado</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Disciplina 03</h2>
+
+					<h3>Arquiteturas Escaláveis e Sistemas Distribuídos</h3>
+				</section>
+				<section>
+					<div class="box">
+						<p><strong>Objetivo:</strong> entender os desafios que surgem quando sistemas crescem.</p>
+
+						<ul>
+							<li class="fragment">Limitações do monólito</li>
+							<li class="fragment">Modularização</li>
+							<li class="fragment">Clean Architecture</li>
+							<li class="fragment">DDD Estratégico</li>
+							<li class="fragment">Filas e eventos</li>
+							<li class="fragment">Cache distribuído</li>
+							<li class="fragment">Observabilidade</li>
+							<li class="fragment">Microserviços</li>
+							<li class="fragment">Serverless</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Projeto da Disciplina 03</h2>
+
+					<div class="box">
+						<h3>Evoluindo uma Aplicação Real</h3>
+
+						<ul>
+							<li class="fragment">Partir de uma API monolítica</li>
+							<li class="fragment">Identificar gargalos</li>
+							<li class="fragment">Separar responsabilidades</li>
+							<li class="fragment">Criar comunicação entre serviços</li>
+							<li class="fragment">Adicionar processamento assíncrono</li>
+							<li class="fragment">Introduzir conceitos distribuídos</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>O Resultado da Disciplina 03</h2>
+
+					<div class="box">
+						<p>Ao final::</p>
+
+						<ul>
+							<li class="fragment">Quando um monólito é suficiente?</li>
+							<li class="fragment">Quando utilizar microserviços?</li>
+							<li class="fragment">Como escalar uma aplicação?</li>
+							<li class="fragment">Como integrar múltiplos sistemas?</li>
+							<li class="fragment">Como manter observabilidade e confiabilidade?</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>A Evolução</h2>
+
+					<div class="box">
+						<table style="width:100%;">
+							<thead>
+							<tr>
+								<th>Etapa</th>
+								<th>Competência Desenvolvida</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr class="fragment">
+								<td>Disciplina 01</td>
+								<td>Entender como funciona o backend</td>
+							</tr>
+							<tr class="fragment">
+								<td>Disciplina 02</td>
+								<td>Construir APIs modernas e profissionais</td>
+							</tr>
+							<tr class="fragment">
+								<td>Disciplina 03</td>
+								<td>Escalar sistemas e arquiteturas</td>
+							</tr>
+							</tbody>
+						</table>
+
+						<h3 class="fragment">
+							Entender → Construir → Escalar
+						</h3>
+					</div>
+				</section>
+
+<!--				<section>-->
+<!--					<h2>O Profissional Formado Pela Trilha</h2>-->
+
+<!--					<div class="box">-->
+<!--						<ul>-->
+<!--							<li class="fragment">Compreende os fundamentos do backend</li>-->
+<!--							<li class="fragment">Constrói APIs robustas e testáveis</li>-->
+<!--							<li class="fragment">Aplica princípios arquiteturais modernos</li>-->
+<!--							<li class="fragment">Entende os desafios da escalabilidade</li>-->
+<!--							<li class="fragment">Consegue participar de projetos distribuídos</li>-->
+<!--							<li class="fragment">Possui visão técnica além do CRUD tradicional</li>-->
+<!--						</ul>-->
+<!--					</div>-->
+<!--				</section>-->
+
+				<!-- Slide 1: Título -->
+				<section data-background="#333">
+					<h2>AGENDA</h2>
+
+					<ul>
+						<li class="fragment">O básico</li>
+						<li class="fragment">Anatomia de uma URL</li>
+						<li class="fragment">Comunicação</li>
+						<li class="fragment">Request</li>
+						<li class="fragment">Response</li>
+						<li class="fragment">Anatomia da Request/Response</li>
+						<li class="fragment">Tipos de Status Code</li>
+						<li class="fragment">Tipos de HTTP Verbos</li>
+					</ul>
+				</section>
+
+
+
+
+				<section data-background-size="60%" data-background="../../../../img/client-server.jpeg">
+
+				</section>
+
+
+				<section data-background-size="60%" data-background="../../../../img/req-res.png">
+
+				</section>
+
+				<section class="gradient-slide">
+					<h1>Redes para Desenvolvedores</h1>
+
+
+					<p class="fragment hero">
+						O que acontece após apertar ENTER?
+					</p>
+
+
+				</section>
+
+				<section>
+					<h2>Experimento Mental</h2>
+
+
+					<div class="box">
+						<p class="fragment">Você digita:</p>
+
+						<div class="hero fragment">
+							google.com
+						</div>
+
+						<p class="fragment">
+							E em menos de um segundo tudo aparece.
+						</p>
+					</div>
+
+
+				</section>
+
+				<section>
+					<h2>Mas espere...</h2>
+
+
+					<div class="box">
+						<p class="fragment">
+							Como o PC encontrou o Google?
+						</p>
+
+						<p class="fragment">
+							Como ele sabe para onde enviar a mensagem?
+						</p>
+
+						<p class="fragment">
+							Como ele sabe o que pedir?
+						</p>
+					</div>
+
+
+				</section>
+
+				<section>
+
+					<style>
+						.journey {
+							display:flex;
+							justify-content:space-between;
+							align-items:center;
+							margin-top:120px;
+						}
+
+						.node{
+							width:180px;
+							height:180px;
+							border-radius:50%;
+							display:flex;
+							align-items:center;
+							justify-content:center;
+							font-weight:bold;
+							background:#f1f5f9;
+						}
+
+						.packet{
+							position:absolute;
+							width:60px;
+							height:60px;
+							border-radius:50%;
+							background:#2563eb;
+							animation: move 4s infinite linear;
+						}
+
+						@keyframes move{
+							0% { transform:translateX(0); }
+							100% { transform:translateX(900px); }
+						}
+					</style>
+
+					<h2>A Request está viajando...</h2>
+
+					<div class="journey">
+
+						<div class="node">Browser</div>
+
+						<div class="node">Internet</div>
+
+						<div class="node">API</div>
+
+					</div>
+
+					<div class="packet"></div>
+
+				</section>
+
+				<section>
+
+					<div class="hero fragment">
+						https://google.com/search?q=Fortaleza
+					</div>
+
+
+				</section>
+
+
+				<section>
+					<h2>Anatomia da URL</h2>
+
+
+					<div class="box">
+
+						<p class="fragment">
+							https
+						</p>
+
+						<p class="fragment">
+							google.com
+						</p>
+
+						<p class="fragment">
+							/search
+						</p>
+
+						<p class="fragment">
+							?q=Fortaleza
+						</p>
+
+					</div>
+
+
+				</section>
+
+				<section>
+					<h2>URL é o endereço?</h2>
+
+
+					<div class="box">
+						<p class="fragment">
+							Quase.
+						</p>
+
+						<p class="fragment">
+							O endereço real é outro.
+						</p>
+					</div>
+
+
+				</section>
+
+				<section>
+					<h2>Domínios existem para humanos</h2>
+
+
+					<div class="columns">
+
+						<div class="col">
+							<div class="card fragment">
+								google.com
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								github.com
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								youtube.com
+							</div>
+						</div>
+
+					</div>
+
+
+				</section>
+
+				<section>
+					<h2>Computadores usam isso</h2>
+
+
+					<div class="big-number">
+						142.250.218.14
+					</div>
+
+
+				</section>
+				<section>
+
+					<h2>Quem conhece o Google?</h2>
+
+					<div style="font-size:3em;margin-top:80px;">
+						google.com
+					</div>
+
+					<div class="fragment"
+						 style="font-size:2em;margin-top:40px;">
+						↓
+					</div>
+
+					<div class="fragment"
+						 style="font-size:3em;">
+						142.250.218.14
+					</div>
+
+				</section>
+
+				<section>
+					<h2>IP</h2>
+
+
+					<div class="box">
+
+						<p class="fragment">
+							O endereço real de um dispositivo.
+						</p>
+
+						<p class="fragment">
+							Cada servidor precisa de um.
+						</p>
+
+					</div>
+
+
+				</section>
+
+				<section>
+					<h2>Quem traduz?</h2>
+
+
+					<div class="hero fragment">
+						DNS
+					</div>
+
+					<div class="box fragment">
+						O catálogo telefônico da internet.
+					</div>
+
+
+				</section>
+
+
+				<section class="gradient-slide">
+
+					<h2>Já sabemos o endereço.</h2>
+
+					<div class="hero fragment">
+						Agora precisamos conversar.
+					</div>
+
+				</section>
+
+				<section>
+
+					<h1 class="hero">
+						Como dois computadores conversam?
+					</h1>
+
+				</section>
+
+				<section>
+
+					<div class="hero">
+						Regras.
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Na internet chamamos essas regras de</h2>
+
+					<div class="hero fragment">
+						Protocolos
+					</div>
+
+				</section>
+
+				<section>
+
+					<div class="box">
+
+						<p class="fragment">
+							Um computador envia.
+						</p>
+
+						<p class="fragment">
+							Outro recebe.
+						</p>
+
+						<p class="fragment">
+							Ambos precisam falar a mesma língua.
+						</p>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Exemplos</h2>
+
+					<div class="columns">
+
+						<div class="col">
+							<div class="card fragment">
+								HTTP
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								HTTPS
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								FTP
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								SMTP
+							</div>
+						</div>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Mas para APIs...</h2>
+
+					<div class="hero fragment">
+						HTTP
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>HyperText Transfer Protocol</h2>
+
+					<div class="box">
+
+						<p class="fragment">
+							O protocolo mais famoso da internet.
+						</p>
+
+						<p class="fragment">
+							Navegadores e APIs falam HTTP.
+						</p>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Quando você acessa um site...</h2>
+
+					<pre><code>
+https://github.com
+</code></pre>
+
+					<div class="box fragment">
+
+						Você está usando HTTP.
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>HTTP define</h2>
+
+					<div class="columns">
+
+						<div class="col">
+							<div class="card fragment">
+								Como pedir
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								Como responder
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								Como identificar erros
+							</div>
+						</div>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Problema...</h2>
+
+					<div class="hero fragment">
+						HTTP puro não protege nada.
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Tudo trafega em texto</h2>
+
+					<pre><code>
+usuario=admin
+
+senha=123456
+</code></pre>
+
+				</section>
+
+				<section>
+
+					<h2>Alguém no caminho pode ler</h2>
+
+					<div class="box">
+
+						<p class="fragment">
+							Login
+						</p>
+
+						<p class="fragment">
+							Senhas
+						</p>
+
+						<p class="fragment">
+							Cartões
+						</p>
+
+						<p class="fragment">
+							Tokens
+						</p>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<div class="hero">
+						Precisávamos de algo melhor.
+					</div>
+
+				</section>
+
+				<section class="gradient-slide">
+
+					<div class="hero">
+						HTTPS
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>O que significa?</h2>
+
+					<div class="box">
+
+						<p class="fragment">
+							HTTP
+						</p>
+
+						<p class="fragment">
+							+
+						</p>
+
+						<p class="fragment">
+							Criptografia
+						</p>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Visualmente</h2>
+
+					<div class="columns">
+
+						<div class="col">
+
+							<div class="card fragment">
+
+								HTTP
+
+								<br><br>
+
+								Aberto
+
+							</div>
+
+						</div>
+
+						<div class="col">
+
+							<div class="card fragment">
+
+								HTTPS
+
+								<br><br>
+
+								Protegido
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>O cadeado significa</h2>
+
+					<div class="hero fragment">
+						Criptografia
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Mas não significa</h2>
+
+					<div class="box">
+
+						<p class="fragment">
+							Site confiável
+						</p>
+
+						<p class="fragment">
+							Site seguro
+						</p>
+
+						<p class="fragment">
+							Empresa legítima
+						</p>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>HTTPS protege</h2>
+
+					<div class="columns">
+
+						<div class="col">
+							<div class="card fragment">
+								Senhas
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								Tokens
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								Dados pessoais
+							</div>
+						</div>
+
+					</div>
+
+				</section>
+
+				<section>
+
+					<h2>Resumo até aqui</h2>
+
+					<div class="box">
+
+						<p class="fragment">
+							URL → identifica o recurso
+						</p>
+
+						<p class="fragment">
+							DNS → encontra o IP
+						</p>
+
+						<p class="fragment">
+							IP → encontra o servidor
+						</p>
+
+						<p class="fragment">
+							HTTP/HTTPS → define a conversa
+						</p>
+
+					</div>
+
+				</section>
+
+				<section class="gradient-slide">
+
+					<h1>
+						Estamos prontos.
+					</h1>
+
+					<p class="fragment hero">
+						Agora vamos enviar uma Request.
+					</p>
+
+				</section>
+				<section class="gradient-slide">
+
+
+					<h1>
+						Agora vem a mágica.
+					</h1>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>Tudo isso está visível.</h2>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>Vamos investigar</h2>
+
+					<div class="columns">
+
+						<div class="col">
+							<div class="card fragment">
+								Status
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								Type
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								Size
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card fragment">
+								Time
+							</div>
+						</div>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>O DevTools conta toda a história.</h2>
+
+					<div class="box">
+
+						<p class="fragment">
+							O que foi pedido.
+						</p>
+
+						<p class="fragment">
+							Para quem foi enviado.
+						</p>
+
+						<p class="fragment">
+							Quanto demorou.
+						</p>
+
+						<p class="fragment">
+							O que voltou.
+						</p>
+
+					</div>
+
+
+				</section>
+
+				<section>
+
+
+					<h2>Resumo da Jornada</h2>
+
+					<div class="box">
+
+						<p class="fragment">
+							URL
+						</p>
+
+						<p class="fragment">
+							↓
+						</p>
+
+						<p class="fragment">
+							DNS
+						</p>
+
+						<p class="fragment">
+							↓
+						</p>
+
+						<p class="fragment">
+							IP
+						</p>
+
+						<p class="fragment">
+							↓
+						</p>
+
+						<p class="fragment">
+							HTTPS
+						</p>
+
+						<p class="fragment">
+							↓
+						</p>
+
+						<p class="fragment">
+							REQUEST
+						</p>
+
+						<p class="fragment">
+							↓
+						</p>
+
+						<p class="fragment">
+							RESPONSE
+						</p>
+
+					</div>
+
+
+				</section>
+
+				<section class="gradient-slide">
+
+
+					<h1>
+						Bem-vindos ao mundo das APIs.
+					</h1>
+
+					<p class="fragment">
+						Agora vocês sabem o que acontece depois do ENTER.
+					</p>
+
+
+				</section>
+
+				<section>
+					<h1>E a Response?</h1>
+				</section>
+
+				<section>
+
+					<div style="font-size:8em;">
+						📄
+					</div>
+
+					<p>5 KB</p>
+
+				</section>
+				<section>
+
+					<div style="font-size:8em;">
+						📄 📄 📄 📄 📄
+					</div>
+
+					<p>500 KB</p>
+
+				</section>
+
+				<section>
+
+					<div style="font-size:8em;">
+						📄 📄 📄 📄 📄
+						📄 📄 📄 📄 📄
+						📄 📄 📄 📄 📄
+					</div>
+
+					<p>5 MB</p>
+
+				</section>
+
+				<section data-background="#333">
+					<h3>Precisamos criar estrategias para as responses</h3>
+				</section>
+
+
+				<section>
+					<hr>
+					<h1>E o tempo?</h1>
+					<hr>
+				</section>
+
+				<section>
+
+					<div class="big-number">
+						50ms
+					</div>
+
+					<p class="fragment">
+						Instantâneo
+					</p>
+
+				</section>
+
+				<section>
+
+					<div class="big-number">
+						1500ms
+					</div>
+
+					<p class="fragment">
+						Já parece lento
+					</p>
+
+				</section>
+
+				<section>
+
+					<div class="big-number">
+						5000ms
+					</div>
+
+					<p class="fragment">
+						O usuário desistiu
+					</p>
+
+				</section>
+
+
+				<section>
+					<h1>REVISEMOS</h1>
+				</section>
+
+				<!-- Slide 2: Anatomia de uma URL -->
+				<section>
+					<h2>Anatomia de uma URL</h2>
+					<p class="fragment">Exemplo: <br><code style="color: blue">https://api.exemplo.com/v1/users?id=123</code></p>
+					<ul>
+					<li class="fragment"><strong>Protocol(o):</strong> https</li>
+					<li class="fragment"><strong>Domínio/Domain:</strong> api.exemplo.com</li>
+					<li class="fragment"><strong>Caminho/Path/Endpoint:</strong> /v1/users</li>
+					<li class="fragment"><strong>Query String/Parameters:</strong> ?id=123</li>
+					</ul>
+				</section>
+
+				<!-- Slide 3: O que é Request? -->
+				<section>
+					<h2>O que é Request?</h2>
+					<p class="fragment">É a requisição enviada pelo cliente para o servidor.</p>
+					<pre class="fragment"><code class="javascript">fetch('https://api.exemplo.com/v1/users')
+				.then(response => response.json())
+				.then(data => console.log(data));
+					</code></pre>
+				</section>
+
+
+
+				<!-- Slide 4: O que é Response? -->
+				<section>
+					<h2>O que é Response?</h2>
+					<p class="fragment">É a resposta enviada pelo servidor para o cliente.</p>
+					<pre class="fragment"><code class="javascript">
+{
+	"id": 123,
+	"name": "Filomena",
+	"age": 30
+}
+					</code></pre>
+				</section>
+
+				<!-- Slide 5: Conteúdo da Request/Response -->
+				<section data-background="#333">
+					<h2>Conteúdo da Request/Response</h2>
+					<ul>
+					<li class="fragment"><strong>Body:</strong> Dados enviados ou recebidos.</li>
+					<li class="fragment"><strong>Header:</strong> Metadados da comunicação (Content-Type, Authorization, etc).</li>
+					<li class="fragment"><strong>Status:</strong> Código da resposta (200, 404, 500, etc).</li>
+					<li class="fragment"><strong>Content-Type:</strong> Tipo de conteúdo (JSON, HTML, etc).</li>
+					<li class="fragment"><strong>Size:</strong> Tamanho do payload.</li>
+					<li class="fragment"><strong>Time:</strong> Tempo de resposta.</li>
+					</ul>
+				</section>
+
+				<!-- Slide 6: Tipos de Status Code -->
+				<section>
+					<h2>Tipos de Status Code</h2>
+					<ul>
+					<li class="fragment"><strong>1xx:</strong> Informativo</li>
+					<li class="fragment"><strong>2xx:</strong> Sucesso (ex: 200 OK)</li>
+					<li class="fragment"><strong>3xx:</strong> Redirecionamento (ex: 301 Moved Permanently)</li>
+					<li class="fragment"><strong>4xx:</strong> Erro do Cliente (ex: 404 Not Found)</li>
+					<li class="fragment"><strong>5xx:</strong> Erro do Servidor (ex: 500 Internal Server Error)</li>
+					</ul>
+				</section>
+
+				      <!-- Slide 12: Exemplos de Status Code - Sucesso -->
+					  <section  data-background="#333">
+						<h2>Status Codes - Sucesso (2xx)</h2>
+						<p>Indicam que a requisição foi bem-sucedida.</p>
+						<ul>
+						  <li><strong>200 OK:</strong> Requisição bem-sucedida (ex: fetch GET).</li>
+						  <li><strong>201 Created:</strong> Recurso criado com sucesso (ex: fetch POST).</li>
+						  <li><strong>204 No Content:</strong> Requisição bem-sucedida, mas sem conteúdo retornado (ex: DELETE).</li>
+						</ul>
+						</section>
+						<section>
+						<pre><code class="javascript">
+fetch('https://api.exemplo.com/v1/users')
+	.then(response => {
+		if (response.ok) {
+			return response.json();
+		}
+		throw new Error('Erro na requisição');
+	})
+	.then(data => console.log(data))
+	.catch(error => console.error(error));
+						</code></pre>
+					  </section>
+				
+					  <!-- Slide 13: Exemplos de Status Code - Erros do Cliente -->
+					  <section>
+						<h2>Status Codes - Erros do Cliente (4xx)</h2>
+						<p>Indicam que houve um problema com a requisição feita pelo cliente.</p>
+						<ul>
+						  <li><strong>400 Bad Request:</strong> A requisição está incorreta ou malformada.</li>
+						  <li><strong>401 Unauthorized:</strong> Necessário autenticação para acessar o recurso.</li>
+						  <li><strong>404 Not Found:</strong> O recurso solicitado não foi encontrado.</li>
+						</ul>
+						</section>
+						<section>
+						<pre><code class="javascript">
+fetch('https://api.exemplo.com/v1/users/999')
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`Erro ${response.status}: Recurso não encontrado`);
+		}
+		return response.json();
+	})
+	.then(data => console.log(data))
+	.catch(error => console.error(error));
+						</code></pre>
+					  </section>
+				
+					  <!-- Slide 14: Exemplos de Status Code - Erros do Servidor -->
+					  <section  data-background="#333">
+						<h2>Status Codes - Erros do Servidor (5xx)</h2>
+						<p>Indicam que houve um problema no servidor ao processar a requisição.</p>
+						<ul>
+						  <li><strong>500 Internal Server Error:</strong> Ocorreu um erro inesperado no servidor.</li>
+						  <li><strong>502 Bad Gateway:</strong> O servidor recebeu uma resposta inválida.</li>
+						  <li><strong>503 Service Unavailable:</strong> O servidor está temporariamente indisponível.</li>
+						</ul>
+						</section>
+						<section>
+						<pre><code class="javascript">
+fetch('https://api.exemplo.com/v1/users')
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`Erro ${response.status}: Problema no servidor`);
+		}
+		return response.json();
+	})
+	.then(data => console.log(data))
+	.catch(error => console.error(error));
+						</code></pre>
+					  </section>
+				
+
+				<!-- Slide 7: Tipos de Verbos -->
+				<section data-background="#333">
+					<h2>Tipos de Verbos HTTP</h2>
+					<ul>
+					<li class="fragment"><strong>GET:</strong> Busca dados (ex: fetch())</li>
+					<li class="fragment"><strong>POST:</strong> Envia dados (ex: fetch() com body)</li>
+					<li class="fragment"><strong>PUT:</strong> Atualiza dados completos</li>
+					<li class="fragment"><strong>PATCH:</strong> Atualiza dados parciais</li>
+					<li class="fragment"><strong>DELETE:</strong> Remove dados</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h2>Exemplo Dinâmico - GET</h2>
+					<pre><code class="javascript">
+const userId = 123;
+
+fetch(`https://api.exemplo.com/v1/users?id=${userId}`)
+	.then(response => response.json())
+	.then(data => console.log(data));
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Exemplo Prático - POST</h2>
+					<pre><code class="javascript">fetch('https://api.exemplo.com/v1/users', {
+			  method: 'POST',
+			  headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer seu_token_aqui'
+			  },
+			  body: JSON.stringify({ name: 'Jessica', age: 30 })
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Erro:', error));
+					</code></pre>
+				</section>
+
+				<section>
+					<p class="r-fit-text">DÚVIDAS?</p>
+				</section>
+
+
+			</div>
+		</div>
+
+		<script src="../../../../dist/reveal.js"></script>
+		<script src="../../../../plugin/notes/notes.js"></script>
+		<script src="../../../../plugin/markdown/markdown.js"></script>
+		<script src="../../../../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
