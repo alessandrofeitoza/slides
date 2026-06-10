@@ -1,0 +1,2544 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aula 26 - Modelagem de Sistemas Complexos</title>
+
+    <link rel="stylesheet" href="../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="../../../dist/theme/black.css">
+
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #818cf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --surface: rgba(255,255,255,.05);
+            --border: rgba(255,255,255,.1);
+        }
+
+        .box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            backdrop-filter: blur(12px);
+        }
+
+        .box h3 {
+            margin: 0;
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .columns > div {
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        .levels {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 18px;
+            margin-top: 50px;
+        }
+
+        .level {
+            flex: 1;
+            background: linear-gradient(
+                    180deg,
+                    rgba(56,189,248,.18),
+                    rgba(56,189,248,.04)
+            );
+            border: 1px solid rgba(56,189,248,.3);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all .3s ease;
+        }
+
+        .level:hover {
+            transform: translateY(-8px);
+        }
+
+        .level h3 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .timeline-item {
+            flex: 1;
+            position: relative;
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 25px rgba(56,189,248,.8);
+        }
+
+        .timeline-item h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .reveal table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .75em;
+        }
+
+        .reveal table th {
+            background: rgba(56,189,248,.15);
+            color: white;
+            border-bottom: 2px solid rgba(56,189,248,.4);
+        }
+
+        .reveal table th,
+        .reveal table td {
+            padding: 14px;
+            text-align: left;
+        }
+
+        .reveal table tr:nth-child(even) {
+            background: rgba(255,255,255,.03);
+        }
+
+        blockquote {
+            border-left: 6px solid var(--primary);
+            background: rgba(56,189,248,.08);
+            padding: 20px 30px;
+            border-radius: 0 15px 15px 0;
+            font-style: italic;
+        }
+
+        pre {
+            border-radius: 18px !important;
+            overflow: hidden !important;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .reveal ol li,
+        .reveal ul li {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+
+        .reveal h1 {
+            background: linear-gradient(
+                    90deg,
+                    #38bdf8,
+                    #818cf8
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .reveal h2 {
+            margin-bottom: 30px;
+        }
+
+        .r-stack h3 {
+            font-size: 2.4rem;
+        }
+
+         :root {
+             --bg: #DEDEDE;
+             --card: #121a30;
+             --card2: #18233f;
+             --text: #f4f7fb;
+             --muted: #98a6c3;
+             --primary: #6ea8fe;
+             --danger: #ff6b6b;
+             --success: #37d67a;
+             --border: rgba(255,255,255,.08);
+         }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: uppercase;
+            color: #e27507; /* Dourado Churchilliano */
+        }
+
+        .reveal {
+            font-family: Inter, system-ui, sans-serif;
+            color: var(--text);
+            font-size: 42px;
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal section {
+            padding: 40px;
+        }
+
+        body {
+            line-height: normal;
+            background:
+                    radial-gradient(circle at top right,#1b2750 0%,#0b1020 40%),
+                    #0b1020;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: -.03em;
+        }
+
+        h2 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: -.02em;
+        }
+
+        h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        p, li {
+            font-size: 2.2rem;
+            line-height: 1.45;
+        }
+
+        ul {
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        li {
+            margin: 18px 0;
+        }
+
+        .hero {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .subtitle {
+            font-size: 1.7rem;
+            color: var(--muted);
+            margin-top: 20px;
+        }
+
+        .speaker {
+            margin-top: 50px;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .box {
+            background: rgba(18,26,48,.85);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .quote {
+            margin-top: 40px;
+            border-left: 6px solid var(--primary);
+            padding-left: 25px;
+            font-size: 2rem;
+            line-height: normal;
+            font-style: italic;
+            color: #dce7ff;
+        }
+
+
+        .media-placeholder {
+            margin-top: 35px;
+            height: 260px;
+            border: 2px dashed rgba(255,255,255,.18);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 1.1rem;
+            background: rgba(255,255,255,.02);
+        }
+
+        .big-center {
+            text-align: center;
+        }
+
+        .huge {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .danger {
+            color: var(--danger);
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        code {
+            font-size: 1.8rem !important;
+            line-height: normal;
+        }
+
+        .reveal pre {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,.35);
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        /*hr {*/
+        /*    border: none;*/
+        /*    border-top: 2px solid var(--border);*/
+        /*    margin: 30px 0;*/
+        /*}*/
+
+        .diagram {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:35px;
+            margin-top:80px;
+            flex-wrap:wrap;
+        }
+
+        .diagram.split {
+            gap:60px;
+        }
+
+        .node {
+            min-width:220px;
+            padding:28px 34px;
+            border-radius:24px;
+            font-size:1.4rem;
+            font-weight:700;
+            text-align:center;
+            border:1px solid rgba(255,255,255,.08);
+            box-shadow:0 20px 50px rgba(0,0,0,.25);
+        }
+
+        .user {
+            background:#1b2750;
+        }
+
+        .gateway {
+            background:#26355f;
+        }
+
+        .legacy {
+            background:#4a2b2b;
+        }
+
+        .modern {
+            background:#1f4b36;
+        }
+
+        .arrow {
+            font-size:3rem;
+            font-weight:800;
+            color:var(--primary);
+        }
+
+        .branch {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:18px;
+        }
+
+        .fragment.blur {
+            filter: blur(5px);
+        }
+        .fragment.blur.visible {
+            filter: none;
+        }
+
+        .tree-scene {
+            position: relative;
+            height: 340px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-top:40px;
+        }
+
+        .tree {
+            position:absolute;
+            transition: all .6s ease;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,.25));
+        }
+
+        .legacy-tree {
+            font-size:7rem;
+        }
+
+        .strangler-tree {
+            font-size:4rem;
+            transform: translateX(90px) translateY(40px);
+        }
+
+        .strangler-tree.big {
+            font-size:7rem;
+            opacity:.9;
+        }
+
+        .strangler-tree.giant {
+            font-size:9rem;
+        }
+
+        .legacy-tree.wrapped {
+            opacity:.35;
+            transform: scale(.85);
+        }
+
+        .grid-2 {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:28px;
+            margin-top:50px;
+        }
+
+        .mini-card {
+            background:rgba(18,26,48,.85);
+            border:1px solid rgba(255,255,255,.08);
+            border-radius:24px;
+            padding:35px;
+            text-align:center;
+        }
+
+        .mini-card h3 {
+            font-size:2.4rem;
+            margin-bottom:18px;
+        }
+
+        .mini-card p {
+            font-size:1.4rem;
+        }
+
+        .terminal {
+            background:#08111f;
+            border-radius:20px;
+            padding:40px;
+            font-family:monospace;
+            margin-top:40px;
+        }
+
+        .terminal p {
+            margin:18px 0;
+            color:#5ef2a3;
+        }
+
+        .grid-3 {
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:26px;
+            margin-top:50px;
+        }
+
+        .promise-card {
+            background:var(--card);
+            border-radius:22px;
+            padding:35px;
+            text-align:center;
+            font-size:2rem;
+        }
+
+        .promise-card p {
+            margin-top:15px;
+            font-size:2rem;
+        }
+
+        .stamp-wall {
+            display:flex;
+            flex-wrap:wrap;
+            gap:25px;
+            margin-top:60px;
+        }
+
+        .stamp {
+            border:3px solid var(--danger);
+            color:var(--danger);
+            padding:18px 26px;
+            border-radius:18px;
+            font-weight:800;
+            transform:rotate(-4deg);
+        }
+
+        .stamp-success {
+            border:3px solid var(--success);
+            color:var(--success);
+            padding:18px 26px;
+            border-radius:18px;
+            font-weight:800;
+            transform:rotate(-4deg);
+        }
+
+        .swap-title {
+            position:relative;
+            height:220px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .swap-title h1 {
+            position:absolute;
+            background:#FFF;
+            color:#111;
+            padding:20px 40px;
+            border-radius:16px;
+        }
+
+        .incident-grid {
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:28px;
+            margin-top:45px;
+        }
+
+        .incident-card {
+            background:#2b1720;
+            border:1px solid rgba(255,90,90,.18);
+            border-radius:22px;
+            padding:35px;
+            text-align:center;
+        }
+
+        .incident-card span {
+            display:block;
+            font-size:2.8rem;
+            color:#ff6b6b;
+            margin-bottom:18px;
+        }
+
+        .incident-card p {
+            font-size:2rem;
+        }
+
+        .check-wall {
+            margin-top:50px;
+        }
+
+        .check {
+            background: #555e55;
+            border-radius:18px;
+            padding:18px 30px;
+            margin:18px 0;
+            font-size:2rem;
+        }
+
+        .bad {
+            border-left:6px solid var(--success);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <!-- ===================================================== -->
+        <!-- PARTE 0 - HISTÓRIA DA MATURIDADE DE SOFTWARE -->
+        <!-- ===================================================== -->
+
+        <section>
+            <h1>Maturidade de Software</h1>
+            <h3>Por que algumas equipes entregam valor continuamente e outras vivem apagando incêndios?</h3>
+        </section>
+
+        <section>
+            <h2>Um problema antigo</h2>
+
+            <div class="box">
+                <p>
+                    Nas décadas de 1960 e 1970, projetos de software começaram a ficar maiores,
+                    mais caros e mais complexos.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">atrasos constantes</li>
+                <li class="fragment">orçamentos estourados</li>
+                <li class="fragment">sistemas instáveis</li>
+                <li class="fragment">alta dependência de indivíduos</li>
+                <li class="fragment">baixa previsibilidade</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>A Crise do Software</h2>
+
+            <div class="timeline">
+                <div class="timeline-item fragment">
+                    <strong>1968</strong>
+                    <p>Conferência da OTAN populariza o termo "Software Crisis"</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <strong>1970</strong>
+                    <p>Engenharia de Software começa a se consolidar como disciplina</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <strong>1980+</strong>
+                    <p>Organizações buscam modelos para medir qualidade e previsibilidade</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>O que significa maturidade?</h2>
+
+            <div class="box">
+                <p>
+                    Maturidade não mede apenas tecnologia.
+                </p>
+
+                <p class="fragment">
+                    Mede a capacidade de uma organização repetir resultados com qualidade.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Duas empresas</h2>
+
+            <div class="r-stack">
+
+                <div class="fragment">
+                    <h3>Empresa A</h3>
+                    <ul>
+                        <li class="fragment">Deploy na sexta-feira</li>
+                        <li class="fragment">Sem testes</li>
+                        <li class="fragment">Sem monitoramento</li>
+                        <li class="fragment">Tudo depende do desenvolvedor mais antigo</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+        <section>
+            <h2>Duas empresas</h2>
+
+            <div class="r-stack">
+
+
+                <div class="fragment">
+                    <h3>Empresa B</h3>
+                    <ul>
+                        <li class="fragment">CI/CD</li>
+                        <li class="fragment">Code Review</li>
+                        <li class="fragment">Observabilidade</li>
+                        <li class="fragment">Processos documentados</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Capability Maturity Model (CMM)</h2>
+
+            <div class="box">
+                <p>
+                    Criado pelo Software Engineering Institute (SEI),
+                    da Carnegie Mellon University.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">final da década de 1980</li>
+                <li class="fragment">encomendado pelo Departamento de Defesa dos EUA</li>
+                <li class="fragment">objetivo: avaliar fornecedores de software</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Os 5 níveis do CMM</h2>
+
+            <div class="levels">
+
+                <div class="level fragment">
+                    <h3>1</h3>
+                    <p>Inicial</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>2</h3>
+                    <p>Repetível</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>3</h3>
+                    <p>Definido</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>4</h3>
+                    <p>Gerenciado</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>5</h3>
+                    <p>Otimizado</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Nível 1 - Inicial</h2>
+
+            <blockquote>
+                "Cada projeto é uma aventura."
+            </blockquote>
+
+            <ul>
+                <li class="fragment">processos inexistentes</li>
+                <li class="fragment">dependência de pessoas específicas</li>
+                <li class="fragment">resultados imprevisíveis</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Nível 5 - Otimizado</h2>
+
+            <blockquote>
+                "A organização aprende continuamente."
+            </blockquote>
+
+            <ul>
+                <li class="fragment">métricas</li>
+                <li class="fragment">melhoria contínua</li>
+                <li class="fragment">automação</li>
+                <li class="fragment">evolução baseada em dados</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Nasce o CMMI</h2>
+
+            <div class="box">
+                <p>
+                    Em 2002 surge o CMMI
+                    (Capability Maturity Model Integration).
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">integra diversos modelos existentes</li>
+                <li class="fragment">mais flexível</li>
+                <li class="fragment">mais adequado para organizações complexas</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>CMM x CMMI</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>CMM</th>
+                    <th>CMMI</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Modelo único</td>
+                    <td>Modelo integrado</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Foco em software</td>
+                    <td>Diversas áreas</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Mais rígido</td>
+                    <td>Mais flexível</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>E o Brasil?</h2>
+
+            <div class="box">
+                <p>
+                    Pequenas e médias empresas tinham dificuldade
+                    para implementar modelos como CMMI.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>MPS.BR</h2>
+
+            <p>
+                Melhoria de Processo do Software Brasileiro
+            </p>
+
+            <ul>
+                <li class="fragment">lançado em 2003</li>
+                <li class="fragment">coordenado pela SOFTEX</li>
+                <li class="fragment">adaptado à realidade brasileira</li>
+                <li class="fragment">menor custo de implementação</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Níveis do MPS.BR</h2>
+
+            <div class="levels-mps">
+                <div class="fragment">G</div>
+                <div class="fragment">F</div>
+                <div class="fragment">E</div>
+                <div class="fragment">D</div>
+                <div class="fragment">C</div>
+                <div class="fragment">B</div>
+                <div class="fragment">A</div>
+            </div>
+
+            <p class="fragment">
+                Quanto mais próximo do nível A,
+                maior a maturidade dos processos.
+            </p>
+        </section>
+
+        <section>
+            <h2>Maturidade em 2026</h2>
+
+            <div class="box">
+                <p>
+                    Poucas empresas falam diariamente sobre CMMI ou MPS.BR.
+                </p>
+            </div>
+
+            <p class="fragment">
+                Mas praticamente todas falam sobre:
+            </p>
+
+            <ul>
+                <li class="fragment">CI/CD</li>
+                <li class="fragment">DevOps</li>
+                <li class="fragment">Observabilidade</li>
+                <li class="fragment">Quality Gates</li>
+                <li class="fragment">Arquitetura Evolutiva</li>
+                <li class="fragment">Platform Engineering</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>A mesma ideia com novos nomes</h2>
+
+            <blockquote>
+                O objetivo continua sendo o mesmo:
+            </blockquote>
+
+            <h3 class="fragment">
+                Entregar software de forma previsível,
+                sustentável e com qualidade.
+            </h3>
+        </section>
+
+        <section>
+            <h1>Parte 1</h1>
+            <h2>Do software que funciona ao software que evolui</h2>
+        </section>
+
+        <!-- ===================================================== -->
+        <!-- PARTE 1 - O SOFTWARE NASCEU ONTEM -->
+        <!-- ===================================================== -->
+
+        <section>
+            <h1>Parte 1</h1>
+            <h2>O Software Nasceu Ontem</h2>
+        </section>
+
+        <section>
+            <h2>Imagine a seguinte startup</h2>
+
+            <div class="box">
+                <h3>AcademiaFit</h3>
+
+                <p>
+                    Uma pequena startup desenvolveu um sistema para gestão de academias.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">500 alunos cadastrados</li>
+                <li class="fragment">1 desenvolvedor</li>
+                <li class="fragment">1 servidor</li>
+                <li class="fragment">1 banco de dados</li>
+                <li class="fragment">deploy manual</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>A arquitetura inicial</h2>
+
+            <pre><code data-trim>
+Browser
+   │
+Laravel
+   │
+MySQL
+</code></pre>
+
+            <p class="fragment">
+                Simples, barata e eficiente.
+            </p>
+        </section>
+
+        <section>
+            <h2>Pergunta importante</h2>
+
+            <div class="box">
+                <h3>
+                    Essa arquitetura está errada?
+                </h3>
+            </div>
+        </section>
+
+        <section>
+            <h2>Resposta: Não</h2>
+
+            <blockquote>
+                Arquitetura boa não é a mais moderna.
+            </blockquote>
+
+            <h3 class="fragment">
+                Arquitetura boa é a que resolve o problema atual.
+            </h3>
+        </section>
+
+        <section>
+            <h2>O erro mais comum</h2>
+
+            <div class="columns">
+
+                <div>
+                    <h3>Necessidade atual</h3>
+
+                    <ul>
+                        <li class="fragment">100 usuários</li>
+                        <li class="fragment">1 servidor</li>
+                        <li class="fragment">1 equipe pequena</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Arquitetura criada</h3>
+
+                    <ul>
+                        <li class="fragment">microserviços</li>
+                        <li class="fragment">Kubernetes</li>
+                        <li class="fragment">mensageria</li>
+                        <li class="fragment">event sourcing</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Overengineering</h2>
+
+            <div class="box">
+                <p>
+                    Criar uma solução muito mais complexa do que o problema exige.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">aumenta custos</li>
+                <li class="fragment">aumenta manutenção</li>
+                <li class="fragment">reduz velocidade de entrega</li>
+                <li class="fragment">gera dívidas técnicas prematuras</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Exemplo real</h2>
+
+            <pre><code class="language-php" data-trim>
+class OrderController
+{
+    public function store(Request $request)
+    {
+        $order = Order::create($request->all());
+
+        Mail::send(...);
+
+        PaymentGateway::charge(...);
+
+        return response()->json($order);
+    }
+}
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>O sistema funciona?</h2>
+
+            <div class="box">
+                <h3 class="fragment">
+                    Sim.
+                </h3>
+            </div>
+
+            <h3 class="fragment">
+                Então qual é o problema?
+            </h3>
+        </section>
+
+        <section>
+            <h2>Analisando o código</h2>
+
+            <ul>
+                <li class="fragment">persistência de dados</li>
+                <li class="fragment">envio de e-mail</li>
+                <li class="fragment">pagamento</li>
+                <li class="fragment">resposta HTTP</li>
+            </ul>
+
+            <p class="fragment">
+                Muitas responsabilidades no mesmo lugar.
+            </p>
+        </section>
+
+        <section>
+            <h2>Problemas que surgirão</h2>
+
+            <ul>
+                <li class="fragment">testes difíceis</li>
+                <li class="fragment">alto acoplamento</li>
+                <li class="fragment">baixa reutilização</li>
+                <li class="fragment">maior risco de regressões</li>
+                <li class="fragment">evolução lenta</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mas devemos corrigir tudo agora?</h2>
+
+            <div class="box">
+                <h3>
+                    Depende.
+                </h3>
+            </div>
+
+            <p class="fragment">
+                Nem toda melhoria gera retorno imediato.
+            </p>
+        </section>
+
+        <section>
+            <h2>Maturidade também é saber priorizar</h2>
+
+            <blockquote>
+                Nem toda dívida técnica precisa ser paga hoje.
+            </blockquote>
+
+            <p class="fragment">
+                O segredo é saber quais dívidas estão impedindo a evolução do negócio.
+            </p>
+        </section>
+
+        <section>
+            <h2>Exercício rápido</h2>
+
+            <div class="box">
+                <h3>
+                    O que vocês melhorariam neste controller?
+                </h3>
+            </div>
+
+            <ul>
+                <li class="fragment">quais responsabilidades separar?</li>
+                <li class="fragment">quais dependências abstrair?</li>
+                <li class="fragment">quais testes criar?</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Primeira lição da aula</h2>
+
+            <blockquote>
+                Software maduro não nasce maduro.
+            </blockquote>
+
+            <h3 class="fragment">
+                Ele evolui conforme o produto, a equipe e o negócio evoluem.
+            </h3>
+        </section>
+
+        <section>
+            <h1>Parte 2</h1>
+            <h2>Quando o sistema começa a crescer</h2>
+        </section>
+
+
+        <!-- ===================================================== -->
+        <!-- PARTE 2 - QUANDO O SISTEMA COMEÇA A CRESCER -->
+        <!-- ===================================================== -->
+
+        <section>
+            <h1>Parte 2</h1>
+            <h2>Quando o Sistema Começa a Crescer</h2>
+        </section>
+
+        <section>
+            <h2>Seis meses depois...</h2>
+
+            <div class="box">
+                <h3>AcademiaFit continua crescendo</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">50 mil alunos</li>
+                <li class="fragment">aplicativo mobile</li>
+                <li class="fragment">integrações com parceiros</li>
+                <li class="fragment">equipe com vários desenvolvedores</li>
+                <li class="fragment">mais clientes chegando</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Novos desafios aparecem</h2>
+
+            <div class="columns">
+
+                <div>
+                    <h3>Técnicos</h3>
+
+                    <ul>
+                        <li class="fragment">lentidão</li>
+                        <li class="fragment">bugs frequentes</li>
+                        <li class="fragment">deploys problemáticos</li>
+                        <li class="fragment">dificuldade de testes</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Organizacionais</h3>
+
+                    <ul>
+                        <li class="fragment">mais pessoas no projeto</li>
+                        <li class="fragment">mais comunicação</li>
+                        <li class="fragment">mais alinhamentos</li>
+                        <li class="fragment">mais risco de conflitos</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O código não é mais o único problema</h2>
+
+            <blockquote>
+                A complexidade começa a migrar do software para a organização.
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>O que é maturidade técnica?</h2>
+
+            <div class="box">
+                <p>
+                    Capacidade de entregar software de forma previsível,
+                    sustentável e com qualidade.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Equipe imatura</h2>
+
+            <ul>
+                <li class="fragment">cada desenvolvedor trabalha de um jeito</li>
+                <li class="fragment">deploy é um momento de tensão</li>
+                <li class="fragment">bugs aparecem constantemente</li>
+                <li class="fragment">conhecimento concentrado em poucas pessoas</li>
+                <li class="fragment">incidentes se repetem</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Equipe madura</h2>
+
+            <ul>
+                <li class="fragment">processos definidos</li>
+                <li class="fragment">automatização de tarefas repetitivas</li>
+                <li class="fragment">compartilhamento de conhecimento</li>
+                <li class="fragment">aprendizado contínuo</li>
+                <li class="fragment">melhoria baseada em métricas</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O que NÃO significa maturidade</h2>
+
+            <div class="r-stack">
+
+                <div class="fragment fade-out">
+                    <h3>Ter Kubernetes</h3>
+                </div>
+
+                <div class="fragment fade-out">
+                    <h3>Ter microserviços</h3>
+                </div>
+
+                <div class="fragment fade-out">
+                    <h3>Usar IA em tudo</h3>
+                </div>
+
+                <div class="fragment current-visible">
+                    <h3>Ter capacidade de evoluir com segurança</h3>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Indicadores de maturidade</h2>
+
+            <ul>
+                <li class="fragment">controle de versão</li>
+                <li class="fragment">code review</li>
+                <li class="fragment">integração contínua</li>
+                <li class="fragment">testes automatizados</li>
+                <li class="fragment">deploy automatizado</li>
+                <li class="fragment">observabilidade</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uma empresa fictícia</h2>
+
+            <div class="box">
+                <h3>Empresa Alpha</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">8 desenvolvedores</li>
+                <li class="fragment">deploy manual</li>
+                <li class="fragment">sem testes automatizados</li>
+                <li class="fragment">sem monitoramento</li>
+                <li class="fragment">correções diretamente em produção</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Qual o nível de risco?</h2>
+
+            <div class="box">
+                <h3 class="fragment">
+                    Alto
+                </h3>
+            </div>
+
+            <p class="fragment">
+                O crescimento do negócio está superando a capacidade operacional da equipe.
+            </p>
+        </section>
+
+        <section>
+            <h2>Uma segunda empresa</h2>
+
+            <div class="box">
+                <h3>Empresa Beta</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">pipeline CI/CD</li>
+                <li class="fragment">testes automatizados</li>
+                <li class="fragment">monitoramento</li>
+                <li class="fragment">revisão de código</li>
+                <li class="fragment">documentação mínima</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Ela possui software perfeito?</h2>
+
+            <div class="box">
+                <h3 class="fragment">
+                    Não.
+                </h3>
+            </div>
+
+            <p class="fragment">
+                Mas possui mecanismos para detectar, corrigir e aprender com erros.
+            </p>
+        </section>
+
+        <section>
+            <h2>Exercício em grupo</h2>
+
+            <div class="box">
+                <h3>Avaliação de maturidade</h3>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Prática</th>
+                    <th>Sim</th>
+                    <th>Não</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Controle de versão</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fragment">
+                    <td>Code Review</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fragment">
+                    <td>CI/CD</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fragment">
+                    <td>Testes Automatizados</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fragment">
+                    <td>Observabilidade</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Discussão</h2>
+
+            <blockquote>
+                Quais práticas geram mais impacto
+                para uma empresa pequena?
+            </blockquote>
+
+            <p class="fragment">
+                E quais só fazem sentido em estágios mais avançados?
+            </p>
+        </section>
+
+        <section>
+            <h2>Segunda lição da aula</h2>
+
+            <blockquote>
+                O crescimento expõe problemas que antes estavam escondidos.
+            </blockquote>
+
+            <h3 class="fragment">
+                Maturidade é a capacidade de continuar evoluindo sem perder o controle.
+            </h3>
+        </section>
+
+        <section>
+            <h1>Parte 3</h1>
+            <h2>Débito Técnico e Sustentabilidade</h2>
+        </section>
+
+        <!-- ===================================================== -->
+        <!-- PARTE 3 - DÉBITO TÉCNICO E SUSTENTABILIDADE -->
+        <!-- ===================================================== -->
+
+        <section>
+            <h1>Parte 3</h1>
+            <h2>Débito Técnico e Sustentabilidade</h2>
+        </section>
+
+        <section>
+            <h2>O sistema continua funcionando...</h2>
+
+            <div class="box">
+                <p>
+                    Mas cada nova funcionalidade demora mais para ser entregue.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">mais bugs</li>
+                <li class="fragment">mais retrabalho</li>
+                <li class="fragment">mais regressões</li>
+                <li class="fragment">mais medo de alterar código</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O que é Débito Técnico?</h2>
+
+            <blockquote>
+                Uma decisão que acelera o presente,
+                mas aumenta o custo do futuro.
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>Exemplo simples</h2>
+
+            <pre><code class="language-php" data-trim>
+if ($user->type == 1) {
+    //
+}
+</code></pre>
+
+            <p class="fragment">
+                Nada assustador até aqui.
+            </p>
+        </section>
+
+        <section>
+            <h2>Alguns meses depois...</h2>
+
+            <pre><code class="language-php" data-trim>
+if ($user->type == 1) {
+    //
+}
+elseif ($user->type == 2) {
+    //
+}
+elseif ($user->type == 3) {
+    //
+}
+elseif ($user->type == 4) {
+    //
+}
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Dois anos depois...</h2>
+
+            <pre><code class="language-php" data-trim>
+if (...) {
+    ...
+}
+elseif (...) {
+    ...
+}
+elseif (...) {
+    ...
+}
+elseif (...) {
+    ...
+}
+elseif (...) {
+    ...
+}
+elseif (...) {
+    ...
+}
+</code></pre>
+
+            <p class="fragment">
+                Todos conhecem esse código.
+            </p>
+        </section>
+
+        <section>
+            <h2>Mas o sistema funciona!</h2>
+
+            <div class="box">
+                <h3 class="fragment">
+                    Sim.
+                </h3>
+            </div>
+
+            <h3 class="fragment">
+                Então por que isso é um problema?
+            </h3>
+        </section>
+
+        <section>
+            <h2>O custo escondido</h2>
+
+            <ul>
+                <li class="fragment">mais difícil de entender</li>
+                <li class="fragment">mais difícil de testar</li>
+                <li class="fragment">mais difícil de modificar</li>
+                <li class="fragment">mais chance de quebrar regras existentes</li>
+                <li class="fragment">mais tempo para onboarding</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Juros do débito técnico</h2>
+
+            <div class="columns">
+
+                <div>
+                    <h3>Hoje</h3>
+
+                    <ul>
+                        <li class="fragment">5 minutos</li>
+                        <li class="fragment">1 ajuste rápido</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Daqui a 2 anos</h3>
+
+                    <ul>
+                        <li class="fragment">2 dias</li>
+                        <li class="fragment">vários impactos</li>
+                        <li class="fragment">risco elevado</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Nem todo débito técnico é ruim</h2>
+
+            <div class="box">
+                <p>
+                    Muitas startups sobrevivem justamente porque assumem débitos técnicos conscientemente.
+                </p>
+            </div>
+
+            <p class="fragment">
+                O problema é quando a dívida deixa de ser controlada.
+            </p>
+        </section>
+
+        <section>
+            <h2>Exemplo clássico</h2>
+
+            <div class="columns">
+
+                <div>
+                    <h3>MVP</h3>
+
+                    <ul>
+                        <li class="fragment">entrega rápida</li>
+                        <li class="fragment">validação de mercado</li>
+                        <li class="fragment">baixo investimento</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Escala</h3>
+
+                    <ul>
+                        <li class="fragment">crescimento de usuários</li>
+                        <li class="fragment">novos requisitos</li>
+                        <li class="fragment">necessidade de evolução</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Débito Técnico x Falta de Qualidade</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Débito Técnico</th>
+                    <th>Falta de Qualidade</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>decisão consciente</td>
+                    <td>erro ou negligência</td>
+                </tr>
+                <tr class="fragment">
+                    <td>possui justificativa</td>
+                    <td>não possui justificativa</td>
+                </tr>
+                <tr class="fragment">
+                    <td>possui plano futuro</td>
+                    <td>não possui plano</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Como identificar débitos técnicos?</h2>
+
+            <ul>
+                <li class="fragment">duplicação de código</li>
+                <li class="fragment">classes gigantes</li>
+                <li class="fragment">acoplamento excessivo</li>
+                <li class="fragment">baixa cobertura de testes</li>
+                <li class="fragment">dependências obsoletas</li>
+                <li class="fragment">processos manuais recorrentes</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uma alternativa melhor</h2>
+
+            <pre><code class="language-php" data-trim>
+interface PaymentMethod
+{
+    public function pay(): void;
+}
+</code></pre>
+
+            <p class="fragment">
+                O objetivo não é apenas deixar o código bonito.
+            </p>
+        </section>
+
+        <section>
+            <h2>O verdadeiro objetivo</h2>
+
+            <blockquote>
+                Tornar mudanças futuras mais baratas.
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>Exercício em grupo</h2>
+
+            <div class="box">
+                <h3>Caça ao débito técnico</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">analise o código fornecido</li>
+                <li class="fragment">identifique riscos</li>
+                <li class="fragment">liste possíveis melhorias</li>
+                <li class="fragment">priorize o que faria primeiro</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uma pergunta importante</h2>
+
+            <h3 class="fragment">
+                Devemos corrigir todos os débitos técnicos?
+            </h3>
+        </section>
+
+        <section>
+            <h2>Resposta</h2>
+
+            <blockquote>
+                Não.
+            </blockquote>
+
+            <p class="fragment">
+                Devemos corrigir os débitos que impedem
+                a evolução do produto e da equipe.
+            </p>
+        </section>
+
+        <section>
+            <h2>Terceira lição da aula</h2>
+
+            <blockquote>
+                Software sustentável não é aquele sem dívidas.
+            </blockquote>
+
+            <h3 class="fragment">
+                É aquele cujas dívidas estão sob controle.
+            </h3>
+        </section>
+
+        <section>
+            <h1>Parte 4</h1>
+            <h2>Arquitetura Evolutiva</h2>
+        </section>
+
+        <!-- ===================================================== -->
+        <!-- PARTE 4 - ARQUITETURA EVOLUTIVA -->
+        <!-- ===================================================== -->
+
+        <section>
+            <h1>Parte 4</h1>
+            <h2>Arquitetura Evolutiva</h2>
+        </section>
+
+        <section>
+            <h2>Uma pergunta comum</h2>
+
+            <div class="box">
+                <h3>
+                    Como projetar uma arquitetura que sobreviva pelos próximos 10 anos?
+                </h3>
+            </div>
+        </section>
+
+        <section>
+            <h2>A resposta pode surpreender</h2>
+
+            <blockquote>
+                Você não projeta.
+            </blockquote>
+
+            <p class="fragment">
+                Nenhuma equipe consegue prever com precisão
+                como um produto irá evoluir.
+            </p>
+        </section>
+
+        <section>
+            <h2>O erro clássico</h2>
+
+            <div class="box">
+                <p>
+                    Tentar resolver hoje problemas que talvez nunca existam.
+                </p>
+            </div>
+
+            <ul>
+                <li class="fragment">complexidade excessiva</li>
+                <li class="fragment">custos elevados</li>
+                <li class="fragment">mais manutenção</li>
+                <li class="fragment">menor produtividade</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Arquitetura Evolutiva</h2>
+
+            <blockquote>
+                Criar sistemas que possam mudar com segurança
+                quando o negócio mudar.
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>O software da AcademiaFit</h2>
+
+            <p>
+                Vamos acompanhar sua evolução.
+            </p>
+        </section>
+
+        <section>
+            <h2>Fase 1</h2>
+
+            <h3>Monólito Simples</h3>
+
+            <pre><code data-trim>
+Browser
+   │
+Laravel
+   │
+MySQL
+</code></pre>
+
+            <p class="fragment">
+                Perfeito para o estágio inicial.
+            </p>
+        </section>
+
+        <section>
+            <h2>Características</h2>
+
+            <ul>
+                <li class="fragment">baixo custo operacional</li>
+                <li class="fragment">deploy simples</li>
+                <li class="fragment">curva de aprendizado pequena</li>
+                <li class="fragment">desenvolvimento rápido</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Fase 2</h2>
+
+            <h3>Organização por módulos</h3>
+
+            <pre><code data-trim>
+Academia
+├── Usuários
+├── Financeiro
+├── Matrículas
+└── Relatórios
+</code></pre>
+
+            <p class="fragment">
+                Ainda é um monólito.
+            </p>
+        </section>
+
+        <section>
+            <h2>Mas agora existe separação</h2>
+
+            <ul>
+                <li class="fragment">responsabilidades claras</li>
+                <li class="fragment">menor acoplamento</li>
+                <li class="fragment">manutenção facilitada</li>
+                <li class="fragment">times conseguem colaborar melhor</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Fase 3</h2>
+
+            <h3>Extração de serviços</h3>
+
+            <pre><code data-trim>
+Sistema Principal
+        │
+ ┌──────┴──────┐
+ │             │
+Auth      Notificações
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Quando isso faz sentido?</h2>
+
+            <ul>
+                <li class="fragment">alta reutilização</li>
+                <li class="fragment">necessidades de escala diferentes</li>
+                <li class="fragment">equipes independentes</li>
+                <li class="fragment">domínios claramente separados</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Nem tudo precisa virar microserviço</h2>
+
+            <blockquote>
+                Microserviços resolvem problemas de escala organizacional.
+            </blockquote>
+
+            <p class="fragment">
+                Muitas empresas os adotam antes de possuir esses problemas.
+            </p>
+        </section>
+
+        <section>
+            <h2>Fase 4</h2>
+
+            <h3>Arquitetura Orientada a Eventos</h3>
+
+            <pre><code data-trim>
+Pedido Criado
+      │
+      ▼
+    Fila
+      │
+ ┌────┼────┐
+ ▼    ▼    ▼
+Email NF  Analytics
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>O que ganhamos?</h2>
+
+            <ul>
+                <li class="fragment">baixo acoplamento</li>
+                <li class="fragment">processamento assíncrono</li>
+                <li class="fragment">escalabilidade</li>
+                <li class="fragment">maior resiliência</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mas também ganhamos...</h2>
+
+            <ul>
+                <li class="fragment">complexidade</li>
+                <li class="fragment">observabilidade obrigatória</li>
+                <li class="fragment">eventual consistency</li>
+                <li class="fragment">novos desafios operacionais</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O segredo da arquitetura evolutiva</h2>
+
+            <div class="box">
+                <h3>
+                    Adicionar complexidade somente quando ela for necessária.
+                </h3>
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo prático</h2>
+
+            <div class="box">
+                <h3>E-commerce</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">checkout lento</li>
+                <li class="fragment">envio de e-mails demora</li>
+                <li class="fragment">nota fiscal bloqueia pedidos</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Como evoluir?</h2>
+
+            <ul>
+                <li class="fragment">fila para e-mails</li>
+                <li class="fragment">processamento assíncrono</li>
+                <li class="fragment">cache</li>
+                <li class="fragment">separação de responsabilidades</li>
+            </ul>
+
+            <p class="fragment">
+                Resolver o problema sem reescrever todo o sistema.
+            </p>
+        </section>
+
+        <section>
+            <h2>Arquitetura Evolutiva na prática</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Situação</th>
+                    <th>Evolução</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Deploys lentos</td>
+                    <td>CI/CD</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Muitos acessos</td>
+                    <td>Cache</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Processos demorados</td>
+                    <td>Filas</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Domínios complexos</td>
+                    <td>Modularização</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Escala organizacional</td>
+                    <td>Serviços independentes</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Exercício em grupo</h2>
+
+            <div class="box">
+                <h3>Consultoria Arquitetural</h3>
+            </div>
+
+            <p>
+                Seu sistema possui:
+            </p>
+
+            <ul>
+                <li class="fragment">checkout lento</li>
+                <li class="fragment">100 mil usuários</li>
+                <li class="fragment">integrações externas</li>
+                <li class="fragment">deploys problemáticos</li>
+            </ul>
+
+            <p class="fragment">
+                Como você evoluiria essa arquitetura?
+            </p>
+        </section>
+
+        <section>
+            <h2>Quarta lição da aula</h2>
+
+            <blockquote>
+                A melhor arquitetura não é a mais moderna.
+            </blockquote>
+
+            <h3 class="fragment">
+                É aquela que permite mudanças frequentes
+                sem comprometer o negócio.
+            </h3>
+        </section>
+
+        <section>
+            <h1>Parte 5</h1>
+            <h2>Maturidade Arquitetural e Organizacional</h2>
+        </section><!-- ===================================================== -->
+        <!-- PARTE 5 - MATURIDADE ARQUITETURAL E ORGANIZACIONAL -->
+        <!-- ===================================================== -->
+
+        <section>
+            <h1>Parte 5</h1>
+            <h2>Maturidade Arquitetural e Organizacional</h2>
+        </section>
+
+        <section>
+            <h2>O maior desafio não é técnico</h2>
+
+            <blockquote>
+                A maioria dos problemas de software nasce da interação entre pessoas, processos e tecnologia.
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>Uma reflexão</h2>
+
+            <div class="box">
+                <h3>
+                    O que acontece quando apenas uma pessoa conhece uma parte crítica do sistema?
+                </h3>
+            </div>
+        </section>
+
+        <section>
+            <h2>O Fator Ônibus</h2>
+
+            <blockquote>
+                Quantas pessoas poderiam sair da empresa antes que o projeto parasse?
+            </blockquote>
+
+            <p class="fragment">
+                Quanto menor o número, maior o risco.
+            </p>
+        </section>
+
+        <section>
+            <h2>Nível 1 - Heroísmo</h2>
+
+            <div class="box">
+                <h3>"Deixa que eu resolvo."</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">conhecimento concentrado</li>
+                <li class="fragment">dependência de indivíduos</li>
+                <li class="fragment">decisões informais</li>
+                <li class="fragment">incêndios constantes</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Nível 2 - Processos</h2>
+
+            <div class="box">
+                <h3>"Vamos repetir o que funciona."</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">padronização</li>
+                <li class="fragment">documentação mínima</li>
+                <li class="fragment">fluxos definidos</li>
+                <li class="fragment">menos dependência individual</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Nível 3 - Automação</h2>
+
+            <div class="box">
+                <h3>"Se é repetitivo, pode ser automatizado."</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">pipelines CI/CD</li>
+                <li class="fragment">testes automatizados</li>
+                <li class="fragment">quality gates</li>
+                <li class="fragment">infraestrutura como código</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Nível 4 - Observabilidade</h2>
+
+            <div class="box">
+                <h3>"Entender o sistema em produção."</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">logs estruturados</li>
+                <li class="fragment">métricas</li>
+                <li class="fragment">tracing distribuído</li>
+                <li class="fragment">alertas automatizados</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Nível 5 - Evolução Contínua</h2>
+
+            <div class="box">
+                <h3>"Mudanças sem trauma."</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">aprendizado contínuo</li>
+                <li class="fragment">feedback rápido</li>
+                <li class="fragment">decisões baseadas em dados</li>
+                <li class="fragment">adaptação constante</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>A escada da maturidade</h2>
+
+            <div class="levels">
+
+                <div class="level fragment">
+                    <h3>1</h3>
+                    <p>Heroísmo</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>2</h3>
+                    <p>Processos</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>3</h3>
+                    <p>Automação</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>4</h3>
+                    <p>Observabilidade</p>
+                </div>
+
+                <div class="level fragment">
+                    <h3>5</h3>
+                    <p>Evolução</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo real</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Situação</th>
+                    <th>Organização Imatura</th>
+                    <th>Organização Madura</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Falha em produção</td>
+                    <td>Caça aos culpados</td>
+                    <td>Análise de causa raiz</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Deploy</td>
+                    <td>Evento de risco</td>
+                    <td>Processo rotineiro</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Conhecimento</td>
+                    <td>Centralizado</td>
+                    <td>Compartilhado</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Melhoria</td>
+                    <td>Reativa</td>
+                    <td>Contínua</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Maturidade não é burocracia</h2>
+
+            <blockquote>
+                O objetivo não é criar mais processos.
+            </blockquote>
+
+            <h3 class="fragment">
+                O objetivo é reduzir riscos e aumentar previsibilidade.
+            </h3>
+        </section>
+
+        <section>
+            <h2>Case de discussão</h2>
+
+            <div class="box">
+                <h3>Empresa Gamma</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">20 desenvolvedores</li>
+                <li class="fragment">sem documentação</li>
+                <li class="fragment">deploy manual</li>
+                <li class="fragment">sem testes</li>
+                <li class="fragment">crescimento acelerado</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Discussão em grupo</h2>
+
+            <p>
+                Qual seria a ordem de prioridade?
+            </p>
+
+            <ol>
+                <li class="fragment">testes?</li>
+                <li class="fragment">CI/CD?</li>
+                <li class="fragment">documentação?</li>
+                <li class="fragment">monitoramento?</li>
+                <li class="fragment">microserviços?</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Resposta esperada</h2>
+
+            <div class="box">
+                <h3>
+                    Primeiro estabilidade.
+                </h3>
+            </div>
+
+            <ul>
+                <li class="fragment">controle</li>
+                <li class="fragment">automação</li>
+                <li class="fragment">visibilidade</li>
+                <li class="fragment">escalabilidade depois</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O paradoxo da maturidade</h2>
+
+            <blockquote>
+                Empresas maduras parecem mais lentas no início.
+            </blockquote>
+
+            <p class="fragment">
+                Mas conseguem acelerar sem perder o controle.
+            </p>
+        </section>
+
+        <section>
+            <h2>Quinta lição da aula</h2>
+
+            <blockquote>
+                Sistemas maduros são consequência de equipes maduras.
+            </blockquote>
+
+            <h3 class="fragment">
+                Arquitetura e organização evoluem juntas.
+            </h3>
+        </section>
+
+        <section>
+            <h1>Parte 6</h1>
+            <h2>Dinâmica Final e Encerramento</h2>
+        </section>
+
+        <!-- ===================================================== -->
+        <!-- PARTE 6 - DINÂMICA FINAL E ENCERRAMENTO -->
+        <!-- ===================================================== -->
+
+        <section>
+            <h1>Parte 6</h1>
+            <h2>Dinâmica Final e Encerramento</h2>
+        </section>
+
+        <section>
+            <h2>Desafio Final</h2>
+
+            <div class="box">
+                <h3>
+                    Vocês agora são consultores de arquitetura e maturidade.
+                </h3>
+            </div>
+        </section>
+
+        <section>
+            <h2>Cenário</h2>
+
+            <div class="box">
+                <h3>Empresa Delta</h3>
+            </div>
+
+            <ul>
+                <li class="fragment">5 anos de mercado</li>
+                <li class="fragment">300 mil usuários</li>
+                <li class="fragment">25 desenvolvedores</li>
+                <li class="fragment">deploy manual</li>
+                <li class="fragment">sem observabilidade</li>
+                <li class="fragment">testes insuficientes</li>
+                <li class="fragment">crescimento acelerado</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Problemas relatados</h2>
+
+            <ul>
+                <li class="fragment">bugs recorrentes em produção</li>
+                <li class="fragment">deploys demorados</li>
+                <li class="fragment">incidentes frequentes</li>
+                <li class="fragment">tempo elevado para onboarding</li>
+                <li class="fragment">dependência de pessoas específicas</li>
+                <li class="fragment">dificuldade para evoluir funcionalidades</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Missão dos grupos</h2>
+
+            <ol>
+                <li class="fragment">avaliar o nível de maturidade</li>
+                <li class="fragment">identificar os principais riscos</li>
+                <li class="fragment">priorizar melhorias</li>
+                <li class="fragment">propor um plano de evolução</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Tempo da atividade</h2>
+
+            <div class="box">
+                <h1>15 minutos</h1>
+            </div>
+
+            <p class="fragment">
+                Cada grupo deverá apresentar suas conclusões.
+            </p>
+        </section>
+
+        <section>
+            <h2>Modelo de resposta</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Problema</th>
+                    <th>Impacto</th>
+                    <th>Prioridade</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Deploy manual</td>
+                    <td>Alto</td>
+                    <td>Alta</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Sem monitoramento</td>
+                    <td>Alto</td>
+                    <td>Alta</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Baixa cobertura de testes</td>
+                    <td>Alto</td>
+                    <td>Alta</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Uma possível estratégia</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    <h3>Mês 1</h3>
+                    <p>CI/CD básico</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>Mês 2</h3>
+                    <p>Observabilidade</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>Mês 3</h3>
+                    <p>Testes críticos</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>Mês 4+</h3>
+                    <p>Evoluções arquiteturais</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O que NÃO fazer</h2>
+
+            <ul>
+                <li class="fragment">reescrever todo o sistema</li>
+                <li class="fragment">migrar tudo para microserviços</li>
+                <li class="fragment">adotar tecnologias sem necessidade</li>
+                <li class="fragment">ignorar os gargalos atuais</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O que fazer</h2>
+
+            <ul>
+                <li class="fragment">resolver riscos prioritários</li>
+                <li class="fragment">automatizar processos</li>
+                <li class="fragment">medir resultados</li>
+                <li class="fragment">evoluir gradualmente</li>
+                <li class="fragment">reduzir dependências críticas</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Resumo da Aula</h2>
+
+            <div class="columns">
+
+                <div>
+                    <h3>Maturidade</h3>
+
+                    <ul>
+                        <li class="fragment">processos</li>
+                        <li class="fragment">previsibilidade</li>
+                        <li class="fragment">qualidade</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Arquitetura Evolutiva</h3>
+
+                    <ul>
+                        <li class="fragment">mudanças seguras</li>
+                        <li class="fragment">crescimento sustentável</li>
+                        <li class="fragment">adaptação contínua</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>As 5 Grandes Ideias da Aula</h2>
+
+            <ol>
+                <li class="fragment">software maduro não nasce pronto</li>
+                <li class="fragment">crescimento revela problemas ocultos</li>
+                <li class="fragment">débito técnico precisa ser gerenciado</li>
+                <li class="fragment">arquitetura deve evoluir junto com o negócio</li>
+                <li class="fragment">equipes maduras criam sistemas maduros</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Conectando com a próxima aula</h2>
+
+            <div class="box">
+                <h3>
+                    Como evoluir sistemas legados sem interromper o negócio?
+                </h3>
+            </div>
+
+            <p class="fragment">
+                Na próxima aula veremos o padrão Strangler Fig,
+                modernização incremental e migração segura de sistemas.
+            </p>
+        </section>
+
+        <section data-background-gradient="linear-gradient(135deg,#0f172a,#1e293b,#334155)">
+            <h1>Obrigado!</h1>
+
+            <h3>
+                Maturidade não é sobre perfeição.
+            </h3>
+
+            <blockquote class="fragment">
+                É sobre criar a capacidade de evoluir continuamente.
+            </blockquote>
+        </section>
+    </div>
+</div>
+
+<script src="../../../dist/reveal.js"></script>
+<script src="../../../plugin/highlight/highlight.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'convex',
+        backgroundTransition: 'fade',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>

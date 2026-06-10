@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>DDD — Introdução ao Domain Driven Design</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+
+	<style>
+		:root{
+			--primary:#42afff;
+			--danger:#ff5e5e;
+			--dark:#111;
+			--card:#1d1d1d;
+			--border:#333;
+		}
+
+		.reveal {
+			font-family: Inter, Segoe UI, sans-serif;
+		}
+
+		.highlight {
+			color: var(--primary);
+			font-weight: bold;
+		}
+
+		.alert {
+			color: var(--danger);
+			font-weight: bold;
+		}
+
+		.box{
+			background:var(--card);
+			border:1px solid var(--border);
+			border-radius:14px;
+			padding:20px;
+			margin-top:20px;
+		}
+
+		.small{
+			font-size:.72em;
+		}
+
+		.grid2{
+			display:grid;
+			grid-template-columns:1fr 1fr;
+			gap:25px;
+			margin-top:20px;
+		}
+
+		.card{
+			background:#202020;
+			border:1px solid #333;
+			border-radius:14px;
+			padding:20px;
+		}
+
+		.card h4{
+			color:var(--primary);
+			margin-bottom:15px;
+		}
+
+		.fragment.blur {
+			filter: blur(5px);
+		}
+
+		.fragment.blur.visible {
+			filter:none;
+		}
+
+		.domain-box{
+			background:#13202e;
+			border-left:5px solid var(--primary);
+			padding:18px;
+			border-radius:8px;
+		}
+
+		.infra-box{
+			background:#2a1d1d;
+			border-left:5px solid var(--danger);
+			padding:18px;
+			border-radius:8px;
+		}
+
+		.pill{
+			display:inline-block;
+			padding:10px 18px;
+			border-radius:30px;
+			background:#2b2b2b;
+			border:1px solid #444;
+			margin:6px;
+			font-size:.6em;
+		}
+
+		code{
+			background:#111;
+			padding:2px 8px;
+			border-radius:6px;
+			color:#8ed0ff;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="reveal">
+	<div class="slides">
+		<!-- PARTE 4 -->
+
+		<section data-background-gradient="linear-gradient(to bottom, #111, #15253a)">
+			<h2>Parte 4</h2>
+			<h3 class="highlight">Aggregates, Domain Events e API de Carrinho</h3>
+			<p>Protegendo regras e modelando comportamento</p>
+		</section>
+
+		<!-- AGGREGATES -->
+
+		<section data-background-color="#121a22">
+			<h2>Aggregates</h2>
+			<p class="highlight">Consistência e proteção do domínio</p>
+		</section>
+
+		<section>
+			<h3>O problema</h3>
+
+			<div class="box fragment">
+<pre><code>
+$item->setQuantidade(-10);
+$pedido->setTotal(0);
+</code></pre>
+			</div>
+
+			<p class="fragment alert">
+				Objetos expostos permitem estados inválidos.
+			</p>
+		</section>
+
+		<section>
+			<h3>O que é um Aggregate?</h3>
+
+			<div class="domain-box fragment">
+				<p style="font-size:.8em;">
+					Conjunto de objetos tratados como
+					<span class="highlight">uma única unidade de consistência</span>.
+				</p>
+			</div>
+
+			<ul style="margin-top:25px; font-size:.75em;">
+				<li class="fragment">Agrupa Entities e Value Objects</li>
+				<li class="fragment">Protege invariantes</li>
+				<li class="fragment">Controla modificações</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Aggregate Root</h3>
+
+			<div class="box fragment">
+				<p>
+					Todo Aggregate possui uma
+					<span class="highlight">porta de entrada</span>.
+				</p>
+			</div>
+
+			<div style="display:flex;justify-content:center;gap:20px;align-items:center;margin-top:35px;">
+
+				<div class="card fragment">
+					Pedido
+					<br>
+					<small>(Root)</small>
+				</div>
+
+				<div class="fragment" style="font-size:2em;">
+					→
+				</div>
+
+				<div class="card fragment">
+					Itens
+				</div>
+
+				<div class="card fragment">
+					Endereço
+				</div>
+
+			</div>
+
+			<p class="fragment small" style="margin-top:25px;">
+				Alterações acontecem pela Root.
+			</p>
+		</section>
+
+		<section>
+			<h3>Exemplo Ruim</h3>
+
+			<div class="box fragment">
+<pre><code>
+$pedido->itens[] = $item;
+</code></pre>
+			</div>
+
+			<p class="fragment alert">
+				Regra bypassada.
+			</p>
+		</section>
+
+		<section>
+			<h3>Exemplo Melhor</h3>
+
+			<div class="box fragment">
+<pre><code>
+$pedido->adicionarItem(
+    $produto,
+    quantidade: 2
+);
+</code></pre>
+			</div>
+
+			<ul style="margin-top:25px;font-size:.75em;">
+				<li class="fragment">Valida quantidade</li>
+				<li class="fragment">Atualiza total</li>
+				<li class="fragment">Mantém consistência</li>
+			</ul>
+		</section>
+
+		<!-- DOMAIN EVENTS -->
+
+		<section data-background-color="#121a22">
+			<h2>Domain Events</h2>
+			<p class="highlight">O domínio também produz acontecimentos</p>
+		</section>
+
+		<section>
+			<h3>Sistemas vivem de eventos</h3>
+
+			<div class="box fragment">
+				<p>
+					Algo importante acontece
+					e outros contextos precisam saber.
+				</p>
+			</div>
+
+			<div style="margin-top:25px;" class="fragment">
+				<div class="pill">PedidoCriado</div>
+				<div class="pill">PagamentoAprovado</div>
+				<div class="pill">ProdutoReservado</div>
+				<div class="pill">CarrinhoFinalizado</div>
+			</div>
+		</section>
+
+		<section>
+			<h3>O que é um Domain Event?</h3>
+
+			<div class="domain-box fragment">
+				<p style="font-size:.8em;">
+					Registro de algo importante
+					que ocorreu no domínio.
+				</p>
+			</div>
+
+			<blockquote class="fragment" style="margin-top:25px;">
+				Eventos descrevem fatos.
+			</blockquote>
+		</section>
+
+		<section>
+			<h3>Exemplo</h3>
+
+			<div class="box fragment">
+<pre><code>
+class PedidoPago
+{
+    public function __construct(
+        public string $pedidoId
+    ) {}
+}
+</code></pre>
+			</div>
+		</section>
+
+		<section>
+			<h3>Por que isso importa?</h3>
+
+			<div class="grid2">
+
+				<div class="card fragment">
+					<h4>Sem Eventos</h4>
+					<p style="font-size:.7em;">
+						Código chama código
+						diretamente.
+					</p>
+				</div>
+
+				<div class="card fragment">
+					<h4>Com Eventos</h4>
+					<p style="font-size:.7em;">
+						Contextos reagem
+						sem forte acoplamento.
+					</p>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- QUANDO USAR -->
+
+		<section>
+			<h3>DDD não é bala de prata</h3>
+
+			<div class="box fragment">
+				<p>
+					Nem todo sistema precisa
+					de DDD completo.
+				</p>
+			</div>
+
+			<table style="font-size:.65em;margin-top:25px;">
+				<thead>
+				<tr>
+					<th>Faz sentido</th>
+					<th>Pode ser exagero</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr class="fragment">
+					<td>Regra complexa</td>
+					<td>CRUD simples</td>
+				</tr>
+				<tr class="fragment">
+					<td>Múltiplos domínios</td>
+					<td>MVP curto</td>
+				</tr>
+				<tr class="fragment">
+					<td>Evolução longa</td>
+					<td>Backoffice básico</td>
+				</tr>
+				</tbody>
+			</table>
+		</section>
+
+		<!-- API CARRINHO -->
+
+		<section data-background-color="#121a22">
+			<h2>Exemplo Final</h2>
+			<p class="highlight">API de Carrinho de Compras</p>
+		</section>
+
+		<section>
+			<h3>Linguagem Ubíqua</h3>
+
+			<div class="box">
+				<div class="pill fragment">Carrinho</div>
+				<div class="pill fragment">Item</div>
+				<div class="pill fragment">Produto</div>
+				<div class="pill fragment">Checkout</div>
+				<div class="pill fragment">Cupom</div>
+			</div>
+
+			<p class="fragment" style="margin-top:25px;">
+				O time inteiro usa os mesmos termos.
+			</p>
+		</section>
+
+		<section>
+			<h3>Bounded Contexts</h3>
+
+			<div style="display:flex;justify-content:center;gap:25px;flex-wrap:wrap;">
+
+				<div class="card fragment">
+					Catálogo
+				</div>
+
+				<div class="card fragment">
+					Carrinho
+				</div>
+
+				<div class="card fragment">
+					Pagamento
+				</div>
+
+				<div class="card fragment">
+					Entrega
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h3>Aggregate do Carrinho</h3>
+
+			<div style="display:flex;justify-content:center;gap:20px;align-items:center;">
+
+				<div class="card fragment">
+					Carrinho
+					<br>
+					<small>(Root)</small>
+				</div>
+
+				<div class="fragment" style="font-size:2em;">
+					→
+				</div>
+
+				<div class="card fragment">
+					ItemCarrinho
+				</div>
+
+				<div class="card fragment">
+					Cupom
+				</div>
+
+			</div>
+
+			<p class="fragment small" style="margin-top:25px;">
+				Apenas Carrinho altera os itens.
+			</p>
+		</section>
+
+		<section>
+			<h3>Entity</h3>
+
+			<div class="box fragment">
+<pre><code>
+Carrinho
+ItemCarrinho
+</code></pre>
+			</div>
+
+			<p class="fragment">
+				Possuem identidade.
+			</p>
+		</section>
+
+		<section>
+			<h3>Value Objects</h3>
+
+			<div class="box fragment">
+<pre><code>
+Dinheiro
+Quantidade
+CupomCodigo
+</code></pre>
+			</div>
+
+			<p class="fragment">
+				Definidos por valor.
+			</p>
+		</section>
+
+		<section>
+			<h3>Repository</h3>
+
+			<div class="box fragment">
+<pre><code>
+interface CarrinhoRepository
+{
+    public function buscar(
+        string $id
+    ): Carrinho;
+
+    public function salvar(
+        Carrinho $carrinho
+    ): void;
+}
+</code></pre>
+			</div>
+		</section>
+
+		<section>
+			<h3>Fluxo do AddItem</h3>
+
+			<div style="display:flex;justify-content:center;gap:18px;align-items:center;flex-wrap:wrap;">
+
+				<div class="card fragment">
+					API
+				</div>
+
+				<div class="fragment">→</div>
+
+				<div class="card fragment">
+					CarrinhoRepository
+				</div>
+
+				<div class="fragment">→</div>
+
+				<div class="card fragment">
+					Carrinho
+				</div>
+
+				<div class="fragment">→</div>
+
+				<div class="card fragment">
+					salvar()
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h3>Comportamento do Aggregate</h3>
+
+			<div class="box fragment">
+<pre><code>
+$carrinho->adicionarItem(
+    $produto,
+    2
+);
+</code></pre>
+			</div>
+
+			<ul style="font-size:.75em;margin-top:25px;">
+				<li class="fragment">Valida quantidade</li>
+				<li class="fragment">Evita item duplicado</li>
+				<li class="fragment">Recalcula total</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Domain Event</h3>
+
+			<div class="box fragment">
+<pre><code>
+CarrinhoFinalizado
+</code></pre>
+			</div>
+
+			<p class="fragment">
+				Pagamento e entrega podem reagir.
+			</p>
+		</section>
+
+		<section>
+			<h3>Resumo Geral do DDD</h3>
+
+			<div class="box">
+				<ul style="font-size:.72em;">
+					<li class="fragment">Domínio no centro</li>
+					<li class="fragment">Linguagem Ubíqua</li>
+					<li class="fragment">Bounded Context</li>
+					<li class="fragment">Entities e Value Objects</li>
+					<li class="fragment">Repositories</li>
+					<li class="fragment">Aggregates</li>
+					<li class="fragment">Context Map</li>
+					<li class="fragment">Domain Events</li>
+				</ul>
+			</div>
+		</section>
+
+		<section data-background-gradient="linear-gradient(to bottom,#111,#1b2f48)">
+			<h2>DDD é sobre</h2>
+
+			<h1 class="fragment highlight">
+				Entender o Negócio
+			</h1>
+
+			<p class="fragment">
+				e refletir isso no código.
+			</p>
+		</section>
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+
+<script>
+	Reveal.initialize({
+		hash:true,
+		slideNumber:'c/t',
+		transition:'slide'
+	});
+</script>
+
+</body>
+</html>
