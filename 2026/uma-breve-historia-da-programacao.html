@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title>Uma breve história da Programação</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../dist/reset.css">
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: uppercase;
+            color: #e2b007; /* Dourado Churchilliano */
+        }
+        .highlight-box {
+            background: rgba(226, 176, 7, 0.1);
+            padding: 20px;
+            border-left: 5px solid #e2b007;
+        }
+        .era-tag {
+            font-size: 1em;
+            color: #888;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <div style="margin-top: 71%; display: flex; justify-content: space-between; align-items: center; font-size: 1.4rem;"> <span>🐘🏜️🤠 <small style="color: #999;">4 ETIU - IFCE UMIRIM</small></span>  <small><strong style="float: right">@alessandro_feitoza</strong> </small> </div>
+
+        <section data-auto-animate data-background-color="#1a1a1a">
+            <h1 class="r-fit-text">Uma breve história<br>da programação</h1>
+            <hr>
+        </section>
+
+        <section data-auto-animate data-background-color="#1a1a1a">
+            <h1 class="r-fit-text">Uma breve história<br>da programação</h1>
+            <hr>
+            <p>O que era? O que é? E o que vai ser dessa área?</p>
+            <p class="fragment"><small>Otimismo, Resiliência e o Fim do Princípio</small></p>
+        </section>
+
+        <section>
+            <blockquote cite="Winston Churchill">
+                &ldquo;O <span style="font-weight: bold; font-size: 3.5rem; color: yellow">sucesso</span> não é definitivo,
+                o <span style="font-weight: bold; font-size: 3.5rem; color: indianred">fracasso</span> não é fatal.
+                <p class="fragment grow" style="font-weight: bold; color: darkseagreen; font-size: 2.7rem">É a coragem de continuar <br> que conta.</p>&rdquo;
+            </blockquote>
+            <p class="fragment">Desde 1950, nos dizem que o programador vai acabar.</p>
+        </section>
+
+
+        <section >
+            <div style="display: flex; margin-top: 100px;" class="fragment">
+                <div style="width: 50%">
+                    <h3>Alessandro Feitoza</h3>
+                    <hr>
+
+                    <ul style="font-size: 2rem; ">
+                        <li class="fragment" style="color: #d6277c;">Fortaleza, <strong>Ceará</strong></li>
+
+                        <li class="fragment">Professor de códigos e outras computarias</li>
+                        <li class="fragment">Programador/Dev/Severino</li>
+                        <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
+                        <li class="fragment" style="color: #d67107;"><strong>PHP</strong>este</li>
+                        <li class="fragment">
+                            <span style="color: #5fb84d;">
+                                <strong>Bússola</strong> Social
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div style="width: 50%">
+                    <img width="60%" src="../img/AlessandroFeitoza-2026-2.jpg" alt="">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div style="display: flex; text-align: left;">
+                <div>
+                    <h3>⚠️ Essa talk não é um mandamento</h3>
+                    <hr>
+                    <ul>
+                        <li class="fragment">É uma coletânea de devaneios que tenho baseados <strong>na academia, literatura, e conhecimento das ruas</strong></li>
+                        <li class="fragment">Só quero que você <strong>abra sua mente</strong>, seja mais realista consigo (e entenda a importância da academia) </li>
+                        <li class="fragment"><strong>Aproveite o que achar</strong> bom e descarte o restante</li>
+                    </ul>
+                </div>
+                <div>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#333">
+            <div style="display: flex;text-align: left;">
+                <div>
+                    <h3>1 - Por que isso é importante?</h3>
+                    <hr>
+                    <p class="fragment">Algumas pessoas desistem (ou não começam) a faculdade, por acharem <strong class="fragment highlight-red">que ela não ensina o que o mercado quer</strong></p>
+                    <hr>
+                    <p class="fragment">Algumas fazem faculdade, terminam, se formam, <strong class="fragment highlight-red">mas não conseguem entrar no mercado</strong></p>
+
+                </div>
+                <div>
+                </div>
+            </div>
+        </section>
+
+        <section data-background-size="50%" data-background="../2025/img/academia/akon.jpg" alt="">
+        </section>
+
+        <section data-background-size="50%" data-background="img/revolution/caminhos.jpg"></section>
+
+        <section data-background-size="50%" data-background="../2025/img/academia/caminhos2.jpg"></section>
+
+        <section data-background="#333">
+            <h3>Quem você contrata quando precisa concerta uma casa?</h3>
+            <p class="fragment">Pedreiro</p>
+        </section>
+
+        <section data-background="../2025/img/academia/engineer.jpg" data-background-size="70%">
+            <p style="font-size: 3rem; background-color: #333; color: white;">E porque não Engenheiro?</p>
+        </section>
+
+
+        <section>
+            <p>Ciencias/Engenharias/Tecnicos/Analistas</p>
+            <h1 class="fragment">das Computarias <span class="fragment">das Informáticas</span></h1>
+
+        </section>
+
+        <section data-background="../2025/img/academia/teknologia.gif">
+            <h2 style="color: white;">Técnolódia</h2>
+            <audio loop src="../2025/img/academia/technologiaa.mp3" data-autoplay></audio>
+
+        </section>
+
+
+
+
+
+        <section data-background="../img/gifs/canguru.gif" data-background-size="40%">
+            <span style="font-size: 4rem; background-color: #333;">  Afinal, o que é computaria? 🖌️ 🎨</span>
+        </section>
+
+        <section>
+            <div style="text-align: left;">
+                <h3><em>Computação</em></h3>
+                <hr>
+                <p class="fragment">
+                    do Latim, <em style="color: red;">Computare/computo</em>
+                </p>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <strong><em> com-</em></strong> Junto, Adicionar <br>
+
+                    <strong><em> putare-</em></strong> ( <em>calcular</em>, avaliar, analisar) <br>
+
+                    "Calcular Junto / Processar / Construir com base na lógica"
+                </p>
+            </div>
+        </section>
+
+        <section data-background="../img/gifs/miranha.gif">
+            <ul>
+                <li class="fragment" style="background-color: #333"> Implementar</li>
+                <li class="fragment" style="background-color: #333"> Estruturar </li>
+                <li class="fragment" style="background-color: #333"> Planejar </li>
+
+
+                <li class="fragment highlight-red" style="background-color: #FFF"> Desenhar </li>
+            </ul>
+        </section>
+
+        <section >
+            <p class="r-fit-text">
+                DESIGN?
+            </p>
+        </section>
+
+        <section data-background="#333">
+                    <span style="font-size: 4rem;">
+                        É o momento de decidir como <strong class="fragment highlight-red">os códigos</strong> do sistema <strong class="fragment highlight-blue">se organizam</strong>, <strong class="fragment highlight-blue">se comunicam</strong> e <strong class="fragment highlight-blue">se comportam</strong> para alcançar os objetivos desejados.
+                    </span>
+        </section>
+
+        <section>
+            <div style="text-align: left;">
+                <h3><em>Design</em></h3>
+                <hr>
+                <p class="fragment">
+                    do Latim, <em style="color: red;">designare</em>
+                </p>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <strong><em> de-</em></strong> (de dentro, para fora) <br>
+
+                    <strong><em> signare-</em></strong> ( <em>signum</em>, indicar algo, marcar) <br>
+
+                    "Designar, Determinar"
+                </p>
+            </div>
+        </section>
+
+        <section data-background="#3A5256">
+                    <span style="font-size: 4rem;">
+                        O processo de <strong>planejar e estruturar</strong> a solução técnica.
+                    </span>
+        </section>
+
+        <section data-background="../img/gifs/obra.gif">
+            <p style="background-color: #FFF; color: #333; font-size: 2.6rem;">
+                Mas qual é o momento de "planejar e estruturar"?
+            </p>
+
+            <em class="fragment" style="background-color: #333; color: white; padding: 0 20px;">No "inicio" do projeto</em>
+        </section>
+
+        <section data-background="../img/obvio.jpg" data-background-size="70%">
+
+        </section>
+
+        <section data-background="../img/gifs/moonwalk.gif" data-background-color="#FF4F4F" data-background-size="80%">
+            <h3>Precisamos voltar alguns passos</h3>
+        </section>
+
+        <section data-background="#333">
+            <div style="text-align: left">
+                <h1>2 - DEFINIÇÕES</h1>
+                <hr>
+                <p class="fragment">
+                    Engenharia de Software
+                </p>
+            </div>
+        </section>
+
+
+        <section>
+            <div style="text-align: left;">
+                <h3><em>Engenharia</em></h3>
+                <hr>
+                <p class="fragment">
+                    do Latim, <em style="color: red;">Ingeniare</em>
+                </p>
+                <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+                    <strong><em> Ingenium</em></strong> (Engenho -> Engenhar, conceber da imaginação / Maquinar)<br>
+
+                    <span class="fragment">
+                            <strong><em> Ingeniator</em></strong> ( Quem <em>criava ou operava</em> "engenhos") <br>
+                          </span>
+                </p>
+            </div>
+        </section>
+
+
+
+        <section data-background="#333">
+            <ul>
+                <li class="fragment">Eng Civil: +5000 anos</li>
+                <li class="fragment">Eng mecanica: Século XVIII / 1700 DC</li>
+                <li class="fragment"><p class="fragment grow">Eng de Software: 1960 DC</p></li>
+            </ul>
+        </section>
+
+
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center">
+
+                <div style="text-align: left">
+                    <ul>
+                        <li class="fragment"><strong>1830:</strong> primeira* calculadora</li>
+                        <li style="color: #AAA;" class="fragment"><strong>1940:</strong> 1a geração computadores (Valvulas)</li>
+                        <li class="fragment"><strong>1960:</strong> 2a geração (transistores)</li>
+                        <li style="color: #AAA;" class="fragment"><strong>1971:</strong> 3a circuitos integrados (chips)</li>
+                        <li class="fragment"><strong>> 1971:</strong> microprocessadores, PCs, smartphones, o escambau</li>
+                    </ul>
+                </div>
+                <video data-autoplay src="video/computer-evolution.mp4" muted playsinline></video>
+            </div>
+        </section>
+
+
+
+        <section data-background="../img/gifs/java.gif">
+            <h2 class="fragment" style="background-color: #333">Transição do Hardware pro Software</h2>
+        </section>
+
+        <section data-auto-animate>
+            <h1>O desafio?</h1>
+        </section>
+
+
+        <section data-auto-animate>
+            <h1>O desafio?</h1>
+            <p>Ensinar a máquina</p>
+        </section>
+        <section data-auto-animate>
+            <h1>O desafio?</h1>
+            <p>Ensinar a máquina</p>
+
+            <p style="font-size: 3.5rem; color: red">Programá-la</p>
+        </section>
+
+        <section data-background="../2025/img/design-principles/diagram-1.png" data-background-size="27%">
+            <p style="margin-bottom: 600px;">
+                Como funciona a engenharia de software?</p>
+
+        </section>
+
+
+
+        <section data-background="../2025/img/design-principles/diagram-2.png" data-background-size="90%" data-background-color="#666">
+            <p style="margin-bottom: 500px;">Como seria melhor?</p>
+
+        </section>
+
+        <section data-background="../2025/img/design-principles/diagram-3.png" data-background-size="65%" data-background-color="#FFF">
+            <p style="margin-right: 300px; margin-bottom: 100px;"></p>
+
+        </section>
+
+        <section>
+            <hr>
+
+            <h1>
+                Mas a IA vai tomar nossos empregos
+            </h1>
+            <hr>
+        </section>
+
+        <section data-background="#661c1d">
+            <p class="r-fit-text">FACULDADE <br> É OBRIGATÓRIA?</p>
+
+            <p>Não, <span class="fragment">Mas é MUITO importante!</span></p>
+        </section>
+
+        <section>
+            <p style="font-size: 4rem;">O que uma pessoa dev faz?</p>
+
+            <ul>
+                <li class="fragment">Sites?</li>
+                <li class="fragment">Aplicativos?</li>
+                <li class="fragment">Aplicações Web?</li>
+                <li class="fragment">Integrações?</li>
+                <li class="fragment">Gestão das pessoas?</li>
+                <li class="fragment">Gestão dos processos?</li>
+                <li class="fragment">Gestão da qualidade?</li>
+            </ul>
+        </section>
+
+        <section >
+            <img src="../img/slide-dev-jornada/scrum-team.png" alt="">
+        </section>
+
+        <section>
+            <div style="display: flex;">
+                <div>
+                    <h2>E quem contrata esse povo todo?</h2>
+                    <p class="fragment">Pessoas do RH</p>
+                    <p class="fragment">Preferivelmente <strong>Tech Recruiters</strong></p>
+                </div>
+                <div>
+                    <img src="../img/gifs/funnel-people.gif" alt="">
+                </div>
+            </div>
+
+        </section>
+
+        <section data-background="#333">
+            <h2>Conhecendo os niveis</h2>
+
+            <div class="">
+                <img width="60%" src="../img/fullstack-um-ano/sandy-junior.gif" alt="">
+            </div>
+        </section>
+
+        <section>
+            <p>Conhecendo os niveis</p>
+
+            <ul>
+                <li class="fragment">Estagiário</li>
+                <li>Junior</li>
+                <li>Pleno</li>
+                <li>Senior</li>
+                <li class="fragment">Especialista</li>
+            </ul>
+        </section>
+
+        <section data-background="#eee">
+            <h2>Junior</h2>
+            <hr>
+
+            <p class="fragment">
+                Uma pessoa recém formada, que <strong style="color: green;">tem o conhecimento</strong>, mas <strong style="color: green;">não tem tanta experiência</strong>
+            </p>
+
+            <p class="fragment">
+                <strong class="fragment highlight-red">Não deveria</strong> assumir um projeto sem a supervisão de alguém com mais experiência
+            </p>
+
+            <hr>
+            <p class="fragment">
+                Resolve problemas simples <span class="fragment">com soluções complexas</span>
+            </p>
+        </section>
+
+        <section data-background="#4c004c">
+            <h2>Pleno</h2>
+            <hr>
+
+            <p class="fragment">
+                Uma pessoa com <strong style="color: yellow;">alguma experiência</strong>, e por essa experiência, garante uma certa <strong style="color: yellow;">especialidade em alguma "stack"</strong>
+            </p>
+
+            <p class="fragment">
+                <strong class="fragment highlight-blue">Pode assumir</strong> projetos sozinhos em sua stack
+            </p>
+
+            <p class="fragment">
+                Resolve problemas simples <span class="fragment">com soluções simples</span>
+            </p>
+        </section>
+
+        <section data-background="#333">
+            <h2>Senior</h2>
+            <hr>
+
+            <p class="fragment">
+                Está pronto para <strong style="color: cyan;">assumir e liderar</strong> projetos e equipes, bem como arquitetar soluções <strong style="color: yellow;">baseadas em suas experiência</strong>
+            </p>
+
+            <p class="fragment">
+                <strong class="fragment highlight-blue">Já não aponta</strong> uma tecnologia como solução pra todo tipo de sistema
+            </p>
+
+            <p class="fragment">
+                Resolve problemas complexos <span class="fragment">com soluções simples</span>
+            </p>
+        </section>
+
+        <section data-background="#333">
+            <hr>
+            <p class="r-fit-text">FOCO DA VAGA</p>
+            <hr>
+        </section>
+
+        <section >
+            <img src="../img/slide-dev-jornada/scrum-team.png" alt="">
+        </section>
+
+        <section>
+            <h1>PRONTO</h1>
+            <h2>VAI SER VAGA PRA DESENVOLVIMENTO</h2>
+        </section>
+
+        <section>
+            <p class="r-fit-text">
+                FRONTEND / BACKEND / MOBILE <br>
+            <div class="fragment"><hr/> FULLSTACK</div>
+            </p>
+        </section>
+
+        <section data-background-size="80%" data-background="../img/req-res.png">
+            <img src="../img/tinder.gif" width="60%" alt="" class="fragment">
+        </section>
+        
+
+        <section data-background="#333">
+            <hr>
+            <p class="r-fit-text">STACK ?</p>
+            <hr>
+        </section>
+
+        <section>
+            <img src="../img/gifs/stack_books.gif" alt="">
+            <p class="fragment">Pilha de tecnologias que a pessoa DEVe dominar</p>
+        </section>
+
+        <section>
+            <h1>FRONTEND</h1>
+            <hr>
+
+            <ul class="fragment">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Javascript</li>
+                <li class="fragment">React/Vue/Angular</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>BACKEND</h1>
+            <hr>
+
+            <ul class="fragment">
+                <li>Alguma linguagem backend <span class="fragment" style="color: red;">(PHP, NodeJS, Java, Ruby, Go, Python)</span> </li>
+                <li>Banco de Dados</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>DIFERENCIAL</h1>
+            <hr>
+
+            <ul class="fragment">
+                <li>Docker </li>
+                <li>Testes automatizados</li>
+                <li>Segurança</li>
+                <li>Boas práticas</li>
+                <li>Padrões Arquiteturais</li>
+            </ul>
+        </section>
+
+        <section>
+            <p>Que diabéisso Feitozo?</p>
+            <img src="../img/gifs/nazaré.gif" width="100%" alt="">
+        </section>
+
+        <section>
+            <img src="../img/gifs/help.gif" width="80%" alt="">
+            <p>Não precisa "dominar" tudo</p>
+        </section>
+
+        <section data-background="#333">
+            <hr>
+            <p class="r-fit-text">SOFT SKILLS</p>
+            <hr>
+        </section>
+
+        <section>
+            <h2>Soft Skills</h2>
+            <hr>
+
+            <ul class="fragment">
+                <li>Comunicação </li>
+                <li>Trabalho em equipe</li>
+                <li>Liderança</li>
+                <li>Trabalho sob pressão</li>
+                <li class="fragment">Agilidade</li>
+                <li class="fragment">Gestão de Tempo </li>
+                <li class="fragment">Foco</li>
+                <li class="fragment">Planejamento</li>
+                <li class="fragment">Inteligencia Emocional</li>
+            </ul>
+        </section>
+
+        <section >
+            <img src="../img/slide-dev-jornada/scrum-team.png" alt="">
+        </section>
+
+
+        <section>
+            <h2>Cerimonias</h2>
+            <hr>
+            <ul>
+                <li class="fragment">Daily</li>
+                <li class="fragment">Sprint Planning</li>
+                <li class="fragment">Sprint Review</li>
+                <li class="fragment">One a One (Reunião entre duas pessoas)</li>
+                <li class="fragment">War Room (Sala de Guerra)</li>
+            </ul>
+        </section>
+
+
+        <section data-background="../2025/img/sprint.png">
+
+        </section>
+
+        <section data-background="../2025/img/sprint-2.png">
+
+        </section>
+
+        <section data-background-size="80%" data-background="../2025/img/sprint-3.png">
+
+        </section>
+
+
+        <section>
+            <h1>E AGORA JOSÉ?</h1>
+            <h2 class="fragment">Bora tentar a vaga</h2>
+        </section>
+
+        <section>
+            <h3>Passo 0</h3>
+
+            <h1>Linkedin/Github</h1>
+        </section>
+
+        <section data-background="#333">
+            <h2>Passo 1</h2>
+
+            <p class="fragment"><strong>Definir o que quer:</strong> fronted, backend, fullstack, mobile, devops, techlead, etc</p>
+        </section>
+
+        <section>
+            <h2>Passo 2</h2>
+
+            <p class="fragment"><strong>Perceber o nivel*:</strong> Estagiário, Junior, Pleno, Senior</p>
+        </section>
+
+
+        <section>
+            <p style="font-style: italic">mas Feitoza, eu não tenho nenhuma experiência nem nada assim</p>
+
+            <hr>
+
+            <p class="fragment">Seja o menos pior</p>
+
+            <p class="fragment">E seja transparte</p>
+        </section>
+
+        <section data-background="#333">
+            <h2>Passo 3</h2>
+
+            <p class="fragment"><strong>Definir a stack:</strong> HTML, CSS, Javascript</p>
+
+            <p class="fragment">Seja objetivo e simples, e não caia na armadilha do "muito"</p>
+        </section>
+
+        <section>
+            <img src="../img/o-que-se-deve-saber-para-contratar-devs/vaga_arrombada_01.jpeg" alt="">
+        </section>
+
+        <section>
+            <img width="70%" src="../img/o-que-se-deve-saber-para-contratar-devs/vaga_arrombada_02.jpeg" alt="">
+        </section>
+
+        <section>
+            <h2>Passo 4</h2>
+
+            <p class="fragment"><strong>Saber os conhecimendos desejáveis/diferenciais:</strong> São coisas especificas da propria empresa</p>
+
+        </section>
+
+        <section data-background="#333">
+            <h2>Passo 5</h2>
+
+            <p class="fragment"><strong>Definir o regime:</strong> CLT/PJ | Presencial/Remoto/Hibrido</p>
+            <p class="fragment"><strong>Definir a carga horaria:</strong> 4h/6h/8h</p>
+        </section>
+
+
+        <section>
+            <h2>Passo 6</h2>
+
+            <p class="fragment"><strong>Definir a faixa salarial:</strong> Não precisa ser o valor fechado, mas pero menos um piso/teto</p>
+
+            <hr>
+
+            <p class="fragment">"Salario a combinar" normalmente afasta, mas pra primeira vaga tudo* vale</p>
+        </section>
+
+        <section>
+            <ul>
+                <li class="fragment"><strong>Junior</strong> R$ 2500 a 4000</li>
+                <li class="fragment"><strong>Pleno</strong> R$ 4500 a 8000</li>
+                <li class="fragment"><strong>Senior</strong> R$ 8000 a 11000</li>
+                <li class="fragment"><strong>Especialista/TechLead</strong> + R$ 11000</li>
+            </ul>
+
+            <img src="../2025/img/vegeta.jpg" width="60%" alt="" class="fragment">
+        </section>
+
+        <section data-background="#333">
+            <p class="r-fit-text">SALARIO <br> EMOCIONAL</p>
+
+        </section>
+
+        <section>
+            <img src="../2025/img/concorrencia.png" alt="">
+            <small class="fragment">Nem todo mundo quer só dinheiro</small>
+        </section>
+
+        <section>
+            <h2>Passo 7</h2>
+
+            <p class="fragment"><strong>Encontrar os beneficios:</strong> VA, PLR, plano de saúde, férias, licença maternidade/paternidade, dayoff no aniversario</p>
+
+            <hr>
+
+            <p class="fragment">Cuidado com os "beneficios" que na verdade são direitos</p>
+        </section>
+
+
+        <section>
+            <img width="70%" src="../img/o-que-se-deve-saber-para-contratar-devs/vaga_arrombada_04.png" alt="">
+        </section>
+
+        <section data-background="#333">
+            <h2>Passo 8</h2>
+
+            <p class="fragment"><strong>Definir o porque vale a pena trabalhar naquela empresa</strong> Venda o seu peixe...</p>
+
+        </section>
+
+
+        <section>
+            <h2>Passo 9</h2>
+
+            <p class="fragment">Entender as fases do <strong>processo seletivo</strong></p>
+
+            <p class="fragment">E não se frustrar</p>
+
+        </section>
+
+        <section>
+            <img src="../2025/img/devs/flow-selecao.png" alt="">
+        </section>
+
+        <section>
+            <h2>Passo 10</h2>
+
+            <p class="fragment">Revisar tudo e <strong>enviar o curriculo</strong></p>
+
+            <small class="fragment"><em>Tá pronto o sorvetinho</em></small>
+        </section>
+
+        <section>
+            <h2>Portais de vagas para pegar alguns exemplos</h2>
+            <br>
+            <ul>
+                <li class="fragment">
+                    <a href="https://github.com/frontendbr/vagas/issues/">github.com/frontendbr/vagas/issues</a>
+                </li>
+
+                <li class="fragment">
+                    <a href="https://github.com/backend-br/vagas/issues">github.com/backend-br/vagas/issues</a>
+                </li>
+
+                <li class="fragment">
+                    <a href="https://linkedin.com/jobs">Linkedin Jobs</a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <hr>
+
+            <h1>
+                Mas a IA vai tomar nossos empregos
+            </h1>
+            <hr>
+        </section>
+
+
+        <section data-background="#FFF">
+            <h1>Voltemos ao inicio da vida</h1>
+        </section>
+
+
+        <section data-auto-animate>
+            <h1>O desafio?</h1>
+        </section>
+
+
+        <section data-auto-animate>
+            <h1>O desafio?</h1>
+            <p>Ensinar a máquina</p>
+        </section>
+        <section data-auto-animate>
+            <h1>O desafio?</h1>
+            <p>Ensinar a máquina</p>
+
+            <p style="font-size: 3.5rem; color: red">Programá-la</p>
+        </section>
+
+        <section data-background="img/revolution/cards.webp"></section>
+
+        <section data-auto-animate>
+            <span class="era-tag">ERA I: A FORJA</span>
+        </section>
+        <section data-auto-animate>
+            <span class="era-tag">ERA I: A FORJA</span>
+            <h2>Cartões Perfurados</h2>
+            <ul>
+                <li class="fragment">Programar era mecânico.</li>
+                <li class="fragment">Um erro custava dias de espera.</li>
+                <li class="fragment"><strong>O Medo:</strong> "Linguagens de alto nível (Fortran) vão tirar o emprego de quem entende a máquina."</li>
+            </ul>
+        </section>
+        
+        <section data-background="img/revolution/homer.jpeg" data-background-size="70%">
+            <br><br><br><br><br>
+            <h2 style="background-color: #333">o Fortran tá contra mim</h2>
+        </section>
+
+        <section data-background="img/revolution/codigos.gif">
+            <h2 style="background-color: #FFF; color: darkred;">Baixo nível</h2>
+            vs
+            <h2 style="background-color: #FFF; color: darkred;">Alto nível</h2>
+        </section>
+
+        <section data-auto-animate data-auto-animate-id="anim-3">
+            Assembly
+            <img src="img/revolution/assembly.png" alt="">
+        </section>
+        <section data-auto-animate data-auto-animate-id="anim-3">
+            <p>O que esse código faz?</p>
+        </section>
+        <section data-auto-animate data-auto-animate-id="anim-3">
+            Javascript
+            <img src="img/revolution/js.png" alt="">
+        </section>
+
+        <section data-auto-animate data-auto-animate-id="anim-4">
+            <span class="era-tag">ERA II: A UNIÃO</span>
+        </section>
+
+        <section data-auto-animate data-auto-animate-id="anim-4">
+            <span class="era-tag">ERA II: A UNIÃO</span>
+            <h2>SOFTWARE LIVRE <br> & <br> Código Aberto</h2>
+            <p class="fragment">O manifesto de 1983 mudou tudo.</p>
+        </section>
+
+        <section>
+            <h2>as 4 Liberdades essenciais</h2>
+            <p>Todo software deve ser livre pra</p>
+            <ul>
+                <li class="fragment">Executar</li>
+                <li class="fragment">Estudar*</li>
+                <li class="fragment">Redistribuir</li>
+                <li class="fragment">Melhorar*</li>
+            </ul>
+        </section>
+
+        <section data-auto-animate data-auto-animate-id="anim-4" data-transition="concave">
+            <p>Software Livre & Código Aberto</p>
+            <div class="fragment highlight-box">
+                "Se o código é de graça e todos podem copiar, <strong>qual será o valor do programador?</strong>"
+            </div>
+        </section>
+
+        <section>
+            <p >Resultado: <br> <span style="font-size: 4rem; color: #e2b007">"Criamos" a base de toda a internet moderna.</span></p>
+        </section>
+
+        <section data-auto-animate>
+            <span class="era-tag">ERA III: A ABSTRAÇÃO</span>
+            <h2>Frameworks & Bibliotecas</h2>
+        </section>
+        <section data-auto-animate>
+            <span class="era-tag">ERA III: A ABSTRAÇÃO</span>
+            <h2>ANTES</h2>
+            <pre><code  data-id="code-animation" class="hljs html" data-trim>
+                   <div style="width: 100%; padding: 10px">
+                      <div style="display: block">
+                          <button
+                              style="background-color: blue;
+                                     color: white;
+                                     border-radius: 5px;"
+                          >
+                              Clique aqui
+                          </button>
+                      </div>
+                   </div>
+                </code></pre>
+        </section>
+        <section data-auto-animate>
+            <span class="era-tag">ERA III: A ABSTRAÇÃO</span>
+            <h2>Frameworks & Bibliotecas</h2>
+            <p>Automatizamos o visual e a estrutura.</p>
+            <pre><code  data-id="code-animation" class="hljs html" data-trim>
+                   <div class="container">
+                      <div class="row">
+                          <button class="btn btn-primary">Clique aqui</button>
+                      </div>
+                   </div>
+                </code></pre>
+        </section>
+        <section>2005 a 2015: o boom dos frameworks/bibliotecas</section>
+        <section data-auto-animate data-background="img/revolution/campus.jpg" data-background-size="90%">
+            <br><br><br>
+            <p style="background-color: #333" class="fragment">2014: "O Web Designer morreu".</p>
+        </section>
+        <section data-background="img/revolution/fast.gif">
+            <h3 style="background-color: #333">Realidade: Focamos em UX e complexidade de dados.</h3>
+            <p class="fragment" style="background-color: #333">Backend x Frontend</p>
+
+        </section>
+
+        <section>
+            <h2>O fim do mundo como conheciamos</h2>
+            <em class="fragment">
+                30 de Novembro de 2022: Lançamento do ChatGPT. <br>
+            </em>
+        </section>
+
+        <section data-auto-animate>
+            <span class="era-tag">ERA IV: A PRIMEIRA REVOLUÇÃO IA</span>
+            <h2 data-id="ia-title">O Oráculo</h2>
+            <p>Substituímos a busca manual pela conversa.</p>
+            <div class="r-stack">
+                <p class="fragment fade-out" data-fragment-index="0">Stack Overflow</p>
+                <p class="fragment fade-in" data-fragment-index="0"><strong>ChatGPT</strong></p>
+            </div>
+            <p class="fragment">O Junior não "morreu", ele ganhou um tutor 24/7.</p>
+        </section>
+
+        <section data-auto-animate>
+            <span class="era-tag">ERA V: A SEGUNDA REVOLUÇÃO IA</span>
+            <h2 data-id="ia-title">O Copiloto</h2>
+            <p>Desenvolvimento Sugerido (GitHub Copilot).</p>
+            <pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+                   function calculateRisk(user) {
+                     // IA sugere a lógica baseada no contexto...
+                   }
+                </code></pre>
+            <p class="fragment">Não paramos de escrever, paramos de <strong>digitar o óbvio</strong>.</p>
+        </section>
+
+        <section>
+            <h2>A ascensão do copilot começou a ganhar força em 2023</h2>
+        </section>
+
+        <section data-auto-animate>
+            <span class="era-tag">ERA VI: A TERCEIRA REVOLUÇÃO IA</span>
+            <h2 data-id="ia-title" style="color: #00ecff;">O Arquiteto</h2>
+            <p>A IA dirige. O Humano é o Comandante.</p>
+            <div class="r-hstack justify-center">
+                <div data-id="box1" style="background: #333; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+                <div data-id="box2" style="background: #e2b007; width: 150px; height: 150px; margin: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold;">VOCÊ</div>
+                <div data-id="box3" style="background: #333; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+            </div>
+            <p class="fragment">Saímos da sintaxe para a <strong>estratégia</strong>.</p>
+        </section>
+
+        <section>
+            <h2>A Escalada da Capacidade</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Era</th>
+                    <th>Papel</th>
+                    <th>Alavancagem</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Punched Cards</td>
+                    <td>Operador</td>
+                    <td>1x</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Frameworks</td>
+                    <td>Engenheiro</td>
+                    <td>100x</td>
+                </tr>
+                <tr class="fragment" style="color: #e2b007;">
+                    <td>IA Agentic</td>
+                    <td>Comandante</td>
+                    <td>1000x</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section data-background="img/revolution/escalada.png"></section>
+
+        <section data-background="../img/gifs/obra.gif">
+            <h2 style="background-color:#333; color: #e2b007;">O Novo arquiteto</h2>
+            <p style="color: #e2b007; background-color: #333" class="">A gente é pago pra resolver problema, não pra escrever código.</p>
+
+        </section>
+
+
+        <section data-background="#333">
+            <p class="r-fit-text">Como dizia minha ex: <br><span class="fragment">TERMINAMOS</span></p>
+        </section>
+
+        <section data-background-color="#e2b007">
+            <h2 style="color: #000;">A IA escreve o paragrafo!</h2>
+            <p style="color: #000;">"Mas é você o autor do livro."</p>
+            <hr>
+            <h3 style="color: #000;" class="fragment">AVANTE, DEVS. AVANTE, UMIRIM</h3>
+        </section>
+
+
+
+        <section class="big-center">
+            <h2>Valeu o Boi,<br> valeu o Vaqueiro</h2>
+
+            <br>
+
+            <div style="display: flex; justify-content: center;">
+                <div style="text-align: left; font-size: 2.3rem; width: 50%">
+                    <br>
+                    @alessandro_feitoza
+                    <br><br>
+
+
+                    Linkedin: <br> /in/AlessandroFeitoza
+
+
+                </div>
+                <div style="width: 50%">
+                    <img width="60%" src="img/strangler/qrcode.png" alt="">
+                    <br>
+                    <strong>slides.feitoza.tec.br</strong>
+                </div>
+            </div>
+
+            <br><br>
+
+        </section>
+
+
+    </div>
+</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/notes/notes.js"></script>
+<script src="../plugin/markdown/markdown.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        autoPlayMedia: true,
+        hash: true,
+        plugins: [ RevealNotes, RevealMarkdown, RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>
