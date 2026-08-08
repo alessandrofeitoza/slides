@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+
+    <title>Aula 28 - Documentação Técnica como Parte do Produto</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+
+    <style>
+        :root{
+            --primary:#00d8ff;
+            --secondary:#7c4dff;
+            --success:#00e676;
+            --warning:#ffca28;
+            --danger:#ff5252;
+            --dark:#0f172a;
+            --card:#1e293b;
+        }
+
+        body{
+            background:#0b1020;
+        }
+
+        .reveal{
+            font-size:32px;
+        }
+
+        .reveal h1{
+            color:var(--primary);
+            text-transform:none;
+        }
+
+        .reveal h2{
+            color:var(--primary);
+            text-transform:none;
+        }
+
+        .reveal h3{
+            color:#fff;
+        }
+
+        .box{
+            background:rgba(255,255,255,.05);
+            border-left:6px solid var(--primary);
+            padding:25px;
+            border-radius:12px;
+        }
+
+        .grid-2{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:30px;
+        }
+
+        .card{
+            background:var(--card);
+            padding:25px;
+            border-radius:15px;
+        }
+
+        .timeline{
+            display:flex;
+            justify-content:space-between;
+            margin-top:50px;
+            gap:20px;
+        }
+
+        .timeline-item{
+            flex:1;
+            background:var(--card);
+            padding:20px;
+            border-top:5px solid var(--primary);
+            border-radius:12px;
+        }
+
+        .highlight{
+            color:var(--warning);
+            font-weight:bold;
+        }
+
+        .quote{
+            font-size:1.3em;
+            font-style:italic;
+            color:#fff;
+            margin-top:30px;
+        }
+
+        ul li{
+            margin-bottom:12px;
+        }
+
+        .big-number{
+            font-size:4em;
+            font-weight:bold;
+            color:var(--primary);
+        }
+
+        .center{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Documentação Técnica como Parte do Produto</h1>
+
+            <p>
+                Aula 28
+            </p>
+
+            <div class="box">
+                Acelerando a documentação com IA
+            </div>
+
+            <br>
+
+            <small>
+                FullCycle • System Design e Arquitetura Evolutiva
+            </small>
+        </section>
+
+        <section>
+            <h2>Objetivos da Aula</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">Entender o papel da documentação moderna</li>
+                    <li class="fragment">Conhecer os tipos de documentação</li>
+                    <li class="fragment">Compreender Documentation as Code</li>
+                    <li class="fragment">Relacionar documentação e maturidade</li>
+                    <li class="fragment">Preparar terreno para IA na próxima aula</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h3>A História da Documentação de Software</h3>
+        </section>
+
+        <section>
+            <h2>Quando documentação era papel</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    <h3>1970</h3>
+                    <p>Mainframes</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>1980</h3>
+                    <p>Projetos governamentais</p>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <h3>1990</h3>
+                    <p>Documentação impressa</p>
+                </div>
+
+            </div>
+
+            <p class="fragment">
+                O software mudava mais rápido do que os documentos.
+            </p>
+        </section>
+
+        <section>
+            <h2>A era dos documentos gigantes</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Produzidos</h3>
+
+                    <ul>
+                        <li>Requisitos</li>
+                        <li>Casos de uso</li>
+                        <li>Diagramas</li>
+                        <li>Planos de teste</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Problema</h3>
+
+                    <ul>
+                        <li>Ninguém lia</li>
+                        <li>Difíceis de atualizar</li>
+                        <li>Rapidamente obsoletos</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O choque do Manifesto Ágil</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Software funcionando
+                </p>
+
+                <p class="fragment highlight">
+                    mais que
+                </p>
+
+                <p class="fragment">
+                    documentação abrangente
+                </p>
+
+            </div>
+
+            <br>
+
+            <p class="fragment">
+                Muitas equipes interpretaram isso da forma errada.
+            </p>
+        </section>
+
+        <section>
+            <h2>O que os ágeis realmente defendiam</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Sim</h3>
+
+                    <ul>
+                        <li>Documentação útil</li>
+                        <li>Documentação viva</li>
+                        <li>Geração de valor</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Não</h3>
+
+                    <ul>
+                        <li>Papel por obrigação</li>
+                        <li>Documentos mortos</li>
+                        <li>Burocracia excessiva</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação Moderna</h2>
+
+            <div class="center">
+
+                <div class="big-number fragment">
+                    Produto
+                </div>
+
+                <p class="fragment">
+                    A documentação deixou de ser um anexo.
+                </p>
+
+                <p class="fragment">
+                    Ela passou a fazer parte da experiência do produto.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Evolução da Mentalidade</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    <strong>Documentar Tudo</strong>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <strong>Documentar Nada</strong>
+                </div>
+
+                <div class="timeline-item fragment">
+                    <strong>Documentar o que gera valor</strong>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h3>Documentação é Produto</h3>
+        </section>
+
+
+        <section>
+            <h1>Parte 1</h1>
+            <h3>Documentação é Produto</h3>
+        </section>
+
+        <section>
+            <h2>O software possui dois públicos</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Usuários</h3>
+
+                    <ul>
+                        <li class="fragment">Consomem funcionalidades</li>
+                        <li class="fragment">Executam processos</li>
+                        <li class="fragment">Geram valor para o negócio</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Desenvolvedores</h3>
+
+                    <ul>
+                        <li class="fragment">Mantêm o sistema</li>
+                        <li class="fragment">Criam novas funcionalidades</li>
+                        <li class="fragment">Corrigem problemas</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <p class="fragment">
+                Ambos precisam de uma boa experiência.
+            </p>
+        </section>
+
+        <section>
+            <h2>Experiência do Usuário vs Experiência do Desenvolvedor</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>UX</h3>
+
+                    <ul>
+                        <li class="fragment">Interface intuitiva</li>
+                        <li class="fragment">Fluxos simples</li>
+                        <li class="fragment">Facilidade de uso</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>DX</h3>
+
+                    <ul>
+                        <li class="fragment">Documentação clara</li>
+                        <li class="fragment">Onboarding rápido</li>
+                        <li class="fragment">Boa arquitetura</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O que é Developer Experience?</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Developer Experience (DX) representa a experiência de quem desenvolve, integra, mantém e evolui um sistema.
+                </p>
+            </div>
+
+            <br>
+
+            <ul>
+                <li class="fragment">Facilidade para começar</li>
+                <li class="fragment">Facilidade para aprender</li>
+                <li class="fragment">Facilidade para manter</li>
+                <li class="fragment">Facilidade para evoluir</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uma API pode funcionar perfeitamente...</h2>
+
+            <div class="center">
+
+                <div class="fragment">
+                    ✔ API rápida
+                </div>
+
+                <div class="fragment">
+                    ✔ Escalável
+                </div>
+
+                <div class="fragment">
+                    ✔ Segura
+                </div>
+
+                <div class="fragment">
+                    ✔ Disponível
+                </div>
+
+                <br>
+
+                <div class="fragment highlight">
+                    Mas ninguém consegue usar sem documentação.
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O que acontece sem documentação?</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    Dúvida
+                </div>
+
+                <div class="timeline-item fragment">
+                    Interrupção
+                </div>
+
+                <div class="timeline-item fragment">
+                    Reunião
+                </div>
+
+                <div class="timeline-item fragment">
+                    Retrabalho
+                </div>
+
+            </div>
+
+            <br>
+
+            <p class="fragment">
+                O custo aparece todos os dias.
+            </p>
+        </section>
+
+        <section>
+            <h2>Documentação reduz dependências</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Em muitas empresas existe uma pessoa que sabe tudo.
+                </p>
+
+                <p class="fragment">
+                    Ela vira gargalo para o crescimento.
+                </p>
+
+                <p class="fragment highlight">
+                    Conhecimento que vive apenas em pessoas é um risco.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O custo invisível da falta de documentação</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Impactos Técnicos</h3>
+
+                    <ul>
+                        <li class="fragment">Mais bugs</li>
+                        <li class="fragment">Mais retrabalho</li>
+                        <li class="fragment">Mudanças lentas</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Impactos Humanos</h3>
+
+                    <ul>
+                        <li class="fragment">Dependência de especialistas</li>
+                        <li class="fragment">Frustração da equipe</li>
+                        <li class="fragment">Onboarding lento</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Onboarding: o primeiro teste da documentação</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Imagine que um novo desenvolvedor entrou hoje.
+                </p>
+
+                <p class="fragment">
+                    Quanto tempo ele levará para produzir algo?
+                </p>
+
+                <p class="fragment highlight">
+                    A resposta depende da qualidade da documentação.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo de onboarding ruim</h2>
+
+            <div class="card">
+
+                <ul>
+                    <li class="fragment">Projeto sem README</li>
+                    <li class="fragment">Sem instruções de setup</li>
+                    <li class="fragment">Sem arquitetura documentada</li>
+                    <li class="fragment">Sem explicação das regras</li>
+                </ul>
+
+            </div>
+
+            <br>
+
+            <p class="fragment">
+                Resultado: dias perdidos apenas tentando entender o sistema.
+            </p>
+        </section>
+
+        <section>
+            <h2>Exemplo de onboarding eficiente</h2>
+
+            <div class="card">
+
+                <ul>
+                    <li class="fragment">README atualizado</li>
+                    <li class="fragment">Passo a passo de instalação</li>
+                    <li class="fragment">Visão arquitetural</li>
+                    <li class="fragment">Fluxos principais documentados</li>
+                </ul>
+
+            </div>
+
+            <br>
+
+            <p class="fragment">
+                Resultado: produtividade muito mais rápida.
+            </p>
+        </section>
+
+        <section>
+            <h2>Documentação gera valor de negócio</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Internamente</h3>
+
+                    <ul>
+                        <li class="fragment">Produtividade</li>
+                        <li class="fragment">Escalabilidade da equipe</li>
+                        <li class="fragment">Redução de riscos</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Externamente</h3>
+
+                    <ul>
+                        <li class="fragment">Melhor adoção</li>
+                        <li class="fragment">Integrações mais rápidas</li>
+                        <li class="fragment">Menos suporte</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação também vende</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Muitos produtos SaaS conquistam clientes porque são fáceis de integrar.
+                </p>
+
+                <p class="fragment">
+                    Muitas vezes a documentação é o primeiro contato técnico com o produto.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Por que desenvolvedores escolhem certas tecnologias?</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Motivos Técnicos</h3>
+
+                    <ul>
+                        <li class="fragment">Performance</li>
+                        <li class="fragment">Escalabilidade</li>
+                        <li class="fragment">Ecossistema</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Motivos Práticos</h3>
+
+                    <ul>
+                        <li class="fragment">Boa documentação</li>
+                        <li class="fragment">Exemplos claros</li>
+                        <li class="fragment">Aprendizado rápido</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Case: Stripe</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    A documentação da Stripe tornou-se referência mundial.
+                </p>
+
+                <p class="fragment">
+                    A empresa investe fortemente em experiência para desenvolvedores.
+                </p>
+
+                <p class="fragment highlight">
+                    A documentação virou vantagem competitiva.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Case: Laravel</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    A documentação do Laravel é considerada uma das melhores do ecossistema PHP.
+                </p>
+
+                <p class="fragment">
+                    Muitos desenvolvedores aprendem a framework diretamente pela documentação.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação é um ativo</h2>
+
+            <div class="center">
+
+                <div class="big-number fragment">
+                    Ativo
+                </div>
+
+                <p class="fragment">
+                    Assim como código, infraestrutura e conhecimento.
+                </p>
+
+                <p class="fragment">
+                    Quanto mais madura a organização, mais ela protege esse ativo.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Maturidade Organizacional</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    Conhecimento tribal
+                </div>
+
+                <div class="timeline-item fragment">
+                    Conhecimento compartilhado
+                </div>
+
+                <div class="timeline-item fragment">
+                    Conhecimento documentado
+                </div>
+
+                <div class="timeline-item fragment">
+                    Conhecimento automatizado
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Reflexão</h2>
+
+            <div class="quote">
+                "Se sua documentação desaparecesse hoje, quanto conhecimento da equipe seria perdido?"
+            </div>
+        </section>
+
+        <section>
+            <h2>Próxima Parte</h2>
+
+            <h3>Tipos de Documentação</h3>
+
+            <p class="fragment">
+                Nem toda documentação tem o mesmo objetivo.
+            </p>
+        </section>
+
+        <section>
+            <h1>Parte 2</h1>
+            <h3>Tipos de Documentação</h3>
+        </section>
+
+        <section>
+            <h2>Nem toda documentação serve para o mesmo propósito</h2>
+
+            <div class="box">
+                <p class="fragment">
+                    Um dos erros mais comuns é tratar toda documentação como se fosse igual.
+                </p>
+
+                <p class="fragment">
+                    Cada tipo atende um público e uma necessidade específica.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Os 4 grandes grupos</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    Negócio
+                </div>
+
+                <div class="timeline-item fragment">
+                    Funcional
+                </div>
+
+                <div class="timeline-item fragment">
+                    Técnica
+                </div>
+
+                <div class="timeline-item fragment">
+                    Operacional
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação de Negócio</h2>
+
+            <div class="center">
+                <div class="big-number fragment">
+                    POR QUÊ?
+                </div>
+            </div>
+
+            <p class="fragment">
+                Explica o motivo da existência do sistema.
+            </p>
+        </section>
+
+        <section>
+            <h2>Objetivos da Documentação de Negócio</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Responder</h3>
+
+                    <ul>
+                        <li class="fragment">Qual problema resolvemos?</li>
+                        <li class="fragment">Quem é o cliente?</li>
+                        <li class="fragment">Qual o objetivo?</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Evitar</h3>
+
+                    <ul>
+                        <li class="fragment">Desalinhamento</li>
+                        <li class="fragment">Escopo confuso</li>
+                        <li class="fragment">Decisões contraditórias</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplos de Documentação de Negócio</h2>
+
+            <div class="card">
+                <ul>
+                    <li class="fragment">Visão do produto</li>
+                    <li class="fragment">Business Model Canvas</li>
+                    <li class="fragment">Jornada do usuário</li>
+                    <li class="fragment">Objetivos estratégicos</li>
+                    <li class="fragment">KPIs</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação Funcional</h2>
+
+            <div class="center">
+                <div class="big-number fragment">
+                    O QUÊ?
+                </div>
+            </div>
+
+            <p class="fragment">
+                Explica o comportamento esperado do sistema.
+            </p>
+        </section>
+
+        <section>
+            <h2>Objetivos da Documentação Funcional</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Define funcionalidades e regras que devem ser implementadas.
+                </p>
+
+                <p class="fragment">
+                    É a ponte entre negócio e tecnologia.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplos de Documentação Funcional</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <ul>
+                        <li class="fragment">Casos de uso</li>
+                        <li class="fragment">User Stories</li>
+                        <li class="fragment">Fluxos de negócio</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <ul>
+                        <li class="fragment">Regras de negócio</li>
+                        <li class="fragment">Critérios de aceitação</li>
+                        <li class="fragment">Mapeamento de processos</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação Técnica</h2>
+
+            <div class="center">
+                <div class="big-number fragment">
+                    COMO?
+                </div>
+            </div>
+
+            <p class="fragment">
+                Explica como o sistema foi construído.
+            </p>
+        </section>
+
+        <section>
+            <h2>Público da Documentação Técnica</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Desenvolvedores</h3>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Arquitetos</h3>
+                </div>
+
+                <div class="card fragment">
+                    <h3>DevOps</h3>
+                </div>
+
+                <div class="card fragment">
+                    <h3>QA</h3>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplos de Documentação Técnica</h2>
+
+            <div class="card">
+
+                <ul>
+                    <li class="fragment">Diagramas de arquitetura</li>
+                    <li class="fragment">Modelo de dados</li>
+                    <li class="fragment">APIs</li>
+                    <li class="fragment">Integrações</li>
+                    <li class="fragment">ADRs</li>
+                    <li class="fragment">Padrões arquiteturais</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação Operacional</h2>
+
+            <div class="center">
+                <div class="big-number fragment">
+                    EXECUTAR
+                </div>
+            </div>
+
+            <p class="fragment">
+                Explica como operar e sustentar o sistema.
+            </p>
+        </section>
+
+        <section>
+            <h2>Exemplos de Documentação Operacional</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <ul>
+                        <li class="fragment">Deploy</li>
+                        <li class="fragment">Rollback</li>
+                        <li class="fragment">Backup</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <ul>
+                        <li class="fragment">Monitoramento</li>
+                        <li class="fragment">Observabilidade</li>
+                        <li class="fragment">Recuperação de falhas</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Existe ainda a documentação para desenvolvedores</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Muitas equipes tratam esse grupo como uma categoria própria.
+                </p>
+
+                <p class="fragment">
+                    Seu foco é acelerar o trabalho diário da equipe.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplos de documentação para desenvolvedores</h2>
+
+            <div class="card">
+
+                <ul>
+                    <li class="fragment">README</li>
+                    <li class="fragment">Guia de Setup</li>
+                    <li class="fragment">Guia de Contribuição</li>
+                    <li class="fragment">Padrões de Código</li>
+                    <li class="fragment">Convenções da Equipe</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O README é frequentemente subestimado</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    O README costuma ser o primeiro documento lido por quem entra em um projeto.
+                </p>
+
+                <p class="fragment highlight">
+                    Um README ruim afasta colaboradores.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O que um bom README deveria conter?</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <ul>
+                        <li class="fragment">Objetivo do projeto</li>
+                        <li class="fragment">Pré-requisitos</li>
+                        <li class="fragment">Instalação</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <ul>
+                        <li class="fragment">Execução</li>
+                        <li class="fragment">Estrutura</li>
+                        <li class="fragment">Links úteis</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Uma analogia simples</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Construção Civil</h3>
+
+                    <ul>
+                        <li class="fragment">Planta</li>
+                        <li class="fragment">Manual</li>
+                        <li class="fragment">Procedimentos</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Software</h3>
+
+                    <ul>
+                        <li class="fragment">Arquitetura</li>
+                        <li class="fragment">Documentação</li>
+                        <li class="fragment">Operação</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O erro mais comum</h2>
+
+            <div class="center">
+
+                <div class="big-number fragment">
+                    DUPLICAÇÃO
+                </div>
+
+                <p class="fragment">
+                    A mesma informação espalhada em vários documentos.
+                </p>
+
+                <p class="fragment">
+                    Quando algo muda, tudo fica inconsistente.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Documentação também precisa de arquitetura</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Assim como sistemas possuem organização,
+                    a documentação também precisa de estrutura.
+                </p>
+
+                <p class="fragment">
+                    O objetivo é facilitar localização, manutenção e evolução.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Resumo</h2>
+
+            <table style="width:100%;">
+                <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Pergunta</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Negócio</td>
+                    <td>Por quê?</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Funcional</td>
+                    <td>O quê?</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Técnica</td>
+                    <td>Como?</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Operacional</td>
+                    <td>Como executar?</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Próxima Parte</h2>
+
+            <h3>O Que Vale a Pena Documentar</h3>
+
+            <p class="fragment">
+                Nem tudo merece virar documento.
+            </p>
+        </section>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash:true,
+        slideNumber:true,
+        transition:'slide'
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../dist/reset.css">
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../dist/theme/black.css">
+
+    <style>
+        :root {
+            --bussola-blue: #214D97;
+            --bussola-light: #62D0F5;
+            --bussola-green: #1FC48D;
+            --bussola-purple: #7A4FFF;
+            --bussola-dark: #08152D;
+            --bussola-black: #050505;
+        }
+
+        .reveal {
+            font-family: "Poppins", sans-serif;
+            color: white;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .reveal h1 {
+            font-size: 2.8em;
+            line-height: 1.1;
+        }
+
+        .reveal h2 {
+            font-size: 2em;
+            line-height: 1.2;
+        }
+
+        .reveal p,
+        .reveal li {
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .logo {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            height: 70px;
+        }
+
+        .hero {
+            text-align: center;
+        }
+
+        .hero h1 {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .impact {
+            display: inline-block;
+            background: #000;
+            padding: 20px 40px;
+            border-radius: 24px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                    90deg,
+                    var(--bussola-purple),
+                    var(--bussola-light)
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .statement {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+            text-align: center;
+        }
+
+        .statement h1 {
+            max-width: 1200px;
+        }
+
+        .question-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            text-align: center;
+        }
+
+        .question-slide h1 {
+            font-size: 3.2em;
+            max-width: 1100px;
+        }
+
+        .dark-slide {
+            background: var(--bussola-dark);
+        }
+
+        .blue-slide {
+            background: var(--bussola-blue);
+        }
+
+        .gradient-slide {
+            background: linear-gradient(
+                    135deg,
+                    var(--bussola-purple),
+                    var(--bussola-blue),
+                    var(--bussola-light)
+            );
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            gap: 20px;
+        }
+
+        .timeline div {
+            flex: 1;
+            background: rgba(0,0,0,.3);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .card {
+            background: rgba(0,0,0,.45);
+            border-radius: 24px;
+            padding: 35px;
+            margin-top: 30px;
+        }
+
+        .card h3 {
+            color: var(--bussola-light);
+            margin-bottom: 20px;
+        }
+
+        .three-columns {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .three-columns .card {
+            height: 100%;
+        }
+
+        .big-number {
+            font-size: 5em;
+            font-weight: 900;
+            color: var(--bussola-light);
+            margin-bottom: 10px;
+        }
+
+        .quote {
+            font-size: 1.8em;
+            font-style: italic;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .fragment.fade-up {
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+
+<body>
+<div class="reveal">
+    <div class="slides">
+
+
+        <section data-background="#143D8D">
+            <img src="logos-bussola-social-positiva.svg"
+                 class="logo">
+
+            <h1 style="margin-top:80px">
+                Cadê o dinheiro<br>
+                que estava aqui?
+            </h1>
+
+            <p>
+                Como organizar as finanças da sua OSC
+            </p>
+
+            <small>
+                Alessandro Feitoza
+            </small>
+        </section>
+
+        <section data-background="#143D8D">
+
+            <h2>
+                Vamos começar com uma situação comum.
+            </h2>
+
+            <div class="timeline">
+
+                <div class="fragment">
+                    Projeto aprovado
+                </div>
+
+                <div class="fragment">
+                    Recurso recebido
+                </div>
+
+                <div class="fragment">
+                    Equipe contratada
+                </div>
+
+                <div class="fragment">
+                    Atividades acontecendo
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="#143D8D">
+
+            <h1>
+                Tudo parece sob controle.
+            </h1>
+
+            <div class="card fragment">
+
+                <h2>
+                    Até alguém perguntar:
+                </h2>
+
+                <h1 style="color:#62D0F5;">
+                    Quanto ainda temos?
+                </h1>
+
+            </div>
+
+        </section>
+
+        <section data-background="#08152D">
+
+            <h2>
+                O que acontece na prática?
+            </h2>
+
+            <div style="position:relative;height:500px;">
+
+                <div class="card fragment"
+                     style="position:absolute;left:35%;top:180px;">
+                    QUANTO AINDA TEMOS?
+                </div>
+
+                <div class="fragment card"
+                     style="position:absolute;left:5%;top:50px;">
+                    Planilha
+                </div>
+
+                <div class="fragment card"
+                     style="position:absolute;right:5%;top:60px;">
+                    E-mail
+                </div>
+
+                <div class="fragment card"
+                     style="position:absolute;left:10%;bottom:30px;">
+                    Comprovantes
+                </div>
+
+                <div class="fragment card"
+                     style="position:absolute;right:10%;bottom:20px;">
+                    WhatsApp
+                </div>
+
+                <div class="fragment card"
+                     style="position:absolute;left:42%;top:20px;">
+                    Banco
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="#08152D">
+
+            <div class="three-columns">
+
+                <div class="card fragment">
+
+                    <h2 style="color:#ff6b6b">
+                        O dinheiro sumiu?
+                    </h2>
+
+                    <p>
+                        Fraude<br>
+                        Desvio<br>
+                        Perda
+                    </p>
+
+                </div>
+
+                <div class="card fragment">
+
+                    <h2 style="color:#62D0F5">
+                        Ou...
+                    </h2>
+
+                </div>
+
+                <div class="card fragment">
+
+                    <h2 style="color:#1FC48D">
+                        A informação se perdeu?
+                    </h2>
+
+                    <p>
+                        Dados espalhados<br>
+                        Falta de acompanhamento<br>
+                        Falta de visibilidade
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+        <section data-background="#08152D">
+
+            <div class="statement">
+
+                <h1 class="gradient-text">
+                    O problema nem sempre é falta de dinheiro.
+                </h1>
+
+            </div>
+
+        </section>
+
+        <section data-background="#08152D">
+
+            <div class="statement">
+
+                <h1>
+                    Muitas vezes é falta de clareza.
+                </h1>
+
+            </div>
+
+        </section>
+        <section data-background="#143D8D">
+
+            <h2>
+                Quando pensamos em auditoria...
+            </h2>
+
+            <div class="three-columns">
+
+                <div class="card fragment">
+                    Tribunal
+                </div>
+
+                <div class="card fragment">
+                    Fiscalização
+                </div>
+
+                <div class="card fragment">
+                    Prestação de contas
+                </div>
+
+            </div>
+
+        </section>
+        <section data-background="#08152D">
+
+            <div class="statement">
+
+                <h1>
+                    Mas auditoria não começa aqui.
+                </h1>
+
+            </div>
+
+        </section>
+        <section data-background="#143D8D">
+
+            <h2>
+                O ciclo de um recurso
+            </h2>
+
+            <div class="timeline">
+
+                <div class="fragment">
+                    Recebimento
+                </div>
+
+                <div class="fragment">
+                    Compra
+                </div>
+
+                <div class="fragment">
+                    Pagamento
+                </div>
+
+                <div class="fragment">
+                    Conciliação
+                </div>
+
+                <div class="fragment">
+                    Prestação
+                </div>
+
+            </div>
+
+        </section>
+        <section data-background="#08152D">
+
+            <h2>
+                Em qual momento sua organização começa a conferir?
+            </h2>
+
+            <div class="timeline">
+
+                <div>
+                    Recebimento
+                </div>
+
+                <div>
+                    Compra
+                </div>
+
+                <div>
+                    Pagamento
+                </div>
+
+                <div>
+                    Conciliação
+                </div>
+
+                <div style="
+            background:#ff6b6b;
+            color:white;
+            font-weight:bold;
+        ">
+                    Prestação
+                </div>
+
+            </div>
+
+        </section>
+        <section data-background="#143D8D">
+
+            <h2>
+                Organizações mais maduras fazem diferente
+            </h2>
+
+            <div class="timeline">
+
+                <div class="fragment">
+                    🔍<br>
+                    Recebimento
+                </div>
+
+                <div class="fragment">
+                    🔍<br>
+                    Compra
+                </div>
+
+                <div class="fragment">
+                    🔍<br>
+                    Pagamento
+                </div>
+
+                <div class="fragment">
+                    🔍<br>
+                    Conciliação
+                </div>
+
+                <div class="fragment">
+                    🔍<br>
+                    Prestação
+                </div>
+
+            </div>
+
+        </section>
+        <section data-background="linear-gradient(135deg,#7A4FFF,#143D8D,#62D0F5)">
+
+            <div class="statement">
+
+                <h1>
+                    Auditoria não é um evento.
+                </h1>
+
+            </div>
+
+        </section>
+
+        <section data-background="linear-gradient(135deg,#7A4FFF,#143D8D,#62D0F5)">
+
+            <div class="statement">
+
+                <h1>
+                    Auditoria é uma rotina.
+                </h1>
+
+            </div>
+
+        </section>
+        <section data-background="#08152D">
+
+            <h2>
+                Se auditoria é uma rotina...
+            </h2>
+
+            <div class="three-columns">
+
+                <div class="card fragment">
+
+                    <h1>
+                        Quem
+                    </h1>
+
+                    <p>
+                        deveria saber?
+                    </p>
+
+                </div>
+
+                <div class="card fragment">
+
+                    <h1>
+                        Quando
+                    </h1>
+
+                    <p>
+                        deveria saber?
+                    </p>
+
+                </div>
+
+                <div class="card fragment">
+
+                    <h1>
+                        O que
+                    </h1>
+
+                    <p>
+                        deveria saber?
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/notes/notes.js"></script>
+<script src="../plugin/markdown/markdown.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+
+</html>

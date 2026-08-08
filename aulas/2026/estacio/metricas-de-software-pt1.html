@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas de Software — Encontro 1 · Parte 1</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+
+    <style>
+        /* ============================================================
+           TEMA "MESA DE PROJETO" — azul-planta profundo, tinta laranja
+           Régua de medição como elemento de assinatura.
+           Tecla T alterna para o tema claro (sala muito clara).
+           ============================================================ */
+        :root{
+            --ink:        #0D1B2C;
+            --ink-2:      #16283F;
+            --ink-3:      #1F3A5C;
+            --surface:    #16283F;
+            --line:       #2E4A6B;
+            --chalk:      #EDF4FF;
+            --chalk-dim:  #9DB4CE;
+            --signal:     #FF7A2F;
+            --gauge:      #4FD1E0;
+            --alert:      #FF4D5E;
+            --ok:         #7BE495;
+
+            --bg: var(--ink);
+            --fg: var(--chalk);
+            --fg-dim: var(--chalk-dim);
+            --card: var(--surface);
+            --rule: var(--line);
+
+            --f-display: "Space Grotesk", system-ui, sans-serif;
+            --f-body: "IBM Plex Sans", system-ui, sans-serif;
+            --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+        }
+        html.light{
+            --bg:      #F2F5F9;
+            --fg:      #0D1B2C;
+            --fg-dim:  #4A6280;
+            --card:    #FFFFFF;
+            --rule:    #C3D2E4;
+            --signal:  #D4490B;
+            --gauge:   #0E7C8C;
+            --alert:   #C2182B;
+            --ok:      #1B7F3B;
+        }
+
+        .reveal{ font-family: var(--f-body); color: var(--fg); font-size: 40px; font-weight: 400; }
+        .reveal-viewport{ background: var(--bg); transition: background .35s ease; }
+
+        .reveal h1, .reveal h2, .reveal h3{
+            font-family: var(--f-display); font-weight: 700;
+            text-transform: none; letter-spacing: -.02em; line-height: 1.02;
+            color: var(--fg); margin: 0 0 .35em 0; text-shadow: none;
+        }
+        .reveal h1{ font-size: 2.5em; }
+        .reveal h2{ font-size: 1.75em; }
+        .reveal h3{ font-size: 1.2em; }
+        .reveal p, .reveal li{ line-height: 1.35; }
+        .reveal strong{ color: var(--signal); font-weight: 600; }
+        .reveal em{ color: var(--gauge); font-style: normal; font-weight: 600; }
+        .reveal section{ text-align: left; }
+        .reveal .center{ text-align: center; }
+
+        /* --- listas grandes, sem bolinha genérica --- */
+        .reveal ul{ list-style: none; margin: 0; padding: 0; }
+        .reveal ul li{
+            position: relative; padding-left: 1.1em; margin: .5em 0;
+        }
+        .reveal ul li::before{
+            content: ""; position: absolute; left: 0; top: .52em;
+            width: .42em; height: .12em; background: var(--signal); border-radius: 2px;
+        }
+
+        /* ============ ELEMENTO DE ASSINATURA: A RÉGUA ============ */
+        .rail{
+            position: fixed; left: 0; right: 0; bottom: 0; height: 46px;
+            pointer-events: none; z-index: 40;
+            font-family: var(--f-mono); font-size: 13px; color: var(--fg-dim);
+        }
+        .rail .ticks{
+            position: absolute; left: 0; right: 0; bottom: 0; height: 14px;
+            background-image: repeating-linear-gradient(to right,
+            var(--rule) 0 1px, transparent 1px 20px);
+            opacity: .55;
+        }
+        .rail .ticks.major{
+            height: 22px;
+            background-image: repeating-linear-gradient(to right,
+            var(--rule) 0 2px, transparent 2px 200px);
+            opacity: .8;
+        }
+        .rail .cursor{
+            position: absolute; bottom: 0; width: 3px; height: 30px;
+            background: var(--signal); transition: left .45s cubic-bezier(.2,.8,.2,1);
+            box-shadow: 0 0 14px var(--signal);
+        }
+        .rail .readout{
+            position: absolute; bottom: 20px; left: 34px;
+            letter-spacing: .16em; text-transform: uppercase;
+        }
+        .rail .readout b{ color: var(--signal); font-weight: 600; }
+        .rail .clock{
+            position: absolute; bottom: 20px; right: 34px; letter-spacing: .12em;
+        }
+
+        /* ============ COMPONENTES ============ */
+        .eyebrow{
+            font-family: var(--f-mono); font-size: .42em; letter-spacing: .28em;
+            text-transform: uppercase; color: var(--gauge); margin-bottom: .8em;
+            display: block;
+        }
+        .huge{ font-family: var(--f-display); font-size: 4.2em; line-height: .92; font-weight: 700; }
+        .mega{ font-family: var(--f-display); font-size: 6em; line-height: .88; font-weight: 700; color: var(--signal); }
+        .sub{ color: var(--fg-dim); font-size: .82em; }
+        .kicker{ font-size: 1.35em; line-height: 1.25; }
+
+        .cards{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: .4em; }
+        .cards.two{ grid-template-columns: repeat(2, 1fr); }
+        .card{
+            background: var(--card); border: 1px solid var(--rule);
+            border-top: 4px solid var(--signal);
+            border-radius: 4px; padding: 26px 24px;
+        }
+        .card .n{ font-family: var(--f-mono); font-size: .52em; color: var(--gauge); letter-spacing: .2em; }
+        .card h3{ font-size: .95em; margin: .18em 0 .3em; }
+        .card p{ font-size: .62em; color: var(--fg-dim); margin: 0; line-height: 1.35; }
+        .card.g{ border-top-color: var(--gauge); }
+        .card.a{ border-top-color: var(--alert); }
+        .card.k{ border-top-color: var(--ok); }
+
+        .quote{
+            font-family: var(--f-display); font-size: 1.9em; line-height: 1.12;
+            border-left: 6px solid var(--signal); padding-left: .5em;
+        }
+        .quote .who{
+            display: block; font-family: var(--f-mono); font-size: .32em;
+            letter-spacing: .18em; text-transform: uppercase; color: var(--fg-dim);
+            margin-top: .9em; border: 0;
+        }
+
+        .pill{
+            display: inline-block; font-family: var(--f-mono); font-size: .5em;
+            letter-spacing: .1em; padding: .25em .7em; border: 1px solid var(--rule);
+            border-radius: 100px; color: var(--fg-dim); margin-right: .4em;
+        }
+        .pill.on{ color: var(--ink); background: var(--signal); border-color: var(--signal); font-weight: 600; }
+
+        .reveal pre{
+            width: 100%; box-shadow: none; font-size: .5em; margin: .2em 0;
+            border: 1px solid var(--rule); border-radius: 4px;
+        }
+        .reveal pre code{
+            font-family: var(--f-mono); padding: 22px 24px; max-height: 560px; line-height: 1.45;
+            background: #0A1524;
+        }
+        html.light .reveal pre code{ background: #10202F; }
+
+        .split{ display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+        .split.wide-left{ grid-template-columns: 1.25fr 1fr; }
+
+        .reveal table{ font-size: .58em; border-collapse: collapse; width: 100%; }
+        .reveal table th{
+            font-family: var(--f-mono); font-size: .8em; letter-spacing: .12em;
+            text-transform: uppercase; color: var(--gauge); text-align: left;
+            border-bottom: 2px solid var(--rule); padding: .5em .6em;
+        }
+        .reveal table td{ border-bottom: 1px solid var(--rule); padding: .5em .6em; }
+
+        /* barra de faixas de risco */
+        .gaugebar{ display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; margin: .5em 0 .3em; }
+        .gaugebar div{
+            padding: .55em .5em; text-align: center; font-family: var(--f-mono);
+            font-size: .5em; color: var(--ink); font-weight: 600; border-radius: 3px;
+        }
+        .gaugebar .s1{ background: var(--ok); }
+        .gaugebar .s2{ background: #E8D44D; }
+        .gaugebar .s3{ background: var(--signal); }
+        .gaugebar .s4{ background: var(--alert); color: #fff; }
+        .gaugebar-lab{ display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; }
+        .gaugebar-lab span{ text-align: center; font-size: .5em; color: var(--fg-dim); }
+
+        /* contador interativo de pontos de decisão */
+        .dp{
+            cursor: pointer; border-bottom: 2px dashed var(--signal);
+            padding: 0 2px; border-radius: 2px; transition: all .18s ease;
+        }
+        .dp.on{ background: var(--signal); color: #0A1524; border-bottom-color: transparent; font-weight: 600; }
+        #dpPanel{
+            font-family: var(--f-mono); font-size: .6em; margin-top: .5em;
+            border: 1px solid var(--rule); border-radius: 4px; padding: .6em .9em;
+            display: flex; gap: 1.6em; align-items: center; background: var(--card);
+        }
+        #dpPanel b{ color: var(--signal); font-size: 1.5em; }
+
+        /* grafo de fluxo animado */
+        .flow .edge{
+            stroke: var(--gauge); stroke-width: 3; fill: none;
+            stroke-dasharray: 400; stroke-dashoffset: 400;
+        }
+        .flow .node{ fill: var(--card); stroke: var(--signal); stroke-width: 3; opacity: 0; }
+        .flow .lbl{ fill: var(--fg); font-family: var(--f-mono); font-size: 15px; opacity: 0; }
+        .present .flow .edge{ animation: draw .7s ease forwards; }
+        .present .flow .node,
+        .present .flow .lbl{ animation: pop .45s ease forwards; }
+        @keyframes draw{ to{ stroke-dashoffset: 0; } }
+        @keyframes pop{ to{ opacity: 1; } }
+        .flow .d1{ animation-delay: .1s; } .flow .d2{ animation-delay: .35s; }
+        .flow .d3{ animation-delay: .6s; } .flow .d4{ animation-delay: .85s; }
+        .flow .d5{ animation-delay: 1.1s; } .flow .d6{ animation-delay: 1.35s; }
+        .flow .d7{ animation-delay: 1.6s; }
+
+        /* timer da pausa */
+        #timer{
+            font-family: var(--f-mono); font-size: 4.5em; font-weight: 600;
+            color: var(--gauge); letter-spacing: .04em;
+        }
+        .btn{
+            font-family: var(--f-mono); font-size: .5em; letter-spacing: .12em;
+            text-transform: uppercase; background: transparent; color: var(--fg);
+            border: 2px solid var(--signal); border-radius: 4px; padding: .6em 1.4em;
+            cursor: pointer; margin-right: .5em;
+        }
+        .btn:hover{ background: var(--signal); color: #0A1524; }
+
+        /* slide de seção */
+        .section-slide h1{ font-size: 3.2em; }
+        .section-slide .bignum{
+            font-family: var(--f-mono); font-size: 1em; color: var(--signal);
+            letter-spacing: .3em; margin-bottom: .3em; display: block;
+        }
+
+        .reveal .progress{ color: var(--signal); height: 5px; }
+        .reveal .slide-number{ background: transparent; color: var(--fg-dim); font-family: var(--f-mono); font-size: 18px; right: 34px; bottom: 52px; }
+        .reveal .controls{ color: var(--signal); bottom: 46px; }
+
+        @media (prefers-reduced-motion: reduce){
+            .present .flow .edge, .present .flow .node, .present .flow .lbl{ animation: none; stroke-dashoffset: 0; opacity: 1; }
+        }
+
+        code {
+            font-size: 3rem;
+        }
+
+        /* grafo passo-a-passo, sincronizado com os fragments do código */
+        .flowstep{ width: 100%; height: 400px; }
+        .flowstep .edge{ stroke: var(--gauge); stroke-width: 3; fill: none; }
+        .flowstep .node{ fill: var(--card); stroke: var(--signal); stroke-width: 3; }
+        .flowstep .exit{ stroke: var(--gauge); }
+        .flowstep .lbl{ fill: var(--fg); font-family: var(--f-mono); font-size: 15px; }
+        .flowstep .tag{ fill: var(--fg-dim); font-family: var(--f-mono); font-size: 12px; }
+        .reveal .split pre{ margin: 0; }
+        .reveal .split pre code{ max-height: 420px; font-size: .95em; }
+    </style>
+</head>
+<body>
+
+<div class="rail" aria-hidden="true">
+    <div class="readout">BLOCO <b id="railSection">—</b></div>
+    <div class="clock" id="railClock">09:00</div>
+    <div class="ticks"></div>
+    <div class="ticks major"></div>
+    <div class="cursor" id="railCursor" style="left:0"></div>
+</div>
+
+<div class="reveal">
+    <div class="slides">
+
+        <!-- ============================ ABERTURA ============================ -->
+        <section data-sec="00" data-hora="09:00" data-background-color="#0D1B2C">
+            <span class="eyebrow">Pós-graduação · Engenharia de Software</span>
+            <h1>Métricas<br>de Software</h1>
+            <p class="sub" style="font-family:var(--f-mono);letter-spacing:.14em;margin-top:.6em">
+                ENCONTRO 1 · PARTE 1 &nbsp;—&nbsp; 09:00 às 12:30
+            </p>
+            <aside class="notes">
+                Boas-vindas. Rodada rápida: nome, onde trabalha, e uma métrica que a empresa
+                dele acompanha hoje. Anote as respostas no quadro — você vai voltar nelas
+                no bloco de armadilhas.
+            </aside>
+        </section>
+
+        <section data-sec="00" data-hora="09:05" data-background-color="#FF7A2F">
+            <h1 style="color:#0D1B2C;font-size:2.9em">Como você<br>prova que este<br>código está bom?</h1>
+            <p style="color:#3A1A05;font-size:.8em;margin-top:.5em">Sem usar a palavra "acho".</p>
+            <aside class="notes">
+                NÃO responda. Deixe 3-4 minutos de silêncio incômodo e discussão.
+                Colete as respostas no quadro. Elas vão reaparecer o dia inteiro.
+            </aside>
+        </section>
+
+        <section data-sec="00" data-hora="09:10">
+            <span class="eyebrow">Roteiro da manhã</span>
+            <table>
+                <tr><td style="font-family:var(--f-mono);color:var(--gauge);width:22%">09:00</td><td>Por que medir — e o que medir significa</td></tr>
+                <tr><td style="font-family:var(--f-mono);color:var(--gauge)">09:40</td><td>GQM: o método que organiza tudo</td></tr>
+                <tr><td style="font-family:var(--f-mono);color:var(--gauge)">10:10</td><td>Armadilhas: quando a métrica vira o problema</td></tr>
+                <tr><td style="font-family:var(--f-mono);color:var(--alert)">10:30</td><td>Pausa</td></tr>
+                <tr><td style="font-family:var(--f-mono);color:var(--gauge)">10:45</td><td>Tamanho: LOC e tamanho funcional</td></tr>
+                <tr><td style="font-family:var(--f-mono);color:var(--gauge)">11:15</td><td>Complexidade ciclomática (McCabe)</td></tr>
+                <tr><td style="font-family:var(--f-mono);color:var(--gauge)">12:00</td><td>Halstead e o que sobrou dele</td></tr>
+            </table>
+            <aside class="notes">Deixe claro: a tarde é 100% ferramenta e código real. A manhã constrói o vocabulário.</aside>
+        </section>
+
+        <!-- ============================ BLOCO A ============================ -->
+        <section data-sec="A" data-hora="09:15" class="section-slide">
+            <span class="bignum">BLOCO A</span>
+            <h1>Por que medir</h1>
+        </section>
+
+        <section data-sec="A" data-hora="09:16">
+            <p class="quote">
+                Você não pode controlar<br>o que não consegue medir.
+                <span class="who">Tom DeMarco · Controlling Software Projects, 1982</span>
+            </p>
+            <aside class="notes">A frase mais citada da área. Deixe no ar por alguns segundos — o próximo slide derruba ela.</aside>
+        </section>
+
+        <section data-sec="A" data-hora="09:18">
+            <p class="quote" style="border-left-color:var(--alert)">
+                Eu estava errado.<br>Controle é só um aspecto — e nem o mais importante.
+                <span class="who">Tom DeMarco · IEEE Software, 2009</span>
+            </p>
+            <p class="fragment fade-up sub" style="margin-top:.8em;font-size:.75em">
+                27 anos depois, o próprio autor revisou a frase que fundou a disciplina.
+            </p>
+            <aside class="notes">
+                Ponto pedagógico central do dia: métricas não são verdade absoluta.
+                DeMarco passou a defender que projetos de alto valor toleram medição frouxa,
+                e que o rigor de medição faz mais sentido em projetos de baixo risco/alto controle.
+            </aside>
+        </section>
+
+        <section data-sec="A" data-hora="09:22">
+            <h2>Medir não é controlar.<br>Medir é <em>tornar discutível</em>.</h2>
+            <div class="cards" style="margin-top:.6em">
+                <div class="card fragment fade-up">
+                    <span class="n">01</span><h3>Entender</h3>
+                    <p>Onde estamos hoje? Qual é a linha de base?</p>
+                </div>
+                <div class="card g fragment fade-up">
+                    <span class="n">02</span><h3>Comparar</h3>
+                    <p>Este módulo é pior que aquele? Melhorou desde a refatoração?</p>
+                </div>
+                <div class="card k fragment fade-up">
+                    <span class="n">03</span><h3>Prever</h3>
+                    <p>Quanto vai custar? Onde os defeitos vão aparecer?</p>
+                </div>
+            </div>
+            <aside class="notes">
+                Enfatize "comparar": quase toda métrica de software é inútil como número absoluto
+                e útil como tendência ou comparação entre partes do mesmo sistema.
+            </aside>
+        </section>
+
+        <section data-sec="A" data-hora="09:26">
+            <span class="eyebrow">Definições que valem prova</span>
+            <div class="cards two">
+                <div class="card">
+                    <h3>Medida</h3>
+                    <p style="font-size:.7em">O número bruto.<br><span style="color:var(--signal);font-family:var(--f-mono)">1.842 linhas</span></p>
+                </div>
+                <div class="card g">
+                    <h3>Métrica</h3>
+                    <p style="font-size:.7em">A medida em relação a algo.<br><span style="color:var(--gauge);font-family:var(--f-mono)">3,1 defeitos / KLOC</span></p>
+                </div>
+            </div>
+            <p class="fragment fade-up" style="margin-top:.7em">
+                E o <strong>indicador</strong> é a métrica com um alvo colado nela:
+                <span style="font-family:var(--f-mono);font-size:.8em">&lt; 2 defeitos / KLOC</span>
+            </p>
+            <aside class="notes">Distinção cobrada em concurso e em entrevista. Vale 2 minutos.</aside>
+        </section>
+
+        <section data-sec="A" data-hora="09:30">
+            <h2>Direta ou indireta?</h2>
+            <div class="split" style="margin-top:.5em">
+                <div>
+                    <p class="pill">DIRETA</p>
+                    <p style="font-size:.8em">Você conta.<br><span class="sub">Linhas, classes, defeitos abertos, horas gastas.</span></p>
+                </div>
+                <div>
+                    <p class="pill" style="border-color:var(--gauge);color:var(--gauge)">INDIRETA</p>
+                    <p style="font-size:.8em">Você deriva.<br><span class="sub">Qualidade, manutenibilidade, produtividade, complexidade.</span></p>
+                </div>
+            </div>
+            <p class="fragment fade-up" style="margin-top:.9em;font-size:.85em">
+                Tudo que <em>importa</em> em software é indireto.<br>
+                <span class="sub">Por isso a disciplina é difícil — e por isso ela é contestada.</span>
+            </p>
+        </section>
+
+        <!-- ---------- escalas ---------- -->
+        <section data-sec="A" data-hora="09:34">
+            <span class="eyebrow">Teoria da medição</span>
+            <h2>Quatro escalas.<br>Cada uma permite uma coisa.</h2>
+            <table style="margin-top:.4em">
+                <tr><th>Escala</th><th>Exemplo em software</th><th>Pode fazer</th></tr>
+                <tr class="fragment fade-up"><td><strong>Nominal</strong></td><td>Linguagem, tipo de defeito</td><td>Contar, moda</td></tr>
+                <tr class="fragment fade-up"><td><strong>Ordinal</strong></td><td>Severidade, story points, CMMI nível</td><td>Ordenar, mediana</td></tr>
+                <tr class="fragment fade-up"><td><strong>Intervalar</strong></td><td>Data de release</td><td>Somar diferenças, média</td></tr>
+                <tr class="fragment fade-up"><td><strong>Racional</strong></td><td>LOC, tempo, nº de defeitos</td><td>Tudo, inclusive razão</td></tr>
+            </table>
+            <aside class="notes">
+                Fundamento de Fenton &amp; Pfleeger. É o que separa métrica séria de número inventado.
+            </aside>
+        </section>
+
+        <section data-sec="A" data-hora="09:38" data-background-color="#16283F">
+            <span class="eyebrow" style="color:var(--alert)">Erro que você vai ver na empresa</span>
+            <h2 style="font-size:2.1em">"A média de story points<br>do time é 4,7."</h2>
+            <p class="fragment fade-up" style="margin-top:.6em;font-size:.9em">
+                Story point é escala <em>ordinal</em>.<br>
+                <span class="sub">3 não é "o triplo de 1". A distância entre 5 e 8 não é a mesma entre 1 e 2.</span>
+            </p>
+            <p class="fragment fade-up" style="font-size:.85em;margin-top:.5em">
+                Média em escala ordinal é <strong>aritmética sem significado</strong>.
+            </p>
+            <aside class="notes">
+                Boa hora de perguntar: quem aqui já viu isso? Costuma render história.
+                Alternativa defensável: usar velocity como soma (não média) e olhar a tendência,
+                ou migrar para contagem de itens + cycle time.
+            </aside>
+        </section>
+
+        <section data-sec="A" data-hora="09:42">
+            <h2>Três famílias</h2>
+            <div class="cards">
+                <div class="card fragment fade-up">
+                    <span class="n">PRODUTO</span><h3>O artefato</h3>
+                    <p>Tamanho, complexidade, acoplamento, cobertura, densidade de defeitos.</p>
+                </div>
+                <div class="card g fragment fade-up">
+                    <span class="n">PROCESSO</span><h3>Como se faz</h3>
+                    <p>Lead time, eficiência de remoção de defeitos, frequência de deploy.</p>
+                </div>
+                <div class="card k fragment fade-up">
+                    <span class="n">PROJETO</span><h3>O esforço</h3>
+                    <p>Custo, prazo, esforço, tamanho da equipe, retrabalho.</p>
+                </div>
+            </div>
+            <p class="fragment fade-up sub" style="margin-top:.8em;font-size:.72em">
+                Hoje de manhã: produto. Amanhã: processo e projeto.
+            </p>
+        </section>
+
+        <!-- ============================ BLOCO B — GQM ============================ -->
+        <section data-sec="B" data-hora="09:46" class="section-slide">
+            <span class="bignum">BLOCO B</span>
+            <h1>GQM</h1>
+            <p class="sub" style="font-size:.85em">O antídoto para "vamos medir tudo e ver o que aparece".</p>
+        </section>
+
+        <section data-sec="B" data-hora="09:47">
+            <p class="quote">
+                A pergunta não é<br>"o que dá para medir?".<br>É <span style="color:var(--signal)">"o que eu quero saber?"</span>
+                <span class="who">Victor Basili · NASA SEL, 1984</span>
+            </p>
+        </section>
+
+        <section data-sec="B" data-hora="09:50" class="center">
+            <svg viewBox="0 0 900 420" class="flow" style="width:100%;max-height:520px">
+                <!-- Goal -->
+                <rect class="node d1" x="330" y="20" width="240" height="72" rx="4"/>
+                <text class="lbl d1" x="450" y="52" text-anchor="middle" style="font-size:20px;fill:var(--signal);font-weight:600">GOAL</text>
+                <text class="lbl d1" x="450" y="74" text-anchor="middle">o objetivo do negócio</text>
+
+                <path class="edge d2" d="M420 92 L250 168"/>
+                <path class="edge d2" d="M450 92 L450 168"/>
+                <path class="edge d2" d="M480 92 L650 168"/>
+
+                <!-- Questions -->
+                <rect class="node d3" x="130" y="168" width="240" height="66" rx="4"/>
+                <text class="lbl d3" x="250" y="208" text-anchor="middle">QUESTION 1</text>
+                <rect class="node d3" x="330" y="168" width="240" height="66" rx="4"/>
+                <text class="lbl d3" x="450" y="208" text-anchor="middle">QUESTION 2</text>
+                <rect class="node d3" x="530" y="168" width="240" height="66" rx="4"/>
+                <text class="lbl d3" x="650" y="208" text-anchor="middle">QUESTION 3</text>
+
+                <path class="edge d4" d="M220 234 L160 310"/>
+                <path class="edge d4" d="M280 234 L340 310"/>
+                <path class="edge d4" d="M450 234 L450 310"/>
+                <path class="edge d4" d="M650 234 L650 310"/>
+                <path class="edge d4" d="M690 234 L760 310"/>
+
+                <!-- Metrics -->
+                <rect class="node d5" x="90"  y="310" width="150" height="60" rx="4" style="stroke:var(--gauge)"/>
+                <text class="lbl d5" x="165" y="346" text-anchor="middle" style="fill:var(--gauge)">MÉTRICA</text>
+                <rect class="node d5" x="270" y="310" width="150" height="60" rx="4" style="stroke:var(--gauge)"/>
+                <text class="lbl d5" x="345" y="346" text-anchor="middle" style="fill:var(--gauge)">MÉTRICA</text>
+                <rect class="node d6" x="450" y="310" width="150" height="60" rx="4" style="stroke:var(--gauge)"/>
+                <text class="lbl d6" x="525" y="346" text-anchor="middle" style="fill:var(--gauge)">MÉTRICA</text>
+                <rect class="node d6" x="630" y="310" width="150" height="60" rx="4" style="stroke:var(--gauge)"/>
+                <text class="lbl d6" x="705" y="346" text-anchor="middle" style="fill:var(--gauge)">MÉTRICA</text>
+            </svg>
+            <p class="sub" style="font-size:.62em;text-align:center;margin-top:.2em">
+                De cima para baixo. Nunca de baixo para cima.
+            </p>
+            <aside class="notes">
+                O grafo se desenha sozinho. Enfatize a direção: toda métrica precisa ser
+                rastreável até uma pergunta, e toda pergunta até um objetivo.
+                Se você não consegue subir da métrica até o goal, ela é ruído.
+            </aside>
+        </section>
+
+        <section data-sec="B" data-hora="09:54" data-auto-animate>
+            <span class="eyebrow">Template de objetivo</span>
+            <h2 data-id="g1" style="font-size:1.3em;font-family:var(--f-mono);line-height:1.5">
+                Analisar <span style="color:var(--fg-dim)">_____</span>
+            </h2>
+        </section>
+        <section data-sec="B" data-hora="09:54" data-auto-animate>
+            <span class="eyebrow">Template de objetivo</span>
+            <h2 data-id="g1" style="font-size:1.3em;font-family:var(--f-mono);line-height:1.5">
+                Analisar <span style="color:var(--signal)">o objeto</span><br>
+                com o propósito de <span style="color:var(--fg-dim)">_____</span>
+            </h2>
+        </section>
+        <section data-sec="B" data-hora="09:55" data-auto-animate>
+            <span class="eyebrow">Template de objetivo</span>
+            <h2 data-id="g1" style="font-size:1.3em;font-family:var(--f-mono);line-height:1.5">
+                Analisar <span style="color:var(--signal)">o objeto</span><br>
+                com o propósito de <span style="color:var(--signal)">entender / controlar / melhorar</span><br>
+                em relação a <span style="color:var(--signal)">o atributo de qualidade</span><br>
+                do ponto de vista de <span style="color:var(--signal)">quem vai usar o número</span><br>
+                no contexto de <span style="color:var(--signal)">onde</span>
+            </h2>
+            <aside class="notes">
+                "Do ponto de vista de" é a linha que mais gente esquece — e é a que evita
+                que a métrica seja usada contra quem ela deveria ajudar.
+            </aside>
+        </section>
+
+        <section data-sec="B" data-hora="09:57" data-auto-animate>
+            <span class="eyebrow">Exemplo real</span>
+            <h3 data-id="ex" style="color:var(--signal);font-family:var(--f-mono);font-size:.95em;line-height:1.4">
+                GOAL &nbsp;Analisar o módulo de pagamentos<br>
+                para <em>reduzir</em> o custo de manutenção,<br>
+                do ponto de vista do time que dá plantão.
+            </h3>
+        </section>
+        <section data-sec="B" data-hora="09:58" data-auto-animate>
+            <h3 data-id="ex" style="color:var(--signal);font-family:var(--f-mono);font-size:.62em;line-height:1.4">
+                GOAL &nbsp;Analisar o módulo de pagamentos para reduzir o custo de manutenção,
+                do ponto de vista do time que dá plantão.
+            </h3>
+            <table style="margin-top:.5em">
+                <tr><th style="width:52%">Question</th><th>Metric</th></tr>
+                <tr class="fragment fade-up"><td>Quais arquivos concentram os incidentes?</td><td>Defeitos por arquivo / 6 meses</td></tr>
+                <tr class="fragment fade-up"><td>Esses arquivos são difíceis de entender?</td><td>Complexidade ciclomática máxima</td></tr>
+                <tr class="fragment fade-up"><td>Estão ficando piores com o tempo?</td><td>Δ complexidade por commit</td></tr>
+                <tr class="fragment fade-up"><td>Estamos com medo de mexer neles?</td><td>Cobertura de testes nesses arquivos</td></tr>
+            </table>
+            <aside class="notes">
+                Note que as métricas escolhidas são exatamente as que veremos hoje e amanhã.
+                Amarre: "vocês vão montar um GQM assim no estudo de caso do encontro 2".
+            </aside>
+        </section>
+
+        <section data-sec="B" data-hora="10:00" data-background-color="#FF7A2F">
+            <span class="eyebrow" style="color:#3A1A05">Exercício · 8 minutos · em duplas</span>
+            <h2 style="color:#0D1B2C;font-size:1.7em">
+                Escreva um GQM<br>para um problema real<br>da sua empresa.
+            </h2>
+            <p style="color:#3A1A05;font-size:.72em;margin-top:.6em">
+                1 goal · 3 questions · 1 métrica por question.<br>
+                Regra: se a métrica não muda nenhuma decisão, corte.
+            </p>
+            <aside class="notes">
+                8 min de trabalho + 6 min de socialização (cada dupla lê o goal em voz alta).
+                Anote os goals no quadro — servem de matéria-prima para o estudo de caso do dia 2.
+            </aside>
+        </section>
+
+        <!-- ============================ BLOCO C — ARMADILHAS ============================ -->
+        <section data-sec="C" data-hora="10:10" class="section-slide">
+            <span class="bignum">BLOCO C</span>
+            <h1>Armadilhas</h1>
+            <p class="sub" style="font-size:.85em">Quando a métrica deixa de descrever e passa a distorcer.</p>
+        </section>
+
+        <section data-sec="C" data-hora="10:11" data-background-color="#16283F">
+            <p class="quote" style="border-left-color:var(--alert);font-size:2.1em">
+                Quando uma medida<br>vira meta,<br>ela deixa de ser<br>uma boa medida.
+                <span class="who">Lei de Goodhart</span>
+            </p>
+        </section>
+
+        <section data-sec="C" data-hora="10:13">
+            <span class="eyebrow" style="color:var(--alert)">Delhi, século XIX</span>
+            <h2>O efeito cobra</h2>
+            <ul style="font-size:.85em">
+                <li class="fragment fade-up">Governo quer menos cobras. Paga recompensa por cobra morta.</li>
+                <li class="fragment fade-up">População começa a <strong>criar cobras</strong> para entregar.</li>
+                <li class="fragment fade-up">Governo cancela o programa. Criadores soltam os estoques.</li>
+                <li class="fragment fade-up">Resultado: <strong>mais cobras do que no início</strong>.</li>
+            </ul>
+            <aside class="notes">
+                História pode ser apócrifa, mas é o melhor mnemônico da aula.
+                Pergunte: "qual é a cobra da métrica que vocês citaram no começo?"
+            </aside>
+        </section>
+
+        <section data-sec="C" data-hora="10:16">
+            <h2>As cobras do nosso setor</h2>
+            <table>
+                <tr><th style="width:42%">Você mede</th><th>O time entrega</th></tr>
+                <tr class="fragment highlight-current-red"><td>Linhas por desenvolvedor</td><td>Código verboso, copy-paste, zero refatoração</td></tr>
+                <tr class="fragment highlight-current-red"><td>Bugs fechados</td><td>Bugs fatiados em 5 tickets</td></tr>
+                <tr class="fragment highlight-current-red"><td>Cobertura de 100%</td><td>Testes sem <span style="font-family:var(--f-mono)">assert</span></td></tr>
+                <tr class="fragment highlight-current-red"><td>Velocity crescente</td><td>Inflação de story points</td></tr>
+                <tr class="fragment highlight-current-red"><td>Nº de commits</td><td>Commits picotados sem sentido</td></tr>
+            </table>
+            <aside class="notes">
+                Cada linha acende em vermelho. Pare em cada uma e peça exemplo vivido.
+                Turma pequena: dá para ouvir todo mundo.
+            </aside>
+        </section>
+
+        <section data-sec="C" data-hora="10:20">
+            <div class="split">
+                <div>
+                    <p class="pill" style="border-color:var(--alert);color:var(--alert)">VAIDADE</p>
+                    <p style="font-size:.78em">Sobe sempre. Faz bonito no slide.<br>
+                        <span class="sub">Total de linhas, total de commits, nº de features entregues.</span></p>
+                    <p class="fragment fade-up" style="font-size:.68em;color:var(--alert)">Nenhuma decisão muda.</p>
+                </div>
+                <div>
+                    <p class="pill" style="border-color:var(--ok);color:var(--ok)">ACIONÁVEL</p>
+                    <p style="font-size:.78em">Aponta para um lugar.<br>
+                        <span class="sub">Defeitos por módulo, tempo até o primeiro feedback, taxa de rollback.</span></p>
+                    <p class="fragment fade-up" style="font-size:.68em;color:var(--ok)">Amanhã alguém faz algo diferente.</p>
+                </div>
+            </div>
+            <aside class="notes">Teste do "e daí?": se a resposta para o número for "e daí?", é vaidade.</aside>
+        </section>
+
+        <section data-sec="C" data-hora="10:24">
+            <h2>Cinco regras de sobrevivência</h2>
+            <ul style="font-size:.78em">
+                <li class="fragment fade-up">Meça o <strong>time</strong> e o <strong>sistema</strong>, nunca o indivíduo.</li>
+                <li class="fragment fade-up">Nenhuma métrica sozinha. Sempre um <strong>par que se contrabalança</strong>.</li>
+                <li class="fragment fade-up">Tendência &gt; valor absoluto.</li>
+                <li class="fragment fade-up">Quem é medido participa da escolha da métrica.</li>
+                <li class="fragment fade-up">Métrica de melhoria nunca vira métrica de avaliação de pessoas.</li>
+            </ul>
+            <aside class="notes">
+                Exemplo de par contrabalançado: frequência de deploy × change failure rate.
+                Velocity × defeitos escapados. Cobertura × mutation score.
+            </aside>
+        </section>
+
+        <!-- ============================ PAUSA ============================ -->
+        <section data-sec="—" data-hora="10:30" data-background-color="#0A1524" class="center">
+            <span class="eyebrow" style="color:var(--signal)">Pausa</span>
+            <div id="timer">15:00</div>
+            <p style="margin-top:.5em">
+                <button class="btn" onclick="startTimer(15)">Iniciar</button>
+                <button class="btn" onclick="resetTimer()">Zerar</button>
+            </p>
+            <p class="sub" style="font-size:.6em;margin-top:1em">Voltamos com código na tela.</p>
+        </section>
+
+        <!-- ============================ BLOCO D — TAMANHO ============================ -->
+        <section data-sec="D" data-hora="10:45" class="section-slide">
+            <span class="bignum">BLOCO D</span>
+            <h1>Tamanho</h1>
+            <p class="sub" style="font-size:.85em">A primeira métrica da história — e a mais mal usada.</p>
+        </section>
+
+        <section data-sec="D" data-hora="10:46">
+            <h2>Quantas linhas tem<br>este programa?</h2>
+            <pre><code class="language-java" data-trim data-line-numbers>
+public int soma(int[] v) {
+    int t = 0;
+    for (int i = 0; i &lt; v.length; i++) {
+        t += v[i];
+    }
+    return t;
+}
+  </code></pre>
+            <p class="fragment fade-up" style="font-size:.75em">7 linhas.</p>
+        </section>
+
+        <section data-sec="D" data-hora="10:48">
+            <h2>E este?</h2>
+            <pre><code class="language-java" data-trim data-line-numbers>
+public int soma(int[] v) { int t=0; for(int x: v) t+=x; return t; }
+  </code></pre>
+            <p class="fragment fade-up" style="font-size:.75em">1 linha. <span class="sub">Mesma função. Mesmo valor entregue.</span></p>
+            <p class="fragment fade-up" style="font-size:.85em;margin-top:.6em">
+                LOC mede <strong>quanto foi escrito</strong>, não <strong>quanto foi resolvido</strong>.
+            </p>
+        </section>
+
+        <section data-sec="D" data-hora="10:51">
+            <span class="eyebrow">Precisão importa</span>
+            <div class="cards">
+                <div class="card"><span class="n">LOC</span><h3>Tudo</h3><p>Inclui branco e comentário. Praticamente inútil.</p></div>
+                <div class="card g"><span class="n">SLOC</span><h3>Só código</h3><p>Sem linhas em branco nem comentários.</p></div>
+                <div class="card k"><span class="n">LLOC</span><h3>Lógicas</h3><p>Conta comandos, não linhas físicas. Imune a estilo.</p></div>
+            </div>
+            <p class="fragment fade-up sub" style="margin-top:.8em;font-size:.7em">
+                Regra: ao publicar um número de tamanho, diga sempre <em>qual</em> contagem foi usada.
+            </p>
+        </section>
+
+        <section data-sec="D" data-hora="10:54" data-background-color="#16283F">
+            <p class="quote" style="font-size:1.75em">
+                Medir progresso de software por linhas de código<br>
+                é como medir progresso de um avião pelo peso.
+                <span class="who">Bill Gates</span>
+            </p>
+        </section>
+
+        <section data-sec="D" data-hora="10:56">
+            <h2>Então LOC serve<br>para alguma coisa?</h2>
+            <ul style="font-size:.8em">
+                <li class="fragment fade-up">Como <strong>denominador</strong>: defeitos/KLOC, comentários/KLOC.</li>
+                <li class="fragment fade-up">Como entrada de modelos de estimativa (COCOMO).</li>
+                <li class="fragment fade-up">Como sinal de alerta: arquivo de 4.000 linhas é um cheiro, não um crime.</li>
+            </ul>
+            <p class="fragment fade-up" style="margin-top:.8em;font-size:.85em">
+                Nunca como <strong>numerador de produtividade</strong>.
+            </p>
+        </section>
+
+        <!-- ============================ BLOCO E — McCABE ============================ -->
+        <section data-sec="E" data-hora="11:00" class="section-slide">
+            <span class="bignum">BLOCO E</span>
+            <h1>Complexidade<br>ciclomática</h1>
+            <p class="sub" style="font-size:.8em">Thomas McCabe, 1976 · a métrica de produto mais usada até hoje</p>
+        </section>
+
+        <section data-sec="E" data-hora="11:01">
+            <h2>A ideia</h2>
+            <p class="kicker">
+                Conte quantos <strong>caminhos independentes</strong><br>
+                existem dentro de uma função.
+            </p>
+            <p class="fragment fade-up sub" style="margin-top:.8em;font-size:.78em">
+                Mais caminhos → mais estados possíveis → mais difícil de entender,<br>de testar e de manter.
+            </p>
+        </section>
+
+        <section data-sec="E" data-hora="11:03" data-auto-animate class="center">
+            <h2 data-id="f" class="mega" style="font-size:3.4em">M = E − N + 2P</h2>
+        </section>
+        <section data-sec="E" data-hora="11:04" data-auto-animate>
+            <h2 data-id="f" class="mega" style="font-size:2.1em">M = E − N + 2P</h2>
+            <table style="margin-top:.4em">
+                <tr class="fragment fade-up"><td style="width:14%;font-family:var(--f-mono);color:var(--signal)">E</td><td>arestas do grafo de fluxo de controle</td></tr>
+                <tr class="fragment fade-up"><td style="font-family:var(--f-mono);color:var(--signal)">N</td><td>nós (blocos de comandos)</td></tr>
+                <tr class="fragment fade-up"><td style="font-family:var(--f-mono);color:var(--signal)">P</td><td>componentes conexos — para uma função, sempre 1</td></tr>
+            </table>
+        </section>
+
+        <section data-sec="E" data-hora="11:06">
+            <div class="split">
+                <div>
+      <pre><code class="language-java" data-trim data-fragment-index="0"
+                 data-line-numbers="2|3|4|5|7|1-8">
+int classificar(int x) {
+    if (x &lt; 0) {
+        return -1;
+    } else if (x == 0) {
+        return 0;
+    }
+    return 1;
+}
+      </code></pre>
+                </div>
+
+                <div class="center">
+                    <svg viewBox="0 0 320 420" class="flowstep">
+                        <!-- visível desde o início: o primeiro if -->
+                        <g>
+                            <circle class="node" cx="160" cy="36" r="22"/>
+                            <text class="lbl" x="160" y="42" text-anchor="middle">1</text>
+                            <text class="tag" x="192" y="40">x &lt; 0 ?</text>
+                        </g>
+
+                        <g class="fragment" data-fragment-index="0">
+                            <path class="edge" d="M142 52 L72 124"/>
+                            <circle class="node" cx="55" cy="140" r="22"/>
+                            <text class="lbl" x="55" y="146" text-anchor="middle">2</text>
+                            <text class="tag" x="16" y="182">return -1</text>
+                        </g>
+
+                        <g class="fragment" data-fragment-index="1">
+                            <path class="edge" d="M178 52 L216 124"/>
+                            <circle class="node" cx="230" cy="140" r="22"/>
+                            <text class="lbl" x="230" y="146" text-anchor="middle">3</text>
+                            <text class="tag" x="258" y="144">x == 0 ?</text>
+                        </g>
+
+                        <g class="fragment" data-fragment-index="2">
+                            <path class="edge" d="M214 157 L156 232"/>
+                            <circle class="node" cx="140" cy="250" r="22"/>
+                            <text class="lbl" x="140" y="256" text-anchor="middle">4</text>
+                            <text class="tag" x="100" y="292">return 0</text>
+                        </g>
+
+                        <g class="fragment" data-fragment-index="3">
+                            <path class="edge" d="M247 157 L272 230"/>
+                            <circle class="node" cx="280" cy="250" r="22"/>
+                            <text class="lbl" x="280" y="256" text-anchor="middle">5</text>
+                            <text class="tag" x="244" y="292">return 1</text>
+                        </g>
+
+                        <g class="fragment" data-fragment-index="4">
+                            <path class="edge" d="M62 161 L146 352"/>
+                            <path class="edge" d="M146 271 L157 348"/>
+                            <path class="edge" d="M270 270 L180 356"/>
+                            <circle class="node exit" cx="160" cy="370" r="22"/>
+                            <text class="lbl" x="160" y="376" text-anchor="middle"
+                                  style="fill:var(--gauge)">6</text>
+                            <text class="tag" x="192" y="374">exit</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <p class="fragment fade-up center" data-fragment-index="5"
+               style="font-family:var(--f-mono);font-size:.75em;margin-top:.3em">
+                E=7 &nbsp; N=6 &nbsp; P=1 &nbsp;→&nbsp;
+                <span style="color:var(--signal)">M = 7 − 6 + 2 = 3</span>
+            </p>
+
+            <aside class="notes">
+                Cada avanço acende uma linha do código e o nó correspondente.
+                No passo final, feche perguntando quantos caminhos independentes existem —
+                são 3, e é também o piso de casos de teste.
+                Depois mostre o atalho: 2 decisões + 1 = 3.
+            </aside>
+        </section>
+
+        <section data-sec="E" data-hora="11:10" data-background-color="#16283F">
+            <span class="eyebrow">O atalho que você vai usar na vida real</span>
+            <h2 style="font-size:2.2em">Conte os pontos<br>de decisão. Some 1.</h2>
+            <p class="fragment fade-up sub" style="font-size:.7em;margin-top:.7em;font-family:var(--f-mono)">
+                if &nbsp; else if &nbsp; for &nbsp; while &nbsp; case &nbsp; catch &nbsp; &amp;&amp; &nbsp; || &nbsp; ?:
+            </p>
+            <p class="fragment fade-up" style="font-size:.75em;margin-top:.7em">
+                <strong>else</strong> não conta. <strong>switch</strong> em si não conta — cada <span style="font-family:var(--f-mono)">case</span> conta.
+            </p>
+            <aside class="notes">
+                Cuidado: ferramentas divergem em detalhes (operadores booleanos, null-coalescing).
+                Por isso comparação entre ferramentas diferentes não vale.
+            </aside>
+        </section>
+
+        <!-- interativo -->
+        <section data-sec="E" data-hora="11:13">
+            <span class="eyebrow">Clique em cada ponto de decisão</span>
+            <pre style="font-size:.52em;background:#0A1524;padding:22px 24px;border:1px solid var(--rule);border-radius:4px;font-family:var(--f-mono);line-height:1.6;color:var(--chalk)">
+boolean aprovar(Pedido p) {
+    <span class="dp">if</span> (p == null) return false;
+    <span class="dp">for</span> (Item i : p.itens) {
+        <span class="dp">if</span> (i.qtd &lt;= 0 <span class="dp">||</span> i.preco &lt; 0) return false;
+    }
+    <span class="dp">while</span> (p.temPendencia()) {
+        <span class="dp">try</span> { p.resolver(); }
+        <span class="dp">catch</span> (Exception e) { return false; }
+    }
+    return p.total() &gt; 0 <span class="dp">&amp;&amp;</span> p.cliente.ativo();
+}</pre>
+            <div id="dpPanel">
+                <span>Pontos de decisão: <b id="dpCount">0</b></span>
+                <span>Complexidade M = <b id="dpCC">1</b></span>
+                <span style="margin-left:auto"><button class="btn" style="font-size:.8em;padding:.4em .9em" onclick="dpReset()">Limpar</button></span>
+            </div>
+            <aside class="notes">
+                Deixe a turma cantar os pontos. Resposta: 8 decisões → M = 9.
+                Pergunte: quantos casos de teste no mínimo? Nove.
+            </aside>
+        </section>
+
+        <section data-sec="E" data-hora="11:17" data-background-color="#FF7A2F">
+            <span class="eyebrow" style="color:#3A1A05">Exercício · 10 minutos · individual</span>
+            <h2 style="color:#0D1B2C;font-size:1.9em">
+                Calcule M<br>de três funções<br>do seu próprio projeto.
+            </h2>
+            <p style="color:#3A1A05;font-size:.7em;margin-top:.6em">
+                À mão. Sem ferramenta. Depois a gente confere com o SonarQube à tarde.
+            </p>
+            <aside class="notes">
+                Se alguém não trouxe código, use um repositório aberto que você deixou preparado.
+                Circule pela sala — é aqui que os mal-entendidos aparecem.
+            </aside>
+        </section>
+
+        <section data-sec="E" data-hora="11:28">
+            <span class="eyebrow">Como interpretar</span>
+            <h2 style="font-size:1.4em">Faixas de risco</h2>
+            <div class="gaugebar">
+                <div class="s1">1 – 10</div><div class="s2">11 – 20</div><div class="s3">21 – 50</div><div class="s4">&gt; 50</div>
+            </div>
+            <div class="gaugebar-lab">
+                <span>simples</span><span>moderado</span><span>alto risco</span><span>intestável</span>
+            </div>
+            <p class="fragment fade-up" style="margin-top:.9em;font-size:.78em">
+                São <strong>convenções</strong>, não leis da física.<br>
+                <span class="sub">Calibre com o seu próprio código antes de virar regra no CI.</span>
+            </p>
+        </section>
+
+        <section data-sec="E" data-hora="11:31">
+            <h2>O uso mais honesto de M</h2>
+            <p class="kicker">
+                M é o número <strong>mínimo</strong> de casos de teste<br>
+                para cobrir todos os caminhos independentes.
+            </p>
+            <p class="fragment fade-up" style="margin-top:.9em;font-size:.8em">
+                Função com M = 24 e 3 testes?<br>
+                <span class="sub">Você não tem cobertura. Você tem esperança.</span>
+            </p>
+            <aside class="notes">
+                Esse é o gancho perfeito para o bloco de cobertura no encontro 2.
+            </aside>
+        </section>
+
+        <section data-sec="E" data-hora="11:34" data-auto-animate>
+            <span class="eyebrow">Baixando a complexidade</span>
+            <pre data-id="code"><code class="language-java" data-trim data-line-numbers>
+String faixa(int idade) {
+    if (idade &lt; 13) {
+        return "crianca";
+    } else if (idade &lt; 18) {
+        return "adolescente";
+    } else if (idade &lt; 60) {
+        return "adulto";
+    } else {
+        return "idoso";
+    }
+}
+  </code></pre>
+            <p style="font-family:var(--f-mono);font-size:.65em;color:var(--alert)">M = 4</p>
+        </section>
+        <section data-sec="E" data-hora="11:35" data-auto-animate>
+            <span class="eyebrow">Baixando a complexidade</span>
+            <pre data-id="code"><code class="language-java" data-trim data-line-numbers>
+private static final NavigableMap&lt;Integer, String&gt; FAIXAS =
+    new TreeMap&lt;&gt;(Map.of(0, "crianca", 13, "adolescente",
+                          18, "adulto", 60, "idoso"));
+
+String faixa(int idade) {
+    return FAIXAS.floorEntry(idade).getValue();
+}
+  </code></pre>
+            <p style="font-family:var(--f-mono);font-size:.65em;color:var(--ok)">M = 1</p>
+            <p class="fragment fade-up" style="font-size:.72em;margin-top:.4em">
+                Mas: ficou mais fácil de <em>ler</em>?
+            </p>
+            <aside class="notes">
+                Discussão obrigatória. A resposta honesta é "depende do time".
+                Complexidade migrou do fluxo para a estrutura de dados — não sumiu.
+                Introduza aqui a Cognitive Complexity do Sonar como resposta a essa crítica.
+            </aside>
+        </section>
+
+        <section data-sec="E" data-hora="11:39">
+            <h2>Limites do McCabe</h2>
+            <ul style="font-size:.76em">
+                <li class="fragment fade-up">Ignora o tamanho: 40 <span style="font-family:var(--f-mono)">ifs</span> em sequência ≠ 40 aninhados, mas dão M parecido.</li>
+                <li class="fragment fade-up">Ignora acoplamento, nomes, duplicação — tudo que dói de verdade.</li>
+                <li class="fragment fade-up">Correlaciona fortemente com LOC. <span class="sub">Muita gente argumenta que não acrescenta muito além do tamanho.</span></li>
+                <li class="fragment fade-up">Resposta moderna: <strong>Cognitive Complexity</strong> (SonarSource), que penaliza aninhamento.</li>
+            </ul>
+        </section>
+
+        <!-- ============================ BLOCO F — HALSTEAD ============================ -->
+        <section data-sec="F" data-hora="11:45" class="section-slide">
+            <span class="bignum">BLOCO F</span>
+            <h1>Halstead</h1>
+            <p class="sub" style="font-size:.8em">1977 · a tentativa de fazer ciência exata com código</p>
+        </section>
+
+        <section data-sec="F" data-hora="11:46">
+            <h2>Todo programa é<br>operadores e operandos.</h2>
+            <table style="margin-top:.5em">
+                <tr class="fragment fade-up"><td style="width:16%;font-family:var(--f-mono);color:var(--signal)">n₁</td><td>operadores <em>distintos</em></td></tr>
+                <tr class="fragment fade-up"><td style="font-family:var(--f-mono);color:var(--signal)">n₂</td><td>operandos <em>distintos</em></td></tr>
+                <tr class="fragment fade-up"><td style="font-family:var(--f-mono);color:var(--gauge)">N₁</td><td>total de ocorrências de operadores</td></tr>
+                <tr class="fragment fade-up"><td style="font-family:var(--f-mono);color:var(--gauge)">N₂</td><td>total de ocorrências de operandos</td></tr>
+            </table>
+        </section>
+
+        <section data-sec="F" data-hora="11:49">
+            <span class="eyebrow">Derivadas</span>
+            <div class="cards">
+                <div class="card fragment fade-up">
+                    <span class="n">VOLUME</span><h3 style="font-family:var(--f-mono);font-size:.8em">V = N · log₂ n</h3>
+                    <p>Tamanho em bits — quanto "cabe na cabeça".</p>
+                </div>
+                <div class="card g fragment fade-up">
+                    <span class="n">DIFICULDADE</span><h3 style="font-family:var(--f-mono);font-size:.8em">D = (n₁/2)·(N₂/n₂)</h3>
+                    <p>Chance de errar ao escrever ou alterar.</p>
+                </div>
+                <div class="card a fragment fade-up">
+                    <span class="n">ESFORÇO</span><h3 style="font-family:var(--f-mono);font-size:.8em">E = D · V</h3>
+                    <p>Halstead chegou a converter isso em segundos de trabalho.</p>
+                </div>
+            </div>
+        </section>
+
+        <section data-sec="F" data-hora="11:53">
+            <h2>Exemplo mínimo</h2>
+            <pre><code class="language-java" data-trim data-line-numbers>
+a = b + c * d;
+  </code></pre>
+            <table style="margin-top:.3em">
+                <tr class="fragment fade-up"><td>Operadores distintos</td><td style="font-family:var(--f-mono);color:var(--signal)">= + * &nbsp;→&nbsp; n₁ = 3</td></tr>
+                <tr class="fragment fade-up"><td>Operandos distintos</td><td style="font-family:var(--f-mono);color:var(--signal)">a b c d &nbsp;→&nbsp; n₂ = 4</td></tr>
+                <tr class="fragment fade-up"><td>Volume</td><td style="font-family:var(--f-mono);color:var(--gauge)">V = 7 · log₂ 7 ≈ 19,6</td></tr>
+            </table>
+        </section>
+
+        <section data-sec="F" data-hora="11:56">
+            <h2>Por que quase ninguém usa</h2>
+            <ul style="font-size:.78em">
+                <li class="fragment fade-up">Definir "o que é operador" muda por linguagem — e por ferramenta.</li>
+                <li class="fragment fade-up">A previsão de esforço em segundos nunca se sustentou empiricamente.</li>
+                <li class="fragment fade-up">Difícil de explicar para quem decide.</li>
+            </ul>
+            <p class="fragment fade-up" style="margin-top:.8em;font-size:.82em">
+                Mas ele <strong>sobrevive escondido</strong>: o <em>Maintainability Index</em><br>
+                combina volume de Halstead + McCabe + LOC.
+            </p>
+            <aside class="notes">
+                MI = 171 − 5,2·ln(V) − 0,23·M − 16,2·ln(LOC), normalizado 0–100 em várias ferramentas.
+                Visual Studio e Radon (Python) usam variantes disso. Volta no encontro 1 à tarde.
+            </aside>
+        </section>
+
+        <!-- ============================ FECHAMENTO ============================ -->
+        <section data-sec="—" data-hora="12:10">
+            <h2>O que fica da manhã</h2>
+            <ul style="font-size:.76em">
+                <li class="fragment fade-up">Métrica sem <strong>goal</strong> é ruído. GQM primeiro, ferramenta depois.</li>
+                <li class="fragment fade-up">Escala errada → conta errada. Cuidado com média de ordinal.</li>
+                <li class="fragment fade-up">Toda métrica pode ser gamificada. Sempre use pares que se contrabalançam.</li>
+                <li class="fragment fade-up">LOC é denominador, nunca numerador de produtividade.</li>
+                <li class="fragment fade-up">McCabe é útil como <strong>piso de casos de teste</strong> e como radar de risco.</li>
+            </ul>
+        </section>
+
+        <section data-sec="—" data-hora="12:25" data-background-color="#16283F">
+            <span class="eyebrow">Depois do almoço · 13:30</span>
+            <h2 style="font-size:2em">Métricas orientadas<br>a objetos</h2>
+            <p style="font-size:.75em;margin-top:.5em;color:var(--fg-dim)">
+                Suíte CK · acoplamento, coesão, herança<br>
+                e a primeira análise em projeto real com SonarQube.
+            </p>
+            <p class="fragment fade-up" style="margin-top:1em;font-size:.7em;font-family:var(--f-mono);color:var(--signal)">
+                Traga um repositório seu aberto no notebook.
+            </p>
+        </section>
+
+    </div>
+</div>
+
+<script type="module">
+    import Reveal from 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.esm.js';
+    import Highlight from 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.esm.js';
+    import Notes from 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.esm.js';
+
+    const deck = new Reveal({
+        width: 1280, height: 720, margin: 0.055,
+        minScale: 0.2, maxScale: 2.5,
+        hash: true, slideNumber: 'c/t',
+        transition: 'fade', transitionSpeed: 'fast',
+        backgroundTransition: 'fade',
+        plugins: [ Highlight, Notes ]
+    });
+    deck.initialize();
+
+    /* ---- régua de medição: cursor + leitura do bloco e do horário ---- */
+    function updateRail(){
+        const cur = deck.getCurrentSlide();
+        if(!cur) return;
+        const total = deck.getTotalSlides() - 1 || 1;
+        const idx = deck.getSlidePastCount();
+        document.getElementById('railCursor').style.left = (idx/total*100) + '%';
+        document.getElementById('railSection').textContent = cur.dataset.sec || '—';
+        document.getElementById('railClock').textContent = cur.dataset.hora || '';
+    }
+    deck.on('ready', updateRail);
+    deck.on('slidechanged', updateRail);
+
+    /* ---- contador interativo de pontos de decisão ---- */
+    window.dpReset = () => {
+        document.querySelectorAll('.dp.on').forEach(e => e.classList.remove('on'));
+        dpSync();
+    };
+    function dpSync(){
+        const n = document.querySelectorAll('.dp.on').length;
+        const c = document.getElementById('dpCount');
+        const m = document.getElementById('dpCC');
+        if(c) c.textContent = n;
+        if(m) m.textContent = n + 1;
+    }
+    document.addEventListener('click', e => {
+        if(e.target.classList && e.target.classList.contains('dp')){
+            e.target.classList.toggle('on');
+            dpSync();
+        }
+    });
+
+    /* ---- timer da pausa ---- */
+    let tInt = null, tLeft = 900;
+    function render(){
+        const m = String(Math.floor(tLeft/60)).padStart(2,'0');
+        const s = String(tLeft%60).padStart(2,'0');
+        const el = document.getElementById('timer');
+        if(el){ el.textContent = m + ':' + s; el.style.color = tLeft <= 60 ? 'var(--alert)' : 'var(--gauge)'; }
+    }
+    window.startTimer = (min) => {
+        clearInterval(tInt); tLeft = min*60; render();
+        tInt = setInterval(() => { if(tLeft > 0){ tLeft--; render(); } else clearInterval(tInt); }, 1000);
+    };
+    window.resetTimer = () => { clearInterval(tInt); tLeft = 900; render(); };
+
+    /* ---- tecla T: alterna tema escuro / claro (sala muito iluminada) ---- */
+    document.addEventListener('keydown', e => {
+        if(e.key === 't' || e.key === 'T') document.documentElement.classList.toggle('light');
+    });
+</script>
+</body>
+</html>

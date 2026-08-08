@@ -1,0 +1,1294 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+
+    <title>Aula 30 - Performance em Banco de dados</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+
+    <style>
+        :root{
+            --primary:#00d8ff;
+            --secondary:#7c4dff;
+            --success:#00e676;
+            --warning:#ffca28;
+            --danger:#ff5252;
+            --dark:#0f172a;
+            --card:#1e293b;
+        }
+
+        body{
+            background:#0b1020;
+        }
+
+        .reveal{
+            font-size:32px;
+        }
+
+        .reveal h1{
+            color:var(--primary);
+            text-transform:none;
+        }
+
+        .reveal h2{
+            color:var(--primary);
+            text-transform:none;
+        }
+
+        .reveal h3{
+            color:#fff;
+        }
+
+        .box{
+            background:rgba(255,255,255,.05);
+            border-left:6px solid var(--primary);
+            padding:25px;
+            border-radius:12px;
+        }
+
+        .grid-2{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:30px;
+        }
+
+        .card{
+            background:var(--card);
+            padding:25px;
+            border-radius:15px;
+        }
+
+        .timeline{
+            display:flex;
+            justify-content:space-between;
+            margin-top:50px;
+            gap:20px;
+        }
+
+        .timeline-item{
+            flex:1;
+            background:var(--card);
+            padding:20px;
+            border-top:5px solid var(--primary);
+            border-radius:12px;
+        }
+
+        .highlight{
+            color:var(--warning);
+            font-weight:bold;
+        }
+
+        .quote{
+            font-size:1.3em;
+            font-style:italic;
+            color:#fff;
+            margin-top:30px;
+        }
+
+        ul li{
+            margin-bottom:12px;
+        }
+
+        .big-number{
+            font-size:4em;
+            font-weight:bold;
+            color:var(--primary);
+        }
+
+        .center{
+            text-align:center;
+        }
+
+        code {
+            font-size: 2rem;
+            line-height: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Performance</h1>
+            <h3>Em apps backend</h3>
+        </section>
+
+        <section>
+            <h2>A Primeira Mentira</h2>
+
+            <div class="comparison-grid">
+
+                <div class="card fragment">
+                    <h3>"Meu endpoint responde em 20ms"</h3>
+                    <p>Então ele é performático.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section data-auto-animate data-background="../unifor/img/joao.jpg" data-background-size="80%"></section>
+
+        <section>
+            <div class="comparison-grid">
+
+                <div class="card">
+                    <h3>Realidade</h3>
+                    <ul>
+                        <li class="fragment">Quantos usuários simultâneos?</li>
+                        <li class="fragment">Quantos acessos por segundo?</li>
+                        <li class="fragment">Qual o consumo de recursos?</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>O Que os Usuários Enxergam?</h2>
+
+            <div class="big-number fragment">
+                1
+            </div>
+
+            <p class="center">
+                Apenas uma coisa: Tátá
+            </p>
+
+            <div class="quote-box fragment">
+                "A aplicação tá rápida ou tá lenta?"
+            </div>
+        </section>
+
+        <section>
+            <h2>O Que os devs precisam enxergar?</h2>
+
+            <div class="architecture-flow">
+
+                <div class="flow-box fragment">Rede</div>
+                <div class="flow-arrow fragment">→</div>
+
+                <div class="flow-box fragment">Load Balancer</div>
+                <div class="flow-arrow fragment">→</div>
+
+                <div class="flow-box fragment">API</div>
+                <div class="flow-arrow fragment">→</div>
+
+                <div class="flow-box fragment">Banco</div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Os Três Pilares da Performance</h2>
+
+            <div class="three-columns">
+
+                <div class="pillar fragment">
+                    <span class="huge">⏱</span>
+                    <h3>Latência</h3>
+                    <p>Quanto tempo leva.</p>
+                </div>
+
+                <div class="pillar fragment">
+                    <span class="huge">⇄</span>
+                    <h3>Throughput</h3>
+                    <p>Quanto consegue processar.</p>
+                </div>
+
+                <div class="pillar fragment">
+                    <span class="huge">📈</span>
+                    <h3>Escalabilidade</h3>
+                    <p>Quanto consegue crescer. <em class="fragment">lá ele</em> </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Latência</h2>
+
+            <div class="quote-box fragment">
+                Tempo necessário para concluir uma operação.
+            </div>
+
+            <div class="timeline-horizontal">
+
+                <div class="fragment">Cliente</div>
+                <div class="fragment">→</div>
+
+                <div class="fragment">API</div>
+                <div class="fragment">→</div>
+
+                <div class="fragment">Banco</div>
+                <div class="fragment">→</div>
+
+                <div class="fragment">Resposta</div>
+
+            </div>
+
+            <div class="fragment center mt">
+                Quanto maior a espera, maior a latência.
+            </div>
+        </section>
+
+        <section>
+            <h2>Imagina um negocio tipo um bar</h2>
+
+            <div class="comparison-grid">
+
+                <div class="card fragment">
+                    <h3>Bar Pé de chinelo</h3>
+                    <div class="big-number">2min</div>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Bar Gourmet Pub</h3>
+                    <div class="big-number">40min</div>
+                </div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                Os dois entregam drinks, mas com diferentes latências.
+            </div>
+        </section>
+
+        <section>
+            <h2>Throughput</h2>
+
+            <div class="center">
+
+                <div class="metric-card fragment">
+                    <span class="metric-value">50</span>
+                    <span class="metric-label">req/s</span>
+                </div>
+
+                <div class="metric-card fragment">
+                    <span class="metric-value">500</span>
+                    <span class="metric-label">req/s</span>
+                </div>
+
+                <div class="metric-card fragment">
+                    <span class="metric-value">5.000</span>
+                    <span class="metric-label">req/s</span>
+                </div>
+
+            </div>
+
+            <p class="fragment center">
+                Throughput mede capacidade.
+            </p>
+        </section>
+
+        <section>
+            <h2>Um Caixa de Supermercado</h2>
+
+            <div class="comparison-grid">
+
+                <div class="card fragment">
+                    <h3>1 cliente/minuto</h3>
+                    <p>Baixo throughput</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>30 clientes/minuto</h3>
+                    <p>Alto throughput</p>
+                </div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                Não importa apenas quanto tempo cada cliente espera.
+                Importa quantos clientes conseguimos atender.
+            </div>
+        </section>
+
+        <section>
+            <h2>Latência ≠ Throughput</h2>
+
+            <div class="comparison-grid">
+
+                <div class="card fragment">
+                    <h3>Baixa Latência</h3>
+                    <p>Resposta rápida</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Alto Throughput</h3>
+                    <p>Muitas operações</p>
+                </div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                Um sistema pode ser rápido para poucos usuários
+                e falhar quando milhares chegam ao mesmo tempo.
+            </div>
+        </section>
+
+        <section>
+            <h2>Escalabilidade</h2>
+
+            <div class="growth-container">
+
+                <div class="growth-step fragment">
+                    👤
+                </div>
+
+                <div class="growth-step fragment">
+                    👤👤👤👤👤
+                </div>
+
+                <div class="growth-step fragment">
+                    👤👤👤👤👤👤👤👤👤👤
+                </div>
+
+                <div class="growth-step fragment">
+                    👤 x 1.000.000
+                </div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                "funciona hoje?"
+            </div>
+
+            <div class="quote-box fragment">
+                "continuará funcionando amanhã?"
+            </div>
+        </section>
+
+        <section>
+            <h2>A Jornada de Toda Aplicação</h2>
+
+            <div class="timeline-vertical">
+
+                <div class="fragment">
+                    1. Lançamento
+                </div>
+
+                <div class="fragment">
+                    2. Primeiros usuários
+                </div>
+
+                <div class="fragment">
+                    3. Crescimento
+                </div>
+
+                <div class="fragment">
+                    4. Gargalos
+                </div>
+
+                <div class="fragment">
+                    5. Otimização
+                </div>
+
+                <div class="fragment">
+                    6. Novo crescimento
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <hr>
+            <h1>Ciclo DevOps</h1>
+            <hr>
+        </section>
+
+        <section>
+
+            <div class="quote-box fragment">
+                Performance não é um framework.
+            </div>
+
+            <div class="quote-box fragment">
+                Performance não é uma linguagem.
+            </div>
+
+            <div class="quote-box fragment">
+                Performance não é um servidor poderoso.
+            </div>
+
+            <div class="quote-box fragment highlight">
+                Performance é entender onde está o gargalo.
+            </div>
+        </section>
+
+
+        <section data-background="#FFF">
+            <h1>Performance é Engenharia</h1>
+        </section>
+
+
+        <section>
+            <h1>Métricas e Observabilidade</h1>
+            <h3>Você não consegue otimizar aquilo que não consegue medir.</h3>
+        </section>
+
+        <section>
+            <h2>O Erro Mais Comum</h2>
+
+            <div class="quote-box fragment">
+                "O sistema está lento."
+            </div>
+
+            <div class="fragment center mt">
+                O que significa lento?
+            </div>
+
+            <div class="comparison-grid mt">
+
+                <div class="card fragment">
+                    <h3>500ms?</h3>
+                </div>
+
+                <div class="card fragment">
+                    <h3>5 segundos?</h3>
+                </div>
+
+                <div class="card fragment">
+                    <h3>30 segundos?</h3>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Sem Métricas, Tudo é Opinião</h2>
+
+            <div class="quote-box fragment">
+                Usuário diz que está lento.
+            </div>
+
+            <div class="quote-box fragment">
+                Desenvolvedor diz que está rápido.
+            </div>
+
+            <div class="quote-box fragment highlight">
+                Os números dizem quem está certo.
+            </div>
+        </section>
+
+        <section>
+            <h2>A Armadilha da Média</h2>
+
+            <div class="stats-row">
+
+                <div class="stat-box fragment">
+                    100ms
+                </div>
+
+                <div class="stat-box fragment">
+                    100ms
+                </div>
+
+                <div class="stat-box fragment">
+                    100ms
+                </div>
+
+                <div class="stat-box fragment">
+                    100ms
+                </div>
+
+                <div class="stat-box fragment">
+                    5000ms
+                </div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                Média = 1080ms
+            </div>
+
+            <div class="fragment center">
+                A média esconde a dor dos usuários.
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Imagine uma Loja Virtual</h2>
+
+            <div class="timeline-horizontal">
+
+                <div class="fragment">Cliente 1 → 100ms</div>
+                <div class="fragment">Cliente 2 → 120ms</div>
+                <div class="fragment">Cliente 3 → 90ms</div>
+                <div class="fragment">Cliente 4 → 7s</div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                Qual cliente vai abrir chamado?
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Percentis</h2>
+
+            <div class="center">
+
+                <div class="metric-card fragment">
+                    <span class="metric-value">P50</span>
+                    <span class="metric-label">mediana</span>
+                </div>
+
+                <div class="metric-card fragment">
+                    <span class="metric-value">P95</span>
+                    <span class="metric-label">95%</span>
+                </div>
+
+                <div class="metric-card fragment">
+                    <span class="metric-value">P99</span>
+                    <span class="metric-label">99%</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="img/cauda.jpeg" data-background-size="100%"></section>
+
+        <section>
+            <h2>P50</h2>
+
+            <div class="big-number fragment">
+                50%
+            </div>
+
+            <div class="quote-box fragment">
+                Metade dos usuários teve experiência melhor.
+                Metade teve experiência pior.
+            </div>
+
+        </section>
+
+        <section>
+            <h2>P95</h2>
+
+            <div class="big-number fragment">
+                95%
+            </div>
+
+            <div class="quote-box fragment">
+                A métrica favorita das grandes empresas.
+            </div>
+
+            <div class="fragment center mt">
+                Mostra a experiência da grande maioria dos usuários.
+            </div>
+
+        </section>
+
+        <section>
+            <h2>P99</h2>
+
+            <div class="big-number fragment">
+                99%
+            </div>
+
+            <div class="quote-box fragment">
+                Onde vivem os problemas mais difíceis.
+            </div>
+
+            <div class="fragment center">
+                Sistemas distribuídos costumam ser analisados pelo P99.
+            </div>
+
+        </section>
+
+        <section>
+            <h2>Exemplo Real</h2>
+
+            <div class="comparison-grid">
+
+                <div class="card fragment">
+                    <h3>P50</h3>
+                    <div class="big-number">
+                        120ms
+                    </div>
+                </div>
+
+                <div class="card fragment">
+                    <h3>P95</h3>
+                    <div class="big-number">
+                        900ms
+                    </div>
+                </div>
+
+
+            </div>
+
+        </section>
+        <section>
+            <h2>Exemplo Real</h2>
+
+            <div class="comparison-grid">
+
+
+                <div class="card fragment">
+                    <h3>P99</h3>
+                    <div class="big-number">
+                        4.2s
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h2>O Que Isso Significa?</h2>
+
+            <div class="quote-box fragment">
+                A maioria dos usuários está feliz.
+            </div>
+
+            <div class="quote-box fragment">
+                Alguns usuários estão sofrendo.
+            </div>
+
+            <div class="quote-box fragment highlight">
+                E geralmente são esses usuários que geram tickets.
+            </div>
+
+        </section>
+
+        <section>
+            <h2>SLI</h2>
+
+            <div class="architecture-flow">
+
+                <div class="flow-box fragment">
+                    Tempo de resposta
+                </div>
+
+                <div class="flow-box fragment">
+                    Taxa de erro
+                </div>
+
+                <div class="flow-box fragment">
+                    Disponibilidade
+                </div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                Indicadores medidos.
+            </div>
+
+        </section>
+
+        <section>
+            <h2>SLO</h2>
+
+            <div class="goal-card fragment">
+
+                <h3>Objetivo</h3>
+
+                <div class="big-number">
+                    99,9%
+                </div>
+
+                <p>Disponibilidade mensal</p>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h2>SLA</h2>
+
+            <div class="contract-card fragment">
+
+                <h3>Contrato</h3>
+
+                <p>
+                    Se a disponibilidade ficar abaixo de 99,9%,
+                    haverá compensação financeira.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <div class="comparison-grid">
+
+                <div class="card fragment">
+                    <h3>SLI</h3>
+                    <p>O que medimos</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>SLO</h3>
+                    <p>Meta desejada</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>SLA</h3>
+                    <p>Compromisso assumido</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h2>O Que Empresas de Alta Escala Fazem?</h2>
+
+            <div class="timeline-vertical">
+
+                <div class="fragment">
+                    Medem tudo
+                </div>
+
+                <div class="fragment">
+                    Definem SLOs
+                </div>
+
+                <div class="fragment">
+                    Criam alertas
+                </div>
+
+                <div class="fragment">
+                    Encontram gargalos
+                </div>
+
+                <div class="fragment">
+                    Otimizam continuamente
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h2>A Regra Mais Importante da Aula</h2>
+
+            <div class="quote-box fragment">
+                Nunca comece otimizando.
+            </div>
+
+            <div class="quote-box fragment">
+                Primeiro descubra onde está o problema.
+            </div>
+
+            <div class="quote-box fragment highlight">
+                Medir → Entender → Corrigir
+            </div>
+
+        </section>
+
+        <section>
+            <h1>E o código, Feitozo?</h1>
+        </section>
+
+        <section data-auto-animate>
+            <h2>A Lei dos BOs</h2>
+
+            <pre><code>
+Cliente
+   ↓
+API .......... 20ms
+   ↓
+Banco ........ 3000ms
+   ↓
+Resposta
+</code></pre>
+
+        </section>
+        <section data-auto-animate>
+            <h2>A Lei dos BOs</h2>
+
+            <pre><code>
+Cliente
+   ↓
+API ..........
+   ↓
+Banco ........
+   ↓
+Resposta
+</code></pre>
+
+        </section>
+        <section data-auto-animate>
+            <h2>A Lei dos BOs</h2>
+
+            <pre><code>
+Cliente
+   ↓
+API .......... 20ms
+   ↓
+Banco ........ 3000ms
+   ↓
+Resposta
+</code></pre>
+
+
+        </section>
+        <section data-auto-animate>
+            <h2>A Lei dos BOs</h2>
+
+            <pre><code>
+Cliente
+   ↓
+API .......... 20ms
+   ↓
+Banco ........ 3000ms
+   ↓
+Resposta
+</code></pre>
+
+    <div class="quote-box fragment">
+        Melhorar os 20ms da API não muda nada.
+    </div>
+        </section>
+
+        <section>
+            <h2>Primeiro Caso</h2>
+
+            <h3>Esse código está lento?</h3>
+
+            <pre><code class="php">
+$users = User::all();
+
+foreach ($users as $user) {
+    echo $user->name;
+}
+</code></pre>
+
+            <div class="quote-box fragment">
+                Ninguém sabe.
+            </div>
+        </section>
+
+        <section>
+            <h2>Agora Temos Contexto</h2>
+
+            <pre><code>
+Quantidade de usuários
+
+= 12
+</code></pre>
+
+            <div class="quote-box fragment">
+                Provavelmente irrelevante.
+            </div>
+        </section>
+
+
+        <section>
+            <h2>E Agora?</h2>
+
+            <pre><code>
+Quantidade de usuários
+
+= 12.000.000
+</code></pre>
+
+            <div class="quote-box fragment highlight">
+                O mesmo código.
+                Um cenário completamente diferente.
+            </div>
+        </section>
+
+        <section>
+            <h2>Segundo Caso</h2>
+
+            <pre><code class="php">
+foreach ($users as $user) {
+    Mail::send($user);
+}
+</code></pre>
+
+            <div class="fragment center">
+                Parece simples.
+            </div>
+        </section>
+
+        <section>
+            <h2>Investigando...</h2>
+
+            <pre><code>
+50.000 usuários
+
+300ms por envio
+</code></pre>
+
+            <div class="quote-box fragment">
+                Quanto tempo a operação levará?
+            </div>
+
+            <div class="fragment center">
+                Aproximadamente 4 horas.
+            </div>
+        </section>
+
+        <section>
+            <h2>Terceiro Caso</h2>
+
+            <pre><code class="php">
+foreach ($products as $product) {
+
+    Http::get(
+        "https://api-stock.com/" .
+        $product->id
+    );
+
+}
+</code></pre>
+
+            <div class="fragment center">
+                Parece besteira.
+            </div>
+        </section>
+
+        <section>
+            <h2>Mas o Problema de vera</h2>
+
+            <pre><code>
+Produto 1 → 200ms
+Produto 2 → 200ms
+Produto 3 → 200ms
+Produto 4 → 200ms
+...
+</code></pre>
+
+            <div class="quote-box fragment">
+                A lentidão não está no PHP.
+            </div>
+
+            <div class="quote-box fragment">
+                Está na rede.
+            </div>
+        </section>
+
+        <section>
+            <h2>Quarto Caso</h2>
+
+            <pre><code class="php">
+$image = file_get_contents(
+    $uploadedFile
+);
+
+$image = resize(
+    $image,
+    4000,
+    4000
+);
+</code></pre>
+
+            <div class="fragment center">
+                Onde está o fumo?
+            </div>
+        </section>
+
+        <section>
+            <h2>CPU Bound</h2>
+
+            <div class="quote-box fragment">
+                O servidor passa a maior parte do tempo processando.
+            </div>
+
+            <div class="architecture-flow">
+
+                <div class="flow-box fragment">
+                    Compressão
+                </div>
+
+                <div class="flow-box fragment">
+                    Imagens
+                </div>
+
+                <div class="flow-box fragment">
+                    Vídeos
+                </div>
+
+                <div class="flow-box fragment">
+                    Criptografia
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Quinto Caso</h2>
+
+            <pre><code class="php">
+$users = User::all();
+
+$data = [];
+
+foreach($users as $user){
+    $data[] = $user;
+}
+</code></pre>
+
+            <div class="fragment center">
+                Outra besteira?
+            </div>
+        </section>
+
+        <section>
+            <h2>Até que...</h2>
+
+            <pre><code>
+Usuários carregados
+
+= 8 milhões
+</code></pre>
+
+            <div class="quote-box fragment">
+                O problema agora é memória.
+            </div>
+        </section>
+
+
+        <section>
+            <h2>Memory Bound</h2>
+
+            <div class="comparison-grid">
+
+                <div class="card fragment">
+                    <h3>Processamento</h3>
+                    <p>rápido</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Memória</h3>
+                    <p>esgotada</p>
+                </div>
+
+            </div>
+
+            <div class="quote-box fragment">
+                O sistema começa a trocar memória por disco.
+            </div>
+        </section>
+
+        <section>
+            <h2>Sexto Caso</h2>
+
+            <pre><code class="php">
+$order = Order::find($id);
+
+$payment =
+    PaymentGateway::process(
+        $order
+    );
+</code></pre>
+
+            <div class="fragment center">
+                Parece rápido.
+            </div>
+        </section>
+
+        <section>
+            <h2>Mas Existe Uma Dependência</h2>
+
+            <pre><code>
+API Principal
+
+ ↓
+
+Gateway de Pagamento
+
+ ↓
+
+Antifraude
+
+ ↓
+
+Banco
+</code></pre>
+
+            <div class="quote-box fragment">
+                Seu endpoint é tão rápido quanto o serviço mais lento.
+            </div>
+        </section>
+
+        <section>
+            <h2>O Código Parece Inocente</h2>
+
+            <pre><code class="php">
+$user = User::find($id);
+</code></pre>
+
+            <div class="quote-box fragment">
+                O código raramente revela o problema.
+            </div>
+
+            <div class="quote-box fragment">
+                Os números revelam.
+            </div>
+        </section>
+
+        <section>
+            <h2>Onde Procurar Evidências?</h2>
+
+            <div class="investigation-grid">
+
+                <div class="fragment">
+                    Logs
+                </div>
+
+                <div class="fragment">
+                    Métricas
+                </div>
+
+                <div class="fragment">
+                    Traces
+                </div>
+
+                <div class="fragment">
+                    Dashboards
+                </div>
+
+                <div class="fragment">
+                    Profilers
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Logs</h2>
+
+            <pre><code>
+[INFO]
+GET /checkout
+
+Tempo:
+4.2 segundos
+</code></pre>
+
+            <div class="quote-box fragment">
+                O log conta o que aconteceu.
+            </div>
+        </section>
+
+        <section>
+            <h2>Tracing</h2>
+
+            <pre><code>
+Request
+
+ ↓
+
+API
+
+ ↓
+
+Auth
+
+ ↓
+
+Payment
+
+ ↓
+
+Database
+</code></pre>
+
+            <div class="quote-box fragment">
+                O trace conta toda a história.
+            </div>
+        </section>
+
+        <section>
+            <h2>Flame Graph</h2>
+
+            <div class="quote-box fragment">
+                Quanto mais largo o bloco,
+                mais tempo foi gasto ali.
+            </div>
+
+            <pre><code>
+████████████████████
+Query Banco
+
+██
+Controller
+
+█
+Validação
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>O Fluxo Mental Correto</h2>
+
+            <div class="timeline-vertical">
+
+                <div class="fragment">
+                    Está lento?
+                </div>
+
+                <div class="fragment">
+                    Medir
+                </div>
+
+                <div class="fragment">
+                    Localizar
+                </div>
+
+                <div class="fragment">
+                    Comprovar
+                </div>
+
+                <div class="fragment">
+                    Corrigir
+                </div>
+
+                <div class="fragment">
+                    Medir novamente
+                </div>
+
+            </div>
+        </section>
+        <section>
+            <h2>Antes de Otimizar Qualquer Linha</h2>
+
+            <div class="quote-box fragment">
+                Você sabe onde está o gargalo?
+            </div>
+
+            <div class="quote-box fragment">
+                Você mediu?
+            </div>
+
+            <div class="quote-box fragment">
+                Você consegue provar?
+            </div>
+
+            <div class="quote-box fragment highlight">
+                Se a resposta for não,
+                ainda não é hora de otimizar.
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash:true,
+        slideNumber:true,
+        transition:'slide'
+    });
+</script>
+
+</body>
+</html>

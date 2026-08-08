@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Revisão SM2</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/dracula.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js/styles/github-dark.css">
+
+    <style>
+        :root {
+            --r-main-font-size: 28px;
+        }
+
+        .reveal pre {
+            width: 100%;
+            font-size: 1.4em;
+            border-radius: 12px;
+        }
+
+        .reveal code {
+            max-height: 600px;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+        }
+
+        h2 {
+            font-size: 5rem;
+        }
+
+        .highlight {
+            color: #00d8ff;
+            font-weight: bold;
+        }
+
+        blockquote {
+            width: 100% !important;
+            padding: 20px !important;
+            border-left: 5px solid #00d8ff !important;
+            background: rgba(255,255,255,0.05);
+        }
+
+        table {
+            font-size: 2rem;
+        }
+
+        th, td {
+            color: white;
+        }
+        p {
+            font-size: 3rem;
+        }
+        li {
+            font-size: 2.5rem
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h2>Flyweight</h2>
+
+            <div class="box">
+                <p>
+                    O objetivo do padrão <strong>Flyweight</strong>
+                    é reduzir o consumo de memória através do
+                    compartilhamento de objetos.
+                </p>
+
+                <p class="fragment">
+                    Em vez de criar milhares de objetos iguais,
+                    reutilizamos instâncias já existentes.
+                </p>
+            </div>
+
+            <div class="fragment box">
+                <strong>Palavras-chave da prova:</strong>
+
+                <ul>
+                    <li class="fragment">muitos objetos</li>
+                    <li class="fragment">objetos repetidos</li>
+                    <li class="fragment">economia de memória</li>
+                    <li class="fragment">compartilhamento</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Problema Sem Flyweight</h2>
+
+            <div class="box">
+                <p>
+                    Imagine um jogo com 100.000 árvores.
+                </p>
+            </div>
+
+            <pre class="fragment"><code class="language-java">
+for(int i = 0; i < 100000; i++) {
+    Arvore arvore = new Arvore(
+        "Carvalho",
+        "Verde",
+        texturaGigante
+    );
+}
+</code></pre>
+
+            <div class="fragment box">
+                <p>
+                    Estamos criando milhares de objetos
+                    praticamente idênticos.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Problema Visual</h2>
+
+            <div class="box">
+        <pre>
+🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳
+
+100.000 objetos iguais
+
+=
+muita memória desperdiçada
+        </pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Solução com Flyweight</h2>
+
+            <pre><code class="language-java">
+class ArvoreFlyweight {
+
+    private String tipo;
+    private String cor;
+    private Textura textura;
+
+}
+</code></pre>
+
+            <div class="fragment box">
+                <p>
+                    Criamos apenas UMA instância
+                    compartilhada entre milhares de árvores.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Flyweight Factory</h2>
+
+            <pre class="fragment"><code class="language-java">
+public class ArvoreFactory {
+
+    private static Map<String, ArvoreFlyweight>
+        cache = new HashMap<>();
+
+    public static ArvoreFlyweight get(
+        String tipo
+    ) {
+        return cache.computeIfAbsent(
+            tipo,
+            t -> new ArvoreFlyweight()
+        );
+    }
+}
+</code></pre>
+
+            <div class="fragment box">
+                <p>
+                    A fábrica evita criar objetos repetidos.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Antes x Depois</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Sem Flyweight</th>
+                    <th>Com Flyweight</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>100.000 objetos</td>
+                    <td>1 objeto compartilhado</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Muita memória</td>
+                    <td>Pouca memória</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Duplicação</td>
+                    <td>Reuso</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Exemplos Reais</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">
+                        Caracteres em editores de texto
+                    </li>
+
+                    <li class="fragment">
+                        Árvores em jogos
+                    </li>
+
+                    <li class="fragment">
+                        Ícones repetidos em interfaces
+                    </li>
+
+                    <li class="fragment">
+                        Emojis em aplicativos
+                    </li>
+
+                    <li class="fragment">
+                        Sprites em engines de jogos
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Como Identificar na Prova?</h2>
+
+            <div class="box">
+                <p>
+                    Se o enunciado falar:
+                </p>
+
+                <ul>
+                    <li class="fragment">grande quantidade de objetos</li>
+                    <li class="fragment">objetos idênticos</li>
+                    <li class="fragment">consumo excessivo de memória</li>
+                    <li class="fragment">compartilhamento de instâncias</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta quase sempre:</strong>
+                Flyweight
+            </div>
+        </section>
+
+        <section>
+            <h2>Questão Clássica de Prova</h2>
+
+            <div class="box small">
+                <p>
+                    Um sistema cria milhares de objetos
+                    iguais e está consumindo memória
+                    excessivamente.
+                </p>
+
+                <p>
+                    Qual padrão pode ser utilizado?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Decorator</li>
+                    <li class="fragment">B) Composite</li>
+                    <li class="fragment">C) Singleton</li>
+                    <li class="fragment">D) Flyweight</li>
+                    <li class="fragment">E) Bridge</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> D) Flyweight
+            </div>
+        </section>
+        <section>
+            <h2>Revisão AV — JPA</h2>
+
+            <div class="box small">
+                <p>
+                    Qual componente do JPA é responsável
+                    pelo gerenciamento das entidades?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) EntityManager</li>
+                    <li class="fragment">B) EntityManagerFactory</li>
+                    <li class="fragment">C) Transaction</li>
+                    <li class="fragment">D) Entity</li>
+                    <li class="fragment">E) Column</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> A) EntityManager
+            </div>
+
+            <div class="fragment box">
+                <p>
+                    EntityManager é o principal componente da JPA.
+                </p>
+
+                <pre><code class="language-java">
+entityManager.persist(usuario);
+entityManager.find(Usuario.class, 1);
+entityManager.remove(usuario);
+        </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV — EJB Local</h2>
+
+            <div class="box small">
+                <p>
+                    Para que serve a anotação @Local?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Stateless Session Bean</li>
+                    <li class="fragment">B) Contexto de Persistência</li>
+                    <li class="fragment">C) Interface do JPA</li>
+                    <li class="fragment">D) Stateful Session Bean</li>
+                    <li class="fragment">E) Interface de acesso local</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                E) Interface de acesso local ao EJB
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV — Flyweight</h2>
+
+            <div class="box small">
+                <p>
+                    Muitos objetos idênticos estão sendo criados,
+                    desperdiçando memória.
+                </p>
+
+                <p>
+                    Qual padrão resolve esse problema?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Composite</li>
+                    <li class="fragment">B) Bridge</li>
+                    <li class="fragment">C) Singleton</li>
+                    <li class="fragment">D) Flyweight</li>
+                    <li class="fragment">E) Decorator</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> D) Flyweight
+            </div>
+
+            <div class="fragment box">
+                <p>
+                    Compartilha objetos imutáveis para economizar memória.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV — Chain of Responsibility</h2>
+
+            <div class="box small">
+                <p>
+                    Uma requisição passa por vários objetos
+                    até encontrar alguém capaz de processá-la.
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Command</li>
+                    <li class="fragment">B) Mediator</li>
+                    <li class="fragment">C) Iterator</li>
+                    <li class="fragment">D) Chain of Responsibility</li>
+                    <li class="fragment">E) Visitor</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                D) Chain of Responsibility
+            </div>
+
+            </section><section>
+            <div class="fragment box">
+        <pre><code class="language-java">
+Supervisor
+   ↓
+Gerente
+   ↓
+Diretor
+        </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV — GRASP Controller</h2>
+
+            <div class="box small">
+                <p>
+                    Uma classe recebe eventos da interface
+                    e controla a execução de um caso de uso.
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Indireção</li>
+                    <li class="fragment">B) Criador</li>
+                    <li class="fragment">C) Mediador</li>
+                    <li class="fragment">D) Controlador</li>
+                    <li class="fragment">E) Polimorfismo</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> D) Controlador
+            </div>
+
+            <div class="fragment box">
+        <pre><code class="language-java">
+PedidoController
+UsuarioController
+PagamentoController
+        </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV — Strategy</h2>
+
+            <div class="box small">
+                <p>
+                    O cálculo do frete muda de acordo
+                    com a transportadora escolhida.
+                </p>
+
+                <p>
+                    Qual padrão utilizar?
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Observer</li>
+                    <li class="fragment">B) Template Method</li>
+                    <li class="fragment">C) Command</li>
+                    <li class="fragment">D) Strategy</li>
+                    <li class="fragment">E) State</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> D) Strategy
+            </div>
+        </section>
+        <section>
+
+            <div class="fragment box">
+        <pre><code class="language-java">
+FreteCorreios
+FreteDHL
+FreteLocal
+        </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV</h2>
+
+            <div class="box small">
+                <p>
+                    Quando uma ação da bolsa muda de valor,
+                    gráficos, painéis e alertas devem ser atualizados.
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Observer</li>
+                    <li class="fragment">B) Strategy</li>
+                    <li class="fragment">C) Facade</li>
+                    <li class="fragment">D) Decorator</li>
+                    <li class="fragment">E) Iterator</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> A) Observer
+            </div>
+
+            <div class="fragment box">
+                <p>
+                    Publisher → notifica → Subscribers
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV </h2>
+
+            <div class="box small">
+                <p>
+                    Um pedido pode estar:
+                </p>
+
+                <ul>
+                    <li class="fragment">Aguardando pagamento</li>
+                    <li class="fragment">Pago</li>
+                    <li class="fragment">Enviado</li>
+                    <li class="fragment">Entregue</li>
+                    <li class="fragment">Cancelado</li>
+                </ul>
+
+                <p class="fragment">
+                    Cada estado altera o comportamento.
+                </p>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong> B) State
+            </div>
+
+            <div class="fragment box">
+                <p>
+                    O comportamento depende do estado atual.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV — Overengineering</h2>
+
+            <div class="box small">
+                <p>
+                    Muitos patterns foram adicionados
+                    a um sistema simples.
+                </p>
+
+                <p>
+                    O código ficou difícil de entender.
+                </p>
+
+                <ul>
+                    <li class="fragment">A) Patterns só servem para legado</li>
+                    <li class="fragment">
+                        B) Uso inadequado gera complexidade desnecessária
+                    </li>
+                    <li class="fragment">
+                        C) Todo pattern aumenta complexidade
+                    </li>
+                    <li class="fragment">
+                        D) Patterns não funcionam com OO
+                    </li>
+                    <li class="fragment">E) Nenhuma</li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                B) Overengineering
+            </div>
+        </section>
+
+        <section>
+            <h2>Revisão AV — Design Patterns</h2>
+
+            <div class="box small">
+                <p>
+                    Qual o principal propósito dos Design Patterns?
+                </p>
+
+                <ul>
+                    <li class="fragment">
+                        A) Bibliotecas prontas
+                    </li>
+
+                    <li class="fragment">
+                        B) Soluções reutilizáveis para problemas recorrentes
+                    </li>
+
+                    <li class="fragment">
+                        C) Regras obrigatórias da linguagem
+                    </li>
+
+                    <li class="fragment">
+                        D) Algoritmos de performance
+                    </li>
+
+                    <li class="fragment">
+                        E) Nenhuma das alternativas
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fragment box">
+                <strong>Resposta:</strong>
+                B) Soluções reutilizáveis para problemas recorrentes
+            </div>
+        </section>
+
+        <section>
+            <h2>Mapa Mental da Prova</h2>
+
+            <div class="box">
+                <ul>
+                    <li class="fragment">JPA → EntityManager</li>
+                    <li class="fragment">EJB → @Local</li>
+                    <li class="fragment">GRASP → Controller</li>
+                    <li class="fragment">GoF → Strategy</li>
+                    <li class="fragment">GoF → Observer</li>
+                    <li class="fragment">GoF → State</li>
+                    <li class="fragment">GoF → Chain of Responsibility</li>
+                    <li class="fragment">GoF → Flyweight</li>
+                    <li class="fragment">Patterns ≠ solução mágica</li>
+                    <li class="fragment">Evite Overengineering</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>
+

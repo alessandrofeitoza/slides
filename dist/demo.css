@@ -1,0 +1,1260 @@
+
+
+:root {
+    --primary: #214D97;
+    --secondary: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --bg-card: rgba(255,255,255,.06);
+    --border: rgba(255,255,255,.12);
+}
+
+.reveal {
+    font-size: 32px;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+    text-transform: none;
+    font-weight: 700;
+}
+
+.reveal section {
+    text-align: left;
+}
+
+/* =====================================
+   HERO
+===================================== */
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 80vh;
+}
+
+.hero h1 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    max-width: 900px;
+    opacity: .8;
+    font-size: .9em;
+}
+
+/* =====================================
+   BADGES
+===================================== */
+
+.badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: .5em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge.primary {
+    background: var(--primary);
+}
+
+.badge.success {
+    background: var(--success);
+}
+
+.badge.warning {
+    background: var(--warning);
+}
+
+/* =====================================
+   BOX
+===================================== */
+
+.box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+}
+
+/* =====================================
+   GRID
+===================================== */
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 25px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+}
+
+/* =====================================
+   CARD
+===================================== */
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    font-size: .7em;
+    opacity: .85;
+}
+
+/* =====================================
+   STATS
+===================================== */
+
+.stat {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.stat-number {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.stat-label {
+    opacity: .7;
+    font-size: .6em;
+}
+
+/* =====================================
+   FLEX
+===================================== */
+
+.flex {
+    display: flex;
+    gap: 25px;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* =====================================
+   LIST PREMIUM
+===================================== */
+
+.premium-list {
+    list-style: none !important;
+    margin: 0 !important;
+}
+
+.premium-list li {
+    background: rgba(255,255,255,.05);
+    margin-bottom: 12px;
+    padding: 18px 25px;
+    border-radius: 12px;
+}
+
+/* =====================================
+   TABLE
+===================================== */
+
+.table-premium {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .65em;
+}
+
+.table-premium th {
+    background: rgba(255,255,255,.12);
+    padding: 15px;
+}
+
+.table-premium td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* =====================================
+   QUOTE
+===================================== */
+
+.quote {
+    border-left: 8px solid var(--primary);
+    padding-left: 30px;
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+/* =====================================
+   TIMELINE
+===================================== */
+
+.timeline {
+    border-left: 4px solid var(--primary);
+    margin-left: 15px;
+    padding-left: 30px;
+}
+
+.timeline-item {
+    margin-bottom: 30px;
+}
+
+.timeline-item h4 {
+    margin-bottom: 5px;
+}
+
+/* =====================================
+   CODE
+===================================== */
+
+.code-box {
+    background: #111827;
+    border-radius: 15px;
+    padding: 20px;
+    font-size: .55em;
+}
+
+.code-box pre {
+    margin: 0;
+}
+
+
+/* =====================================
+   COMPARISON
+===================================== */
+
+.comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.comparison .before,
+.comparison .after {
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.comparison .before {
+    background: rgba(239,68,68,.12);
+    border: 1px solid rgba(239,68,68,.3);
+}
+
+.comparison .after {
+    background: rgba(16,185,129,.12);
+    border: 1px solid rgba(16,185,129,.3);
+}
+
+/* =====================================
+   DASHBOARD
+===================================== */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
+
+.chart-placeholder {
+    height: 350px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =====================================
+   ROADMAP
+===================================== */
+
+.roadmap {
+    display: flex;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.roadmap-step {
+    flex: 1;
+    background: rgba(255,255,255,.05);
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.roadmap-step:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -15px;
+    top: 45%;
+    font-size: 2rem;
+}
+
+/* =====================================
+   KANBAN
+===================================== */
+
+.kanban {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.kanban-column {
+    background: rgba(255,255,255,.04);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.kanban-card {
+    background: rgba(255,255,255,.08);
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+/* =====================================
+   MATRIX
+===================================== */
+
+.matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.matrix-box {
+    min-height: 220px;
+    border-radius: 15px;
+    padding: 20px;
+    background: rgba(255,255,255,.05);
+}
+
+/* =====================================
+   PROCESS FLOW
+===================================== */
+
+.process-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.process-node {
+    background: rgba(255,255,255,.08);
+    padding: 20px 30px;
+    border-radius: 15px;
+}
+
+.process-arrow {
+    font-size: 2rem;
+}
+
+/* =====================================
+   PYRAMID
+===================================== */
+
+.pyramid {
+    width: 700px;
+    margin: auto;
+}
+
+.pyramid-level {
+    text-align: center;
+    margin: auto;
+    padding: 15px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+.level-1 { width: 100%; background: rgba(79,70,229,.3);}
+.level-2 { width: 80%; background: rgba(79,70,229,.4);}
+.level-3 { width: 60%; background: rgba(79,70,229,.5);}
+.level-4 { width: 40%; background: rgba(79,70,229,.6);}
+
+/* =====================================
+   FEATURE CARDS
+===================================== */
+
+.feature-card {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255,255,255,.05);
+    border-radius: 20px;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+/* =====================================
+   WEBINAR CALLOUT
+===================================== */
+
+.callout {
+    border-left: 10px solid var(--primary);
+    background: rgba(79,70,229,.12);
+    padding: 40px;
+    border-radius: 15px;
+}
+
+/* =====================================
+   BIG NUMBER
+===================================== */
+
+.big-number {
+    text-align: center;
+}
+
+.big-number .value {
+    font-size: 6rem;
+    font-weight: bold;
+}
+
+.big-number .label {
+    opacity: .7;
+}
+
+
+/* =====================================
+   ARCHITECTURE BLOCKS
+===================================== */
+
+.architecture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.arch-box {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 20px;
+    padding: 25px;
+    min-width: 220px;
+    text-align: center;
+}
+
+.arch-arrow {
+    font-size: 2rem;
+}
+
+/* =====================================
+   LAYERS
+===================================== */
+
+.layers {
+    width: 900px;
+    margin: auto;
+}
+
+.layer {
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* =====================================
+   DDD ENTITY
+===================================== */
+
+.entity-card {
+    background: rgba(255,255,255,.05);
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.entity-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.entity-field {
+    padding: 10px;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* =====================================
+   RELATION
+===================================== */
+
+.relation-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 25px;
+    align-items: center;
+}
+
+/* =====================================
+   CODE COMPARE
+===================================== */
+
+.code-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.code-card {
+    background: #111827;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.code-card pre {
+    font-size: .45em;
+}
+
+/* =====================================
+   REQUEST FLOW
+===================================== */
+
+.request-flow {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* =====================================
+   DATABASE TABLE
+===================================== */
+
+.db-table {
+    background: rgba(255,255,255,.05);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.db-header {
+    background: rgba(255,255,255,.12);
+    padding: 15px;
+    font-weight: bold;
+}
+
+.db-row {
+    padding: 12px 15px;
+    border-top: 1px solid rgba(255,255,255,.05);
+}
+
+/* =====================================
+   ALERT BOX
+===================================== */
+
+.alert-danger {
+    background: rgba(239,68,68,.15);
+    border-left: 8px solid #ef4444;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.alert-success {
+    background: rgba(16,185,129,.15);
+    border-left: 8px solid #10b981;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+/* =====================================
+   TERMINAL
+===================================== */
+
+.terminal {
+    background: #0d1117;
+    border-radius: 20px;
+    padding: 25px;
+    font-family: monospace;
+}
+
+.terminal pre {
+    margin: 0;
+    font-size: .55em;
+}
+
+/* =====================================
+   FEATURE TIMELINE
+===================================== */
+
+.feature-timeline {
+    display: flex;
+    gap: 15px;
+}
+
+.feature-version {
+    flex: 1;
+    background: rgba(255,255,255,.05);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* =====================================
+   DECISION TABLE
+===================================== */
+
+.decision-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.decision-table td,
+.decision-table th {
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 15px;
+}
+
+/* =====================================
+C4 MODEL
+===================================== */
+
+.c4-system {
+    background: rgba(255,255,255,.05);
+    border: 2px solid rgba(255,255,255,.15);
+    border-radius: 25px;
+    padding: 30px;
+}
+
+.c4-container {
+    background: rgba(79,70,229,.15);
+    border: 1px solid rgba(79,70,229,.4);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* =====================================
+   MICROSERVICES
+===================================== */
+
+.micro-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.microservice {
+    background: rgba(255,255,255,.05);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+}
+
+/* =====================================
+   EVENT STORMING
+===================================== */
+
+.event-board {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.sticky {
+    width: 220px;
+    min-height: 100px;
+    border-radius: 12px;
+    padding: 15px;
+    color: #111;
+}
+
+.event {
+    background: #f97316;
+}
+
+.command {
+    background: #60a5fa;
+}
+
+.aggregate {
+    background: #facc15;
+}
+
+.policy {
+    background: #c084fc;
+}
+
+/* =====================================
+   PIPELINE
+===================================== */
+
+.pipeline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pipeline-step {
+    background: rgba(255,255,255,.05);
+    border-radius: 15px;
+    padding: 20px;
+    min-width: 150px;
+    text-align: center;
+}
+
+/* =====================================
+   KUBERNETES
+===================================== */
+
+.k8s-cluster {
+    border: 2px dashed rgba(255,255,255,.2);
+    border-radius: 25px;
+    padding: 30px;
+}
+
+.k8s-pods {
+    display: flex;
+    gap: 15px;
+}
+
+.pod {
+    flex: 1;
+    background: rgba(16,185,129,.12);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* =====================================
+   HEXAGON
+===================================== */
+
+.hexagon-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.hex-core {
+    background: rgba(79,70,229,.15);
+    border-radius: 25px;
+    padding: 50px;
+    text-align: center;
+}
+
+.adapter {
+    background: rgba(255,255,255,.05);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* =====================================
+   MESSAGE FLOW
+===================================== */
+
+.queue-flow {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+}
+
+.queue-box {
+    background: rgba(255,255,255,.05);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* =====================================
+   API GATEWAY
+===================================== */
+
+.gateway-layout {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.gateway {
+    background: rgba(79,70,229,.2);
+    padding: 40px;
+    border-radius: 20px;
+}
+
+/* =====================================
+   LOAD BALANCER
+===================================== */
+
+.lb-layout {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.server-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.server {
+    background: rgba(255,255,255,.05);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+/* =====================================
+   TIMELINE HORIZONTAL
+===================================== */
+
+.timeline-horizontal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.timeline-point {
+    text-align: center;
+    width: 180px;
+}
+
+
+/* =====================================
+   SPOTLIGHT
+===================================== */
+
+.spotlight {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.spotlight-image {
+    height: 500px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.05);
+    overflow: hidden;
+}
+
+.spotlight-image img,
+.spotlight-image video {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* =====================================
+   FULLSCREEN IMAGE
+===================================== */
+
+.fullscreen-image {
+    position: relative;
+    height: 80vh;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.fullscreen-image img {
+    width:100%;
+    height:100%;
+    margin: 0;
+    object-fit:cover;
+}
+
+.fullscreen-overlay {
+    position:absolute;
+    bottom:40px;
+    left:40px;
+    max-width:800px;
+}
+
+/* =====================================
+   FLOATING CARD
+===================================== */
+
+.floating-card {
+    position:absolute;
+    background:rgba(15,23,42,.9);
+    border-radius:20px;
+    padding:20px;
+    backdrop-filter:blur(20px);
+}
+
+/* =====================================
+   SCREENSHOT FRAME
+===================================== */
+
+.browser-frame {
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.browser-header {
+    height:45px;
+    background:#111827;
+}
+
+.browser-content {
+    height:500px;
+    background:rgba(255,255,255,.05);
+}
+
+/* =====================================
+   APPLE GRID
+===================================== */
+
+.apple-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.apple-card {
+    min-height:300px;
+    border-radius:30px;
+    padding:40px;
+    background:rgba(255,255,255,.05);
+}
+
+/* =====================================
+   FEATURE HERO
+===================================== */
+
+.feature-hero {
+    text-align:center;
+}
+
+.feature-hero h1 {
+    font-size:4em;
+}
+
+.feature-hero p {
+    max-width:900px;
+    margin:auto;
+}
+
+/* =====================================
+   METRIC STRIP
+===================================== */
+
+.metric-strip {
+    display:flex;
+    justify-content:space-between;
+    margin-top:50px;
+}
+
+.metric-item {
+    text-align:center;
+}
+
+/* =====================================
+   VIDEO WALL
+===================================== */
+
+.video-wall {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.video-box {
+    height:300px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+}
+
+/* =====================================
+   PARALLAX CARD
+===================================== */
+
+.parallax-card {
+    transform: rotate(-3deg);
+    padding:40px;
+    border-radius:25px;
+    background:rgba(255,255,255,.05);
+}
+
+/* =====================================
+   LOGO CLOUD
+===================================== */
+
+.logo-cloud {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+}
+
+.logo-box {
+    text-align:center;
+    padding:30px;
+    background:rgba(255,255,255,.05);
+    border-radius:20px;
+}
+
+/* =====================================
+   DEMO PLACEHOLDER
+===================================== */
+
+.live-demo {
+    height:550px;
+    border:4px dashed rgba(255,255,255,.15);
+    border-radius:30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:2rem;
+}
+
+/* =====================================
+SVG CONNECTIONS
+===================================== */
+
+.arch-diagram {
+    position: relative;
+    height: 500px;
+}
+
+.arch-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.arch-line {
+    stroke: #4f46e5;
+    stroke-width: 4;
+    fill: none;
+
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+
+    transition: all 1.2s ease;
+}
+
+.arch-line.visible {
+    stroke-dashoffset: 0;
+}
+
+/* =====================================
+   COUNTER
+===================================== */
+
+.counter {
+    font-size: 5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* =====================================
+   LIVE REQUEST
+===================================== */
+
+.request-ball {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: #06b6d4;
+
+    position: absolute;
+}
+
+/* =====================================
+   QUEUE MESSAGE
+===================================== */
+
+.message {
+    width: 120px;
+    padding: 10px;
+    background: rgba(255,255,255,.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* =====================================
+   TERMINAL ANIMATION
+===================================== */
+
+.fake-terminal {
+    background: #0d1117;
+    border-radius: 20px;
+    padding: 30px;
+    font-family: monospace;
+}
+
+.typing-line {
+    opacity: 0;
+}
+
+/* =====================================
+   LIVE GRAPH
+===================================== */
+
+.graph {
+    height: 400px;
+    display:flex;
+    align-items:flex-end;
+    gap:20px;
+}
+
+.bar {
+    flex:1;
+    background: rgba(79,70,229,.4);
+    border-radius:10px 10px 0 0;
+
+    height:0;
+    transition: height 1.2s ease;
+}
+
+.arch-line.fragment.visible {
+    stroke-dashoffset:0;
+}
+
+.rabbit-message {
+
+    position:absolute;
+
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+
+    background:#06b6d4;
+}
+
+.pipeline-step.active {
+
+    background:#4f46e5;
+
+    transform:scale(1.08);
+
+    transition:.3s;
+}
+
+.graph {
+    height: 400px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.bar {
+    flex: 1;
+
+    height: 0;
+
+    background: rgba(79,70,229,.5);
+
+    border-radius: 12px 12px 0 0;
+
+    transition: height 1s ease;
+}
+
+@keyframes breathe {
+    0% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.9; }
+}
+
+.breathing-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(79,70,229,.25), transparent 60%);
+    animation: breathe 6s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes waveIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+.wave {
+    display: inline-block;
+    animation: waveIn 1s ease forwards infinite;
+}
+
+.fade-dark {
+    position:absolute;
+    inset:0;
+    background:black;
+    opacity:0;
+    animation: fadeDark 2s ease forwards;
+}
+
+@keyframes fadeDark {
+    to { opacity: 0.6; }
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+.float {
+    animation: float 4s ease-in-out infinite;
+}
+
+.spot {
+    opacity: 0.3;
+    transform: scale(0.95);
+    transition: all 0.6s ease;
+}
+
+.spot.active {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-bg {
+    background: linear-gradient(270deg,#4f46e5,#06b6d4,#10b981);
+    background-size: 600% 600%;
+    animation: gradientMove 10s ease infinite;
+}

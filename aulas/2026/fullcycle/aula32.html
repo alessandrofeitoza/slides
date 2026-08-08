@@ -1,0 +1,1778 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>DDD — Introdução ao Domain Driven Design</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+
+	<link rel="stylesheet" href="../../../dist/demo.css">
+
+	<style>
+		text {
+			color: white;
+		}
+
+		.reveal pre {
+			width: 96%;
+			max-width: 96%;
+			margin: 25px auto;
+			font-size: 0.95em;
+			border-radius: 14px;
+		}
+
+		.reveal pre code {
+			max-height: 650px;
+			padding: 25px;
+			line-height: 1.45;
+		}
+
+		.reveal svg rect {
+			fill: var(--primary-color);
+			stroke: rgba(255,255,255,.15);
+			stroke-width: 2;
+		}
+
+		.reveal svg circle {
+			fill: var(--primary-color);
+			stroke: rgba(255,255,255,.15);
+			stroke-width: 2;
+		}
+
+		.reveal svg line {
+			stroke: #8b9bb8;
+			stroke-width: 4;
+		}
+
+		.reveal svg text {
+			fill: #ffffff;
+			font-family: inherit;
+			font-size: 24px;
+			font-weight: 700;
+			dominant-baseline: middle;
+			text-anchor: middle;
+			user-select: none;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="reveal">
+	<div class="slides">
+		<section data-auto-animate>
+			<h2>Quem chegou aqui...</h2>
+
+			<div class="circle-center">
+				💻
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>Quem chegou aqui...</h2>
+
+			<div class="circle-center">
+				💻
+			</div>
+
+			<p>
+				Sabia programar.
+			</p>
+		</section>
+
+		<section data-auto-animate>
+			<h2>Quem saiu daqui...</h2>
+
+			<div class="grid-4">
+
+				<div class="card">
+					💻
+					<small>Código</small>
+				</div>
+
+				<div class="card">
+					🧪
+					<small>Qualidade</small>
+				</div>
+
+				<div class="card">
+					📊
+					<small>Produção</small>
+				</div>
+
+				<div class="card">
+					🏛️
+					<small>Arquitetura</small>
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>O ciclo mais comum do iniciante</h2>
+
+			<span>Código</span>
+		</section>
+
+		<section>
+			<h2>O ciclo do profissional</h2>
+
+			<div style="display: flex; justify-content: space-between">
+
+				<span>Código</span>
+				<span>-> Teste</span>
+				<span>-> Deploy</span>
+			</div>
+
+		</section>
+
+		<section data-auto-animate>
+			<h2>Primeiros códigos</h2>
+
+			<pre>
+if($tipo == 1){
+
+}else{
+
+}
+</pre>
+
+		</section>
+
+		<section data-auto-animate>
+			<h2>Depois...</h2>
+
+			<pre>
+class CalculadoraDeFrete
+{
+}
+</pre>
+
+		</section>
+
+		<section data-auto-animate>
+			<h2>Depois...</h2>
+
+			<pre>
+interface CalculadoraFrete
+{
+}
+</pre>
+
+		</section>
+
+		<section data-auto-animate>
+			<h2>Depois...</h2>
+
+			<pre>
+interface CalculadoraFrete
+{
+}
+
+class CalculadoraCorreios
+{
+}
+</pre>
+
+		</section>
+
+		<section>
+			<h2>O que aprendemos sobre código?</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Código não é para máquinas.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Código é para pessoas.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Principalmente para o próximo desenvolvedor.
+				</h1>
+
+			</div>
+		</section>
+		<section>
+			<h2>Responsabilidades Bem Definidas</h2>
+
+			<div style="
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:40px;
+        margin-top:60px;
+        align-items:center;
+    ">
+
+				<div class="card fragment fade-up">
+					<div style="font-size:64px;">🎮</div>
+					<h3>Controller</h3>
+					<p>Recebe a requisição<br>e orquestra o fluxo.</p>
+				</div>
+
+				<div class="fragment current-visible" style="font-size:60px;">
+					➜
+				</div>
+
+				<div class="card fragment fade-up">
+					<div style="font-size:64px;">⚙️</div>
+					<h3>Service</h3>
+					<p>Executa as regras<br>de negócio.</p>
+				</div>
+
+			</div>
+
+			<div class="fragment current-visible" style="font-size:60px;margin:20px 0;">
+				↓
+			</div>
+
+			<div style="
+        display:flex;
+        justify-content:center;
+    ">
+
+				<div class="card fragment fade-up" style="width:320px;">
+					<div style="font-size:64px;">🗄️</div>
+					<h3>Repository</h3>
+					<p>Persiste e consulta<br>os dados.</p>
+				</div>
+
+			</div>
+
+		</section>
+
+		<section>
+
+			<h2>Quando uma classe faz tudo...</h2>
+
+			<div style="font-size:170px;" class="fragment">
+				🧰
+			</div>
+
+			<div style="
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:18px;
+        margin-top:30px;
+    ">
+
+				<div class="card fragment">📧<br><small>E-mail</small></div>
+				<div class="card fragment">🗄️<br><small>Banco</small></div>
+				<div class="card fragment">📊<br><small>Relatório</small></div>
+				<div class="card fragment">🌐<br><small>API</small></div>
+
+				<div class="card fragment">💾<br><small>Cache</small></div>
+				<div class="card fragment">🔑<br><small>JWT</small></div>
+				<div class="card fragment">📁<br><small>Upload</small></div>
+				<div class="card fragment">📜<br><small>Logs</small></div>
+
+			</div>
+
+			<h3 class="fragment" style="margin-top:40px;">
+				<code>UsuarioController</code>
+			</h3>
+
+		</section>
+
+		<section>
+
+			<h2>Ao final do primeiro módulo...</h2>
+
+			<div class="roadmap">
+
+				<div class="step fragment">
+					Programar
+				</div>
+
+				<div class="step fragment">
+					Estruturar
+				</div>
+
+				<div class="step fragment">
+					Colaborar
+				</div>
+
+				<div class="step fragment">
+					Manter
+				</div>
+
+			</div>
+
+		</section>
+
+		<!-- ===================================================== -->
+		<!-- PARTE 1 — CONSTRUIR -->
+		<!-- ===================================================== -->
+
+		<section data-background-gradient="linear-gradient(135deg, #0f172a, #1e293b)" style="color: white">
+			<h1 style="color: white;">Construir</h1>
+			<h3 style="color: white;">O primeiro passo da jornada Full Cycle</h3>
+
+			<div class="fragment fade-up">
+				<p>
+					Antes de escalar.<br>
+					Antes de monitorar.<br>
+					Antes de arquitetar.
+				</p>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>Era preciso aprender a construir.</h2>
+			</div>
+		</section>
+
+		<section>
+			<h2>Voltemos ao início...</h2>
+
+			<div class="r-stack">
+				<div class="fragment fade-out" data-fragment-index="0">
+					<h3>Primeiros códigos</h3>
+				</div>
+
+				<div class="fragment current-visible" data-fragment-index="0">
+            <pre><code class="php" data-trim>
+function calcular($a, $b)
+{
+    return $a * 0.9;
+}
+            </code></pre>
+				</div>
+
+				<div class="fragment current-visible">
+            <pre><code class="php" data-trim>
+class CalculadoraDeDesconto
+{
+    public function calcular(
+        Pedido $pedido
+    ): float
+    {
+        // ...
+    }
+}
+            </code></pre>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2>A pergunta nunca foi...</h2>
+
+			<div class="r-stack">
+				<h3 class="fragment fade-out">
+					"Funciona?"
+				</h3>
+
+				<h3 class="fragment current-visible">
+					"Vai continuar funcionando?"
+				</h3>
+
+				<h3 class="fragment current-visible">
+					"Alguém conseguirá evoluir isso daqui a 2 anos?"
+				</h3>
+			</div>
+		</section>
+
+		<section>
+			<h2>O problema do código sem estrutura</h2>
+
+			<div class="r-stack">
+
+				<div class="fragment current-visible">
+					<h3>Projeto pequeno</h3>
+					<h1>😎</h1>
+				</div>
+
+				<div class="fragment current-visible">
+					<h3>Primeiro cliente</h3>
+					<h1>🙂</h1>
+				</div>
+
+				<div class="fragment current-visible">
+					<h3>Primeiras mudanças</h3>
+					<h1>😐</h1>
+				</div>
+
+				<div class="fragment current-visible">
+					<h3>Primeira manutenção urgente</h3>
+					<h1>😰</h1>
+				</div>
+
+				<div class="fragment current-visible">
+					<h3>Desenvolvedor saiu da empresa</h3>
+					<h1>💀</h1>
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>O que descobrimos?</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Código é um ativo.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Código é comunicação.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Código é documentação viva.
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Orientação a Objetos</h2>
+
+			<div class="r-stack">
+
+				<h3 class="fragment current-visible">
+					Não é sobre classes.
+				</h3>
+
+				<h3 class="fragment current-visible">
+					Não é sobre herança.
+				</h3>
+
+				<h3 class="fragment current-visible">
+					Não é sobre diagramas.
+				</h3>
+
+				<h2 class="fragment current-visible">
+					É sobre responsabilidades.
+				</h2>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Quando tudo tem responsabilidade...</h2>
+
+			<svg width="900" height="300">
+
+				<rect x="40" y="100" width="180" height="80" rx="10"></rect>
+				<text x="80" y="145">Controller</text>
+
+				<line x1="220" y1="140" x2="350" y2="140"></line>
+
+				<rect x="350" y="100" width="180" height="80" rx="10"></rect>
+				<text x="410" y="145">Service</text>
+
+				<line x1="530" y1="140" x2="660" y2="140"></line>
+
+				<rect x="660" y="100" width="180" height="80" rx="10"></rect>
+				<text x="705" y="145">Repository</text>
+
+			</svg>
+
+			<div class="fragment fade-up">
+				<p>Cada parte possui uma responsabilidade clara.</p>
+			</div>
+		</section>
+
+		<section>
+			<h2>E quando ninguém define responsabilidades?</h2>
+
+			<div class="fragment">
+        <pre><code class="php" data-trim>
+class UsuarioController
+{
+    public function criar()
+    {
+        // valida
+
+        // envia email
+
+        // salva no banco
+
+        // gera log
+
+        // gera relatório
+
+        // integra API
+
+        // calcula regra
+
+        // ...
+    }
+}
+        </code></pre>
+			</div>
+
+			<div class="fragment">
+				<h3>Uma classe vira o sistema inteiro.</h3>
+			</div>
+		</section>
+
+		<section>
+			<h2>Clean Code</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Não é estética.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não é religião.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não é quantidade de padrões.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					É reduzir esforço cognitivo.
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Todo código possui um custo</h2>
+
+			<div class="r-stack">
+
+				<h3 class="fragment current-visible">
+					Escrever
+				</h3>
+
+				<h3 class="fragment current-visible">
+					Entender
+				</h3>
+
+				<h3 class="fragment current-visible">
+					Alterar
+				</h3>
+
+				<h3 class="fragment current-visible">
+					Corrigir
+				</h3>
+
+				<h1 class="fragment current-visible">
+					Manter
+				</h1>
+
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>Mas existe algo ainda mais importante...</h2>
+		</section>
+
+		<section data-auto-animate>
+			<h2>Mas existe algo ainda mais importante...</h2>
+
+			<h1>Colaboração</h1>
+		</section>
+
+		<section>
+			<h2>Desenvolvimento de software é um esporte coletivo</h2>
+
+			<div class="r-stack">
+
+				<div class="fragment current-visible">
+					<h3>1 desenvolvedor</h3>
+					<h1>🙂</h1>
+				</div>
+
+				<div class="fragment current-visible">
+					<h3>5 desenvolvedores</h3>
+					<h1>😐</h1>
+				</div>
+
+				<div class="fragment current-visible">
+					<h3>20 desenvolvedores</h3>
+					<h1>😵</h1>
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Por isso aprendemos</h2>
+
+			<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
+
+				<div class="fragment fade-right box">
+					<h3>Git</h3>
+					<p>Histórico compartilhado.</p>
+				</div>
+
+				<div class="fragment fade-left box">
+					<h3>Code Review</h3>
+					<p>Aprendizado coletivo.</p>
+				</div>
+
+				<div class="fragment fade-right box">
+					<h3>Pull Requests</h3>
+					<p>Discussão técnica.</p>
+				</div>
+
+				<div class="fragment fade-left box">
+					<h3>Padrões</h3>
+					<p>Consistência do time.</p>
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Ao final do módulo...</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Vocês aprenderam a programar.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Depois aprenderam a estruturar.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Depois aprenderam a colaborar.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Depois aprenderam a pensar em manutenção.
+				</h1>
+
+			</div>
+		</section>
+
+		<section data-background-gradient="linear-gradient(135deg,#1e293b,#0f172a)">
+			<h1>Construir</h1>
+
+			<div class="fragment fade-up">
+				<h3>
+					Não é apenas escrever código.
+				</h3>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>
+					É criar software que outras pessoas consigam entender,
+					modificar e evoluir.
+				</h2>
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Construímos.</h1>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Construímos.</h1>
+			<h2>E quebramos.</h2>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Construímos.</h1>
+			<h2>E quebramos.</h2>
+			<h3>Várias vezes.</h3>
+		</section>
+
+		<section>
+
+			<h2>O ciclo do desenvolvedor iniciante</h2>
+
+			<svg width="900" height="400">
+
+				<circle cx="450" cy="120" r="70"></circle>
+				<text x="415" y="125">Código</text>
+
+				<line x1="450" y1="190" x2="450" y2="260"></line>
+
+				<circle cx="450" cy="320" r="70"></circle>
+				<text x="405" y="325">Produção</text>
+
+			</svg>
+
+		</section>
+
+		<section>
+
+			<h2>Como validar?</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Torcer?
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Rezar?
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Testar.
+				</h1>
+
+			</div>
+
+		</section>
+
+		<section data-auto-animate>
+
+			<h2>Primeira evolução</h2>
+
+			<svg width="900" height="350">
+
+				<circle cx="250" cy="180" r="70"></circle>
+				<text x="210" y="185">Código</text>
+
+				<circle cx="650" cy="180" r="70"></circle>
+				<text x="600" y="185">Produção</text>
+
+				<line x1="320" y1="180" x2="580" y2="180"></line>
+
+			</svg>
+
+		</section>
+
+		<section data-auto-animate>
+
+			<h2>Primeira evolução</h2>
+
+			<svg width="900" height="350">
+
+				<circle cx="180" cy="180" r="70"></circle>
+				<text x="140" y="185">Código</text>
+
+				<circle cx="450" cy="180" r="70"></circle>
+				<text x="420" y="185">Teste</text>
+
+				<circle cx="720" cy="180" r="70"></circle>
+				<text x="670" y="185">Produção</text>
+
+				<line x1="250" y1="180" x2="380" y2="180"></line>
+				<line x1="520" y1="180" x2="650" y2="180"></line>
+
+			</svg>
+
+		</section>
+
+		<section>
+
+			<h2>Mas "teste" não é uma coisa só</h2>
+
+		</section>
+
+		<section>
+
+			<div class="cards-3">
+
+				<div class="fragment card">
+					<h3>Unitário</h3>
+					<small>Uma peça</small>
+				</div>
+
+				<div class="fragment card">
+					<h3>Integração</h3>
+					<small>Peças juntas</small>
+				</div>
+
+				<div class="fragment card">
+					<h3>E2E</h3>
+					<small>Sistema completo</small>
+				</div>
+
+			</div>
+
+		</section>
+
+		<section>
+
+			<h2>O que cada teste responde?</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Essa função funciona?
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Esses módulos conversam?
+				</h1>
+
+				<h1 class="fragment current-visible">
+					O usuário consegue concluir o fluxo?
+				</h1>
+
+			</div>
+
+		</section>
+
+		<section>
+
+			<h2>O maior mito sobre testes</h2>
+
+		</section>
+
+		<section>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Testes servem para encontrar bugs.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não exatamente.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Testes servem para permitir mudanças.
+				</h1>
+
+			</div>
+
+		</section>
+
+		<section data-auto-animate>
+
+			<h2>Sem testes</h2>
+
+			<div style="font-size:150px;">
+				😨
+			</div>
+
+		</section>
+
+		<section data-auto-animate>
+
+			<h2>Nova funcionalidade</h2>
+
+			<div style="font-size:150px;">
+				😰
+			</div>
+
+		</section>
+
+		<section data-auto-animate>
+
+			<h2>Com testes</h2>
+
+			<div style="font-size:150px;">
+				😎
+			</div>
+
+		</section>
+
+		<section>
+
+			<h2>Depois veio a automação</h2>
+
+		</section>
+
+		<section>
+
+			<svg width="1100" height="300">
+
+				<rect x="50" y="100" width="180" height="80" rx="15"></rect>
+				<text x="115" y="145">Commit</text>
+
+				<line x1="230" y1="140" x2="350" y2="140"></line>
+
+				<rect x="350" y="100" width="180" height="80" rx="15"></rect>
+				<text x="395" y="145">Pipeline</text>
+
+				<line x1="530" y1="140" x2="650" y2="140"></line>
+
+				<rect x="650" y="100" width="180" height="80" rx="15"></rect>
+				<text x="705" y="145">Testes</text>
+
+				<line x1="830" y1="140" x2="950" y2="140"></line>
+
+				<rect x="950" y="100" width="120" height="80" rx="15"></rect>
+				<text x="980" y="145">Deploy</text>
+
+			</svg>
+
+		</section>
+
+		<section>
+
+			<h2>O que mudou?</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Menos confiança em pessoas.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Mais confiança em processos.
+				</h1>
+
+			</div>
+
+		</section>
+
+		<section data-background-gradient="linear-gradient(135deg,#0f172a,#1e293b)">
+
+			<h1>Testar</h1>
+
+			<div class="fragment fade-up">
+				<h3>
+					Não é provar que o sistema funciona.
+				</h3>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>
+					É permitir que ele continue evoluindo.
+				</h2>
+			</div>
+
+		</section>
+
+		<!-- ===================================================== -->
+		<!-- PARTE 3 — OBSERVABILIDADE E MONITORAMENTO -->
+		<!-- ===================================================== -->
+
+		<section data-auto-animate>
+			<h1>Tudo estava funcionando.</h1>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Tudo estava funcionando.</h1>
+			<h2>Até chegar em produção.</h2>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Produção.</h1>
+
+			<div style="font-size:140px;">
+				🌎
+			</div>
+		</section>
+
+		<section>
+			<h2>A primeira mensagem chega...</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					"Não está funcionando."
+				</h1>
+
+				<h1 class="fragment current-visible">
+					"Está lento."
+				</h1>
+
+				<h1 class="fragment current-visible">
+					"Deu erro."
+				</h1>
+
+				<h1 class="fragment current-visible">
+					"Não sei explicar."
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>E agora?</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Reinicia.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Atualiza a página.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Tenta de novo.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Chama o desenvolvedor.
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>O problema mudou</h2>
+
+			<svg width="1000" height="350">
+
+				<rect x="100" y="120" width="220" height="100" rx="20"></rect>
+				<text x="145" y="180">Desenvolvimento</text>
+
+				<line x1="320" y1="170" x2="450" y2="170"></line>
+
+				<rect x="450" y="120" width="220" height="100" rx="20"></rect>
+				<text x="530" y="180">Deploy</text>
+
+				<line x1="670" y1="170" x2="800" y2="170"></line>
+
+				<rect x="800" y="120" width="120" height="100" rx="20"></rect>
+				<text x="825" y="180">???</text>
+
+			</svg>
+
+			<div class="fragment fade-up">
+				<h3>O sistema sumiu da nossa frente.</h3>
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>O que o desenvolvedor precisa?</h2>
+		</section>
+
+		<section data-auto-animate>
+			<h2>O que o desenvolvedor precisa?</h2>
+
+			<h1>Visibilidade.</h1>
+		</section>
+
+		<section>
+			<h2>Observabilidade</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Entender o que aconteceu.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Entender onde aconteceu.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Entender por que aconteceu.
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Os 3 pilares</h2>
+
+			<div style="display:flex;justify-content:center;align-items:center;gap:80px;margin-top:80px;">
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">📄</div>
+					<h3>Logs</h3>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">📊</div>
+					<h3>Métricas</h3>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">🔍</div>
+					<h3>Traces</h3>
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Logs</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					O que aconteceu?
+				</h1>
+
+				<pre class="fragment current-visible"><code>
+Usuário autenticado
+Pedido criado
+Pagamento aprovado
+Erro ao enviar email
+        </code></pre>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Métricas</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Com que frequência?
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Quantos erros?
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Quanto tempo?
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Quantos usuários?
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Traces</h2>
+
+			<svg width="1100" height="350">
+
+				<rect x="50" y="120" width="180" height="80" rx="15"></rect>
+				<text x="105" y="165">Frontend</text>
+
+				<line x1="230" y1="160" x2="360" y2="160"></line>
+
+				<rect x="360" y="120" width="180" height="80" rx="15"></rect>
+				<text x="435" y="165">API</text>
+
+				<line x1="540" y1="160" x2="670" y2="160"></line>
+
+				<rect x="670" y="120" width="180" height="80" rx="15"></rect>
+				<text x="730" y="165">Banco</text>
+
+				<line x1="850" y1="160" x2="980" y2="160"></line>
+
+				<rect x="980" y="120" width="80" height="80" rx="15"></rect>
+				<text x="995" y="165">💥</text>
+
+			</svg>
+
+			<div class="fragment fade-up">
+				<h3>Onde exatamente ocorreu o problema?</h3>
+			</div>
+		</section>
+
+		<section>
+			<h2>Mas nós aprendemos outra coisa...</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Produção é caótica.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Usuários fazem coisas inesperadas.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Integrações falham.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Redes falham.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Bancos falham.
+				</h1>
+
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>Então começamos a tratar erros</h2>
+
+			<pre>
+try {
+
+}
+catch(Exception $e) {
+
+}
+</pre>
+
+		</section>
+
+		<section data-auto-animate>
+			<h2>Então começamos a tratar erros</h2>
+
+			<pre>
+try {
+
+}
+catch(Exception $e) {
+
+}
+</pre>
+
+			<h3>Mas isso não resolve muita coisa.</h3>
+
+		</section>
+
+		<section>
+			<h2>O verdadeiro fluxo</h2>
+
+			<svg width="1100" height="350">
+
+				<rect x="50" y="120" width="180" height="80" rx="15"></rect>
+				<text x="100" y="165">Erro</text>
+
+				<line x1="230" y1="160" x2="340" y2="160"></line>
+
+				<rect x="340" y="120" width="180" height="80" rx="15"></rect>
+				<text x="395" y="165">Capturar</text>
+
+				<line x1="520" y1="160" x2="630" y2="160"></line>
+
+				<rect x="630" y="120" width="180" height="80" rx="15"></rect>
+				<text x="700" y="165">Registrar</text>
+
+				<line x1="810" y1="160" x2="920" y2="160"></line>
+
+				<rect x="920" y="120" width="180" height="80" rx="15"></rect>
+				<text x="975" y="165">Investigar</text>
+
+			</svg>
+		</section>
+
+		<section>
+			<h2>O desenvolvedor Full Cycle</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Não escreve apenas código.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não faz apenas deploy.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não entrega e esquece.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Ele acompanha o sistema vivo.
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>A evolução aconteceu aqui</h2>
+
+			<div style="display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;">
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">💻</div>
+					<h4>Código</h4>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">🧪</div>
+					<h4>Testes</h4>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">🚀</div>
+					<h4>Deploy</h4>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">📈</div>
+					<h4>Produção</h4>
+				</div>
+
+			</div>
+		</section>
+
+		<section data-background-gradient="linear-gradient(135deg,#0f172a,#1e293b)">
+
+			<h1>Observar</h1>
+
+			<div class="fragment fade-up">
+				<h3>
+					Sistemas falham.
+				</h3>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>
+					O importante é conseguir entender por quê.
+				</h2>
+			</div>
+
+		</section>
+
+		<!-- ===================================================== -->
+		<!-- PARTE 4 — ARQUITETURA EVOLUTIVA -->
+		<!-- ===================================================== -->
+
+		<section data-auto-animate>
+			<h1>Construímos.</h1>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Construímos.</h1>
+			<h1>Testamos.</h1>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Construímos.</h1>
+			<h1>Testamos.</h1>
+			<h1>Monitoramos.</h1>
+		</section>
+
+		<section data-auto-animate>
+			<h1>Construímos.</h1>
+			<h1>Testamos.</h1>
+			<h1>Monitoramos.</h1>
+
+			<h2>E então o sistema cresceu.</h2>
+		</section>
+
+		<section>
+			<h2>O mesmo sistema...</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					10 usuários
+				</h1>
+
+				<h1 class="fragment current-visible">
+					100 usuários
+				</h1>
+
+				<h1 class="fragment current-visible">
+					1.000 usuários
+				</h1>
+
+				<h1 class="fragment current-visible">
+					100.000 usuários
+				</h1>
+
+				<h1 class="fragment current-visible">
+					1.000.000 usuários
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>O código pode continuar igual...</h2>
+
+			<div style="font-size:150px;">
+				💻
+			</div>
+		</section>
+
+		<section>
+			<h2>Mas os desafios mudam completamente</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Performance
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Escalabilidade
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Disponibilidade
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Custos
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Equipes
+				</h1>
+
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>No começo...</h2>
+
+			<div style="font-size:150px;">
+				📦
+			</div>
+
+			<h3>Monólito</h3>
+		</section>
+
+		<section data-auto-animate>
+			<h2>No começo...</h2>
+
+			<div style="font-size:150px;">
+				📦
+			</div>
+
+			<h3>Monólito</h3>
+
+			<p>
+				E isso é ótimo.
+			</p>
+		</section>
+
+		<section>
+			<h2>O maior erro da internet</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Todo sistema deve usar microsserviços.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					❌
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Depende.
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Arquitetura não é destino</h2>
+
+			<svg width="1000" height="350">
+
+				<circle cx="120" cy="180" r="45"></circle>
+				<text x="95" y="188">Start</text>
+
+				<line x1="170" y1="180" x2="350" y2="180"></line>
+
+				<circle cx="400" cy="180" r="45"></circle>
+				<text x="370" y="188">Hoje</text>
+
+				<line x1="450" y1="180" x2="630" y2="180"></line>
+
+				<circle cx="680" cy="180" r="45"></circle>
+				<text x="645" y="188">Amanhã</text>
+
+				<line x1="730" y1="180" x2="910" y2="180"></line>
+
+				<circle cx="960" cy="180" r="45"></circle>
+				<text x="935" y="188">Futuro</text>
+
+			</svg>
+
+			<div class="fragment fade-up">
+				<h3>Ela acompanha o negócio.</h3>
+			</div>
+		</section>
+
+		<section>
+			<h2>Porque os gargalos mudam</h2>
+
+			<div style="display:flex;justify-content:center;gap:50px;flex-wrap:wrap;">
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">🖥️</div>
+					<h4>CPU</h4>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">🧠</div>
+					<h4>Memória</h4>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">🗄️</div>
+					<h4>Banco</h4>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">🌐</div>
+					<h4>Rede</h4>
+				</div>
+
+				<div class="fragment zoom-in">
+					<div style="font-size:80px;">👥</div>
+					<h4>Equipes</h4>
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Toda solução cria um novo problema</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Cache
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Filas
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Réplicas
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Microsserviços
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Complexidade
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>O papel da arquitetura</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Não é criar sistemas perfeitos.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não é usar a tecnologia da moda.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não é impressionar outros desenvolvedores.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					É permitir evolução.
+				</h1>
+
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>A jornada do software</h2>
+
+			<div style="font-size:60px;">
+				💻
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>A jornada do software</h2>
+
+			<div style="display:flex;justify-content:center;gap:40px;align-items:center;">
+
+				<div style="font-size:60px;">💻</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">📦</div>
+
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>A jornada do software</h2>
+
+			<div style="display:flex;justify-content:center;gap:40px;align-items:center;">
+
+				<div style="font-size:60px;">💻</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">📦</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">🚀</div>
+
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>A jornada do software</h2>
+
+			<div style="display:flex;justify-content:center;gap:40px;align-items:center;">
+
+				<div style="font-size:60px;">💻</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">📦</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">🚀</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">📈</div>
+
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>A jornada do software</h2>
+
+			<div style="display:flex;justify-content:center;gap:40px;align-items:center;">
+
+				<div style="font-size:60px;">💻</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">📦</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">🚀</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">📈</div>
+				<div style="font-size:60px;">→</div>
+				<div style="font-size:60px;">🏛️</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>O que significa ser Full Cycle?</h2>
+
+			<div class="r-stack">
+
+				<h1 class="fragment current-visible">
+					Não é saber todas as tecnologias.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não é decorar frameworks.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					Não é conhecer todas as arquiteturas.
+				</h1>
+
+				<h1 class="fragment current-visible">
+					É entender o ciclo completo.
+				</h1>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>Quem vocês eram no início?</h2>
+
+			<div style="font-size:120px;">
+				👨‍💻
+			</div>
+		</section>
+
+		<section data-auto-animate>
+			<h2>Quem vocês são agora?</h2>
+
+			<div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;">
+
+				<div>
+					<div style="font-size:70px;">💻</div>
+					<small>Código</small>
+				</div>
+
+				<div>
+					<div style="font-size:70px;">🧪</div>
+					<small>Qualidade</small>
+				</div>
+
+				<div>
+					<div style="font-size:70px;">📊</div>
+					<small>Produção</small>
+				</div>
+
+				<div>
+					<div style="font-size:70px;">🏛️</div>
+					<small>Arquitetura</small>
+				</div>
+
+			</div>
+		</section>
+
+		<section>
+			<h2>A jornada Full Cycle</h2>
+
+			<svg width="1100" height="250">
+
+				<circle cx="120" cy="120" r="45"></circle>
+				<text x="92" y="128">Build</text>
+
+				<line x1="165" y1="120" x2="350" y2="120"></line>
+
+				<circle cx="400" cy="120" r="45"></circle>
+				<text x="375" y="128">Test</text>
+
+				<line x1="445" y1="120" x2="630" y2="120"></line>
+
+				<circle cx="680" cy="120" r="45"></circle>
+				<text x="645" y="128">Run</text>
+
+				<line x1="725" y1="120" x2="910" y2="120"></line>
+
+				<circle cx="960" cy="120" r="45"></circle>
+				<text x="915" y="128">Evolve</text>
+
+			</svg>
+		</section>
+
+		<section data-background-gradient="linear-gradient(135deg,#0f172a,#1e293b)">
+			<h1>Full Cycle</h1>
+
+			<div class="fragment fade-up">
+				<h2>
+					Construir.
+				</h2>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>
+					Testar.
+				</h2>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>
+					Observar.
+				</h2>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>
+					Evoluir.
+				</h2>
+			</div>
+		</section>
+
+		<section data-background-gradient="linear-gradient(135deg,#0f172a,#1e293b)">
+			<h1>Parabéns.</h1>
+
+			<div class="fragment fade-up">
+				<h3>
+					Vocês não aprenderam apenas a programar.
+				</h3>
+			</div>
+
+			<div class="fragment fade-up">
+				<h2>
+					Aprenderam a construir software que sobrevive.
+				</h2>
+			</div>
+		</section>
+
+
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+
+<script>
+	Reveal.initialize({
+		hash:true,
+		// slideNumber:'c/t',
+		transition:'slide'
+	});
+</script>
+
+</body>
+</html>

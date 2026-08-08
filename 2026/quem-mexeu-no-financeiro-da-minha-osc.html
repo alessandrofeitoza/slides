@@ -1,0 +1,1665 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../dist/reset.css">
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../dist/theme/black.css">
+
+    <link rel="stylesheet" href="../dist/demo.css">
+
+    <style>
+        :root {
+            --bussola-blue: #214D97;
+            --bussola-light: #62D0F5;
+            --bussola-green: #1FC48D;
+            --bussola-purple: #7A4FFF;
+            --bussola-dark: #08152D;
+            --bussola-black: #050505;
+
+            --r-background-color: var(--bussola-dark);
+        }
+
+        .reveal {
+            font-family: "Poppins", sans-serif;
+            color: white;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .reveal h1 {
+            font-size: 2.8em;
+            line-height: 1.1;
+        }
+
+        .reveal h2 {
+            font-size: 2em;
+            line-height: 1.2;
+        }
+
+        .reveal p,
+        .reveal li {
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .logo {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            height: 70px;
+        }
+
+        .hero {
+            text-align: center;
+        }
+
+        .hero h1 {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .impact {
+            display: inline-block;
+            background: #000;
+            padding: 20px 40px;
+            border-radius: 24px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                    90deg,
+                    var(--bussola-purple),
+                    var(--bussola-light)
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .statement {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+            text-align: center;
+        }
+
+        .statement h1 {
+            max-width: 1200px;
+        }
+
+        .question-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            text-align: center;
+        }
+
+        .question-slide h1 {
+            font-size: 3.2em;
+            max-width: 1100px;
+        }
+
+        .dark-slide {
+            background: var(--bussola-dark);
+        }
+
+        .blue-slide {
+            background: var(--bussola-blue);
+        }
+
+        .gradient-slide {
+            background: linear-gradient(
+                    135deg,
+                    var(--bussola-purple),
+                    var(--bussola-blue),
+                    var(--bussola-light)
+            );
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            gap: 20px;
+        }
+
+        .timeline div {
+            flex: 1;
+            background: rgba(0,0,0,.3);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .card {
+            background: rgba(0,0,0,.45);
+            border-radius: 24px;
+            padding: 35px;
+            margin-top: 30px;
+        }
+
+        .card h3 {
+            color: var(--bussola-light);
+            margin-bottom: 20px;
+        }
+
+        .three-columns {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .three-columns .card {
+            height: 100%;
+        }
+
+        /*.big-number {*/
+        /*    font-size: 5em;*/
+        /*    font-weight: 900;*/
+        /*    color: var(--bussola-light);*/
+        /*    margin-bottom: 10px;*/
+        /*}*/
+
+        .quote {
+            font-size: 1.8em;
+            font-style: italic;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .fragment.fade-up {
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <div style="margin-top: 67%; font-size: 1rem; display: flex; justify-content: space-between">
+            <span><img width="100px" src="img/financeiro/bussola.png" alt=""></span> <small style="color: #999;"> <strong style="float: right"></strong> </small>
+        </div>
+        <section>
+            <div class="hero">
+
+                <h1>Quem mexeu no<br> financeiro da minha OSC</h1>
+
+                <h3>Criando processos mais seguros e rastreáveis</h3>
+
+
+                <div>
+                    <hr style="border-color: white">
+                </div>
+                <p class="subtitle">
+
+                    Webinar com a Rede Filantropia
+                </p>
+            </div>
+        </section>
+
+        <section >
+            <div style="display: flex; justify-content: space-between" class="fragment">
+                <div style="width: 50%">
+                    <h3>Alessandro Feitoza</h3>
+                    <hr>
+
+                    <ul style="font-size: 2rem; ">
+                        <li class="fragment" style="color: indianred;">Fortaleza, <strong>Ceará</strong></li>
+
+                        <li class="fragment">Professor de códigos</li>
+                        <li class="fragment">Programador/Dev/Severino</li>
+                        <li class="fragment">
+                            <span style="color: lightgreen;">
+                                <strong>Bússola</strong> Social
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div style="width: 50%; text-align: right">
+                    <img width="60%" src="../img/AlessandroFeitoza-2026-2.jpg" alt="">
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#333">
+            <div style="display: flex;text-align: left;">
+                <div>
+                    <h2>Por que isso é importante?</h2>
+                    <hr>
+                    <p class="fragment"> Entre 2025 e 2026 a Bússola Social <strong class="fragment highlight-red">fez uma grande pesquisa e levantou dados um tanto impactantes</strong></p>
+                    <hr>
+                    <div class="fragment">
+                        <strong>Focada no Terceiro Setor </strong>
+                        <em style="font-size: 1.6rem">"A pesquisa destaca uma série pontos que demonstram como é o dia a dia das OSCS, de diferentes níveis de tamanho"</em>
+                    </div>
+                    <div class="fragment">
+                        <strong style="color: var(--bussola-green)">+500 OSCs </strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="img/financeiro/observatorio.png" data-background-size="80%">
+
+        </section>
+        <section data-background="img/financeiro/terra.png" data-background-size="80%">
+
+        </section>
+
+        <section>
+            <hr>
+            <h1 style="text-align: center; text-transform: uppercase;">Por dentro dos dados</h1>
+            <hr>
+        </section>
+
+        <section data-background="img/financeiro/seca.webp">
+            <div class="big-number">
+
+                <div class="value fragment">
+                    <span style="background-color: white; color: var(--bussola-purple); border-radius: 40px; padding: 0 20px;">29%</span>
+                </div>
+
+                <div class="label fragment" style="border-radius: 10px; background-color: white; margin-top: 30px; color: var(--bussola-blue)">
+                    das OSCs não sabem se terão <strong  class="fragment highlight-red" >recursos suficientes</strong> para operar <strong class="fragment highlight-red"  style="">nos próximos seis meses.</strong>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+
+            <div class="grid-2">
+
+                <div>
+
+                    <div class="stat fragment">
+                        <div class="stat-number">
+                            74,7%
+                        </div>
+
+                        <div class="stat-label">
+                            Enfrentam dificuldades financeiras
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="stat fragment">
+                        <div class="stat-number">
+                            33%
+                        </div>
+
+                        <div class="stat-label">
+                            tem incerteza sobre o fluxo de caixa
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="spotlight-image">
+
+                    <img src="img/financeiro/desespero.png">
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="#DDD">
+            <hr>
+            <h1 style="text-align: center">PORÉM</h1>
+            <hr>
+        </section>
+
+        <section>
+
+            <h1 class="counter"
+                id="usersCounter">
+                0
+            </h1>
+
+            <p>
+                O Brasil atinge níveis recordes de Impacto Social,
+                <span class="fragment">mas a gestão financeira das OSCs continua crítica e pouco visível.</span>
+            </p>
+
+        </section>
+
+        <section data-background="#222">
+
+            <h2>Mas o problema é: </h2>
+            <div class="comparison">
+
+                <div class="before fragment fade-left">
+                    A falta de dinheiro?
+                </div>
+
+                <div class="after fragment fade-right">
+                    Ou a falta de controle?
+                </div>
+
+            </div>
+
+            <div class="fragment">
+                <hr>
+                <p>Então, quem mexe no financeiro dessa OSC?</p>
+            </div>
+
+        </section>
+
+        <section data-background="#DDD">
+            <h1>Agenda</h1>
+            <hr>
+            <ul>
+                <li class="fragment">Por dentro de uma OSC</li>
+                <li class="fragment">"O tal" do paradoxo do controle</li>
+                <li class="fragment">Quem mexe no financeiro? (auditoria)</li>
+                <li class="fragment">A dor da prestação de contas só no final</li>
+                <li class="fragment">O pulo do gato  🐱‍💻</li>
+            </ul>
+        </section>
+
+        <section data-background="img/financeiro/osc.jpg">
+            <h1 style="background-color: #333;">1. Por dentro de uma OSC</h1>
+        </section>
+
+
+        <section data-auto-animate>
+
+            <h2>Fluxo de Trabalho</h2>
+
+            <div class="process-flow">
+
+                <div class="process-node fragment">
+                    Proposta Social
+                </div>
+
+                <div class="process-arrow fragment">
+                    →
+                </div>
+
+                <div class="process-node fragment">
+                    Captação de Recursos
+                </div>
+
+                <div class="process-arrow fragment">
+                    →
+                </div>
+
+                <div class="process-node fragment">
+                    Operação
+                </div>
+
+                <div class="process-arrow fragment">
+                    →
+                </div>
+
+                <div class="process-node fragment">
+                    Prestação de Contas
+                </div>
+
+            </div>
+
+        </section>
+        <section data-auto-animate>
+
+            <h2>Fluxo de Trabalho</h2>
+            <hr>
+
+            <div class="process-flow">
+
+                <div class="process-node ">
+                    Ideia
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Captação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Operação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Prestação
+                </div>
+
+            </div>
+
+        </section>
+        <section data-auto-animate>
+
+            <h2>Fluxo de Trabalho</h2>
+            <hr>
+
+            <div class="process-flow">
+
+                <div class="process-node ">
+                    Ideia
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Captação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Operação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Prestação
+                </div>
+
+            </div>
+            <br>
+            <div class="process-flow">
+
+                <div style="background: rgba(239,68,68,.12);;" class="process-node ">
+                    Captação + Ideia
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div style="background: rgba(239,68,68,.12);;" class="process-node ">
+                    Operação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div style="background: rgba(239,68,68,.12);;" class="process-node ">
+                    Prestação
+                </div>
+
+            </div>
+
+        </section>
+        <section data-auto-animate>
+
+            <h2>Fluxo de Trabalho</h2>
+            <hr>
+
+            <div class="process-flow">
+
+                <div class="process-node ">
+                    Ideia
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Captação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Operação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div class="process-node ">
+                    Prestação
+                </div>
+
+            </div>
+            <br>
+            <div class="process-flow">
+
+                <div style="background: rgba(239,68,68,.12);;" class="process-node ">
+                    Captação + Ideia
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div style="background: rgba(239,68,68,.12);;" class="process-node ">
+                    Operação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div style="background: rgba(239,68,68,.12);;" class="process-node ">
+                    Prestação
+                </div>
+
+            </div>
+
+            <br>
+            <div class="process-flow">
+                <div style="background: rgba(201, 188, 89, .12)" class="process-node ">
+                    Operação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div style="background: rgba(201, 188, 89, .12)" class="process-node ">
+                    Captação
+                </div>
+
+                <div class="process-arrow ">
+                    →
+                </div>
+
+                <div style="background: rgba(201, 188, 89, .12)" class="process-node ">
+                    Prestação
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="img/financeiro/moedas.jpeg">
+            <br><br><br><br><br>
+            <p style="font-size: 3rem">De todo modo,  <br>cada moeda conta!</p>
+        </section>
+
+
+        <section>
+
+            <h2>Sustentabilidade</h2>
+
+            <div class="hexagon-layout">
+
+                <div>
+
+                    <div  data-fragment-index="1" class="adapter fragment">
+                        Projetos
+                    </div>
+
+                    <br>
+
+                    <div data-fragment-index="4"  class="adapter fragment">
+                        Prestação de Serviços
+                    </div>
+
+                </div>
+
+                <div data-fragment-index="5"  class="hex-core fragment">
+
+                    Financeiro
+
+                </div>
+
+                <div>
+                    <div data-fragment-index="2"  class="adapter fragment">
+                        Atendidos
+                    </div>
+
+
+                    <br>
+
+                    <div data-fragment-index="3"  class="adapter fragment">
+                        Materiais/Infraestrutura
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <ul>
+                <li><span class="fragment highlight-red">41%</span> das OSCs dedicam menos de <span class="fragment highlight-red">2 horas</span> semanais às finanças.</li>
+            </ul>
+            <br><br><br>
+            <div class="callout" style="font-size: 2rem;">
+
+                <strong>Risco de Auditoria:</strong> Sem visibilidade financeira, o impacto social é limitado
+                <br><br>
+
+                <span class="fragment">e a organização fica vulnerável a crises de falta de dinheiro não detectadas.</span>
+
+            </div>
+        </section>
+
+
+        <section data-background="img/financeiro/paradoxo.jpg">
+            <h1 style="background-color: #333;">2. O Paradoxo do controle</h1>
+        </section>
+
+        <section data-background="#222">
+
+            <h2>O "Controle" até existe </h2>
+
+            <div class="comparison">
+
+                <div class="after fragment fade-left">
+                    Quanto?
+                </div>
+                <div class="before fragment fade-right">
+                    2h por semana
+                </div>
+
+                <div class="after fragment fade-left">
+                    Como?
+                </div>
+                <div class="before fragment fade-right">
+                    com papel e caneta
+                </div>
+
+                <div class="after fragment fade-left">
+                    Quem?
+                </div>
+                <div class="before fragment fade-right">
+                    Quem tiver "ocioso"
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+
+            <div class="big-number">
+
+                <div class="value fragment">
+                    Apenas 45%
+                </div>
+
+                <div class="label fragment">
+                    possuem profissionais dedicados exclusivamente à área financeira
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section>
+            <div class="callout" style="font-size: 3rem;">
+
+                <strong>25% (1 em cada 4):</strong> das OSCs dependem de pessoas sem formação técnica na área
+            </div>
+            <br>
+
+            <div class="card" style="font-size: 1.6rem; background-color: rgba(239,68,68,.12);">
+                <strong style="color: red;">Risco de Auditoria:</strong> A falta de competência técnica eleva o risco de erros materiais e <strong class="fragment highlight-blue">descumprimento de normas</strong> contábeis fundamentais.
+            </div>
+        </section>
+
+
+        <section data-background="../img/gifs/miranha.gif" data-background-size="100%">
+            <h2 style="background-color: white; color: var(--bussola-purple); text-align: center">E aí, quem mexeu aqui?</h2>
+        </section>
+
+        <section>
+
+            <h2>Controle sem rastreabilidade</h2>
+
+            <div class="gateway-layout">
+
+                <div class="gateway fragment">
+                    Recurso <br> entrou
+                </div>
+
+                <h2 class="fragment">→</h2>
+
+                <div class="server-stack">
+
+                    <div class="server fragment" style=" background-color: rgba(239,68,68,.4);">
+                        - R$ 900,00
+                    </div>
+
+                    <div class="server fragment" style=" background-color: rgba(239,68,68,.4);">
+                        - R$ 12.000,00
+                    </div>
+
+                    <div class="server fragment" style=" background-color: rgba(239,68,68,.4);">
+                        - R$ 1.876,90
+                    </div>
+
+                </div>
+
+                <h2 class="fragment">→</h2>
+                <div class="gateway fragment">
+                    Pra onde? <br> Quem? <br> Por que?
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <div class="fake-terminal">
+
+<pre id="terminalOutput">
+</pre>
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <div class="big-number">
+
+                <div class="value fragment">
+                    11,5%
+                </div>
+
+                <div class="label fragment">
+                    das OSCs não possuem qualquer controle formal (papel ou memória)
+                </div>
+
+            </div>
+
+        </section>
+        <section data-background="#333">
+
+            <div class="big-number">
+
+                <div class="value fragment">
+                    24%
+                </div>
+
+                <div class="label fragment">
+                    das OSCs usam apenas planilhas simples sem vinculo com projetos ou centros de custo
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="../img/gifs/velma.gif">
+            <br><br><br><br><br><br>
+            <h2 class="fragment"  style="border-radius: 15px; padding: 10px; background-color: black">E não tem mistério</h2>
+            <p  class="fragment" style="border-radius: 15px; padding: 10px; background-color: black;">O dinheiro não sumiu do nada, <br> a gente só não sabe pra onde ele foi</p>
+        </section>
+
+
+
+        <section data-background="img/financeiro/auditoria.jpg">
+            <h1 style="background-color: #333;">3. Auditoria</h1>
+        </section>
+
+        <section data-background="#222">
+
+            <h2>Auditoria: o que a gente pensa</h2>
+
+            <div class="alert-danger fragment">
+
+                Fraude
+
+                <br><br>
+
+                Desvio de Recursos
+
+                <br><br>
+
+                Corrupção
+
+                <br><br>
+
+                Irregularidades
+
+            </div>
+
+        </section>
+
+        <section>
+
+            <h2>
+                Auditoria é na verdade
+            </h2>
+            <hr>
+
+            <div class="fragment fade-up" style="margin-top: 5px;">
+                O que foi feito?
+            </div>
+
+
+            <div class="fragment fade-up" style="margin-top: 5px;">
+                Quando?
+            </div>
+
+
+            <div class="fragment fade-up" style="margin-top: 5px;">
+                Usando qual meio?
+            </div>
+
+
+            <div class="fragment fade-up" style="margin-top: 5px;">
+                Quem fez?
+            </div>
+
+
+            <div class="fragment fade-up" style="margin-top: 5px;">
+                Essa pessoa poderia fazer isso?
+            </div>
+
+            <div class="fragment fade-up" style="margin-top: 5px;">
+                E porque ela fez?
+            </div>
+
+
+        </section>
+
+        <section>
+
+            <h2>Ou seja</h2>
+
+            <div class="code-compare">
+
+                <div class="code-card fragment">
+
+                    <h4>Antes</h4>
+
+                    <pre><code data-trim>
+No dia 10/06 um pix de R$ 100
+foi feito para esse CPF.
+</code></pre>
+
+                </div>
+
+                <div class="code-card fragment">
+
+                    <h4>Depois</h4>
+
+                    <pre><code data-trim>
+Um pix foi feito de R$ 100 para esse CPF,
+em 10/06/2024 às 12:45,
+usando o sistema X,
+feito por Fulano,
+com a devida autorização do setor Y,
+para pagar a fatura Z do Projeto W.
+</code></pre>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="../img/gifs/multi-task.gif" data-background-size="90%">
+            <br><br><br><br><br><br>
+            <h2 class="fragment"  style="border-radius: 15px; padding: 10px; background-color: black">Mas aqui na minha OSC é pouca gente</h2>
+        </section>
+
+        <section>
+            <div class="big-number">
+                <h2>A prestação de contas muda conforme a OSC cresce</h2>
+            </div>
+        </section>
+
+        <section>
+
+            <div class="three-columns">
+
+                <div class="card fragment">
+                    <h3>Até 10 pessoas</h3>
+
+                    <div class="big-number">
+                        15,5%
+                    </div>
+
+                    <p style="font-size: 1rem">
+                        têm dificuldade para elaborar relatórios de prestação de contas.
+                    </p>
+                    <hr>
+
+                    <small>
+                        O desafio é centralizar os dados.
+                    </small>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Crescimento</h3>
+
+                    <div class="big-number">
+                        →
+                    </div>
+
+                    <p style="font-size: 1rem">
+                        Novos projetos, novas fontes de recurso e mais pessoas envolvidas.
+                    </p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Mais de 50 pessoas</h3>
+
+                    <div class="big-number">
+                        45,5%
+                    </div>
+
+                    <p style="font-size: 1rem">
+                        apontam a consolidação de dados como principal dificuldade.
+                    </p>
+                    <hr>
+
+                    <small>
+                        O desafio deixa de ser operacional e passa a ser estrutural.
+                    </small>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <div class="statement">
+                <div>
+
+                    <h1>
+                        O problema muda.
+                    </h1>
+
+                    <br>
+                    <h1 class="gradient-text">
+                        Mas não desaparece.
+                    </h1>
+                </div>
+            </div>
+        </section>
+
+        <section data-background="#222">
+            <h2>O que uma auditoria enxerga?</h2>
+            <hr>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>OSC Menor</th>
+                    <th>OSC Maior</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>Documento ausente</td>
+                    <td>Dados divergentes</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Comprovante perdido</td>
+                    <td>Informações duplicadas</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Controle informal</td>
+                    <td>Sistemas desconectados</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Pessoas sobrecarregadas</td>
+                    <td>Processos fragmentados</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="card fragment">
+                <strong>Insight:</strong>
+                Em organizações menores, a auditoria procura evidências.
+                Em organizações maiores, ela procura consistência.
+            </div>
+        </section>
+
+        <section>
+
+            <h2>Crescimento</h2>
+
+            <div class="graph">
+
+                <div class="bar fragment"
+                     data-height="100"></div>
+
+                <div class="bar fragment"
+                     data-height="200"></div>
+
+                <div class="bar fragment"
+                     data-height="300"></div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <h1>Pra quem não tem nada</h1>
+            <p class="fragment">Uma planilha pode ajudar</p>
+        </section>
+
+        <section data-background="img/financeiro/planilha.png" data-background-size="100%">
+
+        </section>
+
+
+        <!--
+        <section>
+            <h3>6. O Ciclo Vicioso que Tira o Sono</h3>
+            <ul>
+                <li><span class="stat-highlight">33%</span> citam a Prestação de Contas e Burocracia como maior dificuldade [12, 13].</li>
+                <li><span class="stat-highlight">30%</span> focam na Captação de Recursos devido à falta de dinheiro [13].</li>
+                <li><span class="stat-highlight">16,5%</span> sofrem com a falta de sistema e tecnologia adequada [13].</li>
+            </ul>
+            <div class="insight-box">
+                <strong>Risco de Auditoria:</strong> O foco em "apagar incêndios" burocráticos impede a análise preventiva, resultando em trilhas de auditoria pouco confiáveis [12].
+            </div>
+        </section>
+
+        <section>
+            <h3>7. Da Sobrevivência à Eficiência</h3>
+            <ul>
+                <li><strong>Sobrevivência:</strong> Gestão informal e reativa a crises imediatas [2, 14].</li>
+                <li><strong>Crescimento:</strong> Processos em construção com incerteza sobre o futuro [11, 14].</li>
+                <li><strong>Eficiência:</strong> Gestão profissionalizada com dados integrados e escala de impacto [14].</li>
+            </ul>
+            <div class="insight-box">
+                <strong>Conclusão:</strong> A auditoria torna-se estratégica quando a OSC migra para a gestão profissional; dados integrados reduzem custos e aumentam a confiança dos doadores [4, 14].
+            </div>
+        </section>-->
+
+        <section data-background="../aulas/2026/img/git/pulo-do-gato.jpg">
+            <br><br><br><br><br><br><br><br><br>
+            <hr>
+            <h1 style="background-color: #333">5. O pulo do gato</h1>
+            <hr>
+        </section>
+
+        <section data-background="#143D8D">
+            <h2>
+                Como criar um financeiro auditável?
+            </h2>
+
+            <div class="card fragment">
+                <p>
+                    Não começa com auditoria externa.
+                </p>
+
+                <p>
+                    Não começa com um ERP.
+                </p>
+
+                <p>
+                    Não começa com uma planilha nova.
+                </p>
+            </div>
+
+            <div class="card fragment">
+                <h3>
+                    Começa respondendo 5 perguntas.
+                </h3>
+            </div>
+        </section>
+
+        <section data-background="#08152D">
+
+            <div class="timeline">
+
+                <div class="fragment">
+                    Onde está?
+                </div>
+
+                <div class="fragment">
+                    Para onde foi?
+                </div>
+
+                <div class="fragment">
+                    Posso provar?
+                </div>
+
+                <div class="fragment">
+                    Estou acompanhando?
+                </div>
+
+                <div class="fragment">
+                    O que faço agora?
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="#143D8D">
+
+            <h2>
+                1. Onde está o dinheiro?
+            </h2>
+
+            <div class="three-columns">
+
+                <div class="card fragment">
+                    Conta bancária
+                </div>
+
+                <div class="card fragment">
+                    Projeto
+                </div>
+
+                <div class="card fragment">
+                    Recurso disponível
+                </div>
+
+            </div>
+
+            <div class="card fragment">
+                <strong>
+                    Objetivo:
+                </strong>
+                enxergar rapidamente o saldo real da organização.
+            </div>
+
+        </section>
+
+        <section data-background="#143D8D">
+
+            <h2>
+                2. Para onde o dinheiro foi?
+            </h2>
+
+            <div class="timeline">
+
+                <div class="fragment">
+                    Projeto
+                </div>
+
+                <div class="fragment">
+                    Rubrica
+                </div>
+
+                <div class="fragment">
+                    Pagamento
+                </div>
+
+                <div class="fragment">
+                    Responsável
+                </div>
+
+            </div>
+
+            <div class="card fragment">
+                Cada gasto precisa ter contexto.
+            </div>
+
+        </section>
+
+        <section data-background="#08152D">
+
+            <h2>
+                3. Posso provar?
+            </h2>
+
+            <div class="timeline">
+
+                <div class="fragment">
+                    Contrato
+                </div>
+
+                <div class="fragment">
+                    Nota Fiscal
+                </div>
+
+                <div class="fragment">
+                    Comprovante
+                </div>
+
+                <div class="fragment">
+                    Projeto
+                </div>
+
+            </div>
+
+            <div class="card fragment">
+
+                <h3>
+                    Teste simples
+                </h3>
+
+                <p>
+                    Se alguém perguntar daqui a 2 anos por que um pagamento foi feito...
+                </p>
+
+                <p class="fragment">
+                    sua OSC consegue responder?
+                </p>
+
+            </div>
+
+        </section>
+
+        <section data-background="#143D8D">
+
+            <h2>
+                4. Estou acompanhando?
+            </h2>
+
+            <div class="three-columns">
+
+                <div class="card fragment">
+                    Semanal
+                </div>
+
+                <div class="card fragment">
+                    Mensal
+                </div>
+
+                <div class="card fragment">
+                    Trimestral
+                </div>
+
+            </div>
+
+            <div class="card fragment">
+
+                <h3>
+                    Auditoria contínua
+                </h3>
+
+                <p>
+                    O problema não deveria aparecer apenas na prestação de contas.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section data-background="#143D8D">
+
+            <h2>
+                5. O que faço agora?
+            </h2>
+
+            <div class="three-columns">
+
+                <div class="card fragment">
+                    Posso contratar?
+                </div>
+
+                <div class="card fragment">
+                    Posso expandir?
+                </div>
+
+                <div class="card fragment">
+                    Preciso reduzir riscos?
+                </div>
+
+            </div>
+
+            <div class="card fragment">
+                O financeiro deixa de apenas registrar.
+                <br><br>
+                Passa a apoiar decisões.
+            </div>
+
+        </section>
+
+        <section data-background="linear-gradient(135deg,#7A4FFF,#143D8D,#62D0F5)">
+
+            <h2>
+                Um financeiro auditável consegue responder:
+            </h2>
+
+            <div class="timeline">
+
+                <div class="fragment">
+                    Onde está?
+                </div>
+
+                <div class="fragment">
+                    Para onde foi?
+                </div>
+
+                <div class="fragment">
+                    Posso provar?
+                </div>
+
+                <div class="fragment">
+                    Estou acompanhando?
+                </div>
+
+                <div class="fragment">
+                    O que faço agora?
+                </div>
+
+            </div>
+
+        </section>
+
+        <section data-background="#08152D">
+
+            <div class="statement">
+
+                <h1 class="gradient-text">
+                    Clareza financeira não é saber quanto entrou.
+                </h1>
+
+            </div>
+
+        </section>
+
+        <section>
+            <p class="r-fit-text">DÚVIDAS?</p>
+
+        </section>
+        <section data-background="#222">
+            <p class="r-fit-text">OBRIGADO!</p>
+
+            <img width="500px" src="img/financeiro/bussola.png" alt="">
+        </section>
+
+
+        <section data-background="#08152D">
+
+            <div class="statement">
+
+                <h1>
+                    É conseguir responder perguntas rapidamente.
+                </h1>
+
+            </div>
+
+        </section>
+
+
+        <section data-background="img/financeiro/panorama.png" data-background-size="100%">
+
+        </section>
+
+    </div>
+</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/notes/notes.js"></script>
+<script src="../plugin/markdown/markdown.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+</script>
+
+
+<script>
+
+    Reveal.on('fragmentshown', event => {
+
+        if(event.fragment.dataset.fragmentIndex === "1") {
+            document
+                .getElementById('line1')
+                .classList
+                .add('visible');
+        }
+
+        document.querySelectorAll('.spot')
+            .forEach(el => el.classList.remove('active'));
+
+        if(event.fragment) {
+            event.fragment.classList.add('active');
+        }
+
+    });
+
+    Reveal.on('slidechanged', event => {
+
+        if(
+            event.currentSlide
+                .querySelector('#terminalOutput')
+        ) {
+            type();
+        }
+
+        const counter =
+            document.getElementById('usersCounter');
+
+        if(!counter) return;
+
+        let value = 0;
+
+        const interval = setInterval(() => {
+
+            value += 66;
+
+            counter.innerText = value
+                .toLocaleString();
+
+            if(value >= 2000) {
+                counter.innerText = 2026;
+
+                clearInterval(interval);
+            }
+
+        }, 30);
+
+        const ball =
+            document.getElementById('requestBall');
+
+        if(!ball) return;
+
+        ball.animate(
+
+            [
+                {left:'120px'},
+                {left:'900px'}
+            ],
+
+            {
+                duration:1500,
+                iterations:Infinity
+            }
+
+        );
+
+    });
+
+    // function createMessage() {
+    //
+    //     const msg =
+    //         document.createElement('div');
+    //
+    //     msg.className =
+    //         'rabbit-message';
+    //
+    //     document.body.appendChild(msg);
+    //
+    //     msg.animate(
+    //
+    //         [
+    //             {
+    //                 left:'300px',
+    //                 top:'300px'
+    //             },
+    //             {
+    //                 left:'600px',
+    //                 top:'300px'
+    //             },
+    //             {
+    //                 left:'900px',
+    //                 top:'300px'
+    //             }
+    //         ],
+    //
+    //         {
+    //             duration:2000
+    //         }
+    //
+    //     );
+    //
+    //     setTimeout(
+    //         () => msg.remove(),
+    //         2000
+    //     );
+    // }
+    //
+    // setInterval(createMessage,1000);
+
+    // 8
+    Reveal.on(
+        'fragmentshown', event => {
+            if(event.fragment.id === 'showLine') {
+                alert('aqui');
+                document
+                    .getElementById('connection')
+                    .classList
+                    .add('visible');
+                return;
+            }
+
+            const latency =
+                document.getElementById(
+                    'latency'
+                );
+
+            if(event.fragment.dataset.fragmentIndex==="1"){
+                latency.innerText="650ms";
+            }
+
+            if(event.fragment.dataset.fragmentIndex==="2"){
+                latency.innerText="120ms";
+            }
+
+        }
+
+    );
+
+    //7
+    Reveal.on('slidechanged', () => {
+
+        document
+            .querySelectorAll('.bar')
+            .forEach(bar => {
+
+                bar.style.height =
+                    bar.dataset.height + 'px';
+
+            });
+
+    });
+
+    setInterval(() => {
+
+        // criar mensagem
+
+        // mover
+
+        // remover
+
+    },1000);
+
+    const steps =
+        document.querySelectorAll(
+            '.pipeline-step'
+        );
+
+    let i = 0;
+
+    setInterval(() => {
+
+        steps.forEach(
+            step => step.classList.remove('active')
+        );
+
+        steps[i].classList.add('active');
+
+        i++;
+
+        if(i >= steps.length) {
+            i = 0;
+        }
+
+    },1000);
+
+    // 6
+    const command = `
+oi Sumido
+faz um pix para esse CPF XXX.XXX.XXX-XX
+no valor de R$ 1.000,00
+é um prestador de serviços que precisa receber
+`;
+
+    let index = 0;
+
+    function type() {
+
+        const output =
+            document.getElementById(
+                'terminalOutput'
+            );
+
+        if(!output) return;
+
+        output.innerText =
+            command.substring(0,index);
+
+        index++;
+
+        if(index < command.length) {
+            setTimeout(type,50);
+        }
+
+    }
+
+
+    Reveal.on('ready', () => {
+
+        document
+            .querySelectorAll('.bar')
+            .forEach(bar => {
+
+                bar.style.height =
+                    bar.dataset.height + 'px';
+
+            });
+
+    });
+</script>
+</body>
+
+</html>

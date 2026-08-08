@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+
+    <title>Aula 28 - Documentação Técnica como Parte do Produto</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+
+    <style>
+        :root{
+            --primary:#00d8ff;
+            --secondary:#7c4dff;
+            --success:#00e676;
+            --warning:#ffca28;
+            --danger:#ff5252;
+            --dark:#0f172a;
+            --card:#1e293b;
+        }
+
+        body{
+            background:#0b1020;
+        }
+
+        .reveal{
+            font-size:32px;
+        }
+
+        .reveal h1{
+            color:var(--primary);
+            text-transform:none;
+        }
+
+        .reveal h2{
+            color:var(--primary);
+            text-transform:none;
+        }
+
+        .reveal h3{
+            color:#fff;
+        }
+
+        .box{
+            background:rgba(255,255,255,.05);
+            border-left:6px solid var(--primary);
+            padding:25px;
+            border-radius:12px;
+        }
+
+        .grid-2{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:30px;
+        }
+
+        .card{
+            background:var(--card);
+            padding:25px;
+            border-radius:15px;
+        }
+
+        .timeline{
+            display:flex;
+            justify-content:space-between;
+            margin-top:50px;
+            gap:20px;
+        }
+
+        .timeline-item{
+            flex:1;
+            background:var(--card);
+            padding:20px;
+            border-top:5px solid var(--primary);
+            border-radius:12px;
+        }
+
+        .highlight{
+            color:var(--warning);
+            font-weight:bold;
+        }
+
+        .quote{
+            font-size:1.3em;
+            font-style:italic;
+            color:#fff;
+            margin-top:30px;
+        }
+
+        ul li{
+            margin-bottom:12px;
+        }
+
+        .big-number{
+            font-size:4em;
+            font-weight:bold;
+            color:var(--primary);
+        }
+
+        .center{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <!-- ====================================================== -->
+        <!-- TIPOS DE DOCUMENTAÇÃO + C4 MODEL -->
+        <!-- ====================================================== -->
+
+        <section>
+            <h2>Tipos de Documentação?</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Negócio</h3>
+                    <p>Por que o sistema existe?</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Funcional</h3>
+                    <p>O que o sistema faz?</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Técnica</h3>
+                    <p>Como foi construuído?</p>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Operacional</h3>
+                    <p>Como executar e manter?</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplos Reais</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Exemplos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="fragment">
+                    <td>Negócio</td>
+                    <td>Canvas, KPIs, Jornada do Cliente</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Funcional</td>
+                    <td>User Stories, Casos de Uso</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Técnica</td>
+                    <td>C4, ADR, OpenAPI</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Operacional</td>
+                    <td>Deploy, Backup, Monitoramento</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>O problema da documentação técnica</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Muitas equipes documentam código demais...
+                </p>
+
+                <p class="fragment">
+                    ...e arquitetura de menos.
+                </p>
+
+                <p class="fragment highlight">
+                    O resultado é ninguém entender como o sistema funciona.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h1>C4 Model</h1>
+
+            <h3>Uma forma simples de documentar arquitetura</h3>
+
+            <p class="fragment">
+                Criado por Simon Brown
+            </p>
+        </section>
+
+        <section>
+            <h2>Por que o C4 surgiu?</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Diagramas UML se tornaram complexos demais.
+                </p>
+
+                <p class="fragment">
+                    Muitas empresas deixaram de documentar arquitetura.
+                </p>
+
+                <p class="fragment highlight">
+                    O C4 simplifica a comunicação arquitetural.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Os 4 níveis do C4</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item fragment">
+                    Context
+                </div>
+
+                <div class="timeline-item fragment">
+                    Container
+                </div>
+
+                <div class="timeline-item fragment">
+                    Component
+                </div>
+
+                <div class="timeline-item fragment">
+                    Code
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Nível 1 — Context Diagram</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Mostra o sistema dentro do ambiente de negócio.
+                </p>
+
+                <p class="fragment">
+                    Quem usa?
+                </p>
+
+                <p class="fragment">
+                    Com quais sistemas ele conversa?
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo: E-commerce</h2>
+
+            <pre><code>
+Cliente
+   |
+   v
+E-commerce
+   |
+   +--> Gateway de Pagamento
+   |
+   +--> Correios
+   |
+   +--> ERP
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Nível 2 — Container Diagram</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Mostra os grandes blocos tecnológicos.
+                </p>
+
+                <p class="fragment">
+                    Não são Docker Containers.
+                </p>
+
+                <p class="fragment">
+                    São aplicações e bancos.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo: Netflix Simplificada</h2>
+
+            <pre><code>
+Frontend React
+      |
+      v
+API Gateway
+      |
+      +--> Serviço de Filmes
+      |
+      +--> Serviço de Assinaturas
+      |
+      +--> Serviço de Recomendação
+
+Banco PostgreSQL
+Redis
+Kafka
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Nível 3 — Component Diagram</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Mostra os módulos internos de uma aplicação.
+                </p>
+
+                <p class="fragment">
+                    Muito útil para DDD e Clean Architecture.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo: API Laravel</h2>
+
+            <pre><code>
+PedidoController
+       |
+PedidoService
+       |
+PedidoRepository
+       |
+PostgreSQL
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Nível 4 — Code Diagram</h2>
+
+            <div class="box">
+
+                <p class="fragment">
+                    Mostra classes e relacionamentos.
+                </p>
+
+                <p class="fragment">
+                    Muitas equipes nem chegam neste nível.
+                </p>
+
+                <p class="fragment highlight">
+                    O código normalmente já é a documentação.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Quando usar cada nível?</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Nível</th>
+                    <th>Público</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="fragment">
+                    <td>Context</td>
+                    <td>Negócio e Gestão</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Container</td>
+                    <td>Arquitetos e Tech Leads</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Component</td>
+                    <td>Desenvolvedores</td>
+                </tr>
+
+                <tr class="fragment">
+                    <td>Code</td>
+                    <td>Equipe Técnica</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Ferramentas modernas</h2>
+
+            <div class="grid-2">
+
+                <div class="card fragment">
+                    <h3>Diagramas Visuais</h3>
+
+                    <ul>
+                        <li class="fragment">Draw.io</li>
+                        <li class="fragment">Excalidraw</li>
+                        <li class="fragment">Miro</li>
+                    </ul>
+                </div>
+
+                <div class="card fragment">
+                    <h3>Diagramas as Code</h3>
+
+                    <ul>
+                        <li class="fragment">Mermaid</li>
+                        <li class="fragment">PlantUML</li>
+                        <li class="fragment">Structurizr</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Mensagem Final</h2>
+
+            <div class="quote">
+                Bons sistemas possuem código de qualidade.
+                <br><br>
+                Sistemas maduros possuem código e arquitetura documentados.
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash:true,
+        slideNumber:true,
+        transition:'slide'
+    });
+</script>
+
+</body>
+</html>
