@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Principais Tags HTML</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+
+<style>
+  :root{
+    --bg:#ffffff;
+    --panel:#f4f5fa;
+    --panel-2:#e9ebf5;
+    --line: rgba(20,18,40,.14);
+    --ink:#15121f;
+    --ink-dim:#514c66;
+    --amber:#b25b06;
+    --mint:#0a8f66;
+    --blue:#2453c9;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+
+  html{ font-size: 22px; }
+  html, .reveal { background: var(--bg); }
+  .reveal { font-family: var(--sans); color: var(--ink); }
+  .reveal .slides section {
+    background: var(--bg);
+    text-align:left;
+    /*padding: 2.4rem 3.4rem;*/
+    border-radius: 0;
+  }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: var(--mono); margin: 0; }
+  .reveal ::selection{ background: var(--mint); color:#fff; }
+  .reveal .controls{ color: var(--ink); }
+  .reveal .progress{ color: var(--mint); height: 8px; }
+
+  /* ---------- shared bits ---------- */
+  .eyebrow{
+    font-family: var(--mono); font-size: 1.3rem; letter-spacing:.14em;
+    text-transform: uppercase; color: var(--amber); opacity:.95; margin-bottom: .7rem;
+    font-weight:700;
+  }
+  .br{ color: var(--amber); }
+
+  /* ---------- title slide ---------- */
+  .title-slide{ text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
+  .brand-mark{
+    font-family: var(--mono); font-weight:800; letter-spacing:-.02em;
+    font-size: clamp(3.6rem, 11vw, 8rem); color: var(--ink);
+    animation: brandIn 1s ease both;
+  }
+  .brand-mark .br{ color: var(--mint); }
+  .title-slide h1{ font-family: var(--sans); font-weight:800; font-size: clamp(2.2rem,4.8vw,3.6rem); margin-top:1.2rem; }
+  .title-slide .subtitle{ font-family: var(--mono); color: var(--ink-dim); font-size: clamp(1.3rem,2.4vw,1.8rem); margin-top:.7rem; }
+  .title-slide .hint{ margin-top: 2.8rem; color: var(--ink-dim); font-size:1.2rem; opacity:.8; }
+  @keyframes brandIn{ from{ opacity:0; transform: translateY(18px) scale(.96);} to{opacity:1; transform:none;} }
+
+  /* ---------- divider slides ---------- */
+  .divider-slide{ display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; }
+  .divider-icon{ font-size: clamp(4rem,7vw,6.5rem); margin-bottom: .6rem; filter: drop-shadow(0 6px 14px rgba(0,0,0,.12)); }
+  .divider-label{ font-family: var(--sans); font-weight:800; font-size: 4rem; color: var(--ink); }
+  .divider-chips{ display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center; margin-top:1.8rem; max-width: 78vw; }
+  .chip{
+    font-family: var(--mono); font-size:1.4rem; color: var(--mint); font-weight:600;
+    background: var(--panel-2); border:1px solid var(--line); border-radius: 999px;
+    padding:.5rem 1.2rem;
+  }
+
+  /* ---------- tag slides ---------- */
+  .tag-slide{ height:100%; display:flex; flex-direction:column; justify-content:center; }
+  .tag-name{
+    font-weight:800; font-size: 3rem; letter-spacing:-.01em;
+    animation: tagIn .5s ease both;
+  }
+  @keyframes tagIn{ from{opacity:0; transform: translateX(-14px);} to{opacity:1; transform:none;} }
+
+  .panels{ display:grid; grid-template-columns: 1.15fr 1fr; gap: 1.8rem; margin: 1.6rem 0 1.4rem; }
+  .panel{
+    background: var(--panel); border:1px solid var(--line); border-radius: 16px;
+    padding: 1.2rem 1.4rem 1.4rem; min-height: 0;
+    box-shadow: 0 8px 24px rgba(20,18,40,.08);
+  }
+  .panel-header{
+    display:flex; align-items:center; gap:.5rem; font-family: var(--mono);
+    font-size: 1.15rem; letter-spacing:.1em; text-transform:uppercase; color: var(--ink-dim);
+    margin-bottom:.7rem; font-weight:600;
+  }
+  .panel-header .ico{ color: var(--amber); }
+  .panel-header .ico.mint{ color: var(--mint); }
+
+  .code-panel pre{ margin:0; background:transparent; box-shadow:none; }
+  .code-panel code{
+    background:transparent !important; padding:0 !important;
+    font-family: var(--mono) !important; font-size: 1.5rem !important;
+    line-height:1.55 !important; white-space: pre !important;
+  }
+  .cursor{
+    display:inline-block; width:.5em; height:1.05em; background: var(--mint);
+    vertical-align: text-bottom; margin-left:.15em; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .browser-mock{ border-radius:10px; overflow:hidden; border:1px solid var(--line); }
+  .browser-bar{
+    display:flex; align-items:center; gap:.5rem; background: var(--panel-2);
+    padding:.6rem .8rem;
+  }
+  .bdot{ width:.7rem; height:.7rem; border-radius:50%; display:inline-block; }
+  .bdot.r{ background:#ff6b6b; } .bdot.y{ background:#f5b942; } .bdot.g{ background:#0a8f66; }
+  .url{
+    font-family: var(--mono); font-size:1rem; color: var(--ink-dim);
+    background: #fff; border:1px solid var(--line); border-radius:6px; padding:.25rem .7rem; margin-left:.5rem;
+  }
+  .loading-bar{ height:3px; width:0; background: var(--mint); }
+  .result-panel.fragment.visible .loading-bar{ animation: loadbar .5s ease forwards; }
+  @keyframes loadbar{ from{ width:0; } to{ width:100%; } }
+  .browser-body{ height: 220px; background:#fff; overflow:auto; }
+  .browser-body iframe{
+    width:100%; height:100%; border:0; zoom:1.7; transform-origin: top left;
+  }
+
+  .uses{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.6rem; }
+  .uses li{
+    display:flex; align-items:flex-start; gap:.65rem;
+    font-size: clamp(1.3rem, 2vw, 1.8rem); color: var(--ink);
+  }
+  .uses li::before{ content:"▸"; color: var(--mint); font-weight:800; }
+  code.inline{
+    font-family: var(--mono); background: var(--panel-2); color: var(--amber);
+    padding:.08em .42em; border-radius:5px; font-size:.85em; border:1px solid var(--line);
+  }
+
+  /* ---------- end slide ---------- */
+  .end-slide{ height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+  .end-slide h2{ font-family: var(--sans); font-weight:800; font-size: clamp(2.6rem,5.5vw,3.8rem); margin-bottom:1.4rem; }
+  .chip-grid{ display:flex; flex-wrap:wrap; gap:.7rem; justify-content:center; max-width:82vw; }
+  .thanks{ margin-top:2.2rem; font-size: clamp(1.6rem,3vw,2.3rem); color: var(--ink-dim); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section class="title-slide">
+      <div class="brand-mark"><span class="br">&lt;</span>html<span class="br">&gt;</span></div>
+      <h1>Principais Tags HTML</h1>
+      <p class="subtitle">código → resultado → onde usar</p>
+      <p class="hint">use as setas do teclado para navegar →</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+
+<script>
+const DECK = [
+  { id:'estrutura', label:'Estrutura', icon:'🏗️', tags:[
+    { tag:'html', code:
+`<!DOCTYPE html>
+<html lang="pt-br">
+  <body>Minha primeira página</body>
+</html>`,
+      uses:[
+        'Elemento raiz de todo documento HTML',
+        'Atributo `lang` define o idioma da página',
+        'Envolve as tags `head` e `body`'
+      ]},
+    { tag:'head', code:
+`<head>
+  <meta charset="UTF-8">
+  <title>Minha Página</title>
+</head>`,
+      uses:[
+        'Não aparece no conteúdo visível da página',
+        'Configura metadados: `title`, `charset`, links...',
+        '`title` define o nome mostrado na aba do navegador'
+      ]},
+    { tag:'body', code:
+`<body>
+  <h1>Bem-vindo!</h1>
+  <p>Conteúdo visível da página.</p>
+</body>`,
+      uses:[
+        'Contém tudo que aparece na tela',
+        'Existe apenas um `body` por documento',
+        'É onde ficam textos, imagens, listas, formulários...'
+      ]},
+  ]},
+
+  { id:'texto', label:'Texto', icon:'📝', tags:[
+    { tag:'h1…h6', code:
+`<h1>Título principal</h1>
+<h2>Subtítulo</h2>
+<h3>Seção</h3>`,
+      uses:[
+        'Hierarquia de importância: `h1` é o mais importante',
+        'Boa prática: apenas um `h1` por página',
+        'Ajuda no SEO e em leitores de tela'
+      ]},
+    { tag:'p', code:
+`<p>Este é um parágrafo de texto corrido.</p>`,
+      uses:[
+        'Bloco de texto padrão',
+        'Quebra de linha automática antes e depois',
+        'Base da maior parte do conteúdo textual'
+      ]},
+    { tag:'strong / em', code:
+`<p><strong>Importante</strong> e <em>enfatizado</em>.</p>`,
+      uses:[
+        '`strong` = importância semântica (negrito)',
+        '`em` = ênfase de leitura (itálico)',
+        'Diferem de `b`/`i`, que são só efeito visual'
+      ]},
+    { tag:'br', code:
+`Linha 1<br>Linha 2`,
+      uses:[
+        'Quebra de linha simples',
+        'Tag vazia — não tem fechamento',
+        'Usar com moderação (evite para espaçamento)'
+      ]},
+    { tag:'hr', code:
+`<p>Seção 1</p>
+<hr>
+<p>Seção 2</p>`,
+      uses:[
+        'Linha divisória temática',
+        'Separa blocos de conteúdo',
+        'Também é uma tag vazia'
+      ]},
+  ]},
+
+  { id:'listas', label:'Listas', icon:'📋', tags:[
+    { tag:'ul / li', code:
+`<ul>
+  <li>Item A</li>
+  <li>Item B</li>
+</ul>`,
+      uses:[
+        'Lista não ordenada — marcadores (bullets)',
+        '`li` representa cada item individual',
+        'Ótima para menus e listas soltas'
+      ]},
+    { tag:'ol / li', code:
+`<ol>
+  <li>Primeiro passo</li>
+  <li>Segundo passo</li>
+</ol>`,
+      uses:[
+        'Lista ordenada — numeração automática',
+        'Usar quando a ordem importa (ex: instruções)',
+        'Atributo `start` define o número inicial'
+      ]},
+  ]},
+
+  { id:'links', label:'Links & Mídia', icon:'🔗', tags:[
+    { tag:'a', code:
+`<a href="https://exemplo.com">Visite o site</a>`,
+      uses:[
+        'Cria hyperlinks (links)',
+        '`href` define o destino do link',
+        '`target="_blank"` abre em nova aba'
+      ]},
+    { tag:'img', code:
+`<img src="https://picsum.photos/300/180" alt="Foto de exemplo">`,
+      uses:[
+        'Insere imagens na página',
+        'Atributo `alt` é essencial (acessibilidade e SEO)',
+        'Tag vazia — sem fechamento'
+      ]},
+  ]},
+
+  { id:'organizacao', label:'Organização', icon:'📦', tags:[
+    { tag:'div', code:
+`<div>
+  <p>Bloco de conteúdo agrupado</p>
+</div>`,
+      uses:[
+        'Contêiner genérico em bloco',
+        'Agrupa elementos para estruturar a página',
+        'Não tem significado semântico próprio'
+      ]},
+    { tag:'span', code:
+`<p>Texto com <span>uma parte</span> destacada.</p>`,
+      uses:[
+        'Contêiner genérico em linha (inline)',
+        'Usado para marcar trechos dentro de um texto',
+        'Também não tem significado semântico próprio'
+      ]},
+  ]},
+
+  { id:'semantica', label:'Semântica', icon:'🧭', tags:[
+    { tag:'header/nav/main/section/article/footer', code:
+`<header>Topo do site</header>
+<nav>Menu de navegação</nav>
+<main>
+  <section>Bloco de conteúdo</section>
+  <article>Post independente</article>
+</main>
+<footer>Rodapé</footer>`,
+      uses:[
+        'Dão significado à estrutura da página',
+        'Melhoram acessibilidade e SEO',
+        'Substituem o excesso de `div` sem sentido ("div soup")'
+      ]},
+  ]},
+
+  { id:'tabelas', label:'Tabelas', icon:'📊', tags:[
+    { tag:'table/tr/td/th', code:
+`<table border="1">
+  <tr><th>Nome</th><th>Idade</th></tr>
+  <tr><td>Ana</td><td>28</td></tr>
+</table>`,
+      uses:[
+        '`table` cria a tabela; `tr` é a linha',
+        '`th` é célula de cabeçalho; `td` é célula de dado',
+        'Ideal para dados tabulares, não para layout'
+      ]},
+  ]},
+
+  { id:'formularios', label:'Formulários', icon:'🧾', tags:[
+    { tag:'form', code:
+`<form action="/enviar" method="post">
+  <!-- campos do formulário -->
+</form>`,
+      uses:[
+        'Agrupa campos de entrada de dados',
+        '`action` define para onde os dados vão',
+        '`method` define GET ou POST'
+      ]},
+    { tag:'input', code:
+`<input type="text" placeholder="Seu nome">
+<input type="email" placeholder="seu@email.com">`,
+      uses:[
+        'Campo de entrada de dados do usuário',
+        '`type` muda o comportamento (text, email, password...)',
+        '`placeholder` mostra uma dica visual'
+      ]},
+    { tag:'label', code:
+`<label for="nome">Nome:</label>
+<input id="nome" type="text">`,
+      uses:[
+        'Rotula um campo de formulário',
+        '`for` conecta o rótulo ao `id` do input',
+        'Melhora acessibilidade e a área clicável'
+      ]},
+    { tag:'button', code:
+`<button type="submit">Enviar</button>`,
+      uses:[
+        'Cria um botão clicável',
+        '`type` pode ser submit, button ou reset',
+        'Dispara envio de formulários ou ações em JS'
+      ]},
+  ]},
+
+  { id:'comentarios', label:'Comentários', icon:'💬', tags:[
+    { tag:'!-- --', code:
+`<!-- Isto é um comentário -->
+<p>Isto aparece na página</p>`,
+      uses:[
+        'Não é exibido pelo navegador',
+        'Documenta o código para outros devs',
+        'Útil para deixar avisos e organizar o arquivo'
+      ]},
+  ]},
+];
+
+function mono(str){ return str.replace(/`([^`]+)`/g, '<code class="inline">$1</code>'); }
+
+function buildDivider(cat){
+  const section = document.createElement('section');
+  section.className = 'divider-slide';
+  const chips = cat.tags.map(t => `<span class="chip fragment fade-in">&lt;${t.tag.split('/')[0].split('…')[0].trim()}&gt;</span>`).join('');
+  section.innerHTML = `
+    <div class="divider-icon">${cat.icon}</div>
+    <h2 class="divider-label">${cat.label}</h2>
+    <div class="divider-chips">${chips}</div>
+  `;
+  return section;
+}
+
+function buildTagSlide(tag, cat, idx, total){
+  const section = document.createElement('section');
+  section.className = 'tag-slide';
+  section.innerHTML = `
+    <!--<div class="eyebrow">${cat.label} · ${idx} de ${total}</div>-->
+    <h1 class="tag-name"><span class="br">&lt;</span>${tag.tag}<span class="br">&gt;</span></h1>
+    <div class="panels">
+      <div class="panel code-panel fragment fade-in">
+        <div class="panel-header"><span class="ico">⌨</span>Código</div>
+        <pre><code class="language-html hljs" data-trim></code><span class="cursor"></span></pre>
+      </div>
+      <div class="panel result-panel fragment fade-in">
+        <div class="panel-header"><span class="ico mint">▶</span>Resultado</div>
+        <div class="browser-mock">
+          <div class="browser-bar">
+            <span class="bdot r"></span><span class="bdot y"></span><span class="bdot g"></span>
+            <span class="url">🔒 resultado.html</span>
+          </div>
+          <div class="loading-bar"></div>
+          <div class="browser-body"><iframe class="live" sandbox=""></iframe></div>
+        </div>
+      </div>
+    </div>
+    <ul class="uses"></ul>
+  `;
+  section.querySelector('code').textContent = tag.code;
+  section.querySelector('iframe.live').srcdoc = tag.code;
+  const ul = section.querySelector('.uses');
+  tag.uses.forEach(u => {
+    const li = document.createElement('li');
+    li.className = 'fragment fade-up';
+    li.innerHTML = mono(u);
+    ul.appendChild(li);
+  });
+  return section;
+}
+
+const slidesRoot = document.querySelector('.reveal .slides');
+const allTagsFlat = [];
+
+DECK.forEach(cat => {
+  slidesRoot.appendChild(buildDivider(cat));
+  cat.tags.forEach((tag, i) => {
+    slidesRoot.appendChild(buildTagSlide(tag, cat, i + 1, cat.tags.length));
+    allTagsFlat.push(tag);
+  });
+});
+
+const end = document.createElement('section');
+end.className = 'end-slide';
+end.innerHTML = `
+  <h2>Pronto</h2>
+  <div class="chip-grid">
+    ${allTagsFlat.map(t => `<span class="chip fragment fade-in">&lt;${t.tag.split('/')[0].split('…')[0].trim()}&gt;</span>`).join('')}
+  </div>
+  <p class="thanks">Até a proxima aula! </p>
+`;
+slidesRoot.appendChild(end);
+
+Reveal.initialize({
+  hash: true,
+  controls: true,
+  controlsLayout: 'bottom-right',
+  controlsTutorial: false,
+  progress: true,
+  center: false,
+  navigationMode: 'linear',
+  width: 1280,
+  height: 720,
+  margin: 0.06,
+  transition: 'slide',
+  backgroundTransition: 'fade',
+  keyboard: { 38: null, 40: null },
+  plugins: [ RevealHighlight ]
+});
+</script>
+</body>
+</html>
