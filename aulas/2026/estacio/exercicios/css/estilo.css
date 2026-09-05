@@ -1,0 +1,59 @@
+nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+a {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #333333;
+    color: white;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #333;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #DDD;
+}
+
+table a {
+    padding: 0;
+    margin: 0;
+    border: unset;
+}
+
+input {
+    display: block;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+button {
+    background-color: #2986CC;
+    color: white;
+    border: 0;
+    height: 30px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #1c5d8e;
+    cursor: pointer;
+}

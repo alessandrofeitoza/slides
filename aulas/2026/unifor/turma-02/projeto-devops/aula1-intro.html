@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Aula 1 — Kickoff | Projeto de Software com DevOps</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/white.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #ffffff;
+    --ink: #12151c;
+    --ink-soft: #4b5261;
+    --line: #e6e8ee;
+    --healthy: #16a34a;
+    --warn: #d97706;
+    --crit: #dc2626;
+    --brand: #2453e6;
+    --brand-soft: #eaf0ff;
+  }
+
+  html, body { background: var(--bg); }
+
+  .reveal { font-family: 'Inter', sans-serif; color: var(--ink); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section {
+    padding: 70px 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  /* --- status strip: assinatura visual recorrente --- */
+  .status-strip {
+    position: absolute;
+    top: 46px;
+    /*left: 90px;*/
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .status-strip .dot { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
+  .dot.g { background: var(--healthy); }
+  .dot.a { background: var(--warn); }
+  .dot.r { background: var(--crit); }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 24px;
+    color: var(--brand);
+    letter-spacing: 0.06em;
+    margin-bottom: 18px;
+  }
+
+  .headline {
+    font-size: 74px;
+    line-height: 1.12;
+    margin: 0 0 20px 0;
+  }
+  .headline .accent { color: var(--brand); }
+
+  .sub {
+    font-size: 38px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    line-height: 1.35;
+    max-width: 900px;
+  }
+
+  .big-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 130px;
+    font-weight: 700;
+    color: var(--brand);
+    line-height: 1;
+  }
+
+  /* pipeline visual (slide "o que é a disciplina") */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 50px;
+    flex-wrap: wrap;
+  }
+  .pipe-node {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    padding: 16px 22px;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    color: var(--ink-soft);
+    background: #fafbfc;
+  }
+  .pipe-node.final {
+    border-color: var(--brand);
+    color: var(--brand);
+    background: var(--brand-soft);
+    font-weight: 700;
+    font-size: 26px;
+  }
+  .pipe-arrow {
+    font-size: 28px;
+    color: var(--line);
+    margin: 0 10px;
+    font-weight: 700;
+  }
+
+  /* cards de avaliação */
+  .cards { display: flex; gap: 34px; margin-top: 40px; }
+  .card {
+    flex: 1;
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 30px;
+    background: #fafbfc;
+  }
+  .card .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    color: var(--brand);
+    margin-bottom: 14px;
+  }
+  .card h3 { font-size: 30px; margin: 0 0 12px 0; }
+  .card p { font-size: 21px; color: var(--ink-soft); line-height: 1.4; margin: 0; }
+
+  /* timeline das 5 aulas */
+  .timeline { display: flex; margin-top: 60px; position: relative; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    right: 22px;
+    height: 3px;
+    background: var(--line);
+  }
+  .t-node { flex: 1; text-align: center; position: relative; }
+  .t-dot {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--line);
+    margin: 0 auto 20px auto;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px;
+    color: var(--ink-soft);
+    position: relative; z-index: 2;
+  }
+  .t-node.now .t-dot { border-color: var(--brand); color: var(--brand); background: var(--brand-soft); }
+  .t-label { font-size: 20px; color: var(--ink-soft); line-height: 1.3; padding: 0 8px; }
+  .t-node.now .t-label { color: var(--ink); font-weight: 600; }
+
+  /* regras do jogo */
+  ul.rules { list-style: none; padding: 0; margin: 40px 0 0 0; }
+  ul.rules li {
+    font-size: 34px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+  ul.rules li .n {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--brand);
+    font-size: 22px;
+    min-width: 34px;
+  }
+
+  .closing {
+    font-size: 84px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+  }
+
+  /* abertura / provocação */
+  .big-question {
+    font-size: 68px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* sobre mim */
+  .about-name { font-size: 64px; margin: 0 0 6px 0; }
+  .about-role { font-size: 30px; color: var(--brand); font-weight: 600; margin-bottom: 30px; }
+  .about-line { font-size: 26px; color: var(--ink-soft); line-height: 1.5; max-width: 850px; }
+  .about-line + .about-line { margin-top: 10px; }
+
+  /* CAMS - pilares do devops */
+  .cams { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 40px; }
+  .cams .card h3 { font-size: 26px; }
+  .cams .card p { font-size: 19px; }
+
+  /* histórias */
+  .story-list { list-style: none; padding: 0; margin: 36px 0 0 0; }
+  .story-list li {
+    font-size: 28px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- SLIDE 0 — TÍTULO -->
+    <section>
+      <div class="status-strip"><span class="dot g"></span> SISTEMA: TURMA 02</div>
+      <div class="eyebrow">PROJETO DE SOFTWARE COM DEVOPS</div>
+      <h1 class="headline">Aula 1</h1>
+      <div class="sub">Kickoff &amp; definição do projeto</div>
+    </section>
+
+    <!-- SLIDE — ABERTURA / PROVOCAÇÃO -->
+    <section>
+      <div class="status-strip"><span class="dot r"></span> ABERTURA</div>
+      <div class="big-question">Quem aqui já foi<br>acordado de madrugada<br>por causa de um deploy?</div>
+    </section>
+
+    <!-- SLIDE — CASE REAL -->
+    <section>
+      <div class="status-strip"><span class="dot r"></span> CASE REAL</div>
+      <h2 class="headline" style="font-size:52px;">Knight Capital, 2012</h2>
+      <div class="sub">Um deploy malfeito, sem rollback automático.</div>
+      <div class="pipeline fragment fade-up" style="margin-top:40px; gap:40px;">
+        <div class="big-number" style="font-size:80px;">45min</div>
+        <div class="big-number" style="font-size:80px;">US$ 440M</div>
+      </div>
+      <div class="sub fragment fade-up" style="margin-top:30px; font-size:28px;">O que vocês acham que faltou nesse processo?</div>
+    </section>
+
+    <!-- SLIDE — HISTÓRIAS DE DEVOPS -->
+    <section>
+      <div class="status-strip"><span class="dot a"></span> MOMENTO DA TURMA</div>
+      <h2 class="headline" style="font-size:56px;">Agora é a vez de vocês</h2>
+      <div class="sub">Quem quiser, conta uma história rápida —<br>de sucesso ou de desastre.</div>
+      <ul class="story-list">
+        <li class="fragment fade-up">Um deploy que deu muito errado</li>
+        <li class="fragment fade-up">Um incidente que vocês resolveram sob pressão</li>
+        <li class="fragment fade-up">Uma automação que salvou o time</li>
+      </ul>
+    </section>
+
+    <!-- SLIDE — SOBRE MIM -->
+    <section>
+      <div class="status-strip"><span class="dot g"></span> SOBRE VOCÊS</div>
+      <h1 class="about-name">[Seu nome]</h1>
+      <div class="about-role">[Seu cargo / onde você atua com Eng de Soft/DevOps]</div>
+      <div class="about-line fragment fade-up">[Um resumo sobre sua experiência prática — projetos, empresas, escala]</div>
+      <div class="about-line fragment fade-up">[O que você espera dessa disciplina]</div>
+    </section>
+
+    <!-- SLIDE — DEVOPS EM POUCAS PALAVRAS -->
+    <section>
+      <div class="status-strip"><span class="dot g"></span> DEVOPS</div>
+      <h2 class="headline" style="font-size:52px;">É <span style="color:var(--brand);">romper o muro</span><br>entre Dev e Ops.</h2> Nunca  que DevOps é ferramenta.<br>
+    </section>
+
+    <!-- SLIDE — PILARES (CAMS) -->
+    <section>
+      <div class="status-strip"><span class="dot g"></span> DEVOPS EM 2 MINUTOS</div>
+      <h2 class="headline" style="font-size:48px;">Os 4 pilares (CAMS)</h2>
+      <div class="cams">
+        <div class="card fragment fade-up">
+          <div class="tag">CULTURA</div>
+          <h3>Responsabilidade compartilhada</h3>
+          <p>Quem escreve o código também ajuda a operá-lo.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="tag">AUTOMAÇÃO</div>
+          <h3>Tirar o humano do caminho repetitivo</h3>
+          <p>Pipelines, IaC, testes — automatizar o que é mecânico.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="tag">MEDIÇÃO</div>
+          <h3>Se não mede, não melhora</h3>
+          <p>Métricas de entrega, incidentes, tempo de recuperação.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="tag">COMPARTILHAMENTO</div>
+          <h3>Conhecimento não fica com uma pessoa</h3>
+          <p>Documentação, blameless postmortems, pair work.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 1 — O QUE É A DISCIPLINA -->
+    <section>
+      <div class="status-strip"><span class="dot g"></span> 01 / 04 · SOBRE A DISCIPLINA</div>
+      <h2 class="headline">Não vai ter aula<br>de ferramenta nova.</h2>
+      <div class="sub fragment fade-up">É onde tudo que vocês já aprenderam<br>vira uma <span class="accent" style="color:var(--brand); font-weight:700;">entrega real</span>.</div>
+
+      <div class="pipeline fragment fade-up">
+        <div class="pipe-node">Infra</div><div class="pipe-arrow">→</div>
+        <div class="pipe-node">Testes</div><div class="pipe-arrow">→</div>
+        <div class="pipe-node">Segurança</div><div class="pipe-arrow">→</div>
+        <div class="pipe-node">Observabilidade</div><div class="pipe-arrow">→</div>
+        <div class="pipe-node final">PROJETO</div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 — AVALIAÇÃO -->
+    <section>
+      <div class="status-strip"><span class="dot a"></span> 02 / 04 · AVALIAÇÃO</div>
+      <h2 class="headline" style="font-size:56px;">Como vocês serão avaliados</h2>
+
+      <div class="cards">
+        <div class="card fragment fade-up">
+          <div class="tag">01</div>
+          <h3>Entrega do projeto</h3>
+          <p>Repositório, pipeline e arquitetura construídos ao longo das 5 aulas.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="tag">02</div>
+          <h3>Apresentação final</h3>
+          <p>Sua equipe defende as decisões técnicas na última aula.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="tag">03</div>
+          <h3>Incidente simulado</h3>
+          <p>Vocês vão reagir a uma falha ao vivo. Isso conta nota.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 — CRONOGRAMA -->
+    <section>
+      <div class="status-strip"><span class="dot g"></span> 03 / 04 · CRONOGRAMA</div>
+      <h2 class="headline" style="font-size:56px;">As 5 aulas</h2>
+
+      <div class="timeline">
+        <div class="t-node now">
+          <div class="t-dot">01</div>
+          <div class="t-label">Kickoff</div>
+        </div>
+        <div class="t-node fragment fade-up">
+          <div class="t-dot">02</div>
+          <div class="t-label">Pipeline</div>
+        </div>
+        <div class="t-node fragment fade-up">
+          <div class="t-dot">03</div>
+          <div class="t-label">Segurança &amp; testes</div>
+        </div>
+        <div class="t-node fragment fade-up">
+          <div class="t-dot">04</div>
+          <div class="t-label">Deploy &amp; observabilidade</div>
+        </div>
+        <div class="t-node fragment fade-up">
+          <div class="t-dot">05</div>
+          <div class="t-label">Apresentações</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 — REGRAS DO JOGO -->
+    <section>
+      <div class="status-strip"><span class="dot r"></span> 04 / 04 · REGRAS DO JOGO</div>
+      <h2 class="headline" style="font-size:56px;">Regras do jogo</h2>
+      <ul class="rules">
+        <li class="fragment fade-up"><span class="n">01</span> Equipes de 3 a 4 pessoas</li>
+        <li class="fragment fade-up"><span class="n">02</span> Repositório criado ainda hoje</li>
+        <li class="fragment fade-up"><span class="n">03</span> Commits visíveis a cada aula</li>
+        <li class="fragment fade-up"><span class="n">04</span> Link do repo no zap</li>
+      </ul>
+    </section>
+
+    <!-- SLIDE 5 — TRANSIÇÃO -->
+    <section>
+      <div class="status-strip"><span class="dot g"></span> PRÓXIMO PASSO</div>
+      <div class="closing">Bora formar<br>as equipes.</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: false,
+    controls: true,
+    progress: true,
+    center: true,
+    keyboard: true,
+    transition: 'slide',
+    width: 1280,
+    height: 720,
+    margin: 0.04
+  });
+</script>
+</body>
+</html>

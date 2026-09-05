@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Aula 2 — Jogo da Grade</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/white.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#ffffff; --ink:#12151c; --ink-soft:#4b5261; --line:#e6e8ee;
+    --a:#2453e6; --b:#7c3aed; --c:#0891b2; --d:#16a34a; --e:#d97706; --f:#dc2626;
+  }
+  html, body { background: var(--bg); }
+  .reveal { font-family:'Inter',sans-serif; color:var(--ink); }
+  .reveal .slides { text-align:left; }
+  .reveal .slides section {
+    padding:60px 80px; height:100%;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .reveal h1,.reveal h2,.reveal h3{ font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.01em; color:var(--ink); }
+
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:22px; letter-spacing:.06em; margin-bottom:16px; }
+  .headline{ font-size:60px; line-height:1.15; margin:0 0 18px 0; }
+  .sub{ font-size:32px; color:var(--ink-soft); font-weight:500; line-height:1.35; max-width:920px; }
+
+  /* --- TABULEIRO --- */
+  .board-title{ text-align:center; font-size:52px; margin-bottom:30px; }
+  .board{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto repeat(3, 1fr);
+    gap:12px;
+    width:100%;
+    height:78%;
+  }
+  .board .cat{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:16px; font-weight:600;
+    color:#fff; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:10px 6px; line-height:1.25;
+  }
+  .cat.a{background:var(--a);} .cat.b{background:var(--b);} .cat.c{background:var(--c);}
+  .cat.d{background:var(--d);} .cat.e{background:var(--e);} .cat.f{background:var(--f);}
+
+  .board button.cell{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:34px; font-weight:700;
+    border:2px solid var(--line);
+    background:#fafbfc; color:var(--ink);
+    border-radius:10px; cursor:pointer;
+  }
+  .board button.cell:hover{ background:#f0f2f6; }
+  .board button.cell.used{
+    background:#f4f5f7; color:#c7cbd4; border-color:#eef0f3;
+    text-decoration:line-through; cursor:default;
+  }
+
+  /* --- SLIDE DE PERGUNTA --- */
+  .qcard{ border-left:8px solid var(--ink); padding-left:28px; }
+  .qcard.a{border-color:var(--a);} .qcard.b{border-color:var(--b);} .qcard.c{border-color:var(--c);}
+  .qcard.d{border-color:var(--d);} .qcard.e{border-color:var(--e);} .qcard.f{border-color:var(--f);}
+
+  .qtext{ font-size:44px; line-height:1.3; margin:14px 0 30px 0; }
+
+  .panel{
+    border:2px solid var(--line); border-radius:14px;
+    padding:26px 30px; margin-top:18px; background:#fafbfc;
+  }
+  .panel .tag{ font-family:'IBM Plex Mono',monospace; font-size:16px; color:var(--ink-soft); margin-bottom:8px; }
+  .panel p{ font-size:24px; line-height:1.4; margin:0; color:var(--ink); }
+  .panel.gancho{ background:#eef4ff; border-color:#cddcfb; }
+
+  .back-link{
+    position:absolute; bottom:40px; right:70px;
+    font-family:'IBM Plex Mono',monospace; font-size:18px;
+    color:var(--ink-soft); text-decoration:none;
+    border:2px solid var(--line); border-radius:8px; padding:8px 16px;
+  }
+  .back-link:hover{ color:var(--ink); border-color:var(--ink-soft); }
+
+  .closing{ font-size:70px; font-family:'Space Grotesk',sans-serif; font-weight:700; }
+  ul.rules{ list-style:none; padding:0; margin:30px 0 0 0; }
+  ul.rules li{ font-size:30px; padding:14px 0; border-bottom:1px solid var(--line); }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- TÍTULO -->
+    <section>
+      <div class="eyebrow" style="color:var(--a);">AULA 2 · REVISÃO GERAL</div>
+      <h1 class="headline">O Jogo da Grade</h1>
+      <div class="sub">Revisando as 19 disciplinas da pós, em equipe.</div>
+    </section>
+
+    <!-- REGRAS -->
+    <section>
+      <div class="eyebrow" style="color:var(--a);">COMO FUNCIONA</div>
+      <h2 class="headline" style="font-size:50px;">Regras rápidas</h2>
+      <ul class="rules">
+        <li class="fragment fade-up">Sua equipe escolhe categoria + valor no tabuleiro</li>
+        <li class="fragment fade-up">30-45s pra responder, sem celular/IA</li>
+        <li class="fragment fade-up">Acertou: ganha os pontos. Errou: outra equipe pode roubar por metade</li>
+        <li class="fragment fade-up">Placar fica no quadro físico ao lado</li>
+      </ul>
+    </section>
+
+    <!-- TABULEIRO -->
+    <section id="board">
+      <div class="board-title">Tabuleiro</div>
+      <div class="board">
+        <div class="cat a">A · Fundamentos<br>&amp; Processo</div>
+        <div class="cat b">B · Pessoas, Direito<br>&amp; Produto</div>
+        <div class="cat c">C · Versionamento<br>&amp; Entrega</div>
+        <div class="cat d">D · Infraestrutura<br>&amp; Nuvem</div>
+        <div class="cat e">E · Escala &amp;<br>Confiabilidade</div>
+        <div class="cat f">F · Qualidade, Segurança<br>&amp; Futuro</div>
+
+        <button class="cell" id="btn-a100" onclick="go('a100')">100</button>
+        <button class="cell" id="btn-b100" onclick="go('b100')">100</button>
+        <button class="cell" id="btn-c100" onclick="go('c100')">100</button>
+        <button class="cell" id="btn-d100" onclick="go('d100')">100</button>
+        <button class="cell" id="btn-e100" onclick="go('e100')">100</button>
+        <button class="cell" id="btn-f100" onclick="go('f100')">100</button>
+
+        <button class="cell" id="btn-a200" onclick="go('a200')">200</button>
+        <button class="cell" id="btn-b200" onclick="go('b200')">200</button>
+        <button class="cell" id="btn-c200" onclick="go('c200')">200</button>
+        <button class="cell" id="btn-d200" onclick="go('d200')">200</button>
+        <button class="cell" id="btn-e200" onclick="go('e200')">200</button>
+        <button class="cell" id="btn-f200" onclick="go('f200')">200</button>
+
+        <button class="cell" id="btn-a300" onclick="go('a300')">300</button>
+        <button class="cell" id="btn-b300" onclick="go('b300')">300</button>
+        <button class="cell" id="btn-c300" onclick="go('c300')">300</button>
+        <button class="cell" id="btn-d300" onclick="go('d300')">300</button>
+        <button class="cell" id="btn-e300" onclick="go('e300')">300</button>
+        <button class="cell" id="btn-f300" onclick="go('f300')">300</button>
+      </div>
+    </section>
+
+    <!-- ===================== CATEGORIA A ===================== -->
+    <section id="a100" class="a-slide">
+      <div class="qcard a">
+        <div class="eyebrow" style="color:var(--a);">A · FUNDAMENTOS &amp; PROCESSO · 100</div>
+        <div class="qtext">Cite duas diferenças entre um requisito funcional e um não-funcional.</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Funcional descreve o que o sistema faz (comportamento/feature); não-funcional descreve como ele deve se comportar (performance, segurança, disponibilidade, usabilidade).</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Peça pra cada equipe citar 1 requisito não-funcional do próprio projeto (o SLA definido na aula 1).</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="a200" class="a-slide">
+      <div class="qcard a">
+        <div class="eyebrow" style="color:var(--a);">A · FUNDAMENTOS &amp; PROCESSO · 200</div>
+        <div class="qtext">Numa cerimônia ágil, qual a diferença de propósito entre Retrospectiva e Review/Demo?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Review avalia o produto (o que foi entregue, com stakeholder); Retrospectiva avalia o processo da equipe (o que melhorar em como trabalham).</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Avise que a Aula 5 vai ter uma retrospectiva da disciplina inteira.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="a300" class="a-slide">
+      <div class="qcard a">
+        <div class="eyebrow" style="color:var(--a);">A · FUNDAMENTOS &amp; PROCESSO · 300</div>
+        <div class="qtext">O que é um MVP e qual o erro mais comum das equipes ao defini-lo?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Menor versão do produto que já entrega valor validável; erro comum é confundir "mínimo" com "incompleto/quebrado" em vez de "enxuto mas funcional".</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Pergunte: "o que seria o MVP do projeto de vocês pra sair até a aula 5?"</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <!-- ===================== CATEGORIA B ===================== -->
+    <section id="b100" class="b-slide">
+      <div class="qcard b">
+        <div class="eyebrow" style="color:var(--b);">B · PESSOAS, DIREITO &amp; PRODUTO · 100</div>
+        <div class="qtext">Na LGPD, qual a diferença entre "controlador" e "operador" de dados?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Controlador decide o quê e por quê tratar os dados; operador trata os dados em nome do controlador (ex: um provedor de cloud pode ser operador).</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>"No sistema fictício de vocês, quem seria o controlador dos dados dos usuários?"</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="b200" class="b-slide">
+      <div class="qcard b">
+        <div class="eyebrow" style="color:var(--b);">B · PESSOAS, DIREITO &amp; PRODUTO · 200</div>
+        <div class="qtext">Cite um princípio de UX que impacta diretamente decisões de arquitetura/backend.</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Ex: tempo de resposta percebido (cache/CDN), feedback de progresso em operações longas (filas assíncronas), acessibilidade (contrato de API).</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>"Algum requisito de UX do projeto de vocês já força uma decisão técnica no backend?"</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="b300" class="b-slide">
+      <div class="qcard b">
+        <div class="eyebrow" style="color:var(--b);">B · PESSOAS, DIREITO &amp; PRODUTO · 300</div>
+        <div class="qtext">Por que product-market fit importa mesmo num projeto interno/corporativo?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>O conceito generaliza para "existe demanda real pelo que construímos" — em projeto interno vira validar com o usuário/área de negócio antes de investir engenharia.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Conecta com o canvas de contexto de negócio preenchido na aula 1.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <!-- ===================== CATEGORIA C ===================== -->
+    <section id="c100" class="c-slide">
+      <div class="qcard c">
+        <div class="eyebrow" style="color:var(--c);">C · VERSIONAMENTO &amp; ENTREGA · 100</div>
+        <div class="qtext">Qual a diferença entre Integração Contínua (CI) e Entrega Contínua (CD)?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>CI = integrar e testar código com frequência automaticamente; CD = garantir que o software está sempre pronto pra ir a produção.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>É literalmente o que a equipe vai implementar no Bloco 3 de hoje.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="c200" class="c-slide">
+      <div class="qcard c">
+        <div class="eyebrow" style="color:var(--c);">C · VERSIONAMENTO &amp; ENTREGA · 200</div>
+        <div class="qtext">O que é "configuration drift" e como versionar infraestrutura ajuda a evitá-lo?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>É quando o ambiente real diverge do estado esperado; IaC versionado permite recriar/reconciliar o ambiente a partir de uma fonte única de verdade.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>"Algum projeto de vocês vai versionar infraestrutura (IaC) ou só código de aplicação?"</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="c300" class="c-slide">
+      <div class="qcard c">
+        <div class="eyebrow" style="color:var(--c);">C · VERSIONAMENTO &amp; ENTREGA · 300</div>
+        <div class="qtext">Por que documentação técnica é parte da "entrega" num projeto DevOps maduro?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Runbooks/documentação de operação permitem que qualquer pessoa do time opere e responda a incidentes — é parte da confiabilidade, não burocracia.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Avise que a apresentação final (aula 5) vai cobrar isso.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <!-- ===================== CATEGORIA D ===================== -->
+    <section id="d100" class="d-slide">
+      <div class="qcard d">
+        <div class="eyebrow" style="color:var(--d);">D · INFRAESTRUTURA &amp; NUVEM · 100</div>
+        <div class="qtext">Qual a diferença entre IaaS, PaaS e Serverless em termos do que você deixa de gerenciar?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>IaaS: você gerencia SO e acima; PaaS: só a aplicação e dados; Serverless: só a lógica/função.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>"O projeto de vocês vai usar qual desses modelos, e por quê?"</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="d200" class="d-slide">
+      <div class="qcard d">
+        <div class="eyebrow" style="color:var(--d);">D · INFRAESTRUTURA &amp; NUVEM · 200</div>
+        <div class="qtext">Cite uma vantagem e uma desvantagem de Serverless num sistema com tráfego imprevisível.</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Vantagem: escala automaticamente, paga só pelo uso. Desvantagem: cold start pode impactar latência, nem sempre é mais barato em alta escala constante.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Conecta com o SLA definido no canvas da aula 1.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="d300" class="d-slide">
+      <div class="qcard d">
+        <div class="eyebrow" style="color:var(--d);">D · INFRAESTRUTURA &amp; NUVEM · 300</div>
+        <div class="qtext">O que significa infraestrutura ser "idempotente" e por que isso importa em automação?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Aplicar a mesma configuração várias vezes produz o mesmo resultado final, sem efeitos colaterais cumulativos — essencial pra rodar pipelines de infra com segurança repetidamente.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Liga direto com o pipeline que vão começar a montar no Bloco 3.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <!-- ===================== CATEGORIA E ===================== -->
+    <section id="e100" class="e-slide">
+      <div class="qcard e">
+        <div class="eyebrow" style="color:var(--e);">E · ESCALA &amp; CONFIABILIDADE · 100</div>
+        <div class="qtext">Pra que serve um orquestrador de contêineres além de "só rodar containers"?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Garante estado desejado (reinicia containers que caem), faz scaling automático, distribui carga e gerencia rede/descoberta de serviço.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>"O projeto de vocês vai precisar de orquestração, ou um único serviço já resolve?"</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="e200" class="e-slide">
+      <div class="qcard e">
+        <div class="eyebrow" style="color:var(--e);">E · ESCALA &amp; CONFIABILIDADE · 200</div>
+        <div class="qtext">Qual o principal trade-off ao quebrar um monólito em microsserviços?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Ganha independência de deploy/escala por serviço, mas paga com complexidade operacional (rede, consistência de dados, observabilidade distribuída).</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Pergunte se algum time está tentado a "microsserviçar tudo" só por tendência — bom gancho de debate.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="e300" class="e-slide">
+      <div class="qcard e">
+        <div class="eyebrow" style="color:var(--e);">E · ESCALA &amp; CONFIABILIDADE · 300</div>
+        <div class="qtext">Por que "ter logs" não é a mesma coisa que "ter observabilidade"?</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Observabilidade combina logs + métricas + tracing pra permitir entender o porquê de um comportamento, não só registrar que ele aconteceu.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Prepara terreno pro "game day" de incidente da aula 4.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <!-- ===================== CATEGORIA F ===================== -->
+    <section id="f100" class="f-slide">
+      <div class="qcard f">
+        <div class="eyebrow" style="color:var(--f);">F · QUALIDADE, SEGURANÇA &amp; FUTURO · 100</div>
+        <div class="qtext">Diferença entre teste unitário, de integração e end-to-end, em uma frase cada.</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Unitário testa uma unidade isolada; integração testa a comunicação entre componentes/serviços; end-to-end testa o fluxo completo do ponto de vista do usuário.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>"Qual desses tipos o pipeline de vocês vai priorizar primeiro, e por quê?"</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="f200" class="f-slide">
+      <div class="qcard f">
+        <div class="eyebrow" style="color:var(--f);">F · QUALIDADE, SEGURANÇA &amp; FUTURO · 200</div>
+        <div class="qtext">O que significa "shift-left" em segurança? Cite uma prática concreta.</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Trazer verificações de segurança pra fases iniciais do desenvolvimento; prática: scan de dependências (SCA) ou análise estática (SAST) já no pipeline de CI.</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>A aula 3 vai colocar isso na prática — cria expectativa.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <section id="f300" class="f-slide">
+      <div class="qcard f">
+        <div class="eyebrow" style="color:var(--f);">F · QUALIDADE, SEGURANÇA &amp; FUTURO · 300</div>
+        <div class="qtext">Cite uma tendência atual que está mudando como equipes fazem DevOps, e por que ela importa.</div>
+      </div>
+      <div class="panel fragment fade-up"><div class="tag">RESPOSTA</div><p>Aberta — ex: IA em geração/revisão de pipelines, platform engineering/IDPs, GitOps, FinOps. O importante é a equipe justificar o "por quê importa".</p></div>
+      <div class="panel gancho fragment fade-up"><div class="tag">CONEXÃO COM O PROJETO</div><p>Pergunta aberta pra fechar o jogo com discussão livre antes do Bloco 2.</p></div>
+      <a class="back-link" href="#" onclick="goBoard(); return false;">← tabuleiro</a>
+    </section>
+
+    <!-- FECHAMENTO -->
+    <section>
+      <div class="eyebrow" style="color:var(--a);">PRÓXIMO PASSO</div>
+      <div class="closing">Mapa de dependências<br>+ início do pipeline.</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+  function slideIndexById(id){
+    var target = document.getElementById(id);
+    var slides = Reveal.getSlides();
+    return slides.indexOf(target);
+  }
+
+  function go(id){
+    var btn = document.getElementById('btn-' + id);
+    if (btn) btn.classList.add('used');
+    var idx = slideIndexById(id);
+    if (idx !== -1) { Reveal.slide(idx); }
+  }
+
+  function goBoard(){
+    var idx = slideIndexById('board');
+    if (idx !== -1) { Reveal.slide(idx); }
+  }
+
+  Reveal.initialize({
+    hash: false,
+    controls: true,
+    progress: true,
+    center: true,
+    keyboard: true,
+    transition: 'slide',
+    width: 1280,
+    height: 720,
+    margin: 0.04
+  });
+</script>
+</body>
+</html>
