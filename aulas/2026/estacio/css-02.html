@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS — Parte 2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+
+<style>
+  :root{
+    --bg:#ffffff;
+    --panel:#f4f5fa;
+    --panel-2:#e9ebf5;
+    --line: rgba(20,18,40,.14);
+    --ink:#15121f;
+    --ink-dim:#514c66;
+    --amber:#b25b06;
+    --mint:#0a8f66;
+    --blue:#2453c9;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+
+  html{ font-size: 18px; }
+  html, .reveal { background: var(--bg); }
+  .reveal { font-family: var(--sans); color: var(--ink); }
+  .reveal .slides section {
+    background: var(--bg);
+    text-align:left;
+    border-radius: 0;
+  }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: var(--mono); margin: 0; }
+  .reveal ::selection{ background: var(--mint); color:#fff; }
+  .reveal .controls{ color: var(--ink); }
+  .reveal .progress{ color: var(--mint); height: 8px; }
+
+  /* ---------- shared bits ---------- */
+  .eyebrow{
+    font-family: var(--mono); font-size: 1.3rem; letter-spacing:.14em;
+    text-transform: uppercase; color: var(--amber); opacity:.95; margin-bottom: .7rem;
+    font-weight:700;
+  }
+  .br{ color: var(--amber); }
+
+  /* ---------- title slide ---------- */
+  .title-slide{ text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
+  .brand-mark{
+    font-family: var(--mono); font-weight:800; letter-spacing:-.02em;
+    font-size: clamp(3.6rem, 11vw, 8rem); color: var(--ink);
+    animation: brandIn 1s ease both;
+  }
+  .brand-mark .br{ color: var(--mint); }
+  .title-slide h1{ font-family: var(--sans); font-weight:800; font-size: clamp(2.2rem,4.8vw,3.6rem); margin-top:1.2rem; }
+  .title-slide .subtitle{ font-family: var(--mono); color: var(--ink-dim); font-size: clamp(1.3rem,2.4vw,1.8rem); margin-top:.7rem; }
+  .title-slide .hint{ margin-top: 2.8rem; color: var(--ink-dim); font-size:1.2rem; opacity:.8; }
+  @keyframes brandIn{ from{ opacity:0; transform: translateY(18px) scale(.96);} to{opacity:1; transform:none;} }
+
+  /* ---------- divider slides ---------- */
+  .divider-slide{ display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; }
+  .divider-icon{ font-size: clamp(4rem,7vw,6.5rem); margin-bottom: .6rem; filter: drop-shadow(0 6px 14px rgba(0,0,0,.12)); }
+  .divider-label{ font-family: var(--sans); font-weight:800; font-size: 4rem; color: var(--ink); }
+  .divider-chips{ display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center; margin-top:1.8rem; max-width: 78vw; }
+  .chip{
+    font-family: var(--mono); font-size:1.4rem; color: var(--mint); font-weight:600;
+    background: var(--panel-2); border:1px solid var(--line); border-radius: 999px;
+    padding:.5rem 1.2rem;
+  }
+
+  /* ---------- tag slides ---------- */
+  .tag-slide{ height:100%; display:flex; flex-direction:column; justify-content:center; }
+  .tag-name{
+    font-weight:800; font-size: 2.7rem; letter-spacing:-.01em;
+    animation: tagIn .5s ease both;
+    font-family: var(--mono);
+  }
+  @keyframes tagIn{ from{opacity:0; transform: translateX(-14px);} to{opacity:1; transform:none;} }
+
+  .panels{ display:grid; grid-template-columns: 1.15fr 1fr; gap: 1.8rem; margin: 1.6rem 0 1.4rem; }
+  .panel{
+    background: var(--panel); border:1px solid var(--line); border-radius: 16px;
+    padding: 1.2rem 1.4rem 1.4rem; min-height: 0;
+    box-shadow: 0 8px 24px rgba(20,18,40,.08);
+  }
+  .panel-header{
+    display:flex; align-items:center; gap:.5rem; font-family: var(--mono);
+    font-size: 1.15rem; letter-spacing:.1em; text-transform:uppercase; color: var(--ink-dim);
+    margin-bottom:.7rem; font-weight:600;
+  }
+  .panel-header .ico{ color: var(--amber); }
+  .panel-header .ico.mint{ color: var(--mint); }
+
+  .code-panel pre{ margin:0; background:transparent; box-shadow:none; }
+  .code-panel code{
+    background:transparent !important; padding:0 !important;
+    font-family: var(--mono) !important; font-size: 1.3rem !important;
+    line-height:1.55 !important; white-space: pre !important;
+  }
+  .cursor{
+    display:inline-block; width:.5em; height:1.05em; background: var(--mint);
+    vertical-align: text-bottom; margin-left:.15em; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .browser-mock{ border-radius:10px; overflow:hidden; border:1px solid var(--line); }
+  .browser-bar{
+    display:flex; align-items:center; gap:.5rem; background: var(--panel-2);
+    padding:.6rem .8rem;
+  }
+  .bdot{ width:.7rem; height:.7rem; border-radius:50%; display:inline-block; }
+  .bdot.r{ background:#ff6b6b; } .bdot.y{ background:#f5b942; } .bdot.g{ background:#0a8f66; }
+  .url{
+    font-family: var(--mono); font-size:1rem; color: var(--ink-dim);
+    background: #fff; border:1px solid var(--line); border-radius:6px; padding:.25rem .7rem; margin-left:.5rem;
+  }
+  .loading-bar{ height:3px; width:0; background: var(--mint); }
+  .result-panel.fragment.visible .loading-bar{ animation: loadbar .5s ease forwards; }
+  @keyframes loadbar{ from{ width:0; } to{ width:100%; } }
+  .browser-body{ height: 220px; background:#fff; overflow:auto; }
+  .browser-body iframe{
+    width:100%; height:100%; border:0; zoom:1.7; transform-origin: top left;
+  }
+
+  .uses{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.6rem; }
+  .uses li{
+    display:flex; align-items:flex-start; gap:.65rem;
+    font-size: clamp(1.3rem, 2vw, 1.8rem); color: var(--ink);
+  }
+  .uses li::before{ content:"▸"; color: var(--mint); font-weight:800; }
+  code.inline{
+    font-family: var(--mono); background: var(--panel-2); color: var(--amber);
+    padding:.08em .42em; border-radius:5px; font-size:.85em; border:1px solid var(--line);
+  }
+
+  /* ---------- end slide ---------- */
+  .end-slide{ height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+  .end-slide h2{ font-family: var(--sans); font-weight:800; font-size: clamp(2.6rem,5.5vw,3.8rem); margin-bottom:1.4rem; }
+  .thanks{ margin-top:2.2rem; font-size: clamp(1.6rem,3vw,2.3rem); color: var(--ink-dim); }
+
+  /* ---------- question / discussion slides ---------- */
+  .question-slide{
+    height:100%; max-width: 74vw; margin: 0 auto;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  }
+  .q-icon{ font-size: 3.6rem; margin-bottom:.3rem; }
+  .q-eyebrow{
+    font-family: var(--mono); font-size:1.2rem; letter-spacing:.16em; text-transform:uppercase;
+    color: var(--amber); font-weight:700; margin-bottom:1rem;
+  }
+  .q-title{
+    font-family: var(--sans); font-weight:800; font-size: 2.6rem; color: var(--ink); line-height:1.3;
+    margin-bottom: 1.8rem;
+  }
+  .q-points{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.8rem; text-align:left; width:100%; }
+  .q-points li{
+    font-size: 1.4rem; color: var(--ink-dim); display:flex; align-items:flex-start; gap:.7rem;
+  }
+  .q-points li::before{ content:"?"; color: var(--amber); font-weight:800; font-family: var(--mono); }
+
+  /* ---------- tips / boas práticas slides ---------- */
+  .tips-slide{
+    height:100%; max-width: 74vw; margin: 0 auto;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  }
+  .tip-icon{ font-size: 3.6rem; margin-bottom:.3rem; }
+  .tip-eyebrow{
+    font-family: var(--mono); font-size:1.2rem; letter-spacing:.16em; text-transform:uppercase;
+    color: var(--mint); font-weight:700; margin-bottom:1rem;
+  }
+  .tip-title{
+    font-family: var(--sans); font-weight:800; font-size: 2.6rem; color: var(--ink); line-height:1.3;
+    margin-bottom: 1.8rem;
+  }
+  .tip-points{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.8rem; text-align:left; width:100%; }
+  .tip-points li{
+    font-size: 1.4rem; color: var(--ink-dim); display:flex; align-items:flex-start; gap:.7rem;
+  }
+  .tip-points li::before{ content:"✓"; color: var(--mint); font-weight:800; font-family: var(--mono); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section class="title-slide">
+      <div class="brand-mark"><span class="br">{</span>css<span class="br">}</span></div>
+      <h1>CSS — Parte 2</h1>
+      <p class="subtitle">transform, flexbox e responsividade</p>
+      <p class="hint">use as setas do teclado para navegar →</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+
+<script>
+const DECK = [
+
+  { id:'transform', label:'Transform', icon:'🔄', tags:[
+    { display:'translate', code:
+`<style>
+  .caixa {
+    width: 80px; height: 80px;
+    background: #2453c9;
+    transform: translate(40px, 20px);
+  }
+</style>
+
+<div class="caixa"></div>`,
+      uses:[
+        'Move o elemento sem afetar o layout dos outros',
+        'Aceita px, %, etc — `translateX`/`translateY` isolam um eixo',
+        'Não "empurra" elementos vizinhos como `margin` faria'
+      ]},
+    { display:'rotate', code:
+`<style>
+  .caixa {
+    width: 80px; height: 80px;
+    background: #b25b06;
+    transform: rotate(25deg);
+  }
+</style>
+
+<div class="caixa"></div>`,
+      uses:[
+        'Gira o elemento em torno do seu centro',
+        'Valor em graus (`deg`) — positivo gira no sentido horário',
+        'Muito usado em ícones, cards e efeitos de hover'
+      ]},
+    { display:'scale', code:
+`<style>
+  .caixa {
+    width: 80px; height: 80px;
+    background: #0a8f66;
+    transform: scale(1.4);
+  }
+</style>
+
+<div class="caixa"></div>`,
+      uses:[
+        'Aumenta ou diminui o tamanho visual do elemento',
+        '`scale(1)` é o tamanho original; `scale(0.5)` é metade',
+        'Pode ser aplicado só em X ou Y (`scaleX`, `scaleY`)'
+      ]},
+    { type:'question',
+      title:'Mover ou redimensionar: transform ou propriedades normais?',
+      points:[
+        '`transform` não recalcula o layout da página — geralmente é mais performático pra animações',
+        'Mudar `width`, `margin` ou `top` pode empurrar outros elementos; `transform` nunca empurra',
+        'Para animações suaves (hover, carrossel, drag), `transform` costuma ser a escolha certa'
+      ]},
+  ]},
+
+  { id:'transitions', label:'Transitions', icon:'⏱️', tags:[
+    { display:'transition', code:
+`<style>
+  .btn {
+    background: #0a8f66;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  .btn:hover { background: #b25b06; }
+</style>
+
+<button class="btn">Passe o mouse</button>`,
+      uses:[
+        '`transition` anima a mudança entre dois estados (ex: normal → hover)',
+        'Primeiro valor é a propriedade, segundo é a duração',
+        'Sem `transition`, a mudança acontece de forma instantânea'
+      ]},
+    { display:'transition + transform', code:
+`<style>
+  .card {
+    width: 120px; height: 60px;
+    background: #2453c9;
+    transition: transform 0.4s ease-in-out;
+  }
+  .card:hover { transform: scale(1.15) rotate(-3deg); }
+</style>
+
+<div class="card"></div>`,
+      uses:[
+        'Pode animar várias propriedades ao mesmo tempo, separadas por vírgula',
+        '`ease`, `linear`, `ease-in-out` mudam o "ritmo" da animação',
+        'Combina muito bem com `transform` pra efeitos de hover'
+      ]},
+  ]},
+
+  { id:'hierarquia', label:'Hierarquia de Seletores', icon:'🪜', tags:[
+    { display:'div p', code:
+`<style>
+  div p { color: darkred; }
+</style>
+
+<div>
+  <p>Este parágrafo fica vermelho</p>
+</div>
+<p>Este não — está fora da div</p>`,
+      uses:[
+        'Seleciona um elemento que está dentro de outro, em qualquer nível',
+        '`div p` = "todo `p` que está dentro de uma `div`"',
+        'Cuidado: pode acabar pegando elementos mais profundos do que você queria'
+      ]},
+    { display:'div > p', code:
+`<style>
+  div > p { color: darkblue; }
+</style>
+
+<div>
+  <p>Filho direto — fica azul</p>
+  <section><p>Neto — não fica azul</p></section>
+</div>`,
+      uses:[
+        '`>` seleciona só o filho direto, não os "netos"',
+        'Mais preciso do que o seletor descendente simples',
+        'Ajuda a evitar estilos "vazando" pra dentro de componentes filhos'
+      ]},
+    { display:'.card.destaque', code:
+`<style>
+  .card.destaque { border: 3px solid #b25b06; }
+</style>
+
+<div class="card destaque">Card em destaque</div>
+<div class="card">Card comum</div>`,
+      uses:[
+        '`.card.destaque` (sem espaço) exige as duas classes no mesmo elemento',
+        'Útil para variações de um componente (ex: card normal vs card destaque)',
+        'Diferente de `.card .destaque`, que seria descendente'
+      ]},
+    { display:'especificidade', code:
+`<style>
+  p { color: black; }
+  .aviso { color: orange; }
+  #principal { color: red; }
+</style>
+
+<p id="principal" class="aviso">Qual cor vence?</p>`,
+      uses:[
+        'Ordem de força: estilo inline > `id` > classe > tag',
+        'Nesse exemplo, o `id` vence e o texto fica vermelho',
+        'Entre regras de mesma força, a última declarada no CSS vence'
+      ]},
+    { display:'!important', code:
+`<style>
+  p { color: teal !important; }
+  #principal { color: red; }
+</style>
+
+<p id="principal">Mesmo com id, este texto fica teal</p>`,
+      uses:[
+        '`!important` ignora a especificidade normal e "grita mais alto"',
+        'Facilita resolver um problema agora, mas dificulta manter o código depois',
+        'Boas equipes tratam `!important` como último recurso, não como hábito'
+      ]},
+    { type:'question',
+      title:'Por que evitar seletores gigantes como div#app .lista li.item a?',
+      points:[
+        'Quanto mais específico, mais difícil de sobrescrever depois — inclusive por você mesmo no futuro',
+        'Seletores longos geralmente indicam HTML aninhado demais ou falta de uma classe própria pro elemento',
+        'Uma classe direta no elemento (ex: `.link-item`) resolve o mesmo problema com muito menos força bruta'
+      ]},
+  ]},
+
+  { id:'boas-praticas', label:'Boas Práticas', icon:'✅', tags:[
+    { type:'tips',
+      title:'Nomeando classes',
+      points:[
+        'Prefira nomes que descrevem a função, não a aparência: `.alerta-erro`, não `.vermelho`',
+        'kebab-case é a convenção mais comum em CSS: `.menu-principal`, não `.menuPrincipal`',
+        'BEM é um padrão popular pra variações: `.card`, `.card__titulo`, `.card--destaque`'
+      ]},
+    { type:'tips',
+      title:'Organizando o arquivo CSS',
+      points:[
+        'Agrupe regras por seção ou componente, com comentários indicando cada bloco',
+        'Evite estilizar por `id` — prefira classes reutilizáveis',
+        'Um arquivo gigante é difícil de manter; considere separar por componente quando o projeto crescer'
+      ]},
+  ]},
+
+  { id:'flexbox', label:'Flexbox', icon:'📐', tags:[
+    { display:'display: flex', code:
+`<style>
+  .linha {
+    display: flex;
+    background: #e9ebf5;
+    padding: 8px;
+  }
+  .linha div {
+    background: #2453c9;
+    color: white;
+    padding: 12px;
+    margin: 4px;
+  }
+</style>
+
+<div class="linha">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</div>`,
+      uses:[
+        'Transforma o container em um "flex container" — os filhos ficam em linha',
+        'Os itens se organizam automaticamente, sem precisar de `float`',
+        'Base de praticamente todo layout moderno em CSS'
+      ]},
+    { display:'justify-content', code:
+`<style>
+  .linha {
+    display: flex;
+    justify-content: space-between;
+    background: #e9ebf5;
+    padding: 8px;
+  }
+  .linha div { background: #0a8f66; color: white; padding: 12px; }
+</style>
+
+<div class="linha">
+  <div>A</div>
+  <div>B</div>
+  <div>C</div>
+</div>`,
+      uses:[
+        'Controla o alinhamento horizontal dos itens dentro do container',
+        '`space-between`, `center`, `flex-end` são os valores mais usados',
+        'Por padrão, afeta o eixo principal do flex (horizontal)'
+      ]},
+    { display:'align-items', code:
+`<style>
+  .linha {
+    display: flex;
+    align-items: center;
+    height: 120px;
+    background: #e9ebf5;
+  }
+  .linha div { background: #b25b06; color: white; padding: 10px; }
+</style>
+
+<div class="linha">
+  <div>Centralizado verticalmente</div>
+</div>`,
+      uses:[
+        'Controla o alinhamento no eixo cruzado (por padrão, vertical)',
+        '`center` resolve um dos problemas mais clássicos do CSS: centralizar na vertical',
+        'Funciona junto com `justify-content` pra centralizar nos dois eixos'
+      ]},
+    { display:'flex-wrap', code:
+`<style>
+  .linha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .linha div {
+    background: #2453c9; color: white;
+    padding: 12px; width: 90px;
+  }
+</style>
+
+<div class="linha">
+  <div>1</div><div>2</div><div>3</div><div>4</div>
+</div>`,
+      uses:[
+        'Permite que os itens "quebrem linha" quando não cabem mais',
+        'Sem `flex-wrap`, os itens encolhem ou vazam do container',
+        'Combinado com `gap`, cria espaçamento entre os itens automaticamente'
+      ]},
+    { type:'question',
+      title:'Flexbox resolve tudo? E o CSS Grid?',
+      points:[
+        'Flexbox é ótimo pra layouts em uma direção (uma linha ou uma coluna)',
+        'Pra grades com linhas E colunas ao mesmo tempo, `CSS Grid` costuma ser mais direto (fica pra outra aula!)',
+        'Na prática, muitos projetos usam os dois: Grid pra estrutura geral, Flex pra componentes internos'
+      ]},
+  ]},
+
+  { id:'responsividade', label:'Responsividade', icon:'📱', tags:[
+    { display:'vw / vh', code:
+`<style>
+  .banner {
+    width: 100vw;
+    height: 30vh;
+    background: #2453c9;
+  }
+</style>
+
+<div class="banner"></div>`,
+      uses:[
+        '`vw`/`vh` são relativos ao tamanho da tela (viewport), não ao elemento pai',
+        '`100vw` = a largura inteira da tela; `50vh` = metade da altura da tela',
+        'Muito usado em banners e seções que devem ocupar a tela toda'
+      ]},
+    { display:'@media', code:
+`<style>
+  .caixa { background: #0a8f66; padding: 20px; color: white; }
+
+  @media (max-width: 480px) {
+    .caixa { background: #b25b06; }
+  }
+</style>
+
+<div class="caixa">O resultado ao lado já está numa tela estreita</div>`,
+      uses:[
+        '`@media` aplica regras só quando a condição é verdadeira',
+        '`max-width: 480px` = "quando a tela tiver até 480px de largura"',
+        'Base de todo o design responsivo'
+      ]},
+    { display:'cards responsivos', code:
+`<style>
+  .cards { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cards div {
+    flex: 1 1 120px;
+    background: #2453c9;
+    color: white;
+    padding: 14px;
+  }
+</style>
+
+<div class="cards">
+  <div>Card 1</div><div>Card 2</div><div>Card 3</div>
+</div>`,
+      uses:[
+        '`flex: 1 1 120px` diz "cresça, encolha, mas nunca menos que 120px"',
+        'Combinado com `flex-wrap`, os cards se reorganizam sozinhos conforme o espaço',
+        'Essa é a base de grades de cards responsivas sem nenhuma media query'
+      ]},
+    { type:'question',
+      title:'Por onde começar: mobile-first ou desktop-first?',
+      points:[
+        'Mobile-first: escreve o CSS base pra tela pequena e usa `@media (min-width: ...)` pra crescer',
+        'Desktop-first: escreve pro desktop primeiro e usa `@media (max-width: ...)` pra encolher',
+        'A maioria dos times novos hoje prefere mobile-first — por quê, na opinião de vocês?'
+      ]},
+  ]},
+
+  { id:'extras', label:'Entre Outros', icon:'✨', tags:[
+    { display:'--variável', code:
+`<style>
+  :root {
+    --cor-principal: #2453c9;
+  }
+  .titulo { color: var(--cor-principal); }
+  .borda { border: 2px solid var(--cor-principal); padding: 8px; }
+</style>
+
+<h2 class="titulo">Título</h2>
+<div class="borda">Caixa com a mesma cor</div>`,
+      uses:[
+        'Cria uma "variável" reaproveitável em várias regras',
+        'Trocar o valor em `:root` muda a cor em todo lugar que a usa',
+        'Muito usado para cores e espaçamentos de um design system'
+      ]},
+    { display:'box-shadow', code:
+`<style>
+  .cartao {
+    width: 140px; padding: 16px;
+    background: white;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  }
+</style>
+
+<div class="cartao">Cartão com sombra</div>`,
+      uses:[
+        'Adiciona sombra ao redor do elemento',
+        'Ordem dos valores: deslocamento X, deslocamento Y, desfoque, cor',
+        'Dá sensação de profundidade — muito usado em cards e modais'
+      ]},
+    { display:'opacity', code:
+`<style>
+  .caixa {
+    width: 100px; height: 60px;
+    background: #b25b06;
+    opacity: 0.5;
+  }
+</style>
+
+<div class="caixa"></div>`,
+      uses:[
+        'Controla a transparência do elemento inteiro (de 0 a 1)',
+        'Diferente de usar `rgba` na cor — `opacity` afeta todo o conteúdo, incluindo filhos',
+        'Muito usado em estados desabilitados ou efeitos de hover/transição'
+      ]},
+  ]},
+
+];
+
+function mono(str){ return str.replace(/`([^`]+)`/g, '<code class="inline">$1</code>'); }
+
+function buildDivider(cat){
+  const section = document.createElement('section');
+  section.className = 'divider-slide';
+  const chips = cat.tags.filter(t => !t.type).map(t => {
+    return `<span class="chip fragment fade-in">${t.display}</span>`;
+  }).join('');
+  section.innerHTML = `
+    <div class="divider-icon">${cat.icon}</div>
+    <h2 class="divider-label">${cat.label}</h2>
+    <div class="divider-chips">${chips}</div>
+  `;
+  return section;
+}
+
+function buildQuestionSlide(q){
+  const section = document.createElement('section');
+  section.className = 'question-slide';
+  section.innerHTML = `
+    <div class="q-icon">💭</div>
+    <div class="q-eyebrow">Para discutir</div>
+    <h2 class="q-title">${q.title}</h2>
+    <ul class="q-points"></ul>
+  `;
+  const ul = section.querySelector('.q-points');
+  q.points.forEach(p => {
+    const li = document.createElement('li');
+    li.className = 'fragment fade-up';
+    li.innerHTML = mono(p);
+    ul.appendChild(li);
+  });
+  return section;
+}
+
+function buildTipsSlide(t){
+  const section = document.createElement('section');
+  section.className = 'tips-slide';
+  section.innerHTML = `
+    <div class="tip-icon">✅</div>
+    <div class="tip-eyebrow">Boa prática</div>
+    <h2 class="tip-title">${t.title}</h2>
+    <ul class="tip-points"></ul>
+  `;
+  const ul = section.querySelector('.tip-points');
+  t.points.forEach(p => {
+    const li = document.createElement('li');
+    li.className = 'fragment fade-up';
+    li.innerHTML = mono(p);
+    ul.appendChild(li);
+  });
+  return section;
+}
+
+function buildTagSlide(tag){
+  const section = document.createElement('section');
+  section.className = 'tag-slide';
+  section.innerHTML = tag.display ? `<h1 class="tag-name">${tag.display}</h1>` : '';
+  section.innerHTML += `
+    <div class="panels">
+      <div class="panel code-panel fragment fade-in">
+        <div class="panel-header"><span class="ico">⌨</span>Código</div>
+        <pre><code class="language-css hljs" data-trim></code><span class="cursor"></span></pre>
+      </div>
+      <div class="panel result-panel fragment fade-in">
+        <div class="panel-header"><span class="ico mint">▶</span>Resultado</div>
+        <div class="browser-mock">
+          <div class="browser-bar">
+            <span class="bdot r"></span><span class="bdot y"></span><span class="bdot g"></span>
+            <span class="url">🔒 resultado.html</span>
+          </div>
+          <div class="loading-bar"></div>
+          <div class="browser-body"><iframe class="live" sandbox=""></iframe></div>
+        </div>
+      </div>
+    </div>
+    <ul class="uses fragment fade-up"></ul>
+  `;
+  section.querySelector('code').textContent = tag.code;
+  section.querySelector('iframe.live').srcdoc = tag.code;
+  const ul = section.querySelector('.uses');
+  tag.uses.forEach(u => {
+    const li = document.createElement('li');
+    li.innerHTML = mono(u);
+    ul.appendChild(li);
+  });
+  return section;
+}
+
+const slidesRoot = document.querySelector('.reveal .slides');
+
+DECK.forEach(cat => {
+  try {
+    slidesRoot.appendChild(buildDivider(cat));
+  } catch (e) { console.error('Erro ao montar divisor', cat.id, e); }
+  cat.tags.forEach(item => {
+    try {
+      if (item.type === 'question') {
+        slidesRoot.appendChild(buildQuestionSlide(item));
+      } else if (item.type === 'tips') {
+        slidesRoot.appendChild(buildTipsSlide(item));
+      } else {
+        slidesRoot.appendChild(buildTagSlide(item));
+      }
+    } catch (e) { console.error('Erro ao montar slide', item.display || item.title, e); }
+  });
+});
+
+const end = document.createElement('section');
+end.className = 'end-slide';
+end.innerHTML = `
+  <h2>Pronto</h2>
+  <p class="thanks">Até a próxima aula!</p>
+`;
+slidesRoot.appendChild(end);
+
+Reveal.initialize({
+  hash: true,
+  controls: true,
+  controlsLayout: 'bottom-right',
+  controlsTutorial: false,
+  progress: true,
+  center: false,
+  navigationMode: 'linear',
+  width: 1280,
+  height: 720,
+  margin: 0.06,
+  transition: 'slide',
+  backgroundTransition: 'fade',
+  keyboard: { 38: null, 40: null },
+  plugins: [ RevealHighlight ]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+header, section, footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+header {                                                                                                                                                                                                                                                                    
+    justify-content: space-between;
+}
+
+header li {
+    display: inline;        
+}
+
+section {
+    min-height: 400px;
+}
+
+section.contato {
+    background-color: #666;
+}
+
+section.detalhes > div {
+    border: 1px solid #DDD;
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.6s ease;
+}
+
+section.detalhes > div:hover {
+    background-color: #DDD;
+    transform: scale(0.9);
+    transition: 0.6s ease;
+    cursor: pointer;
+}
+
+section.detalhes i {
+    font-size: 4rem;
+    color: rgb(121, 3, 3);
+}
+
+section.sobre1 {
+    background-color: #333;
+}
+
