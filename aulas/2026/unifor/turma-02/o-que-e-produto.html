@@ -1,0 +1,1009 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>O que é Produto? — e o lugar do Engenheiro de Software nisso</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../../dist/theme/white.css">
+    <link rel="stylesheet" href="../../../../plugin/highlight/monokai.css">
+
+    <style>
+        :root {
+            --primary: #e2b007;   /* Dourado Churchilliano */
+            --primary2: #b45f06;
+            --text: #222;
+            --muted: #6b6b6b;
+            --border: rgba(0,0,0,.12);
+            --card: #f7f6f3;
+            --danger: #c0392b;
+            --success: #2e7d32;
+            --eng: #1155a3; /* azul = "voz do engenheiro" em todo o deck */
+        }
+
+        .reveal { font-family: Inter, system-ui, sans-serif; color: var(--text); font-size: 38px; }
+        .reveal .slides { text-align: left; }
+        .reveal section { padding: 30px 10px; }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: uppercase;
+            color: var(--primary2);
+            letter-spacing: -.02em;
+        }
+        h1 { font-size: 4.4rem; font-weight: 900; line-height: 1.15; }
+        h2 { font-size: 3.2rem; font-weight: 800; margin-bottom: .6em; }
+        h3 { font-size: 1.9rem; color: var(--primary); font-weight: 700; margin-bottom: .5em; }
+
+        p, li { font-size: 1.7rem; line-height: 1.4; }
+        ul { margin-top: 20px; }
+        li { margin: 12px 0; }
+
+        .subtitle { font-size: 1.5rem; color: var(--muted); margin-top: 14px; }
+        .big-center { text-align: center; }
+        .muted { color: var(--muted); }
+        .danger { color: var(--danger); }
+        .success { color: var(--success); }
+
+        .box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 26px 30px;
+            margin-top: 24px;
+        }
+
+        .quote {
+            border-left: 6px solid var(--primary);
+            padding-left: 22px;
+            font-size: 1.9rem;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* === CAIXA "voz do engenheiro" — recorrente no deck === */
+        .eng-box {
+            margin-top: 26px;
+            border: 2px solid var(--eng);
+            border-radius: 20px;
+            padding: 20px 26px;
+            background: rgba(17,85,163,.06);
+        }
+        .eng-box .eng-label {
+            display: inline-block;
+            font-weight: 800;
+            color: var(--eng);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .eng-box p { font-size: 1.5rem; margin: 0; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 30px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 30px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 30px; }
+
+        .mini-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 10px;
+            padding-top: 0;
+            text-align: left;
+        }
+        .mini-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
+        .mini-card p { font-size: 1.15rem; margin: 0; }
+        .mini-card .tag { font-size: .95rem; color: var(--muted); }
+
+        .reveal table { width: 100%; border-collapse: collapse; font-size: .62em; margin-top: 20px; }
+        .reveal table th { background: rgba(226,176,7,.18); color: var(--text); border-bottom: 2px solid var(--primary); }
+        .reveal table th, .reveal table td { padding: 10px 14px; text-align: left; }
+        .reveal table tr:nth-child(even) { background: rgba(0,0,0,.03); }
+
+        .levels { display: flex; justify-content: space-between; gap: 14px; margin-top: 40px; }
+        .level {
+            flex: 1; text-align: center; border-radius: 18px; padding: 18px 10px;
+            background: linear-gradient(180deg, rgba(226,176,7,.18), rgba(226,176,7,.03));
+            border: 1px solid rgba(226,176,7,.4);
+        }
+        .level h3 { font-size: 1.8rem; margin-bottom: 6px; }
+        .level p { font-size: 1.1rem; margin: 0; }
+
+        .timeline { display: flex; justify-content: space-between; gap: 16px; margin-top: 40px; }
+        .timeline-item {
+            flex: 1; position: relative; background: var(--card); border: 1px solid var(--border);
+            border-radius: 18px; padding: 18px;
+        }
+        .timeline-item::before {
+            content: ""; position: absolute; top: -10px; left: 50%; width: 18px; height: 18px;
+            background: var(--primary); border-radius: 50%; transform: translateX(-50%);
+        }
+        .timeline-item h3 { font-size: 1.3rem; margin-bottom: 6px; }
+        .timeline-item p { font-size: 1.1rem; margin: 0; }
+
+        .diagram { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 50px; flex-wrap: wrap; }
+        .node {
+            min-width: 160px; padding: 20px 22px; border-radius: 20px; font-size: 1.15rem; font-weight: 700;
+            text-align: center; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,.08);
+        }
+        .node.produto { background: #fff3d1; }
+        .node.eng { background: #dbe9fb; color: var(--eng); }
+        .node.design { background: #ffe0f0; }
+        .node.central { background: var(--primary2); color: #fff; }
+        .arrow { font-size: 2.2rem; font-weight: 800; color: var(--primary2); }
+
+        .stamp-wall { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 40px; }
+        .stamp {
+            border: 3px solid var(--primary2); color: var(--primary2); padding: 12px 20px;
+            border-radius: 14px; font-weight: 800; transform: rotate(-3deg); font-size: 1.15rem;
+        }
+        .stamp.eng { border-color: var(--eng); color: var(--eng); }
+
+        .check-wall { margin-top: 36px; }
+        .check {
+            background: var(--card); border-left: 6px solid var(--success);
+            border-radius: 12px; padding: 14px 22px; margin: 12px 0; font-size: 1.4rem;
+        }
+
+        .word-cloud { display: flex; flex-wrap: wrap; gap: 14px 22px; margin-top: 36px; }
+        .word-cloud span { font-weight: 700; color: var(--primary2); }
+        .word-cloud span.eng { color: var(--eng); }
+        .word-cloud span.small { font-size: .85rem; color: var(--muted); font-weight: 400; }
+
+        .exercise {
+            border: 3px dashed var(--primary2);
+            border-radius: 24px;
+            padding: 28px 32px;
+            margin-top: 26px;
+            background: #fffaf0;
+        }
+        .exercise .ex-label {
+            display: inline-block; font-weight: 900; color: var(--primary2);
+            font-size: 1.3rem; text-transform: uppercase; margin-bottom: 10px;
+        }
+        .exercise p { font-size: 1.5rem; margin: 6px 0; }
+        .exercise li { font-size: 1.4rem; }
+
+        .timer-badge {
+            display: inline-block; background: var(--primary2); color: #fff;
+            border-radius: 14px; padding: 10px 22px; font-weight: 900; font-size: 1.6rem;
+            margin-top: 10px;
+        }
+
+        .case-tag {
+            display: inline-block; background: var(--eng); color: #fff;
+            border-radius: 10px; padding: 4px 14px; font-size: 1.05rem; font-weight: 800;
+            letter-spacing: .04em; margin-bottom: 14px;
+        }
+
+        .gabarito {
+            margin-top: 22px; border-left: 6px solid var(--success);
+            padding: 14px 22px; background: rgba(46,125,50,.07); border-radius: 0 14px 14px 0;
+        }
+        .gabarito .gab-label { font-weight: 900; color: var(--success); font-size: 1.1rem; text-transform: uppercase; }
+        .gabarito p { font-size: 1.35rem; margin: 4px 0 0; }
+
+        code { font-size: 1.3rem !important; }
+        .reveal pre { width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,.15); }
+
+        .fragment.blur { filter: blur(5px); }
+        .fragment.blur.visible { filter: none; }
+
+        .r-fit-text { font-weight: 900; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <!-- ============================================================ -->
+        <!-- ABERTURA -->
+        <!-- ============================================================ -->
+        <section>
+            <div class="big-center">
+                <h1>O que é<br>Produto?</h1>
+                <p class="subtitle">Processos, atuação e entrega — e o que isso pede da Engenharia de Software</p>
+<!--                <p class="subtitle" style="margin-top: 40px;">baseado em "O que é produto?", Giovana Talisz</p>-->
+            </div>
+        </section>
+
+        <section>
+            <h2>Por que um engenheiro precisa saber isso?</h2>
+            <div class="box">
+                <p class="fragment">Você não escreve código pra "ter código".</p>
+                <p class="fragment">Você escreve pra fazer um <strong>produto</strong> acontecer.</p>
+            </div>
+            <div class="eng-box fragment">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Entender produto não é "virar PM". É entender <strong>por que</strong> a tarefa do sprint existe.</p>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h3 style="text-align:center">A definição que vamos usar</h3>
+            <div class="quote" style="font-size: 2.1rem; text-align:left;">
+                Produto é a esteira que transforma <strong class="fragment highlight-red">dor</strong> e <strong class="fragment highlight-red">necessidade</strong>
+                em <strong class="fragment highlight-red">impacto real</strong>, por meio do
+                <strong class="fragment">desenvolvimento</strong>, <strong class="fragment">rollout</strong> e
+                <strong class="fragment">iteração contínua</strong> de uma solução.
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>A esteira, passo a passo</h2>
+            <div class="diagram" data-id="esteira">
+                <div class="node produto fragment">1. Dor / necessidade</div>
+                <div class="arrow fragment">→</div>
+                <div class="node eng fragment">2. Desenvolvimento</div>
+                <div class="arrow fragment">→</div>
+                <div class="node produto fragment">3. Rollout</div>
+                <div class="arrow fragment">→</div>
+                <div class="node produto fragment">4. Impacto real</div>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>A esteira, passo a passo</h2>
+            <div class="diagram" data-id="esteira">
+                <div class="node eng central">2. Desenvolvimento</div>
+            </div>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>De todo o ciclo, esse é o único passo que <strong>só existe se você existir</strong>.
+                    E é justamente esse passo que o semestre inteiro — de <strong>Fundamentos de Engenharia de Software</strong>
+                    até <strong>Tópicos Avançados</strong> — existe pra detalhar.</p>
+            </div>
+        </section>
+
+        <section style="align-items: flex-start; margin-top: 0;">
+            <h3 style="text-align:left">Agenda</h3>
+            <hr>
+            <ul>
+                <li class="fragment">O que é produto (e o que não é)</li>
+                <li class="fragment">Quem decide o quê</li>
+                <li class="fragment">Como se mede</li>
+                <li class="fragment">Como se prioriza</li>
+                <li class="fragment">Como se constrói</li>
+                <li class="fragment">O que isso pede de nós, engenheiros</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Um case pra acompanhar a aula toda</h2>
+            <div class="box">
+                <span class="case-tag">O CASE</span>
+                <h3 style="margin-top:6px;">FreteCerto</h3>
+                <p class="fragment">Calculadora de frete: uma API que lojas online plugam pra saber preço e prazo de entrega na hora.</p>
+                <p class="fragment">Vamos usar esse sistema em <strong>todos os exercícios</strong> — ele evolui junto com a aula.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- BLOCO 1 - O QUE É PRODUTO -->
+        <!-- ============================================================ -->
+        <section data-background="#333" class="big-center">
+            <h1 style="color:#FFF">1</h1>
+            <h2 style="color:#e2b007">O que é produto</h2>
+        </section>
+
+        <section>
+            <h2>Produto e projeto não são a mesma coisa</h2>
+            <table>
+                <thead><tr><th>Dimensão</th><th>Projeto</th><th>Produto</th></tr></thead>
+                <tbody>
+                <tr class="fragment"><td>Escopo</td><td>Definido no início, defendido até o fim</td><td>Aprendido no caminho</td></tr>
+                <tr class="fragment"><td>Ciclo de vida</td><td>Tem data de encerramento</td><td>Evolui enquanto o problema existir</td></tr>
+                <tr class="fragment"><td>Sucesso</td><td>Entregou no prazo/escopo</td><td>Mudou o comportamento de quem usa</td></tr>
+                <tr class="fragment"><td>Pergunta central</td><td>Estamos construindo <em>certo</em>?</td><td>Estamos construindo a coisa <em>certa</em>?</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>"Por que mudou o escopo dessa task?" — em produto, a resposta normal é <strong>aprendemos algo novo</strong>.
+                    Isso é o mecanismo funcionando, não o processo falhando.</p>
+            </div>
+            <p class="fragment" style="margin-top: 30px;">Mas não é licença pra estourar prazo: muda o escopo, com evidência — a data continua de pé.</p>
+        </section>
+
+        <section>
+            <h2>Nem todo produto é o mesmo tipo</h2>
+            <p>Um mesmo sistema costuma ter os quatro tipos convivendo dentro dele.</p>
+            <div class="grid-4">
+                <div class="mini-card fragment">
+                    <span class="tag">CUSTOMER-FACING</span>
+                    <h3>Voltado ao cliente</h3>
+                    <p>Streaming, banco digital, CRM. Foco: experiência de quem usa e paga.</p>
+                </div>
+                <div class="mini-card fragment">
+                    <span class="tag">INTERNAL <br> - OPS</span>
+                    <h3>Interno</h3>
+                    <p>Painel de conciliação, roteirização. Foco: reduzir custo e erro humano.</p>
+                </div>
+                <div class="mini-card fragment">
+                    <span class="tag">PLATFORM <br> - CORE</span>
+                    <h3>Plataforma</h3>
+                    <p>API de pagamento, auth. Invisível pro usuário; foco em estabilidade.</p>
+                </div>
+                <div class="mini-card fragment">
+                    <span class="tag">DATA PRODUCTS</span>
+                    <h3>Dados</h3>
+                    <p>Recomendação, score de crédito. Foco: precisão da decisão.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Cada tipo puxa uma disciplina diferente de engenharia: <br>
+                    -> <strong>Design da Experiência do Usuário</strong> <br>
+                    e performance no customer-facing <br>
+                    -> automação no interno <br>
+                    -> <strong>Arquitetura de Microsserviços</strong>
+                    no de plataforma
+                    <br> -> dados no de dados. </p>
+                <br>
+                <p class="fragment">
+                    "Ser bom em backend" não é a mesma coisa em cada um desses quatro.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Quatro condições pra ser produto</h2>
+            <p class="muted">Se alguma falha, o que existe é funcionalidade, projeto ou atendimento.</p>
+            <ol>
+                <li class="fragment"><strong>Resolve um problema real</strong> — sem dor, é funcionalidade à procura de usuário</li>
+                <li class="fragment"><strong>Se sustenta no tempo</strong> — evolui, é mantido, gera valor recorrente</li>
+                <li class="fragment"><strong>É replicável</strong> — resolve o mesmo problema pra várias pessoas</li>
+                <li class="fragment"><strong>É sistema, não tela</strong> — regras de negócio, processo, operação, suporte</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>🎯 Exercício — É produto ou não é?</h2>
+            <div class="exercise">
+                <span class="ex-label">FreteCerto</span>
+                <ul>
+                    <li class="fragment">A API que devolve preço e prazo de frete pra loja?</li>
+                    <li class="fragment">A planilha que o comercial usa pra negociar tabela com transportadoras?</li>
+                    <li class="fragment">O script que o suporte roda manualmente quando a API erra o CEP?</li>
+                    <li class="fragment">O painel interno onde a operação acompanha o SLA de cada transportadora?</li>
+                </ul>
+            </div>
+            <div class="gabarito fragment">
+                <span class="gab-label">Gabarito</span>
+                <p>API e painel: produto. Planilha e script manual: resolvem, mas não escalam nem são sistema — são funcionalidade/atendimento até virarem algo replicável.</p>
+            </div>
+        </section>
+
+        <section data-background="#333" class="big-center">
+            <h2 style="color:#e2b007">"sistema não é tela"</h2>
+            <h3 class="fragment" style="color:#FFF">e ponto</h3>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>A interface é a ponta do iceberg. Quem sustenta "a parada toda" no dia a dia é
+                    <strong>arquitetura, dados, integrações e operação</strong> — e isso não aparece no Figma.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Todo produto equilibra três forças</h2>
+            <div class="diagram">
+                <div class="node produto fragment">Desejável<br><small>negócio e usuário</small></div>
+                <div class="node eng fragment">Viável<br><small>técnica</small></div>
+                <div class="node design fragment">Sustentável<br><small>operação e negócio</small></div>
+            </div>
+            <div class="box fragment" style="margin-top:40px; text-align:center;">
+                No centro: <strong>a decisão de produto</strong>, quase sempre uma negociação entre as três.
+            </div>
+        </section>
+
+        <section data-background="img/triangulo.png" data-background-size="60%"></section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>"Viável" é o nosso território: </p>
+                <ul>
+                    <li class="fragment">Conseguimos construir?</li>
+                    <li class="fragment">manter?</li>
+                    <li class="fragment">cabe na arquitetura atual? <em>(Arquitetura de Microsserviços)</em></li>
+                    <li class="fragment">qual o custo de rodar? <em>(Infraestrutura Automatizada, Cloud)</em></li>
+                    <li class="fragment">E depois (vira débito técnico)?</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- BLOCO 2 - QUEM DECIDE O QUÊ -->
+        <!-- ============================================================ -->
+        <section data-background="#333" class="big-center">
+            <h1 style="color:#FFF">2</h1>
+            <h2 style="color:#e2b007">Quem decide o quê</h2>
+        </section>
+
+        <section>
+            <h2>Produto é o trio, e não a pessoa PO</h2>
+            <div class="diagram">
+                <div class="node produto fragment">Produto<br></div>
+                <div class="node design fragment">Design<br></div>
+                <div class="node eng fragment">Engenharia<br></div>
+            </div>
+            <p class="fragment" style="text-align:center; margin-top:30px;">a decisão é colegiada</p>
+        </section>
+
+        <section>
+            <div class="grid-3">
+                <div class="mini-card fragment"><h3>Produto</h3><p>Que dor resolvemos, pra quem, e o que justifica o esforço agora?</p></div>
+                <div class="mini-card fragment"><h3>Design</h3><p>Como a pessoa entende? Onde ela trava?</p></div>
+                <div class="mini-card fragment" style="border-color: var(--eng);"><h3 style="color: var(--eng);">Engenharia</h3><p>O que custa de verdade? Que risco corre? Que caminho resolve o mesmo por menos?</p></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Três tipos de decisão</h2>
+            <table>
+                <thead><tr><th>Produto decide</th><th>Decisão colegiada</th><th>Engenharia decide</th></tr></thead>
+                <tbody>
+                <tr class="fragment"><td>O quê e por quê entra</td><td>Fatiamento e escopo × prazo</td><td>Arquitetura e desenho</td></tr>
+                <tr class="fragment"><td>Pra quem, o que fica de fora</td><td>Dívida técnica: quando pagar</td><td>Tecnologia e padrão adotado</td></tr>
+                <tr class="fragment"><td>Se o entregue resolveu</td><td>Ordem: fundação antes de feature</td><td>Estimativa real de custo</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Boa parte do atrito entre produto e time vem de uma decisão do <strong>meio</strong> sendo tratada como se fosse de ponta.
+                    "Cabe no prazo?" não é pergunta só sua nem só do PM — se constrói junto.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Exercício — Quem decide isso?</h2>
+            <div class="exercise">
+                <span class="ex-label">FreteCerto</span>
+                <p>Pra cada decisão: <strong>Produto</strong>, <strong>Engenharia</strong> ou <strong>Colegiada</strong>.</p>
+                <ol>
+                    <li class="fragment">Trocar a API de geolocalização de CEP</li>
+                    <li class="fragment">Lançar frete grátis acima de R$ 200 em compras</li>
+                    <li class="fragment">Cortar o cálculo com múltiplas transportadoras pra caber no prazo do MVP</li>
+                    <li class="fragment">Adiar a integração com a nova transportadora regional</li>
+                </ol>
+            </div>
+            <div class="gabarito fragment">
+                <span class="gab-label">Gabarito</span>
+                <p>1: Engenharia. 2: Produto. 3 e 4: Colegiada — é fatiamento de escopo × prazo.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>As três vozes em volta da decisão</h2>
+            <div class="grid-3">
+                <div class="mini-card fragment"><span class="tag">DEFINE O RUMO</span><h3>C-level</h3><p>"Isso nos aproxima de onde queremos chegar?"</p></div>
+                <div class="mini-card fragment"><span class="tag">TRAZ O PROBLEMA</span><h3>Stakeholder</h3><p>Costuma chegar com a solução pronta.</p></div>
+                <div class="mini-card fragment"><span class="tag">VALIDA A DOR</span><h3>Usuário</h3><p>"Não entendi o que eu faço nesta tela."</p></div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- BLOCO 3 - COMO SE MEDE -->
+        <!-- ============================================================ -->
+        <section data-background="#333" class="big-center">
+            <h1 style="color:#FFF">3</h1>
+            <h2 style="color:#e2b007">Como se mede</h2>
+        </section>
+
+        <section>
+            <h2>Três níveis encadeados</h2>
+            <div class="levels">
+                <div class="level fragment"><h3>Visão</h3><p>o destino, sem número, sem prazo</p></div>
+                <div class="level fragment"><h3>OKR</h3><p>o que muda agora — trimestre</p></div>
+                <div class="level fragment"><h3>KPI</h3><p>como sabemos se está de pé — contínuo</p></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="box">
+                <p><strong>KPI não é OKR.</strong></p>
+                <p class="fragment">KPI você <em>monitora</em> pra saber se o produto está saudável.</p>
+                <p class="fragment">OKR você <em>escolhe</em> pra mudar algo nesse trimestre.</p>
+            </div>
+            <div class="eng-box fragment">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Soa familiar? É a mesma confusão entre <strong>métrica de saúde do sistema</strong> (uptime, latência, taxa de erro)
+                    e <strong>meta do sprint</strong>. Transformar todo KPI em meta faz o time otimizar o número, não o resultado.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O eixo não é senioridade técnica</h2>
+            <p>É o tamanho do horizonte que a pessoa precisa enxergar.</p>
+            <div class="levels">
+                <div class="level fragment"><h3>PO</h3><p>a sprint<br><small>semanas</small></p></div>
+                <div class="level fragment"><h3>PM</h3><p>o produto<br><small>trimestre</small></p></div>
+                <div class="level fragment"><h3>GPM</h3><p>vários produtos<br><small>ano</small></p></div>
+                <div class="level fragment"><h3>CPO</h3><p>a empresa<br><small>anos</small></p></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>É a mesma escada de Dev → Tech Lead → Eng. Manager → CTO. Muda o horizonte de decisão,
+                    não a régua de "quem sabe mais código".</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>As siglas que aparecem toda hora</h2>
+            <div class="grid-3">
+                <div class="mini-card fragment"><span class="tag">QUEM FICA</span><h3>Retenção</h3><p>% de quem continua usando. O sinal mais honesto de valor.</p></div>
+                <div class="mini-card fragment"><span class="tag">QUEM SAI</span><h3>Churn</h3><p>Invalida crescimento: entra gente e sai na mesma velocidade.</p></div>
+                <div class="mini-card fragment"><span class="tag">O QUE ACHAM</span><h3>NPS</h3><p>Mede percepção, não uso.</p></div>
+            </div>
+            <div class="grid-2">
+                <div class="mini-card fragment"><span class="tag">QUANTO VALE</span><h3>LTV</h3><p>Receita gerada ao longo da relação.</p></div>
+                <div class="mini-card fragment"><span class="tag">QUANTO CUSTA</span><h3>CAC</h3><p>LTV/CAC abaixo de 1 = pagar pra ter cliente.</p></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Fora do produto voltado ao cliente, o equivalente muda: em interno, tempo economizado e erro evitado;
+                    em plataforma, estabilidade e o que ela destrava. É por isso que <strong>Monitoramento e Análise de Logs</strong>
+                    existe como disciplina própria — DORA metrics, MTTR, lead time (esse último, direto de
+                    <strong>Integração e Entrega Contínua</strong>) são o "retenção/churn" da engenharia.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Exercício — Esse produto está saudável?</h2>
+            <div class="exercise">
+                <span class="ex-label">FreteCerto — em duplas, 2 minutos</span>
+                <p>Churn: 6% ao mês <br> - NPS: 30 <br> - Uptime da API: 96% <br> - Taxa de erro no cálculo: 4%</p>
+                <p class="fragment">O que vocês olhariam primeiro — a métrica de produto ou a de engenharia?</p>
+            </div>
+            <div class="timer-badge">⏱ 2 min</div>
+            <div class="gabarito fragment">
+                <span class="gab-label">Gabarito</span>
+                <p>Taxa de erro no cálculo é a suspeita principal: loja recebe preço errado, repassa pro cliente
+                    final e cancela a integração. A métrica de engenharia explica a de produto.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- BLOCO 4 - COMO SE PRIORIZA -->
+        <!-- ============================================================ -->
+        <section data-background="#333" class="big-center">
+            <h1 style="color:#FFF">4</h1>
+            <h2 style="color:#e2b007">Como se prioriza</h2>
+        </section>
+
+        <section class="big-center">
+            <h2>O trabalho é dizer não</h2>
+            <h3 class="fragment">na maioria das vezes, o PM responde não pelo que priorizou — <br>mas pelo que deixou de priorizar</h3>
+        </section>
+
+        <section>
+            <div class="stamp-wall">
+                <div class="stamp fragment">falta informação</div>
+                <div class="stamp fragment">desloca o resto do plano</div>
+                <div class="stamp fragment">não é agora ≠ nunca</div>
+                <div class="stamp fragment">toda escolha empurra outra</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Os critérios pra ordenar</h2>
+            <div class="grid-3">
+                <div class="mini-card fragment"><h3>Custo de não fazer</h3><p>Se a resposta for "nada", provavelmente não é agora.</p></div>
+                <div class="mini-card fragment"><h3>Alcance</h3><p>Dor forte de um perde pra dor média de duzentos.</p></div>
+                <div class="mini-card fragment" style="border-color: var(--eng);"><h3 style="color:var(--eng);">Esforço técnico</h3><p>Mesmo valor, custos diferentes ≠ mesma prioridade.</p></div>
+                <div class="mini-card fragment"><h3>Dependência</h3><p>Fundação vale mais do que o valor isolado sugere.</p></div>
+                <div class="mini-card fragment"><h3>Reversibilidade</h3><p>Difícil de desfazer merece mais discovery.</p></div>
+                <div class="mini-card fragment"><h3>Confiança</h3><p>Baixa confiança pede um passo menor antes do grande.</p></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>"Esforço técnico" e "dependência" não vêm do achismo — vêm da sua estimativa.
+                    Uma estimativa mal feita distorce a priorização inteira do produto.
+                    Dizer não também é trabalho de engenharia: <strong>dívida técnica que pode esperar</strong> vs
+                    <strong>a que trava tudo o resto</strong>.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Exercício — Monte o backlog</h2>
+            <div class="exercise">
+                <span class="ex-label">FreteCerto — em grupo</span>
+                <p>Ordenem por prioridade, usando os critérios que acabamos de ver:</p>
+                <ul>
+                    <li class="fragment">Cálculo de frete internacional</li>
+                    <li class="fragment">Cache de resultado por CEP frequente</li>
+                    <li class="fragment">Dashboard de SLA por transportadora</li>
+                    <li class="fragment">Webhook de notificação de atraso na entrega</li>
+                </ul>
+            </div>
+            <div class="timer-badge">⏱ 5 min</div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- BLOCO 5 - COMO SE CONSTRÓI -->
+        <!-- ============================================================ -->
+        <section data-background="#333" class="big-center">
+            <h1 style="color:#FFF">5</h1>
+            <h2 style="color:#e2b007">Como se constrói</h2>
+        </section>
+
+<!--        <section>-->
+<!--            <h2>Dois ciclos que se alimentam</h2>-->
+<!--            <div class="diagram">-->
+<!--                <div class="node produto fragment">Descoberta<br><small>entender</small></div>-->
+<!--                <div class="node central fragment">Visão &amp; OKR</div>-->
+<!--                <div class="node eng fragment">Teste<br><small>aprender</small></div>-->
+<!--            </div>-->
+<!--            <p class="fragment" style="text-align:center; margin-top:30px;">Visão e OKR filtram o que entra em cada volta.</p>-->
+<!--        </section>-->
+
+<!--        <section>-->
+<!--            <h2>A árvore de oportunidades</h2>-->
+<!--            <div class="box">-->
+<!--                <p><strong>KR:</strong> reduzir de 22% para 10% os casos devolvidos</p>-->
+<!--                <p class="fragment"><strong>Oportunidade:</strong> 7 em cada 10 voltam por documento que já existia</p>-->
+<!--                <p class="fragment"><strong>Hipótese:</strong> se o sistema avisar o que falta, a origem corrige</p>-->
+<!--                <p class="fragment"><strong>Experimento:</strong> bloquear envio com documento obrigatório ausente</p>-->
+<!--            </div>-->
+<!--        </section>-->
+
+<!--        <section>-->
+<!--            <h2>Triplo diamante</h2>-->
+<!--            <div class="diagram">-->
+<!--                <div class="node produto fragment">Discovery</div>-->
+<!--                <div class="arrow fragment">→</div>-->
+<!--                <div class="node eng fragment">Delivery</div>-->
+<!--                <div class="arrow fragment">→</div>-->
+<!--                <div class="node design fragment">Rollout</div>-->
+<!--            </div>-->
+<!--            <p class="fragment" style="text-align:center; margin-top: 20px;">O terceiro diamante não fecha em ideia: fecha em <strong>software no ar</strong>.</p>-->
+<!--        </section>-->
+
+
+
+        <section data-background="img/mvp0.png" data-background-size="80%">
+            <div style="text-align: center">
+
+                MVP = Mínimo Produto Viável
+            </div>
+
+            <br><br><br><br><br><br><br>
+
+        </section>
+        <section data-background="img/mvp.png" data-background-size="80%"></section>
+
+        <section>
+            <h2>O protótipo existe pra errar antes</h2>
+            <ul>
+                <li class="fragment">materializa a discussão — uma leitura só, não quinze</li>
+                <li class="fragment">revela o requisito oculto — "e quando o caso volta?"</li>
+                <li class="fragment">antecipa o custo — a engenharia já diz o que é caro</li>
+            </ul>
+            <div class="eng-box fragment">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Protótipo aprovado é o <strong>começo da spec</strong>, não o fim do design. <br><br> Testa viabilidade, infraestrutura inicial, casos de borda, etc.</p>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>MVP não é sinônimo de gambiarra. <br><br>
+                    "Mínimo" é sobre <strong>escopo</strong>, não sobre abrir mão de qualidade de engenharia.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Exercício — Desenhem o MVP</h2>
+            <div class="exercise">
+                <span class="ex-label">FreteCerto — papel ou quadro, em duplas</span>
+                <p>Qual é o "skate" do FreteCerto? A menor coisa que já responde preço e prazo, sem ser gambiarra.</p>
+                <p class="fragment">Dica: pensem no que <em>não</em> entra — múltiplas transportadoras, cache, rastreio em tempo real...</p>
+            </div>
+            <div class="timer-badge">⏱ 3 min</div>
+            <div class="gabarito fragment">
+                <span class="gab-label">Um caminho possível</span>
+                <p>Tabela fixa de preço por faixa de CEP, atualizada na unha numa planilha, exposta por um único
+                    endpoint. <br><br> Horroroso, mas funciona.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Discovery × Delivery</h2>
+            <table>
+                <thead><tr><th></th><th>Discovery</th><th>Delivery</th></tr></thead>
+                <tbody>
+                <tr class="fragment"><td>Pergunta</td><td>Vale a pena construir?</td><td>Como construímos bem?</td></tr>
+                <tr class="fragment"><td>Moeda</td><td>Aprendizado</td><td>Software funcionando</td></tr>
+                <tr class="fragment"><td>Erro custa</td><td>Barato</td><td class="danger">Caro — retrabalho de código pronto</td></tr>
+                <tr class="fragment"><td>Prazo</td><td>Timeboxed</td><td>Estimado</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section data-background="#333" class="big-center">
+            <h2 style="color:#e2b007">Delivery é o seu território natural</h2>
+            <h3 class="fragment" style="color:#FFF">previsibilidade e qualidade é o que você entrega todo dia</h3>
+        </section>
+
+        <section>
+            <h2>O novo problema: IA acelerou tudo</h2>
+            <div class="grid-2">
+                <div class="mini-card fragment">
+                    <h3>Antes</h3>
+                    <p>Escolha dois: custo, velocidade, valor.</p>
+                </div>
+                <div class="mini-card fragment">
+                    <h3>Depois</h3>
+                    <p>Custo caiu, velocidade subiu — mas <strong>valor</strong> não veio de graça junto.</p>
+                </div>
+            </div>
+            <div class="eng-box fragment">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Errar no delivery ficou barato de <em>construir</em>, mas continua caro de <em>manter</em>. <br><br>
+                    Se o discovery é mal feito e ninguém revisa o escopo durante o delivery, a IA só faz
+                    entregar código errado <strong>mais rápido</strong>.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- BLOCO 6 - O QUE ISSO PEDE DE NÓS -->
+        <!-- ============================================================ -->
+        <section data-background="#333" class="big-center">
+            <h1 style="color:#FFF">6</h1>
+            <h2 style="color:#e2b007">O que isso pede de nós ENGENHEIROS</h2>
+        </section>
+
+        <section>
+            <h2>O mapa da pós</h2>
+            <p class="muted" style="font-size: 1rem">Cada disciplina que vocês cursaram é a versão detalhada de um pedaço desta esteira.</p>
+            <div class="grid-4">
+                <div class="mini-card fragment">
+                    <span class="tag">BLOCO 1</span>
+                    <h3>O que é produto</h3>
+                    <p>
+                        - Fundamentos de Eng de Software <br> - Design da XP do Usuário <br> - Arquitetura de Microsserviços</p>
+                </div>
+                <div class="mini-card fragment">
+                    <span class="tag">BLOCO 2</span>
+                    <h3>Quem decide o quê</h3>
+                    <p>
+                        - Gerenciamento de Produtos <br> - Metodologias Ágeis <br> - Ecossistemas de Startups</p>
+                </div>
+                <div class="mini-card fragment">
+                    <span class="tag">BLOCO 3</span>
+                    <h3>Como se mede</h3>
+                    <p>
+                        - Monitoramento e Análise de Logs <br> - Tópicos Avançados (DORA)</p>
+                </div>
+                <div class="mini-card fragment">
+                    <span class="tag">BLOCO 4</span>
+                    <h3>Como se prioriza</h3>
+                    <p>
+                        - Metodologias Ágeis <br> - Gerenciamento de Produtos</p>
+                </div>
+                <div class="mini-card fragment" style="border-color: var(--eng);">
+                    <span class="tag">BLOCO 5</span>
+                    <h3 style="color: var(--eng);">Escrever &amp; testar</h3>
+                    <p>- Controle de Versão e Gerenciamento de Configuração <br> - Testes Automatizados e Contínuos</p>
+                </div>
+                <div class="mini-card fragment" style="border-color: var(--eng);">
+                    <span class="tag">BLOCO 5</span>
+                    <h3 style="color: var(--eng);">Entregar</h3>
+                    <p>- DevOps <br> - Integração e Entrega Contínua <br> - DevSecOps <br> - Documentação Técnica</p>
+                </div>
+                <div class="mini-card fragment" style="border-color: var(--eng);">
+                    <span class="tag">BLOCO 5</span>
+                    <h3 style="color: var(--eng);">Rodar em escala</h3>
+                    <p>- Computação em Nuvem <br> - Computação sem Servidores <br> - Orquestração de Contêineres <br> - Infraestrutura Automatizada</p>
+                </div>
+                <div class="mini-card fragment">
+                    <span class="tag">BLOCO 6</span>
+                    <h3>O que isso pede de nós</h3>
+                    <p>- Direito Digital e LGPD <br> - Tópicos Avançados em Engenharia de Software</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Nenhuma dessas disciplinas existe isolada — todas são resposta a uma das perguntas de produto
+                    que vimos hoje: o que construir, pra quem, com que qualidade, e como manter de pé depois que
+                    foi ao ar. <strong>Direito Digital e LGPD</strong> não é uma matéria "fora do escopo técnico":
+                    é a força "sustentável" do triângulo entrando como restrição de arquitetura desde o discovery.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Todo produto percorre uma curva</h2>
+            <div class="timeline">
+                <div class="timeline-item fragment"><h3>Discovery</h3><p>entender o problema</p></div>
+                <div class="timeline-item fragment"><h3>Skilling</h3><p>construir e aprender</p></div>
+                <div class="timeline-item fragment"><h3>Growth</h3><p>escalar o que funciona</p></div>
+                <div class="timeline-item fragment"><h3>Maturidade</h3><p>eficiência e retenção</p></div>
+                <div class="timeline-item fragment"><h3>Declínio</h3><p>renovar ou encerrar</p></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Cada fase pede uma <strong>arquitetura</strong> diferente: no discovery, código descartável é aceitável;
+                    no growth, o mesmo código descartável é incêndio. <br><br></p><p class="fragment"> É quando <strong>Computação em Nuvem</strong>,
+                    <strong>Orquestração de Contêineres</strong> e <strong>Infraestrutura Automatizada</strong> deixam de
+                    ser "legal ter" e viram sobrevivência. <br><br></p><p class="fragment"> Overengineering na fase 1 e subengenharia na
+                    fase 3 são o mesmo erro, em direções opostas.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Seis atalhos mentais de produto</h2>
+            <div class="grid-3">
+                <div class="mini-card fragment"><h3>Custo afundado</h3><p>O que já foi gasto não deveria pesar na decisão de continuar.</p></div>
+                <div class="mini-card fragment"><h3>Parada ótima</h3><p>Discovery sem timebox vira a razão de nada sair.</p></div>
+                <div class="mini-card fragment"><h3>Lei de Hick</h3><p>Mais opções, decisão mais lenta.</p></div>
+                <div class="mini-card fragment"><h3>Ancoragem</h3><p>O primeiro número gruda em todas as estimativas seguintes.</p></div>
+                <div class="mini-card fragment"><h3>Pareto (80/20)</h3><p>Achar os 20% que resolvem 80% da dor.</p></div>
+                <div class="mini-card fragment" style="border-color: var(--eng);"><h3 style="color:var(--eng);">Lei de Brooks</h3><p>Mais gente num projeto atrasado, mais atraso.</p></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eng-box">
+                <span class="eng-label">🧑‍💻 Pra Engenharia</span>
+                <p>Lei de Brooks nasceu de engenharia de software (Fred Brooks, "The Mythical Man-Month") — é literalmente
+                    o tipo de armadilha que <strong>Metodologias Ágeis em Gestão de Projetos</strong> existe pra evitar.
+                    <br><br>
+                    A saída pra um atraso é <strong>cortar escopo</strong>, não somar gente que precisa de onboarding.</p>
+            </div>
+        </section>
+
+        <section>
+            <strong>1 mulher grávida gerar 1 bebê em 9 meses</strong> <span class="fragment">não significa que <br><br> 9 mulheres grávidas geram 1 bebê em 1 mês</span>
+        </section>
+
+        <section>
+            <h2>Armadilhas comuns</h2>
+            <ul>
+                <li class="fragment"><strong>Fábrica de features</strong> — mede sucesso por quantidade entregue</li>
+                <li class="fragment"><strong>Solução procurando problema</strong> — "vamos usar essa tecnologia" antes de "temos essa dor"</li>
+                <li class="fragment"><strong>Roadmap de pedidos</strong> — ordem vem de quem pediu, não do valor</li>
+                <li class="fragment"><strong>Discovery infinito</strong> — pesquisa que nunca vira decisão</li>
+                <li class="fragment"><strong>Escopo que só cresce</strong> — cada conversa soma um caso de borda</li>
+                <li class="fragment"><strong>Otimizar o número, não o resultado</strong></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎯 Exercício — Caça à armadilha</h2>
+            <div class="exercise">
+                <span class="ex-label">FreteCerto — frases reais de reunião</span>
+                <p>Qual armadilha é essa?</p>
+                <ol>
+                    <li class="fragment">"Vamos usar machine learning pra prever o frete, fica mais moderno."</li>
+                    <li class="fragment">"Entregamos 10 endpoints novos esse mês!" (ninguém sabe se algum cliente usa)</li>
+                    <li class="fragment">"O maior cliente pediu suporte a mais uma transportadora, então entra amanhã."</li>
+                </ol>
+            </div>
+            <div class="gabarito fragment">
+                <span class="gab-label">Gabarito</span>
+                <p>1: solução procurando problema. 2: fábrica de features. 3: roadmap de pedidos.</p>
+            </div>
+        </section>
+
+        <section data-background="#333" class="big-center">
+            <h2 style="color:#e2b007">"Solução procurando problema"</h2>
+            <h3 class="fragment" style="color:#FFF">é overengineering com um nome mais elegante</h3>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- FECHAMENTO -->
+        <!-- ============================================================ -->
+        <section>
+            <h2>Seis coisas pra levar</h2>
+            <ol>
+                <li class="fragment">Produto é decisão sob incerteza</li>
+                <li class="fragment">A pergunta mais valiosa: "que problema isso resolve?"</li>
+                <li class="fragment">Escopo que muda com evidência é acerto</li>
+                <li class="fragment">Prazo se negocia antes, não se estoura depois</li>
+                <li class="fragment">Entregar não é resolver</li>
+                <li class="fragment">Viabilidade é insumo de produto, não obstáculo</li>
+            </ol>
+        </section>
+
+        <section data-background="#333" class="big-center">
+            <h2 style="color:#e2b007">A sétima, que não estava na lista</h2>
+            <h1 class="fragment" style="color:#FFF; font-size: 3.2rem;">Engenharia não é quem executa a ideia de outro.</h1>
+            <h3 class="fragment" style="color:#e2b007;">É um dos três donos da decisão.</h3>
+        </section>
+
+        <section>
+            <h2>O vocabulário que mais se repete</h2>
+            <div class="word-cloud">
+                <span class="fragment">discovery</span>
+                <span class="fragment eng">dívida técnica</span>
+                <span class="fragment">roadmap</span>
+                <span class="fragment">backlog</span>
+                <span class="fragment eng">deploy</span>
+                <span class="fragment">OKR</span>
+                <span class="fragment">valor</span>
+                <span class="fragment eng">uptime</span>
+                <span class="fragment">MVP</span>
+                <span class="fragment">churn</span>
+                <span class="fragment eng">CI/CD</span>
+                <span class="fragment">stakeholder</span>
+                <span class="fragment">priorização</span>
+                <span class="fragment eng">arquitetura</span>
+                <span class="fragment">product-market fit</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Exercício final — Consultoria FreteCerto</h2>
+            <div class="exercise">
+                <span class="ex-label">Em grupo, 10 min — apresentem depois</span>
+                <p>O FreteCerto cresceu: 200 lojas integradas, mas o time só adiciona transportadora nova e a API
+                    segue devolvendo preço errado sem ninguém saber por quê.</p>
+                <ol>
+                    <li class="fragment">Que axioma de produto ainda não foi cumprido?</li>
+                    <li class="fragment">Que decisão é claramente da Engenharia, e está sendo ignorada?</li>
+                    <li class="fragment">Que métrica vocês colocariam no OKR do próximo trimestre?</li>
+                    <li class="fragment">Qual armadilha da lista está em curso?</li>
+                </ol>
+            </div>
+            <div class="timer-badge">⏱ 10 min</div>
+        </section>
+
+        <section class="big-center">
+            <h2>Referências</h2>
+            <p style="font-size: 1.3rem;">
+                "O que é produto? — Processos, atuação e entrega", Giovana Talisz
+            </p>
+        </section>
+
+        <section class="big-center">
+            <h1 class="r-fit-text">Perguntas?</h1>
+        </section>
+
+    </div>
+</div>
+
+<script src="../../../../dist/reveal.js"></script>
+<script src="../../../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'fade',
+        navigationMode: 'linear',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>
