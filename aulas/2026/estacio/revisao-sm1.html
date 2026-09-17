@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão — Desenvolvimento Web em HTML5, CSS, JS e PHP</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f6f7fb;
+  --ink:#1b1f2a;
+  --ink-soft:#5a6270;
+  --accent:#3454d1;
+  --accent-soft:#e7ebfc;
+  --good:#1f9d55;
+  --good-soft:#e6f7ec;
+  --bad:#e0435b;
+  --line:#e3e6ee;
+  --mono:'JetBrains Mono', 'SFMono-Regular', Consolas, Menlo, monospace;
+  --sans:'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+@font-face{
+  font-family:'Inter';
+  src:local('Inter');
+}
+*{box-sizing:border-box;}
+html,body{
+  margin:0;padding:0;height:100%;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow:hidden;
+}
+#deck{
+  position:relative;
+  width:100vw;height:100vh;
+}
+.slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:6vh 8vw;
+  opacity:0;
+  visibility:hidden;
+  transform:translateX(40px);
+  transition:opacity .45s ease, transform .45s ease;
+}
+.slide.active{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(0);
+}
+.slide.leaving-back{ transform:translateX(-40px); }
+
+/* ---------- Title & closing ---------- */
+.title-slide, .closing-slide{
+  text-align:center;
+  background:
+    radial-gradient(circle at 15% 20%, var(--accent-soft) 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, #fde9ee 0%, transparent 45%);
+}
+.title-slide .kicker, .closing-slide .kicker{
+  font-size:clamp(1rem,1.6vw,1.4rem);
+  color:var(--accent);
+  font-weight:600;
+  letter-spacing:.02em;
+  margin-bottom:1.2rem;
+}
+.title-slide h1{
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  line-height:1.08;
+  margin:0 0 1.4rem 0;
+  font-weight:800;
+  max-width:20ch;
+}
+.title-slide p.sub{
+  font-size:clamp(1.2rem,2.1vw,1.7rem);
+  color:var(--ink-soft);
+  max-width:52ch;
+  line-height:1.5;
+  margin:0 0 2.2rem 0;
+}
+.title-meta{
+  display:flex;
+  gap:2.2rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  font-size:clamp(.95rem,1.4vw,1.15rem);
+  color:var(--ink-soft);
+  border-top:1px solid var(--line);
+  padding-top:1.4rem;
+  max-width:60ch;
+}
+.title-meta span b{color:var(--ink);}
+.hint-pill{
+  margin-top:2.4rem;
+  background:var(--bg-soft);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:.7rem 1.6rem;
+  font-size:clamp(.9rem,1.3vw,1.05rem);
+  color:var(--ink-soft);
+}
+.closing-slide h1{
+  font-size:clamp(2.6rem,5.5vw,4.6rem);
+  margin:0 0 1rem 0;
+  font-weight:800;
+}
+.closing-slide p{
+  font-size:clamp(1.1rem,1.9vw,1.5rem);
+  color:var(--ink-soft);
+  max-width:46ch;
+  line-height:1.55;
+}
+
+/* ---------- Divider ---------- */
+.divider-slide{
+  text-align:center;
+  background:linear-gradient(135deg,var(--accent) 0%, #6a3fd1 100%);
+  color:#fff;
+}
+.divider-slide .num{
+  font-size:clamp(1.1rem,1.8vw,1.5rem);
+  opacity:.75;
+  margin-bottom:1rem;
+  letter-spacing:.03em;
+}
+.divider-slide h2{
+  font-size:clamp(3rem,4.4vw,3.4rem);
+  font-weight:800;
+  max-width:22ch;
+  line-height:1.15;
+}
+
+/* ---------- Question slide ---------- */
+.quiz-slide{ align-items:flex-start; }
+.q-inner{ width:100%; max-width:1000px; margin:0 auto; }
+.q-tag{
+  display:inline-block;
+  font-size:clamp(.95rem,1.3vw,1.15rem);
+  font-weight:700;
+  color:var(--accent);
+  background:var(--accent-soft);
+  padding:.45rem 1.1rem;
+  border-radius:999px;
+  margin-bottom:1.6rem;
+}
+.stem{
+  font-size:clamp(1.5rem,2.7vw,2.35rem);
+  line-height:1.32;
+  font-weight:700;
+  margin:0 0 1.6rem 0;
+  max-width:38ch;
+}
+.code-block{
+  background:#1b1f2a;
+  color:#e9edf7;
+  font-family:var(--mono);
+  font-size:clamp(1.05rem,1.7vw,1.35rem);
+  line-height:1.55;
+  border-radius:14px;
+  padding:1.4rem 1.7rem;
+  margin:0 0 1.8rem 0;
+  white-space:pre;
+  overflow-x:auto;
+  max-width:100%;
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .5s ease, transform .5s ease;
+  position:relative;
+}
+.code-block.visible{ opacity:1; transform:translateY(0); }
+.code-block .cursor{
+  display:inline-block;width:.55ch;height:1.1em;background:#8fb0ff;
+  margin-left:2px;vertical-align:-.15em;
+  animation:blink 1s steps(2) infinite;
+}
+@keyframes blink{50%{opacity:0;}}
+
+.options{ list-style:none; margin:0; padding:0; width:100%; }
+.option{
+  display:flex;
+  align-items:flex-start;
+  gap:1rem;
+  background:var(--bg-soft);
+  border:1.5px solid var(--line);
+  border-radius:14px;
+  padding:.95rem 1.3rem;
+  margin-bottom:.8rem;
+  font-size:clamp(1.5rem,1.7vw,1.35rem);
+  line-height:1.4;
+  opacity:0;
+  transform:translateX(18px);
+  transition:opacity .4s ease, transform .4s ease, background .3s, border-color .3s;
+}
+.option.visible{ opacity:1; transform:translateX(0); }
+.option .letter{
+  flex:0 0 auto;
+  width:2.1rem;height:2.1rem;
+  border-radius:50%;
+  background:#fff;
+  border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+  font-size:2rem;
+}
+.option .text code{
+  font-family:var(--mono);
+  font-size:2rem;
+  background:rgba(0,0,0,.05);
+  padding:.1em .35em;
+  border-radius:5px;
+}
+.option.reveal-correct{
+  background:var(--good-soft);
+  border-color:var(--good);
+}
+.option.reveal-correct .letter{
+  background:var(--good);
+  border-color:var(--good);
+  color:#fff;
+}
+
+/* ---------- Answer slide ---------- */
+.answer-slide{ align-items:flex-start; background:var(--bg-soft); }
+.a-inner{ width:100%; max-width:1400px; margin:0 auto; }
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.7rem;
+  background:var(--good);
+  color:#fff;
+  font-weight:800;
+  font-size:clamp(1.15rem,2vw,1.55rem);
+  padding:.75rem 1.5rem;
+  border-radius:999px;
+  margin-bottom:1.4rem;
+  opacity:0;
+  transform:translateY(14px) scale(.95);
+  transition:opacity .45s ease, transform .45s ease;
+}
+.badge.visible{ opacity:1; transform:translateY(0) scale(1); }
+.badge .check{
+  width:1.7rem;height:1.7rem;border-radius:50%;
+  background:rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.correct-text{
+  font-size:clamp(1.2rem,2.1vw,1.7rem);
+  font-weight:700;
+  line-height:1.4;
+  margin:0 0 1.4rem 0;
+  max-width:36ch;
+}
+.explanation{
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-left:5px solid var(--accent);
+  border-radius:12px;
+  padding:1.3rem 1.6rem;
+  font-size:clamp(1.05rem,1.65vw,1.3rem);
+  line-height:1.58;
+  color:var(--ink);
+  max-width:52ch;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.explanation.visible{ opacity:1; transform:translateY(0); }
+.explanation .exp-label{
+  display:block;
+  font-size:.85em;
+  font-weight:700;
+  color:var(--accent);
+  margin-bottom:.4rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
+/* ---------- Chrome: progress + nav ---------- */
+#progress-bar{
+  position:fixed; top:0; left:0; height:5px;
+  background:linear-gradient(90deg,var(--accent),#8a5cf0);
+  width:0%;
+  transition:width .35s ease;
+  z-index:20;
+}
+#counter{
+  position:fixed; bottom:1.4rem; right:1.6rem;
+  font-size:.95rem; color:var(--ink-soft);
+  font-weight:600;
+  background:rgba(255,255,255,.85);
+  padding:.35rem .8rem;
+  border-radius:999px;
+  border:1px solid var(--line);
+  z-index:20;
+}
+.nav-btn{
+  position:fixed; top:50%; transform:translateY(-50%);
+  width:3.1rem;height:3.1rem;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  font-size:1.3rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  z-index:20;
+  box-shadow:0 4px 14px rgba(0,0,0,.07);
+  transition:background .2s, transform .2s;
+  user-select:none;
+}
+.nav-btn:hover{ background:var(--accent-soft); }
+.nav-btn:active{ transform:translateY(-50%) scale(.92); }
+#prev-btn{ left:1.6rem; }
+#next-btn{ right:1.6rem; }
+.nav-btn.disabled{ opacity:.25; pointer-events:none; }
+
+.fragment-hint{
+  position:fixed; bottom:1.4rem; left:1.6rem;
+  font-size:.85rem; color:var(--ink-soft);
+  z-index:20;
+  opacity:.75;
+}
+
+@media (max-width:640px){
+  .nav-btn{ width:2.5rem;height:2.5rem;font-size:1.05rem; }
+  .stem{ max-width:none; }
+  .fragment-hint{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="deck"></div>
+<button class="nav-btn" id="prev-btn" aria-label="Anterior">←</button>
+<button class="nav-btn" id="next-btn" aria-label="Próximo">→</button>
+<div id="counter">1 / 1</div>
+<div class="fragment-hint">Use ← → para navegar</div>
+
+<script>
+// ======================= DATA =======================
+const QUIZ = [
+{
+  tag: "Provas A e Semi-prova — Questão 1",
+  stem: "Qual estrutura básica inicia um documento HTML?",
+  options: [
+    {letter:"A", text:"<start>", code:true},
+    {letter:"B", text:"<html>", code:true},
+    {letter:"C", text:"<body>", code:true},
+    {letter:"D", text:"<head>", code:true},
+    {letter:"E", text:"<title>", code:true},
+  ],
+  correct:"B",
+  explanation:"Todo documento HTML começa com a tag <html>, que envolve todo o conteúdo da página. Dentro dela ficam o <head> (metadados) e o <body> (conteúdo visível)."
+},
+{
+  tag: "Prova A — Questão 2 (FURB/2022)",
+  stem: "Um código HTML5 é estilizado com CSS3. Para tornar animado um grupo de elementos, qual(is) seletor(es) CSS deve(m) ser usado(s) para especificar um grupo de elementos?",
+  options: [
+    {letter:"A", text:"Rótulo e identificador."},
+    {letter:"B", text:"Identificador."},
+    {letter:"C", text:"Classe e identificador."},
+    {letter:"D", text:"Rótulo."},
+    {letter:"E", text:"Classe."},
+  ],
+  correct:"E",
+  explanation:"O seletor de classe (.classe) pode ser aplicado a vários elementos ao mesmo tempo, permitindo estilizar ou animar um grupo. Já o identificador (#id) deve ser único por página, então não serve para grupos."
+},
+{
+  tag: "Prova A — Questão 3",
+  stem: "Qual é o código de status HTTP padrão para \"Recurso não encontrado\"?",
+  options: [
+    {letter:"A", text:"200 OK"},
+    {letter:"B", text:"301 Moved Permanently"},
+    {letter:"C", text:"403 Forbidden"},
+    {letter:"D", text:"404 Not Found"},
+    {letter:"E", text:"500 Internal Server Error"},
+  ],
+  correct:"D",
+  explanation:"O código 404 indica que o servidor não encontrou o recurso solicitado — geralmente porque a URL está incorreta ou o conteúdo foi removido."
+},
+{
+  tag: "Prova A — Questão 5",
+  stem: "Na arquitetura cliente-servidor, qual é o protocolo padrão utilizado para a comunicação entre cliente e servidor na Web?",
+  options: [
+    {letter:"A", text:"FTP (File Transfer Protocol)"},
+    {letter:"B", text:"SMTP (Simple Mail Transfer Protocol)"},
+    {letter:"C", text:"HTTP (Hypertext Transfer Protocol)"},
+    {letter:"D", text:"SNMP (Simple Network Management Protocol)"},
+    {letter:"E", text:"SSH (Secure Shell)"},
+  ],
+  correct:"C",
+  explanation:"HTTP (Hypertext Transfer Protocol) é o protocolo padrão para troca de páginas e dados entre o navegador (cliente) e o servidor Web."
+},
+{
+  tag: "Prova A — Questão 6 (FGV/2021)",
+  stem: "Analise o trecho HTML abaixo. Na exibição da página, esse script produz uma tabela...",
+  code: "<table>\n  <tr><th>A</th><th>C</th></tr>\n  <tr><th>B</th><th>D</th></tr>\n</table>",
+  options: [
+    {letter:"A", text:"Com duas linhas e duas colunas."},
+    {letter:"B", text:"Com quatro linhas e uma coluna."},
+    {letter:"C", text:"Com quatro colunas e uma linha."},
+    {letter:"D", text:"Com uma linha e uma coluna."},
+    {letter:"E", text:"Com linhas e colunas desalinhadas."},
+  ],
+  correct:"A",
+  explanation:"Cada <tr> é uma linha da tabela — há duas. Dentro de cada uma há duas células <th>, formando duas colunas. Resultado: uma tabela 2×2."
+},
+{
+  tag: "Prova A — Questão 7",
+  stem: "Qual tag é responsável por efetuar uma quebra de linha textual em HTML?",
+  options: [
+    {letter:"A", text:"br /", code:true},
+    {letter:"B", text:"hr", code:true},
+    {letter:"C", text:"p", code:true},
+    {letter:"D", text:"h1", code:true},
+    {letter:"E", text:"a", code:true},
+  ],
+  correct:"A",
+  explanation:"A tag <br> força uma quebra de linha dentro do texto, sem criar um novo parágrafo. Já <hr> insere uma linha horizontal divisória."
+},
+{
+  tag: "Semi-prova — Questão 2",
+  stem: "Qual é a tag que utilizamos para quebra de linha?",
+  options: [
+    {letter:"A", text:"<br>", code:true},
+    {letter:"B", text:"<hr>", code:true},
+    {letter:"C", text:"<bg>", code:true},
+    {letter:"D", text:"<bt>", code:true},
+    {letter:"E", text:"<href>", code:true},
+  ],
+  correct:"A",
+  explanation:"<br> é a tag padrão de quebra de linha. As demais alternativas (<bg>, <bt>, <href>) não existem como tags HTML válidas para esse fim."
+},
+{
+  tag: "Provas A e Semi-prova — Questão 8",
+  stem: "Qual é a função da tag `&lt;table&gt;` em um documento HTML?",
+  options: [
+    {letter:"A", text:"Montar o layout da página, pois toda página contém cabeçalho, linhas, colunas e rodapé."},
+    {letter:"B", text:"Apresentar dados organizados no formato de listas."},
+    {letter:"C", text:"Apresentar dados tabulares, organizados e agrupados, horizontal e verticalmente."},
+    {letter:"D", text:"Armazenar os links de navegação da página."},
+    {letter:"E", text:"Agrupar textos de parágrafos alinhados à direita, um após o outro."},
+  ],
+  correct:"C",
+  explanation:"A tag <table> foi criada para apresentar dados tabulares — organizados em linhas e colunas — e não para montar o layout geral da página, prática antiga e hoje evitada."
+},
+{
+  tag: "Prova A — Questão 9 (AMPF-2026-SM1)",
+  stem: "Sobre a natureza do HTML na arquitetura Cliente x Servidor, assinale a alternativa correta.",
+  options: [
+    {letter:"A", text:"O HTML é uma linguagem de programação funcional executada no servidor para gerar bancos de dados."},
+    {letter:"B", text:"O HTML é uma linguagem de marcação interpretada pelo navegador (cliente), definindo a estrutura e o significado do conteúdo web."},
+    {letter:"C", text:"O HTML é um protocolo de transferência de arquivos que substitui o HTTP em conexões seguras."},
+    {letter:"D", text:"O HTML é responsável por compilar o código PHP antes de ser enviado ao usuário final."},
+    {letter:"E", text:"O HTML atua como uma camada de estilo que substitui a necessidade do uso de CSS."},
+  ],
+  correct:"B",
+  explanation:"HTML não é uma linguagem de programação nem um protocolo — é uma linguagem de marcação interpretada pelo navegador para estruturar o conteúdo exibido ao usuário."
+},
+{
+  tag: "Prova A — Questão 10",
+  stem: "Sobre a arquitetura cliente-servidor no ambiente web, assinale a alternativa correta.",
+  options: [
+    {letter:"A", text:"No modelo cliente-servidor, o cliente armazena e processa os dados, e o servidor apenas exibe informações ao usuário."},
+    {letter:"B", text:"A comunicação ocorre por protocolos como o HTTP, seguindo o ciclo de requisição (request) e resposta (response) entre cliente e servidor."},
+    {letter:"C", text:"No modelo de duas camadas, o cliente não possui interface, sendo essa responsabilidade exclusiva do servidor."},
+    {letter:"D", text:"No modelo de três camadas, o cliente acessa diretamente o banco de dados, sem passar por um servidor de aplicação."},
+    {letter:"E", text:"No modelo de quatro camadas, é necessário instalar softwares específicos em cada máquina cliente."},
+  ],
+  correct:"B",
+  explanation:"A comunicação web segue o ciclo requisição-resposta via HTTP: o cliente pede um recurso e o servidor responde. As demais alternativas invertem ou descrevem incorretamente os papéis das camadas."
+},
+{
+  tag: "Prova B — Questão 1",
+  stem: "Qual protocolo é fundamentalmente responsável pela comunicação de transferência de hipertexto entre o Cliente e o Servidor na Web?",
+  options: [
+    {letter:"A", text:"FTP"},
+    {letter:"B", text:"SMTP"},
+    {letter:"C", text:"HTTP / HTTPS"},
+    {letter:"D", text:"SSH"},
+    {letter:"E", text:"TCP / IP"},
+  ],
+  correct:"C",
+  explanation:"HTTP (e sua versão segura HTTPS) é o protocolo de transferência de hipertexto usado na comunicação entre navegador e servidor Web."
+},
+{
+  tag: "Prova B — Questão 2",
+  stem: "No desenvolvimento Front-end, quais são as três tecnologias fundamentais utilizadas para estruturar o conteúdo, definir o estilo visual e implementar comportamentos dinâmicos, respectivamente?",
+  options: [
+    {letter:"A", text:"HTML, CSS e JavaScript."},
+    {letter:"B", text:"PHP, Python e SQL."},
+    {letter:"C", text:"XML, JSON e Java."},
+    {letter:"D", text:"HTTP, FTP e TCP."},
+    {letter:"E", text:"Apache, Nginx e Docker."},
+  ],
+  correct:"A",
+  explanation:"HTML estrutura o conteúdo, CSS define a aparência visual e JavaScript implementa comportamentos dinâmicos e interatividade no front-end."
+},
+{
+  tag: "Provas B e Semi-prova — Questão 3 / 7",
+  stem: "Quando uma pessoa acessa um site pelo navegador, como ocorre normalmente a comunicação entre cliente e servidor?",
+  options: [
+    {letter:"A", text:"O servidor solicita uma página ao navegador e aguarda o CSS responder."},
+    {letter:"B", text:"O navegador envia uma requisição, o servidor processa e devolve uma resposta."},
+    {letter:"C", text:"O HTML acessa diretamente o banco de dados do servidor."},
+    {letter:"D", text:"O CSS envia os dados e o JavaScript substitui o servidor."},
+    {letter:"E", text:"O banco de dados envia a página diretamente para o monitor."},
+  ],
+  correct:"B",
+  explanation:"O fluxo padrão é: o navegador (cliente) envia uma requisição HTTP, o servidor a processa e devolve uma resposta — o clássico ciclo request/response."
+},
+{
+  tag: "Prova B — Questão 4",
+  stem: "Um desenvolvedor precisa destacar um trecho de um contrato alertando sobre penalidades, de forma que leitores de tela alterem a entonação ao ler a frase — e visualmente a palavra apareça em negrito. Qual tag satisfaz acessibilidade e semântica do HTML5?",
+  options: [
+    {letter:"A", text:"<b>", code:true},
+    {letter:"B", text:"<strong>", code:true},
+    {letter:"C", text:"<i>", code:true},
+    {letter:"D", text:"<em>", code:true},
+    {letter:"E", text:"<mark>", code:true},
+  ],
+  correct:"B",
+  explanation:"<strong> tem significado semântico de forte importância — leitores de tela mudam a entonação — e também aplica negrito visualmente. <b> só aplica o estilo, sem significado semântico."
+},
+{
+  tag: "Prova B — Questão 5 (AMPF-2026-SM1)",
+  stem: "Sobre as tags semânticas do HTML5, assinale a opção que descreve corretamente a função de cada tag.",
+  options: [
+    {letter:"A", text:"<section> é utilizada exclusivamente para criar links de navegação entre páginas externas."},
+    {letter:"B", text:"<nav> define um bloco de links de navegação, facilitando a identificação da estrutura do site pelo cliente."},
+    {letter:"C", text:"<footer> é usada para definir o cabeçalho principal e o logotipo da aplicação web."},
+    {letter:"D", text:"<aside> serve para destacar o conteúdo principal e mais importante de uma página."},
+    {letter:"E", text:"<article> é uma tag de estilo usada apenas para mudar a cor da fonte de textos longos."},
+  ],
+  correct:"B",
+  explanation:"<nav> foi criada especificamente para agrupar os links de navegação principais de um site, ajudando inclusive tecnologias assistivas a identificar essa área."
+},
+{
+  tag: "Prova B — Questão 6",
+  stem: "Você precisa criar um campo obrigatório para coleta de e-mail, que impeça o envio se estiver vazio e valide nativamente o formato de e-mail, sem scripts adicionais. Qual linha atende a esses requisitos?",
+  options: [
+    {letter:"A", text:'<input type="email" name="usuario_email" required>', code:true},
+    {letter:"B", text:'<form type="text" validate="email" obrigatório="sim">', code:true},
+    {letter:"C", text:'<input type="text" name="usuario_email" pattern="email" check="true">', code:true},
+    {letter:"D", text:'<input type="mail" id="email" validation="required-email">', code:true},
+    {letter:"E", text:'<input type="text" name="usuario_email" constraint="email-format" data-required="true">', code:true},
+  ],
+  correct:"A",
+  explanation:'O atributo type="email" já valida nativamente o formato do endereço, e required impede o envio do formulário se o campo estiver vazio — sem precisar de nenhum script adicional.'
+},
+{
+  tag: "Provas B e Semi-prova — Questão 7 / 9",
+  stem: "Sobre os pilares da necessidade do Back-end em uma aplicação web, assinale a alternativa correta.",
+  options: [
+    {letter:"A", text:"Dados sensíveis, como senhas, devem ser armazenados e processados no Front-end para reduzir a carga do servidor."},
+    {letter:"B", text:"O Back-end é fundamental para a persistência, garantindo que os dados sejam armazenados de forma confiável e centralizada em um servidor com banco de dados."},
+    {letter:"C", text:"Operações computacionalmente intensivas devem ser transferidas para o navegador do cliente."},
+    {letter:"D", text:"A lógica de autorização é dispensada quando a aplicação utiliza armazenamento em nuvem."},
+    {letter:"E", text:"A principal função do Back-end é gerenciar o layout responsivo das páginas."},
+  ],
+  correct:"B",
+  explanation:"O Back-end é responsável por processar regras de negócio, autenticação e, sobretudo, garantir a persistência confiável e centralizada dos dados em um servidor — algo que nunca deve ficar exposto no cliente."
+},
+{
+  tag: "Provas B e Semi-prova — Questão 8 / 10",
+  stem: 'Sobre o atributo target="_blank", frequentemente usado na tag <a> (âncora), assinale a opção que descreve corretamente sua função.',
+  options: [
+    {letter:"A", text:"Indica que o link deve baixar um arquivo automaticamente no computador do servidor."},
+    {letter:"B", text:"Determina que o destino do link deve ser aberto em uma nova aba ou janela do navegador."},
+    {letter:"C", text:"Serve para criar um link interno que leva o usuário para o topo da mesma página."},
+    {letter:"D", text:"Força o navegador a limpar o cache antes de carregar a nova URL."},
+    {letter:"E", text:"Define que o link só pode ser acessado se o usuário estiver autenticado via PHP."},
+  ],
+  correct:"B",
+  explanation:'target="_blank" instrui o navegador a abrir o link em uma nova aba ou janela, mantendo a página original aberta.'
+},
+{
+  tag: "Prova B — Questão 9",
+  stem: "Considerando as atribuições de Especialista Front-end, Especialista Back-end e Desenvolvedor Full-Stack, assinale a alternativa correta.",
+  options: [
+    {letter:"A", text:"O Especialista Front-end concentra-se em arquitetura de sistemas, APIs e bancos de dados."},
+    {letter:"B", text:"O Full-Stack atua exclusivamente na construção de layouts visuais."},
+    {letter:"C", text:"O Especialista Back-end foca em UX/UI com React, Vue e Angular."},
+    {letter:"D", text:"O Desenvolvedor Full-Stack é versátil, atuando tanto no front-end quanto no back-end, compreendendo o fluxo completo da aplicação."},
+    {letter:"E", text:"A atuação Full-Stack elimina a necessidade de entender comunicação por APIs."},
+  ],
+  correct:"D",
+  explanation:"O profissional Full-Stack domina tanto a camada de interface (front-end) quanto a de dados e regras de negócio (back-end), entendendo o fluxo completo, incluindo a comunicação via APIs."
+},
+{
+  tag: "Prova B — Questão 10",
+  stem: 'Observe o código abaixo. Qual é a função da relação entre for="email" e id="email"?',
+  code: '<label for="email">E-mail:</label>\n<input type="email" id="email" name="email">',
+  options: [
+    {letter:"A", text:"Definir a cor do campo."},
+    {letter:"B", text:"Tornar o preenchimento do campo obrigatório."},
+    {letter:"C", text:"Associar o texto da label ao campo de e-mail."},
+    {letter:"D", text:"Enviar automaticamente o formulário."},
+    {letter:"E", text:"Criar uma identificação para o banco de dados."},
+  ],
+  correct:"C",
+  explanation:"O atributo for do <label> deve corresponder ao id do campo para associá-los — isso melhora a acessibilidade e permite clicar no texto da label para focar o campo."
+},
+{
+  tag: "Semi-prova — Questão 3",
+  stem: "No ambiente web, o que é o \"cliente\"?",
+  options: [
+    {letter:"A", text:"O computador que armazena os dados."},
+    {letter:"B", text:"O dispositivo que faz a requisição (navegador do usuário)."},
+    {letter:"C", text:"O servidor de internet."},
+    {letter:"D", text:"O banco de dados."},
+    {letter:"E", text:"O roteador."},
+  ],
+  correct:"B",
+  explanation:"O cliente é o dispositivo/navegador que faz a requisição ao servidor e exibe a resposta ao usuário — diferente do servidor, que armazena e processa os dados."
+},
+{
+  tag: "Semi-prova — Questão 4",
+  stem: "Qual das alternativas apresenta uma tag para criar títulos numa página HTML?",
+  options: [
+    {letter:"A", text:"p", code:true},
+    {letter:"B", text:"header", code:true},
+    {letter:"C", text:"h1", code:true},
+    {letter:"D", text:"div", code:true},
+    {letter:"E", text:"span", code:true},
+  ],
+  correct:"C",
+  explanation:"As tags <h1> a <h6> são usadas especificamente para títulos e subtítulos, em ordem de importância hierárquica."
+},
+{
+  tag: "Semi-prova — Questão 5",
+  stem: "Um desenvolvedor deseja criar um link que leve o usuário para outra página ao clicar em um texto. Qual tag HTML deve ser utilizada?",
+  options: [
+    {letter:"A", text:"<img>", code:true},
+    {letter:"B", text:"<link>", code:true},
+    {letter:"C", text:"<a>", code:true},
+    {letter:"D", text:"<div>", code:true},
+    {letter:"E", text:"<span>", code:true},
+  ],
+  correct:"C",
+  explanation:"A tag <a> (âncora) é usada para criar hiperlinks, geralmente com o atributo href apontando para o destino."
+},
+{
+  tag: "Semi-prova — Questão 6",
+  stem: 'Qual é a principal função do lado "Cliente" (Front-end) na arquitetura web?',
+  options: [
+    {letter:"A", text:"Gerenciar o banco de dados e armazenar informações de forma persistente."},
+    {letter:"B", text:"Processar regras de negócio complexas e autenticar usuários com segurança."},
+    {letter:"C", text:"Interpretar e renderizar o código (HTML, CSS e JavaScript) para exibir a interface ao usuário."},
+    {letter:"D", text:"Configurar as portas de rede e hospedar o domínio do site."},
+    {letter:"E", text:"Balancear a carga de requisições que chegam ao servidor físico."},
+  ],
+  correct:"C",
+  explanation:"O Front-end é executado no navegador do cliente, responsável por interpretar HTML/CSS/JS e renderizar a interface visual para o usuário."
+},
+];
+
+// ======================= BUILD SLIDES =======================
+const deck = document.getElementById('deck');
+const slides = [];
+
+function el(tag, cls, html){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+// Title slide
+(function(){
+  const s = el('section','slide title-slide');
+  s.innerHTML = `
+    <div class="kicker">ARA0062 · Desenvolvimento Web em HTML5, CSS, JavaScript e PHP</div>
+    <h1>Revisão de Prova — Quiz</h1>
+    <p class="sub">${QUIZ.length} questões reunidas das provas SM1 (2026.2, versões A/B) e da semi-prova (2026.3) — fundamentos de HTML, CSS, arquitetura cliente-servidor e semântica.</p>
+    <div class="title-meta">
+      <span><b>${QUIZ.length}</b> questões</span>
+      <span><b>2</b> telas por questão</span>
+      <span>Turmas 1001 / 1007</span>
+    </div>
+    <div class="hint-pill">Leia o enunciado, escolha sua resposta — depois avance para ver o gabarito</div>
+  `;
+  deck.appendChild(s);
+  slides.push({el:s, fragments:[]});
+})();
+
+QUIZ.forEach((q, i) => {
+  // Question slide
+  const qs = el('section','slide quiz-slide');
+  const qInner = el('div','q-inner');
+  qInner.appendChild(el('div','q-tag', `Questão ${i+1} de ${QUIZ.length} · ${q.tag.split('—')[0].trim()}`));
+  qInner.appendChild(el('h2','stem', q.stem));
+  const qFragments = [];
+  if(q.code){
+    const cb = el('div','code-block', escapeHtml(q.code));
+    qInner.appendChild(cb);
+    qFragments.push(cb);
+  }
+  const ul = el('ul','options');
+  q.options.forEach(opt => {
+    const li = el('li','option');
+    li.dataset.letter = opt.letter;
+    const letterSpan = el('span','letter', opt.letter);
+    const textSpan = el('span','text', opt.code ? `<code>${escapeHtml(opt.text)}</code>` : escapeHtml(opt.text));
+    li.appendChild(letterSpan);
+    li.appendChild(textSpan);
+    ul.appendChild(li);
+    qFragments.push(li);
+  });
+  qInner.appendChild(ul);
+  qs.appendChild(qInner);
+  deck.appendChild(qs);
+  slides.push({el:qs, fragments:qFragments});
+
+  // Answer slide
+  const as = el('section','slide answer-slide');
+  const aInner = el('div','a-inner');
+  aInner.appendChild(el('div','q-tag', `Gabarito · Questão ${i+1} de ${QUIZ.length}`));
+  const badge = el('div','badge fragment', `<span class="check">✓</span> Alternativa ${q.correct}`);
+  const correctOpt = q.options.find(o => o.letter === q.correct);
+  const correctText = el('p','correct-text', correctOpt.code ? `<code>${escapeHtml(correctOpt.text)}</code>` : escapeHtml(correctOpt.text));
+  const expl = el('div','explanation fragment', `<span class="exp-label">Por quê</span>${escapeHtml(q.explanation)}`);
+  aInner.appendChild(badge);
+  aInner.appendChild(correctText);
+  aInner.appendChild(expl);
+  as.appendChild(aInner);
+  deck.appendChild(as);
+  slides.push({el:as, fragments:[badge, expl]});
+});
+
+// Closing slide
+(function(){
+  const s = el('section','slide closing-slide');
+  s.innerHTML = `
+    <div class="kicker">Fim da revisão</div>
+    <h1>Bom estudo! 🎓</h1>
+    <p>Releia as questões em que você teve mais dúvida e volte aos slides de HTML5, CSS e arquitetura cliente-servidor sempre que precisar.</p>
+  `;
+  deck.appendChild(s);
+  slides.push({el:s, fragments:[]});
+})();
+
+function escapeHtml(str){
+  return String(str)
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;');
+}
+
+// ======================= NAVIGATION =======================
+let current = 0;
+let fragIndex = 0; // number of fragments currently visible on active slide
+
+const progressBar = document.getElementById('progress-bar');
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+
+function renderSlide(dir){
+  slides.forEach((s,idx) => {
+    s.el.classList.remove('active','leaving-back');
+    if(idx === current){
+      s.el.classList.add('active');
+      if(dir === 'back') s.el.classList.add('leaving-back');
+    }
+  });
+  // sync fragment visibility
+  const frags = slides[current].fragments;
+  frags.forEach((f, idx) => {
+    if(idx < fragIndex){
+      f.classList.add('visible');
+      if(f.classList.contains('code-block')) f.classList.add('visible');
+    } else {
+      f.classList.remove('visible');
+    }
+  });
+  progressBar.style.width = (current/(slides.length-1))*100 + '%';
+  counter.textContent = `${current+1} / ${slides.length}`;
+  prevBtn.classList.toggle('disabled', current===0 && fragIndex===0);
+  nextBtn.classList.toggle('disabled', current===slides.length-1 && fragIndex>=frags.length);
+}
+
+function goNext(){
+  const frags = slides[current].fragments;
+  if(fragIndex < frags.length){
+    fragIndex++;
+    renderSlide('fwd');
+  } else if(current < slides.length-1){
+    current++;
+    fragIndex = 0;
+    renderSlide('fwd');
+  }
+}
+
+function goPrev(){
+  if(fragIndex > 0){
+    fragIndex--;
+    renderSlide('back');
+  } else if(current > 0){
+    current--;
+    fragIndex = slides[current].fragments.length; // show slide fully when arriving from ahead
+    renderSlide('back');
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){
+    e.preventDefault(); goNext();
+  } else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){
+    e.preventDefault(); goPrev();
+  }
+});
+nextBtn.addEventListener('click', goNext);
+prevBtn.addEventListener('click', goPrev);
+
+// init
+renderSlide('fwd');
+</script>
+</body>
+</html>

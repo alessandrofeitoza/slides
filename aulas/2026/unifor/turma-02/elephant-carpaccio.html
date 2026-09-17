@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Elephant Carpaccio: fatiando entregas para DevOps de verdade</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../../dist/reset.css">
+    <link rel="stylesheet" href="../../../../dist/reveal.css">
+    <link rel="stylesheet" href="../../../../dist/theme/white.css">
+    <link rel="stylesheet" href="../../../../plugin/highlight/monokai.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap');
+
+        :root {
+            --ink: #12161f;
+            --paper: #fdfdfb;
+            --accent: #00c896;   /* verde "deploy" */
+            --accent2: #ff5a36;  /* laranja "elefante" */
+            --line: rgba(18,22,31,.14);
+            --muted: #5b6270;
+            --danger: #d64545;
+            --success: #0f9d63;
+            --eng: #880202;
+        }
+
+        .reveal { font-family: 'Work Sans', system-ui, sans-serif; color: var(--ink); font-size: 38px; background: var(--paper); }
+        .reveal .slides { text-align: left; }
+        .reveal section { padding: 30px 16px; }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: none;
+            color: var(--ink);
+            letter-spacing: -.01em;
+        }
+        h1 { font-size: 4.6rem; font-weight: 700; line-height: 1.08; }
+        h2 { font-size: 3rem; font-weight: 700; margin-bottom: .7em; position: relative; padding-bottom: 16px; display: inline-block; }
+        h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 74px; height: 6px; background: var(--accent2); }
+        h3 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.5rem; color: var(--accent2); font-weight: 600;
+            margin-bottom: .5em; text-transform: uppercase; letter-spacing: .05em;
+        }
+
+        p, li { font-size: 1.65rem; line-height: 1.45; }
+        ul { margin-top: 20px; }
+        li { margin: 12px 0; }
+
+        .subtitle {
+            font-family: 'IBM Plex Mono', monospace; font-size: 1.15rem; color: var(--muted);
+            margin-top: 14px; text-transform: uppercase; letter-spacing: .06em;
+        }
+        .big-center { text-align: center; }
+        .muted { color: var(--muted); }
+        .danger { color: var(--danger); }
+        .success { color: var(--success); }
+
+        .box {
+            border-left: 4px solid var(--accent2);
+            padding: 6px 0 6px 26px;
+            margin-top: 26px;
+        }
+
+        .quote {
+            border-left: 4px solid var(--accent);
+            padding-left: 22px;
+            font-size: 1.9rem;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        .devops-box {
+            margin-top: 28px;
+            background: var(--ink);
+            color: #fff;
+            border-radius: 3px;
+            padding: 24px 28px;
+        }
+        .devops-box .devops-label {
+            display: block; font-family: 'IBM Plex Mono', monospace; color: var(--accent);
+            font-size: 1rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; font-weight: 600;
+        }
+        .devops-box p { font-size: 1.35rem; margin: 0; font-family: 'Work Sans', sans-serif; color: #f2f2f2; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 30px; background: var(--line); }
+        .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 30px; background: var(--line); }
+        .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 30px; background: var(--line); }
+
+        .mini-card {
+            background: var(--paper);
+            border-top: 4px solid var(--accent2);
+            padding: 22px 20px;
+            text-align: left;
+        }
+        .mini-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--accent2); }
+        .mini-card p { font-size: 1.1rem; margin: 0; font-family: 'Work Sans', sans-serif; color: var(--ink); }
+        .mini-card .tag { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--muted); }
+
+        .reveal table { width: 100%; border-collapse: collapse; font-size: .6em; margin-top: 20px; }
+        .reveal table th {
+            background: var(--ink); color: #fff; font-family: 'IBM Plex Mono', monospace;
+            text-transform: uppercase; letter-spacing: .04em; font-size: .85em;
+        }
+        .reveal table th, .reveal table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+        .reveal table tr:nth-child(even) { background: rgba(18,22,31,.03); }
+
+        /* === Elefante vs Carpaccio === */
+        .slice-row { display: flex; gap: 4px; margin-top: 60px; align-items: stretch; }
+        .slice {
+            flex: 1; height: 140px; background: var(--ink); border-radius: 3px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            color: #fff; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: .95rem; padding: 8px;
+        }
+        .slice.elephant {
+            background: var(--accent2); font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700;
+            clip-path: polygon(0 0, 96% 0, 100% 100%, 4% 100%);
+        }
+
+        /* === Camadas (fatiamento errado) vs Fatias (fatiamento certo) === */
+        .layers { display: flex; flex-direction: column; gap: 4px; margin-top: 40px; }
+        .layer {
+            height: 60px; border-radius: 3px; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 1.1rem;
+        }
+        .layer.ui { background: var(--accent2); }
+        .layer.api { background: var(--ink); }
+        .layer.db { background: var(--muted); }
+
+        .verticals { display: flex; gap: 14px; margin-top: 40px; }
+        .vertical { flex: 1; border-radius: 3px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--line); }
+        .vertical .v-ui { background: var(--accent2); height: 44px; }
+        .vertical .v-api { background: var(--ink); height: 44px; }
+        .vertical .v-db { background: var(--muted); height: 44px; }
+        .vertical span {
+            display: block; text-align: center; margin-top: 8px; padding-bottom: 8px;
+            font-family: 'IBM Plex Mono', monospace; font-size: .95rem; font-weight: 600;
+        }
+
+        .levels { display: flex; justify-content: space-between; gap: 14px; margin-top: 40px; }
+        .level {
+            flex: 1; text-align: center; border-radius: 3px; padding: 20px 10px;
+            background: var(--paper); border: 1px solid var(--line); border-top: 4px solid var(--accent2);
+        }
+        .level h3 { font-family: 'Space Grotesk', sans-serif; text-transform: none; color: var(--ink); font-size: 1.5rem; margin-bottom: 6px; }
+        .level p { font-family: 'Work Sans', sans-serif; font-size: 1.05rem; margin: 0; color: var(--muted); }
+
+        .diagram { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 50px; flex-wrap: wrap; }
+        .node {
+            min-width: 150px; padding: 18px 20px; border-radius: 3px; font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.05rem; font-weight: 600; text-align: center; background: #fff; border: 2px solid var(--ink);
+        }
+        .node.small { border-color: var(--accent2); color: var(--accent2); }
+        .node.eng { border-color: var(--accent); color: var(--accent); }
+        .node.danger { border-color: var(--danger); color: var(--danger); }
+        .arrow { font-size: 2rem; font-weight: 700; color: var(--ink); }
+
+        .stamp-wall { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; }
+        .stamp {
+            border: 2px solid var(--danger); color: var(--danger); padding: 12px 20px;
+            border-radius: 3px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 1.05rem;
+        }
+        .stamp.no { border-color: var(--danger); color: var(--danger); }
+
+        .exercise {
+            border: 2px solid var(--ink);
+            border-radius: 4px;
+            padding: 28px 30px;
+            margin-top: 26px;
+            background: #fff;
+        }
+        .exercise .ex-label {
+            display: inline-block; background: var(--ink); color: var(--accent);
+            font-family: 'IBM Plex Mono', monospace; padding: 6px 14px; border-radius: 2px;
+            font-size: .95rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 16px;
+        }
+        .exercise p { font-size: 1.5rem; margin: 6px 0; }
+        .exercise li { font-size: 1.4rem; }
+
+        .timer-badge {
+            display: inline-block; background: var(--accent2); color: #fff;
+            border-radius: 3px; padding: 10px 22px; font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700; font-size: 1.4rem; margin-top: 10px;
+        }
+
+        .gabarito {
+            margin-top: 22px; border-left: 4px solid var(--success);
+            padding: 14px 22px; background: rgba(15,157,99,.06);
+        }
+        .gabarito .gab-label {
+            font-family: 'IBM Plex Mono', monospace; font-weight: 700; color: var(--success);
+            font-size: 1rem; text-transform: uppercase; letter-spacing: .04em;
+        }
+        .gabarito p { font-size: 1.35rem; margin: 4px 0 0; }
+
+        .word-cloud { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+        .word-cloud span {
+            font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: .95rem;
+            background: var(--ink); color: #fff; padding: 7px 14px; border-radius: 2px;
+        }
+        .word-cloud span.eng { background: var(--accent); color: var(--ink); }
+
+        code { font-size: 2.5rem !important; font-family: 'IBM Plex Mono', monospace !important; }
+        .reveal pre { width: 100%; border-radius: 4px; overflow: hidden; border: 1px solid var(--line); box-shadow: none; }
+        .adr-card { border: 2px solid var(--ink); border-radius: 4px; margin-top: 24px; overflow: hidden; background: #fff; }
+        .adr-card .adr-head {
+            background: var(--ink); color: #fff; font-family: 'IBM Plex Mono', monospace;
+            padding: 12px 24px; font-size: 1rem; text-transform: uppercase; letter-spacing: .05em;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .adr-card .adr-status {
+            background: var(--accent); color: var(--ink); padding: 3px 12px; border-radius: 2px; font-weight: 700;
+        }
+        .adr-card .adr-body { padding: 22px 28px; }
+        .adr-field { margin-bottom: 16px; }
+        .adr-field:last-child { margin-bottom: 0; }
+        .adr-field .adr-label {
+            font-family: 'IBM Plex Mono', monospace; color: var(--accent2); font-size: .9rem;
+            text-transform: uppercase; letter-spacing: .05em; display: block; margin-bottom: 4px;
+        }
+        .adr-field p { margin: 0; font-size: 1.3rem; }
+
+        .flow { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 40px; }
+        .flow-step {
+            border: 2px solid var(--ink); border-radius: 3px; padding: 14px 26px;
+            font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 1.05rem;
+            background: #fff; text-align: center; min-width: 380px;
+        }
+        .flow-step.decision { border-color: var(--accent2); color: var(--accent2); }
+        .flow-step.end { border-color: var(--accent); color: var(--accent); background: var(--ink); color: #fff; border-color: var(--accent); }
+        .flow-arrow-down { font-size: 1.5rem; color: var(--muted); font-weight: 700; line-height: 1; }
+        .flow-note {
+            font-family: 'IBM Plex Mono', monospace; font-size: .85rem; color: var(--muted);
+            margin: -2px 0 -2px 260px; align-self: flex-start;
+        }
+
+        .r-fit-text { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <!-- ============================================================ -->
+        <!-- ABERTURA -->
+        <!-- ============================================================ -->
+        <section data-auto-animate="">
+            <div class="big-center">
+                <h1>Elephant<br>Carpaccio</h1>
+                <img src="img/elefante.gif" alt="Elephant Carpaccio">
+            </div>
+        </section>
+        <section data-auto-animate="">
+            <div class="big-center">
+                <h1>Elephant<br>Carpaccio</h1>
+                <p class="subtitle">Fatiar entregas grandes em incrementos que cabem num pipeline de CI/CD</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Como sua equipe entrega uma feature grande?</h2>
+            <div class="stamp-wall">
+                <div class="stamp no fragment">3 semanas numa branch só</div>
+                <div class="stamp no fragment">PR de 2 mil linhas</div>
+                <div class="stamp no fragment">merge sexta às 18h</div>
+                <div class="stamp no fragment">deploy "quando ficar pronto"</div>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h2>E se a gente entregar uma feature todo dia?</h2>
+            <h3 class="fragment">Não a feature inteira. <span class="fragment" style="color:var(--eng)">Uma fatia dela.</span></h3>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- O QUE É -->
+        <!-- ============================================================ -->
+        <section>
+            <h2>O que é Elephant Carpaccio</h2>
+            <div class="box">
+                <p class="fragment">Uma técnica pra fatiar uma funcionalidade grande</p>
+                <p class="fragment">em pedaços <strong>E2E</strong>, tão finos</p>
+                <p class="fragment">que cada um cabe em <strong>menos de um dia</strong> de trabalho:</p>
+                <p class="fragment">e ainda assim é <strong>demonstrável</strong> e <strong>deployável</strong>.</p>
+                <p class="fragment"></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>De onde vem o nome</h2>
+            <div class="grid-2">
+                <div class="mini-card fragment">
+                    <h3>🐘 Elephant</h3>
+                    <p>A funcionalidade gigante que ninguém quer estimar: "isso é um elefante".</p>
+                </div>
+                <div class="mini-card fragment">
+                    <h3>🍖 Carpaccio</h3>
+                    <p>Fatias tão finas que dá pra ver através delas: cada uma, sozinha, ainda é o prato.</p>
+                </div>
+            </div>
+            <div class="box fragment">
+                <p>Técnica de <strong>Alistair Cockburn</strong>, popularizada como exercício de treinamento: <em>o exemplo clássico
+                    é uma calculadora de imposto de vendas fatiada em dezenas de entregas de minutos.</em></p>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>O elefante inteiro</h2>
+            <div class="slice-row" data-id="slices">
+                <div class="slice elephant" data-id="block" style="flex: 6;">🐘 "Calcular frete pro carrinho"</div>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>Fatiado em carpaccio</h2>
+            <div class="slice-row" data-id="slices">
+                <div class="slice" data-id="block">Frete fixo</div>
+                <div class="slice fragment">Por faixa de CEP</div>
+                <div class="slice fragment">Por peso</div>
+                <div class="slice fragment">Frete grátis</div>
+                <div class="slice fragment">2 transportadoras</div>
+                <div class="slice fragment">Internacional</div>
+            </div>
+            <p class="fragment" style="text-align:center; margin-top:30px;">Seis entregas. Seis deploys. Zero big bang.</p>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- REGRA DE OURO -->
+        <!-- ============================================================ -->
+        <section>
+            <h2>A receita pra cada fatia/slice</h2>
+            <ul>
+                <li class="fragment"><strong>E2E</strong>: passa por UI, backend e persistência, mesmo que rudimentar</li>
+                <li class="fragment"><strong>Demonstrável</strong>: dá pra mostrar rodando, não só explicar</li>
+                <li class="fragment"><strong>Deployável</strong>: vai pra produção sozinha, sem esperar as outras</li>
+                <li class="fragment"><strong>Agrega valor</strong>: resolve algo, mesmo que pequeno</li>
+            </ul>
+        </section>
+
+        <section data-auto-animate>
+            <h2>Fatiar errado: por camada</h2>
+            <div class="layers" data-id="corte">
+                <div class="layer ui">Frontend inteiro</div>
+                <div class="layer api">Backend inteiro</div>
+                <div class="layer db">Banco inteiro</div>
+            </div>
+            <p class="fragment" style="margin-top: 30px;">Três "entregas": e nenhuma delas funciona sozinha até a terceira.</p>
+        </section>
+
+        <section data-auto-animate>
+            <h2>Fatiar certo: por valor, E2E</h2>
+            <div class="verticals" data-id="corte">
+                <div class="vertical fragment">
+                    <div class="v-ui"></div><div class="v-api"></div><div class="v-db"></div>
+                    <span>Fatia 1</span>
+                </div>
+                <div class="vertical fragment">
+                    <div class="v-ui"></div><div class="v-api"></div><div class="v-db"></div>
+                    <span>Fatia 2</span>
+                </div>
+                <div class="vertical fragment">
+                    <div class="v-ui"></div><div class="v-api"></div><div class="v-db"></div>
+                    <span>Fatia 3</span>
+                </div>
+            </div>
+            <p class="fragment" style="margin-top: 20px;">Cada coluna já é um sistema completo, só que pequeno.</p>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- CONEXÃO COM DEVOPS -->
+        <!-- ============================================================ -->
+        <section data-background="#12161f" class="big-center">
+            <h2 style="color:#ff5a36; font-family:'Space Grotesk', sans-serif;">Isso é receita de bolo pra DevOps</h2>
+        </section>
+
+        <section>
+            <h2>Lote pequeno, risco pequeno</h2>
+            <div class="diagram">
+                <div class="node danger fragment">Feature grande<br><small>3 semanas</small></div>
+                <div class="arrow fragment">→</div>
+                <div class="node danger fragment">Merge gigante</div>
+                <div class="arrow fragment">→</div>
+                <div class="node danger fragment">Deploy de risco alto</div>
+            </div>
+            <div class="diagram" style="margin-top: 10px;">
+                <div class="node eng fragment">Fatia fina<br><small>&lt; 1 dia</small></div>
+                <div class="arrow fragment">→</div>
+                <div class="node eng fragment">Pipeline roda rápido</div>
+                <div class="arrow fragment">→</div>
+                <div class="node eng fragment">Deploy trivial de reverter</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="devops-box">
+                <span class="devops-label">⚙️ Conexão direta</span>
+                <p>Fatia fina é exatamente o que <strong>trunk-based development</strong> e <strong>feature flags</strong> precisam
+                    pra existir: commits pequenos, integrados o dia todo, escondidos do usuário até a fatia fazer sentido sozinha.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>As 4 métricas DORA: e o que fatiar bem faz por elas</h2>
+            <div class="grid-2">
+                <div class="mini-card fragment"><h3>Lead Time for Changes</h3><p>Fatia pequena = menos código esperando revisão = merge mais rápido.</p></div>
+                <div class="mini-card fragment"><h3>Deployment Frequency</h3><p>Se cabe num dia, cabe num deploy. Ou vários por dia.</p></div>
+                <div class="mini-card fragment"><h3>Change Failure Rate</h3><p>Menos mudança por deploy = menos coisa pra quebrar por vez.</p></div>
+                <div class="mini-card fragment"><h3>MTTR</h3><p>Achar o culpado é trivial quando o deploy tem 40 linhas, não 4 mil.</p></div>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h2>Fatia fina não é fatia incompleta</h2>
+            <h3 class="fragment">ela ainda precisa de teste, observabilidade e code review</h3>
+            <h3 class="fragment" style="color: var(--danger);">"pequeno" é sobre escopo, não sobre qualidade</h3>
+        </section>
+
+        <section>
+            <h2>Antipadrões de fatiamento</h2>
+            <ul>
+                <li class="fragment"><strong>Fatiar por camada</strong>: "faço todo o backend primeiro"</li>
+                <li class="fragment"><strong>Fatiar como protótipo descartável</strong>: não é deployável de verdade</li>
+                <li class="fragment"><strong>Fatiar por tecnologia</strong>: "essa fatia é só pra testar a lib nova", sem valor pro usuário</li>
+                <li class="fragment"><strong>Fatia grande demais "pra ficar redondo"</strong>: se não cabe num dia, ainda é elefante</li>
+            </ul>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- ARQUITETURA EVOLUTIVA -->
+        <!-- ============================================================ -->
+        <section data-background="#12161f" class="big-center">
+            <h2 style="color:#ff5a36; font-family:'Space Grotesk', sans-serif;">Arquitetura Evolutiva</h2>
+        </section>
+
+        <section>
+            <h2>Cada fatia também é uma escolha de arquitetura</h2>
+            <div class="box">
+                <p class="fragment">Fatiar fino resolve o <strong>tamanho</strong> da entrega.</p>
+                <p class="fragment">Mas não resolve sozinho <strong>pra onde</strong> a arquitetura está indo.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O que é arquitetura evolutiva</h2>
+            <div class="box">
+                <p class="fragment">Não é desenhar tudo antes.</p>
+                <p class="fragment">É deixar a arquitetura <strong>mudar de forma guiada</strong>, fatia após fatia:</p>
+                <p class="fragment">sem virar caos e sem precisar de um "big redesign".</p>
+            </div>
+            <div class="devops-box fragment">
+                <span class="devops-label">⚙️ Termo</span>
+                <p>Conceito de Neal Ford, Rebecca Parsons e Patrick Kua ("Building Evolutionary Architectures").</p>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>A arquitetura cresce junto com as fatias</h2>
+            <div class="verticals" data-id="arq">
+                <div class="vertical fragment">
+                    <div class="v-ui"></div><div class="v-api"></div><div class="v-db"></div>
+                    <span>Fatia 1</span>
+                </div>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>A arquitetura cresce junto com as fatias</h2>
+            <div class="verticals" data-id="arq">
+                <div class="vertical fragment">
+                    <div class="v-ui"></div><div class="v-api"></div><div class="v-db"></div>
+                    <span>Fatia 1</span>
+                </div>
+                <div class="vertical fragment">
+                    <div class="v-ui"></div><div class="v-api"></div><div class="v-db"></div>
+                    <span>Fatia 2</span>
+                </div>
+                <div class="vertical fragment">
+                    <div class="v-ui"></div><div class="v-api"></div><div class="v-db"></div>
+                    <span>Fatia 3: precisou de cache</span>
+                </div>
+            </div>
+            <p class="fragment" style="margin-top: 20px;">Toda vez que uma fatia muda a estrutura, alguém precisa saber <strong>por quê</strong>.</p>
+        </section>
+
+        <section>
+            <h2>Guardrails, não um desenho fixo</h2>
+            <ul>
+                <li class="fragment"><strong>Mudança incremental</strong>: a arquitetura evolui em passos pequenos, como as fatias</li>
+                <li class="fragment"><strong>Fitness functions</strong>: testes automatizados que protegem características importantes (performance, segurança, acoplamento)</li>
+                <li class="fragment"><strong>Acoplamento apropriado</strong>: nem tudo precisa ser desacoplado; decide-se onde isso importa de verdade</li>
+            </ul>
+        </section>
+
+        <section class="big-center">
+            <h2>O problema que sobra</h2>
+            <h3 class="fragment">seis meses depois, ninguém lembra <span style="color:var(--accent2)">por que</span> a fatia 3 trocou de banco</h3>
+        </section>
+
+        <section>
+            <h2>ADR: Architecture Decision Record</h2>
+            <div class="box">
+                <p class="fragment">Um documento curto.</p>
+                <p class="fragment">Registra <strong>uma</strong> decisão de arquitetura: contexto, escolha e consequência.</p>
+                <p class="fragment">Escrito <strong>no momento da decisão</strong>, não meses depois.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Anatomia de uma ADR</h2>
+            <div class="grid-4">
+                <div class="mini-card fragment"><span class="tag">01</span><h3>Contexto</h3><p>Qual problema forçou essa decisão agora?</p></div>
+                <div class="mini-card fragment"><span class="tag">02</span><h3>Decisão</h3><p>O que foi escolhido, em uma frase direta.</p></div>
+                <div class="mini-card fragment"><span class="tag">03</span><h3>Consequências</h3><p>O que essa escolha facilita: e o que ela custa.</p></div>
+                <div class="mini-card fragment"><span class="tag">04</span><h3>Status</h3><p>Proposta, aceita, substituída por outra ADR.</p></div>
+            </div>
+            <div class="devops-box fragment">
+                <span class="devops-label">⚙️ Por que isso combina com fatiamento</span>
+                <p>Cada fatia que muda estrutura vira candidata natural a uma ADR: o registro fica do tamanho da decisão, não do projeto inteiro.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Exemplo: a fatia 3 do FreteCerto</h2>
+            <div class="box">
+                <p>Lembra da fatia "por peso do carrinho"? Ela trouxe um problema novo:</p>
+                <p class="fragment"><strong>o mesmo CEP era calculado dezenas de vezes por minuto.</strong></p>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>Construindo a ADR</h2>
+            <div class="adr-card" data-id="adr">
+                <div class="adr-head">
+                    <span>ADR-003</span>
+                    <span class="adr-status">proposta</span>
+                </div>
+                <div class="adr-body">
+                    <div class="adr-field">
+                        <span class="adr-label">Contexto</span>
+                        <p class="fragment">CEPs frequentes recalculam o mesmo frete repetidas vezes, sobrecarregando a chamada à transportadora.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>Construindo a ADR</h2>
+            <div class="adr-card" data-id="adr">
+                <div class="adr-head">
+                    <span>ADR-003</span>
+                    <span class="adr-status">proposta</span>
+                </div>
+                <div class="adr-body">
+                    <div class="adr-field">
+                        <span class="adr-label">Contexto</span>
+                        <p>CEPs frequentes recalculam o mesmo frete repetidas vezes, sobrecarregando a chamada à transportadora.</p>
+                    </div>
+                    <div class="adr-field">
+                        <span class="adr-label">Decisão</span>
+                        <p class="fragment">Adicionar cache local por CEP, com expiração de 24h, antes de chamar a transportadora.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-auto-animate>
+            <h2>Construindo a ADR</h2>
+            <div class="adr-card" data-id="adr">
+                <div class="adr-head">
+                    <span>ADR-003</span>
+                    <span class="adr-status">aceita</span>
+                </div>
+                <div class="adr-body">
+                    <div class="adr-field">
+                        <span class="adr-label">Contexto</span>
+                        <p>CEPs frequentes recalculam o mesmo frete repetidas vezes, sobrecarregando a chamada à transportadora.</p>
+                    </div>
+                    <div class="adr-field">
+                        <span class="adr-label">Decisão</span>
+                        <p>Adicionar cache local por CEP, com expiração de 24h, antes de chamar a transportadora.</p>
+                    </div>
+                    <div class="adr-field">
+                        <span class="adr-label">Consequências</span>
+                        <p class="fragment">✅ Menos chamadas externas, resposta mais rápida.<br>
+                            ⚠️ Frete pode ficar até 24h desatualizado se a transportadora mudar preço.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="devops-box">
+                <span class="devops-label">⚙️ Onde isso vive no pipeline</span>
+                <p>ADR entra no mesmo PR da fatia, versionada junto com o código: não num wiki separado que ninguém abre de novo.</p>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h2>Não é sobre documentar tudo</h2>
+            <h3 class="fragment">é sobre não perder o <span style="color:var(--accent2)">porquê</span> quando a fatia seguinte esbarrar nessa decisão</h3>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- RESULTADO REAL -->
+        <!-- ============================================================ -->
+        <section data-background="#12161f" class="big-center">
+            <h2 style="color:#ff5a36; font-family:'Space Grotesk', sans-serif;">Como ficou na prática</h2>
+        </section>
+
+        <section>
+            <h2>O roadmap real das 6 fatias</h2>
+            <div class="timeline">
+                <div class="timeline-item fragment"><h3>Sprint 1</h3><p>Frete fixo R$ 20</p></div>
+                <div class="timeline-item fragment"><h3>Sprint 2</h3><p>3 faixas de CEP</p></div>
+                <div class="timeline-item fragment"><h3>Sprint 3</h3><p>Cálculo por peso</p></div>
+                <div class="timeline-item fragment"><h3>Sprint 4</h3><p>Frete grátis &gt; R$200</p></div>
+            </div>
+        </section>
+        <section>
+            <div class="timeline">
+                <div class="timeline-item fragment"><h3>Sprint 5</h3><p>2 transportadoras</p></div>
+                <div class="timeline-item fragment"><h3>Sprint 6</h3><p>Frete internacional</p></div>
+            </div>
+            <hr>
+            <p class="fragment" style="text-align:center; margin-top:30px;">Seis sprints, seis versões em produção: nunca uma branch de dois meses.</p>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Sprint 1: a resposta da API</h3>
+            <pre data-id="code-result"><code class="hljs json" data-trim data-line-numbers>
+{
+  "cep": "01311-000",
+  "frete": 20.00
+}
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Sprint 2: por faixa de CEP</h3>
+            <pre data-id="code-result"><code class="hljs json" data-trim data-line-numbers="3">
+{
+  "cep": "01311-000",
+  "faixa": "sudeste",
+  "frete": 15.00
+}
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Sprint 3: por peso do carrinho</h3>
+            <pre data-id="code-result"><code class="hljs json" data-trim data-line-numbers="3">
+{
+  "cep": "01311-000",
+  "peso_kg": 2.4,
+  "frete": 18.50
+}
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Sprint 4: frete grátis condicional</h3>
+            <pre data-id="code-result"><code class="hljs json" data-trim data-line-numbers="3,4,5">
+{
+  "cep": "01311-000",
+  "peso_kg": 2.4,
+  "valor_carrinho": 235.00,
+  "frete": 0.00,
+  "motivo": "frete_gratis"
+}
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Sprint 5: transportadora mais barata</h3>
+            <pre data-id="code-result"><code class="hljs json" data-trim data-line-numbers="4">
+{
+  "cep": "01311-000",
+  "peso_kg": 2.4,
+  "transportadora": "Correios",
+  "frete": 14.90
+}
+            </code></pre>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Sprint 6: frete internacional</h3>
+            <pre data-id="code-result"><code class="hljs json" data-trim data-line-numbers="1,2,5,6">
+{
+  "cep": "BE-1000",
+  "pais": "Bélgica",
+  "peso_kg": 2.4,
+  "frete": 89.00,
+  "moeda": "BRL"
+}
+            </code></pre>
+        </section>
+
+        <section>
+            <div class="gabarito">
+                <span class="gab-label">Repara</span>
+                <p>O mesmo endpoint, respondendo cada vez mais completo. <br><br> Nenhum sprint "fez o backend do frete":
+                    cada um já devolvia um preço real, só que cada vez mais sofisticado.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>O fluxo final, depois das 6 fatias</h2>
+            <div class="flow">
+                <div class="flow-step">Pedido recebido (CEP, peso, valor do carrinho)</div>
+                <div class="flow-arrow-down">↓</div>
+                <div class="fragment flow-step decision">CEP já está em cache?</div>
+                <div class="fragment flow-note">↳ SIM: pula direto pro último passo</div>
+                <div class="flow-arrow-down fragment">↓ NÃO</div>
+                <div class="fragment flow-step">Calcula por faixa de CEP + peso</div>
+                <div class="flow-arrow-down">↓</div>
+                <div class="fragment flow-step">Carrinho ≥ R$ 200? → aplica frete grátis</div>
+                <div class="flow-arrow-down">↓</div>
+                <div class="fragment flow-step">Escolhe a transportadora mais barata</div>
+                <div class="flow-arrow-down">↓</div>
+                <div class="fragment flow-step end">Grava no cache (24h) e retorna o preço</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="devops-box">
+                <span class="devops-label">⚙️ Repara de novo</span>
+                <p>O passo "CEP em cache" só existe porque a fatia 3 esbarrou no problema de performance:
+                    e foi exatamente essa decisão que virou a <strong>ADR-003</strong> que acabamos de ver.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- FECHAMENTO -->
+        <!-- ============================================================ -->
+        <section>
+            <h2>Pra fixar</h2>
+            <ol>
+                <li class="fragment">Fatiar não é simplificar o problema: é adiar a complexidade certa</li>
+                <li class="fragment">Fatia E2E, nunca por camada</li>
+                <li class="fragment">Lote pequeno é a base técnica do DevOps, não só uma prática ágil</li>
+                <li class="fragment">Cada fatia melhora as 4 métricas DORA ao mesmo tempo</li>
+                <li class="fragment">Arquitetura evolutiva é deixar a estrutura mudar fatia após fatia, de forma guiada</li>
+                <li class="fragment">Uma ADR por decisão relevante custa menos do que reconstruir o raciocínio meses depois</li>
+            </ol>
+        </section>
+
+        <section data-background="#12161f" class="big-center">
+            <h2 style="color:#ff5a36; font-family:'Space Grotesk', sans-serif;">O elefante nunca foi o problema.</h2>
+            <h3 class="fragment" style="color:#FFF">O problema é servi-lo inteiro de uma vez.</h3>
+        </section>
+
+        <section>
+            <hr>
+            <h1>E agora josé?</h1>
+            <hr>
+        </section>
+
+        <section>
+            <h2>Prática</h2>
+            <ul>
+                <li class="fragment">Escolher 3 features mais importantes do projeto de vocês - <small>MVP/Produto</small></li>
+                <li class="fragment">Dividir cada feature em fatias menores - <small>Elephant Carpaccio</small></li>
+                <li class="fragment">Tomar decisões técnicas - <small>ADR</small></li>
+                <li class="fragment">Implementar e testar cada fatia separadamente - <small>Github Actions/Pipelines</small></li>
+                <li class="fragment">Apresentar</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>O vocabulário que mais se repete</h2>
+            <div class="word-cloud">
+                <span class="fragment">fatia vertical</span>
+                <span class="fragment eng">trunk-based</span>
+                <span class="fragment">valor incremental</span>
+                <span class="fragment eng">feature flag</span>
+                <span class="fragment">E2E</span>
+                <span class="fragment eng">lead time</span>
+                <span class="fragment">lote pequeno</span>
+                <span class="fragment eng">deployment frequency</span>
+                <span class="fragment">demonstrável</span>
+                <span class="fragment eng">change failure rate</span>
+                <span class="fragment">big bang</span>
+                <span class="fragment eng">MTTR</span>
+                <span class="fragment">arquitetura evolutiva</span>
+                <span class="fragment eng">ADR</span>
+                <span class="fragment">fitness function</span>
+            </div>
+        </section>
+
+        <section class="big-center">
+            <h2>Referências</h2>
+            <p style="font-size: 1.3rem;">Elephant Carpaccio Exercise: Alistair Cockburn / Henrik Kniberg</p>
+            <p style="font-size: 1.3rem;">Accelerate: Nicole Forsgren, Jez Humble, Gene Kim</p>
+            <p style="font-size: 1.3rem;">Building Evolutionary Architectures: Neal Ford, Rebecca Parsons, Patrick Kua</p>
+            <p style="font-size: 1.3rem;">Documenting Architecture Decisions: Michael Nygard (formato ADR)</p>
+        </section>
+
+        <section class="big-center">
+            <h1 class="r-fit-text">Perguntas?</h1>
+        </section>
+
+    </div>
+</div>
+
+<script src="../../../../dist/reveal.js"></script>
+<script src="../../../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'fade',
+        navigationMode: 'linear',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>
