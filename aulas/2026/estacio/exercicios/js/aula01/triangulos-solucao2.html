@@ -1,0 +1,18 @@
+<script>
+    let A = prompt("Digite o A");
+    let B = prompt("Digite o B");
+    let C = prompt("Digite o C");
+
+    let lados = new Set([A, B, C]);
+
+    switch (lados.size) {
+        case 1:
+            document.write("Equilatero");
+            break;
+        case 2:
+            document.write("Isosceles");
+            break;
+        case 3:
+            document.write("Escaleno");
+    }
+</script>

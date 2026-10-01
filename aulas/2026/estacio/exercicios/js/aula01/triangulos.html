@@ -1,0 +1,25 @@
+<script>
+    let ladoA = prompt("Digite o ladoA");
+    let ladoB = prompt("Digite o ladoB");
+    let ladoC = prompt("Digite o ladoC");
+
+    if (ladoA === ladoB && ladoB === ladoC) {
+        document.write("Equilatero");
+    } else if (
+        ladoA !== ladoB
+        && ladoB !== ladoC
+        && ladoA !== ladoC
+    ) {
+        document.write("Escaleno");
+    } else {
+        document.write("Isosceles");
+    }
+
+    // if (
+    //     (ladoA === ladoB && ladoA !== ladoC)
+    //     || (ladoA === ladoC && ladoA !== ladoB)
+    //     || (ladoB === ladoC && ladoB !== ladoA) 
+    // ){
+    //     document.write("Isosceles");
+    // }
+</script>

@@ -1,0 +1,15 @@
+<h2>Informe sua data de nascimento</h2>
+<form>
+    <select id="select_dia">
+        <option> -- Selecione o dia </option>
+    </select>
+</form>
+
+<script>
+    for (let dia = 1; dia <= 31; dia++) {
+        select_dia.innerHTML += `
+           <option>${dia}</option> 
+        `;
+    }
+
+</script>

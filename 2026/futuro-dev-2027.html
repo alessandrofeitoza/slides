@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ei dev: o que esperar dessa área nos próximos anos</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/white.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<style>
+  :root{
+    --accent:#0a6e5e;
+    --accent2:#e0562b;
+    --ink:#1b1b1b;
+    --muted:#5b5b5b;
+    --bg:#ffffff;
+    --card:#f4f6f5;
+  }
+  html, body{ background:var(--bg); }
+  .reveal { font-family: 'Segoe UI', Arial, sans-serif; color:var(--ink); }
+  .reveal h1, .reveal h2, .reveal h3 { font-weight:800; letter-spacing:-0.01em; color:var(--ink); }
+  .reveal h1{ font-size: 2.6em; }
+  .reveal h2{ font-size: 2.1em; }
+  .reveal h3{ font-size: 1.4em; color:var(--accent); }
+  .reveal p, .reveal li{ font-size:1.15em; line-height:1.5; color:var(--ink); }
+  .reveal .subtitle{ color:var(--muted); font-size:1.2em; margin-top:0.3em; }
+  .reveal section{ text-align:left; }
+  .reveal section.center, .reveal .title-slide, .reveal .center-slide{ text-align:center; }
+  .reveal .tag{
+    display:inline-block; background:var(--accent); color:#fff; font-weight:700;
+    padding:0.25em 0.9em; border-radius:999px; font-size:0.55em; letter-spacing:0.06em;
+    text-transform:uppercase; margin-bottom:0.6em;
+  }
+  .reveal .big{ font-size:2.2em; font-weight:800; color:var(--accent); }
+  .reveal .huge{ font-size:3em; font-weight:900; color:var(--accent2); line-height:1.15; }
+  .reveal .card{
+    background:var(--card); border-left:6px solid var(--accent);
+    border-radius:10px; padding:0.7em 1em; margin:0.5em 0; font-size:1em;
+  }
+  .reveal .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:1em; margin-top:0.6em; }
+  .reveal .pill-row{ display:flex; flex-wrap:wrap; gap:0.5em; margin-top:0.8em; }
+  .reveal .pill{
+    background:#fff; border:2px solid var(--accent); color:var(--accent);
+    font-weight:700; padding:0.35em 0.9em; border-radius:999px; font-size:0.85em;
+  }
+  .reveal .footer-note{ position:absolute; bottom:1.6%; right:3%; font-size:0.4em; color:var(--muted); }
+  .reveal .emoji{ font-size:2.2em; }
+  .reveal .source{ font-size:0.5em; color:var(--muted); margin-top:1em; }
+  .reveal code{ background:#f0f0f0; border-radius:4px; }
+  .reveal pre code{ font-size:0.7em; max-height:420px; }
+  .reveal .checklist li{ margin:0.35em 0; }
+  .reveal .checklist li::marker{ color:var(--accent2); font-weight:900; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- 1. TITLE -->
+  <section class="title-slide">
+    <span class="tag">EEEP Jijoca de Jericoacoara</span>
+    <h1>Ei dev 👋</h1>
+    <p class="subtitle">o que esperar dessa área nos próximos anos</p>
+    <p class="source">Uma conversa sobre tecnologia, IA e o futuro de vocês</p>
+  </section>
+
+  <!-- 2. ICEBREAKER -->
+  <section>
+    <h2>Antes de começar…</h2>
+    <ul>
+      <li class="fragment">Quem aqui já usou IA pra fazer um trabalho do Kisley? <small class="fragment">E das outras materias?</small> </li>
+      <li class="fragment">Quem já pensou em trabalhar pra uma empresa fora de Jijoca? <small class="fragment">Ceará?</small> <small class="fragment">Brasil?</small> </li>
+      <li class="fragment">Quem tem medo de a IA "roubar" a profissão antes de vocês entrarem nela?</li>
+    </ul>
+  </section>
+
+  <section class="center-slide">
+    <p class="huge">Bora responder<br>essas três perguntas.</p>
+  </section>
+
+  <section >
+    <div style="display: flex; justify-content: center; margin-top: 100px;" class="fragment">
+      <div style="width: 50%">
+        <h3>Alessandro Feitoza</h3>
+        <hr>
+
+        <ul style="font-size: 2rem; ">
+          <li class="fragment" style="color: #d6277c;">Fortaleza, <strong>Ceará</strong></li>
+
+          <li class="fragment">Professor de códigos e outras computarias</li>
+          <li class="fragment">Programador/Dev/Severino</li>
+          <li class="fragment" style="color: #007cba;"><strong>PHP</strong> com <strong>Rapadura</strong></li>
+          <li class="fragment">+15 anos de XP</li>
+          <li class="fragment">
+                            <span style="color: #1f800c;">
+                                <strong>Bússola</strong> Social
+                            </span>
+          </li>
+        </ul>
+      </div>
+      <div style="width: 50%">
+        <img width="60%" src="../img/AlessandroFeitoza-2026-2.jpg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. VALORIZAR PONTO DE PARTIDA -->
+  <section>
+    <span class="tag">Bloco 1</span>
+    <h2>Onde vocês já estão hoje</h2>
+    <div class="card fragment">Vocês estudam <strong>Sistemas de Informação</strong> e <strong>Desenvolvimento de Software</strong> ainda no ensino médio.</div>
+    <div class="card fragment">Muita gente só chega nisso na faculdade — aos 22, 23 anos.</div>
+  </section>
+
+  <section data-background-size="80%" data-background="../img/gifs/meninoLouco.gif">
+
+    <br><br><br><br><br><br><br>
+    <div class="card fragment">Vocês já saem daqui com <strong>3 anos de vantagem</strong>.</div>
+  </section>
+
+  <!-- 4. IA -->
+  <section class="center-slide">
+    <span class="tag">Bloco 2 — o elefante na sala</span>
+    <h1>A IA vai acabar<br>com a profissão?</h1>
+  </section>
+
+  <section>
+    <h3>A resposta curta</h3>
+    <p class="big fragment">A IA muda <u>o que</u> o dev faz.</p>
+    <hr>
+    <p class="big fragment">Não elimina a necessidade<br>de gente que entende de sistemas.</p>
+  </section>
+
+  <section>
+    <h3>O que está mudando</h3>
+    <ul class="checklist">
+      <li class="fragment">Escrever código repetitivo → cada vez mais automático</li>
+      <li class="fragment">O primeiro emprego ficou mais competitivo</li>
+      <li class="fragment">Quem só "copia código" perde espaço rápido</li>
+    </ul>
+  </section>
+
+  <section data-background="../img/gifs/pato.gif" data-background-size="50%">
+
+    <br><br><br><br><br><br><br>
+    <div class="card fragment">Seja <strong>PATO</strong>.</div>
+  </section>
+
+  <section data-background="#333">
+    <h2 style="text-align: center;">Conhecendo os niveis</h2>
+
+    <div class="" style="text-align: center;">
+      <img width="60%" src="../img/fullstack-um-ano/sandy-junior.gif" alt="">
+    </div>
+  </section>
+
+  <section>
+    <p>Conhecendo os niveis</p>
+
+    <ul>
+      <li class="fragment">Estagiário</li>
+      <li>Junior</li>
+      <li>Pleno</li>
+      <li>Senior</li>
+      <li class="fragment">Especialista</li>
+    </ul>
+  </section>
+
+  <section data-background="#333">
+    <h1>NINGUEM QUER CONTRATAR JUNIOR</h1>
+    <hr>
+    <p class="fragment">Querem contratar alguém pra resolver algo</p>
+  </section>
+
+  <section>
+    <h3>O que continua valendo (e muito)</h3>
+    <ul class="checklist">
+      <li class="fragment">Entender o problema antes de sair codando</li>
+      <li class="fragment">Revisar, testar e corrigir o que a IA gera</li>
+      <li class="fragment">Integrar sistemas, conversar com o cliente</li>
+      <li class="fragment">Saber quando a resposta da IA está <strong>errada</strong></li>
+    </ul>
+  </section>
+
+  <section data-background="../img/cascata2.png" data-background-size="80%"></section>
+
+  <section>
+    <hr>
+
+    <h1>
+      A IA vai tomar os empregos
+    </h1>
+    <hr>
+  </section>
+
+
+  <section data-background="#FFF">
+    <h1>Voltemos ao inicio da vida</h1>
+  </section>
+
+
+  <section data-auto-animate>
+    <h1>O desafio?</h1>
+  </section>
+
+
+  <section data-auto-animate>
+    <h1>O desafio?</h1>
+    <p>Ensinar a máquina</p>
+  </section>
+  <section data-auto-animate>
+    <h1>O desafio?</h1>
+    <p>Ensinar a máquina</p>
+
+    <p style="font-size: 3.5rem; color: red">Programá-la</p>
+  </section>
+
+  <section data-background="img/revolution/cards.webp"></section>
+
+  <section data-auto-animate>
+    <span class="era-tag">ERA I: A FORJA</span>
+  </section>
+  <section data-auto-animate>
+    <span class="era-tag">ERA I: A FORJA</span>
+    <h2>Cartões Perfurados</h2>
+    <ul>
+      <li class="fragment">Programar era mecânico.</li>
+      <li class="fragment">Um erro custava dias de espera.</li>
+      <li class="fragment"><strong>O Medo:</strong> "Linguagens de alto nível (Fortran) vão tirar o emprego de quem entende a máquina."</li>
+    </ul>
+  </section>
+
+  <section data-background="img/revolution/homer.jpeg" data-background-size="70%">
+    <br><br><br><br><br>
+    <h2 style="background-color: #333">o Fortran tá contra mim</h2>
+  </section>
+
+  <section data-background="img/revolution/codigos.gif">
+    <h2 style="background-color: #FFF; color: darkred;">Baixo nível</h2>
+    vs
+    <h2 style="background-color: #FFF; color: darkred;">Alto nível</h2>
+  </section>
+
+  <section data-auto-animate data-auto-animate-id="anim-3">
+    Assembly
+    <img src="img/revolution/assembly.png" alt="">
+  </section>
+  <section data-auto-animate data-auto-animate-id="anim-3">
+    <p>O que esse código faz?</p>
+  </section>
+  <section data-auto-animate data-auto-animate-id="anim-3">
+    Javascript
+    <img src="img/revolution/js.png" alt="">
+  </section>
+
+  <section>
+    <h3>Vamos testar ao vivo</h3>
+    <p class="fragment">Vou pedir pra uma IA gerar um código simples…</p>
+    <p class="fragment">…e vocês vão me dizer se ele tem algum problema.</p>
+    <div class="card fragment">💡 Quem souber achar o erro, já está fazendo o trabalho que continua sendo humano.</div>
+  </section>
+
+  <!-- 5. AREAS -->
+  <section class="center-slide">
+    <span class="tag">Bloco 3</span>
+    <h1>"Dev" é um guarda-chuva<br>bem maior do que parece</h1>
+  </section>
+
+  <section>
+    <h3>Áreas em alta</h3>
+    <div class="pill-row">
+      <span class="pill fragment">Web &amp; Mobile</span>
+      <span class="pill fragment">Dados</span>
+      <span class="pill fragment">Cloud &amp; DevOps</span>
+      <span class="pill fragment">Segurança</span>
+      <span class="pill fragment">IA aplicada</span>
+      <span class="pill fragment">QA / Testes</span>
+      <span class="pill fragment">Suporte técnico</span>
+    </div>
+    <p class="fragment source" style="margin-top:1em; font-size:0.6em;">Não precisa saber tudo — precisa escolher uma porta de entrada.</p>
+  </section>
+
+  <!-- 6. CEARA -->
+  <section class="center-slide">
+    <span class="tag">Bloco 4</span>
+    <h1>O Ceará está<br>no mapa da tecnologia</h1>
+  </section>
+
+  <section>
+    <div class="grid2">
+      <div class="card fragment">🌊 Fortaleza é um dos grandes pontos de chegada de cabos de internet do mundo</div>
+      <div class="card fragment">🧵 Cinturão Digital leva fibra óptica pro interior do estado</div>
+      <div class="card fragment">🎓 UFC, IFCE, e + formam gente perto de vocês</div>
+      <div class="card fragment">🏖️ Jeri tem demanda real: reservas, sites de pousada, apps de passeio</div>
+    </div>
+  </section>
+
+  <section class="center-slide">
+    <p class="huge">Tem problema de verdade<br>pra resolver aqui do lado.</p>
+  </section>
+
+  <!-- 7. TRABALHO REMOTO -->
+  <section class="center-slide">
+    <span class="tag">Bloco 5</span>
+    <h1>Dá pra trabalhar remoto<br>saindo de Jijoca?</h1>
+  </section>
+
+  <section>
+    <p class="big fragment">Dá. De verdade.</p>
+    <p class="fragment">Mas exige preparo:</p>
+    <ul class="checklist">
+      <li class="fragment">Inglês — pelo menos leitura técnica</li>
+      <li class="fragment">Autonomia pra resolver sem alguém do lado</li>
+      <li class="fragment">Comunicação escrita boa</li>
+      <li class="fragment">Internet estável</li>
+    </ul>
+  </section>
+
+  <!-- 8. SOFT SKILLS -->
+  <section>
+    <span class="tag">Bloco 6</span>
+    <h2>O que as empresas procuram<br>além do código</h2>
+    <ul class="checklist">
+      <li class="fragment">Aprender sozinho</li>
+      <li class="fragment">Se comunicar bem</li>
+      <li class="fragment">Trabalhar em equipe</li>
+      <li class="fragment">Ler documentação</li>
+      <li class="fragment">Saber pedir ajuda</li>
+    </ul>
+  </section>
+
+  <!-- 9. CAMINHOS -->
+  <section>
+    <span class="tag">Bloco 7</span>
+    <h2>Caminhos depois do técnico</h2>
+    <div class="pill-row">
+      <span class="pill fragment">Faculdade (Enem/Sisu)</span>
+      <span class="pill fragment">Estágio</span>
+      <span class="pill fragment">1º emprego já com o técnico</span>
+      <span class="pill fragment">Cursos gratuitos</span>
+      <span class="pill fragment">Programas de formação</span>
+    </div>
+    <p class="fragment source" style="margin-top:1em; font-size:0.6em;">Não é um caminho só — dá pra combinar.</p>
+  </section>
+
+  <!-- 10. FECHAMENTO -->
+  <section class="center-slide">
+    <span class="tag">Pra fazer a partir de amanhã</span>
+    <h1>4 passos</h1>
+  </section>
+
+  <section>
+    <h3>1. Crie seu GitHub</h3>
+    <p>Coloque lá os projetos que você já fez na escola.</p>
+  </section>
+
+  <section>
+    <h3>2. Resolva um problema real</h3>
+    <p>Um site, um app, um sistema pra algo daqui de Jeri mesmo.</p>
+  </section>
+
+  <section>
+    <h3>3. Estude inglês um pouco todo dia</h3>
+    <p>Nem que seja 10 minutos. É o que mais separa quem trabalha remoto de quem não trabalha.</p>
+  </section>
+
+  <section>
+    <h3>4. Use a IA como professor, não como atalho</h3>
+    <p>Peça pra ela <em>explicar</em>, não só entregar pronto.</p>
+  </section>
+
+  <section class="center-slide">
+    <p class="huge">A tecnologia não vai<br>substituir vocês.</p>
+    <p class="big fragment">Vai substituir quem<br>para de aprender.</p>
+  </section>
+
+  <section class="title-slide">
+    <h1>Perguntas? 🙋</h1>
+    <p class="subtitle">Vamos conversar</p>
+  </section>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'slide',
+    navigationMode: 'linear',
+    width: 1280,
+    height: 720,
+    margin: 0.06,
+    plugins: [ RevealNotes, RevealHighlight ]
+  });
+</script>
+</body>
+</html>

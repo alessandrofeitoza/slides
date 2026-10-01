@@ -1,0 +1,16 @@
+<script>
+    const A = prompt("Digite o A");
+    const B = prompt("Digite o B");
+    const C = prompt("Digite o C");
+
+    // estrutura de dados que remove os duplicados
+    const lados = new Set([A, B, C]);
+
+    const resultado = {
+        1: "Equilatero",
+        2: "Isosceles",
+        3: "Escaleno"
+    };
+
+    document.write(resultado[lados.size]);
+</script>

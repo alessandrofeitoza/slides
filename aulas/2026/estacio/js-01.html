@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript — Parte 1: Lógica</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+
+<style>
+  :root{
+    --bg:#ffffff;
+    --panel:#f4f5fa;
+    --panel-2:#e9ebf5;
+    --line: rgba(20,18,40,.14);
+    --ink:#15121f;
+    --ink-dim:#514c66;
+    --amber:#b25b06;
+    --mint:#0a8f66;
+    --blue:#2453c9;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+
+  html{ font-size: 22px; }
+  html, .reveal { background: var(--bg); }
+  .reveal { font-family: var(--sans); color: var(--ink); }
+  .reveal .slides section {
+    background: var(--bg);
+    text-align:left;
+    border-radius: 0;
+  }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: var(--mono); margin: 0; }
+  .reveal ::selection{ background: var(--mint); color:#fff; }
+  .reveal .controls{ color: var(--ink); }
+  .reveal .progress{ color: var(--mint); height: 8px; }
+
+  /* ---------- shared bits ---------- */
+  .eyebrow{
+    font-family: var(--mono); font-size: 1.3rem; letter-spacing:.14em;
+    text-transform: uppercase; color: var(--amber); opacity:.95; margin-bottom: .7rem;
+    font-weight:700;
+  }
+  .br{ color: var(--amber); }
+
+  /* ---------- title slide ---------- */
+  .title-slide{ text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
+  .brand-mark{
+    font-family: var(--mono); font-weight:800; letter-spacing:-.02em;
+    font-size: clamp(3.6rem, 11vw, 8rem); color: var(--ink);
+    animation: brandIn 1s ease both;
+  }
+  .brand-mark .br{ color: var(--mint); }
+  .title-slide h1{ font-family: var(--sans); font-weight:800; font-size: clamp(2.2rem,4.8vw,3.6rem); margin-top:1.2rem; }
+  .title-slide .subtitle{ font-family: var(--mono); color: var(--ink-dim); font-size: clamp(1.3rem,2.4vw,1.8rem); margin-top:.7rem; }
+  .title-slide .hint{ margin-top: 2.8rem; color: var(--ink-dim); font-size:1.2rem; opacity:.8; }
+  @keyframes brandIn{ from{ opacity:0; transform: translateY(18px) scale(.96);} to{opacity:1; transform:none;} }
+
+  /* ---------- divider slides ---------- */
+  .divider-slide{ display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; }
+  .divider-icon{ font-size: clamp(4rem,7vw,6.5rem); margin-bottom: .6rem; filter: drop-shadow(0 6px 14px rgba(0,0,0,.12)); }
+  .divider-label{ font-family: var(--sans); font-weight:800; font-size: 4rem; color: var(--ink); }
+  .divider-chips{ display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center; margin-top:1.8rem; max-width: 78vw; }
+  .chip{
+    font-family: var(--mono); font-size:1.4rem; color: var(--mint); font-weight:600;
+    background: var(--panel-2); border:1px solid var(--line); border-radius: 999px;
+    padding:.5rem 1.2rem;
+  }
+
+  /* ---------- tag slides ---------- */
+  .tag-slide{ height:100%; display:flex; flex-direction:column; justify-content:center; }
+  .tag-name{
+    font-weight:800; font-size: 2.7rem; letter-spacing:-.01em;
+    animation: tagIn .5s ease both;
+    font-family: var(--mono);
+  }
+  @keyframes tagIn{ from{opacity:0; transform: translateX(-14px);} to{opacity:1; transform:none;} }
+
+  .panels{ display:grid; grid-template-columns: 1.15fr 1fr; gap: 1.8rem; margin: 1.6rem 0 1.4rem; }
+  .panel{
+    background: var(--panel); border:1px solid var(--line); border-radius: 16px;
+    padding: 1.2rem 1.4rem 1.4rem; min-height: 0;
+    box-shadow: 0 8px 24px rgba(20,18,40,.08);
+  }
+  .panel-header{
+    display:flex; align-items:center; gap:.5rem; font-family: var(--mono);
+    font-size: 1.15rem; letter-spacing:.1em; text-transform:uppercase; color: var(--ink-dim);
+    margin-bottom:.7rem; font-weight:600;
+  }
+  .panel-header .ico{ color: var(--amber); }
+  .panel-header .ico.mint{ color: var(--mint); }
+
+  .code-panel pre{ margin:0; background:transparent; box-shadow:none; overflow-x:auto; }
+  .code-panel code{
+    background:transparent !important; padding:0 !important;
+    font-family: var(--mono) !important; font-size: 1.25rem !important;
+    line-height:1.5 !important; white-space: pre !important;
+  }
+  .cursor{
+    display:inline-block; width:.5em; height:1.05em; background: var(--mint);
+    vertical-align: text-bottom; margin-left:.15em; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .browser-mock{ border-radius:10px; overflow:hidden; border:1px solid var(--line); }
+  .browser-bar{
+    display:flex; align-items:center; gap:.5rem; background: var(--panel-2);
+    padding:.6rem .8rem;
+  }
+  .bdot{ width:.7rem; height:.7rem; border-radius:50%; display:inline-block; }
+  .bdot.r{ background:#ff6b6b; } .bdot.y{ background:#f5b942; } .bdot.g{ background:#0a8f66; }
+  .url{
+    font-family: var(--mono); font-size:1rem; color: var(--ink-dim);
+    background: #fff; border:1px solid var(--line); border-radius:6px; padding:.25rem .7rem; margin-left:.5rem;
+  }
+  .loading-bar{ height:3px; width:0; background: var(--mint); }
+  .result-panel.fragment.visible .loading-bar{ animation: loadbar .5s ease forwards; }
+  @keyframes loadbar{ from{ width:0; } to{ width:100%; } }
+  .browser-body{ height: 220px; background:#1b1430; overflow:auto; }
+  .browser-body iframe{
+    width:100%; height:100%; border:0; zoom:1.5; transform-origin: top left;
+  }
+
+  .uses{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.6rem; }
+  .uses li{
+    display:flex; align-items:flex-start; gap:.65rem;
+    font-size: clamp(1.3rem, 2vw, 1.8rem); color: var(--ink);
+  }
+  .uses li::before{ content:"▸"; color: var(--mint); font-weight:800; }
+  code.inline{
+    font-family: var(--mono); background: var(--panel-2); color: var(--amber);
+    padding:.08em .42em; border-radius:5px; font-size:.85em; border:1px solid var(--line);
+  }
+
+  /* ---------- end slide ---------- */
+  .end-slide{ height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+  .end-slide h2{ font-family: var(--sans); font-weight:800; font-size: clamp(2.6rem,5.5vw,3.8rem); margin-bottom:1.4rem; }
+  .thanks{ margin-top:2.2rem; font-size: clamp(1.6rem,3vw,2.3rem); color: var(--ink-dim); }
+
+  /* ---------- question / discussion slides ---------- */
+  .question-slide{
+    height:100%; max-width: 74vw; margin: 0 auto;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  }
+  .q-icon{ font-size: 3.6rem; margin-bottom:.3rem; }
+  .q-eyebrow{
+    font-family: var(--mono); font-size:1.2rem; letter-spacing:.16em; text-transform:uppercase;
+    color: var(--amber); font-weight:700; margin-bottom:1rem;
+  }
+  .q-title{
+    font-family: var(--sans); font-weight:800; font-size: 2.6rem; color: var(--ink); line-height:1.3;
+    margin-bottom: 1.8rem;
+  }
+  .q-points{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.8rem; text-align:left; width:100%; }
+  .q-points li{
+    font-size: 1.4rem; color: var(--ink-dim); display:flex; align-items:flex-start; gap:.7rem;
+  }
+  .q-points li::before{ content:"?"; color: var(--amber); font-weight:800; font-family: var(--mono); }
+
+  /* ---------- tips / boas práticas slides ---------- */
+  .tips-slide{
+    height:100%; max-width: 74vw; margin: 0 auto;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  }
+  .tip-icon{ font-size: 3.6rem; margin-bottom:.3rem; }
+  .tip-eyebrow{
+    font-family: var(--mono); font-size:1.2rem; letter-spacing:.16em; text-transform:uppercase;
+    color: var(--mint); font-weight:700; margin-bottom:1rem;
+  }
+  .tip-title{
+    font-family: var(--sans); font-weight:800; font-size: 2.6rem; color: var(--ink); line-height:1.3;
+    margin-bottom: 1.8rem;
+  }
+  .tip-points{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.8rem; text-align:left; width:100%; }
+  .tip-points li{
+    font-size: 1.4rem; color: var(--ink-dim); display:flex; align-items:flex-start; gap:.7rem;
+  }
+  .tip-points li::before{ content:"✓"; color: var(--mint); font-weight:800; font-family: var(--mono); }
+
+  /* ---------- history / milestone slides ---------- */
+  .milestone-slide{
+    height:100%; max-width: 70vw; margin: 0 auto;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  }
+  .milestone-year{
+    font-family: var(--mono); font-weight:800; font-size: clamp(4rem,9vw,7rem);
+    color: var(--mint); letter-spacing:-.02em; line-height:1;
+    animation: tagIn .5s ease both;
+  }
+  .milestone-title{
+    font-family: var(--sans); font-weight:800; font-size: 2.6rem; color: var(--ink);
+    margin-top: .8rem;
+  }
+  .milestone-text{
+    font-size: 1.5rem; color: var(--ink-dim); margin-top: 1.4rem; line-height:1.55; max-width: 85%;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section class="title-slide">
+      <div class="brand-mark"><span class="br">{</span>js<span class="br">}</span></div>
+      <h1>JavaScript — Parte 1: Lógica</h1>
+      <p class="subtitle">a base de tudo que vem depois</p>
+      <p class="hint">use as setas do teclado para navegar →</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+
+<script>
+const DECK = [
+
+  { id:'historia', label:'História do JavaScript', icon:'📜', tags:[
+    { type:'milestone', year:'1995',
+      title:'10 dias que mudaram a web',
+      text:'Brendan Eich cria a primeira versão do JavaScript na Netscape em apenas 10 dias, pra dar vida às páginas estáticas da época.'
+      },
+    { type:'milestone', year:'1995',
+      title:'De LiveScript a JavaScript',
+      text:'A linguagem nasceu com o nome "LiveScript", mas foi renomeada numa jogada de marketing pra aproveitar a popularidade do Java — apesar das duas linguagens terem quase nada em comum.'
+      },
+    { type:'milestone', year:'1996',
+      title:'A guerra dos navegadores',
+      text:'A Microsoft lança o JScript pro Internet Explorer, uma implementação própria e incompatível. Cada navegador interpretava o JS de um jeito — um pesadelo pra quem desenvolvia.'
+      },
+    { type:'milestone', year:'1997',
+      title:'Nasce o ECMAScript',
+      text:'Pra acabar com a fragmentação, a linguagem é padronizada pela ECMA sob o nome ECMAScript. "JavaScript" continua sendo o nome popular, mas o padrão oficial é esse.'
+      },
+    { type:'milestone', year:'2009',
+      title:'JavaScript sai do navegador',
+      text:'Ryan Dahl cria o Node.js, permitindo rodar JavaScript no servidor. A linguagem deixa de ser só "do navegador" pra se tornar praticamente universal.'
+      },
+    { type:'milestone', year:'2015',
+      title:'ES6: o grande salto',
+      text:'O ECMAScript 2015 (ES6) traz let/const, arrow functions, classes, template literals — praticamente tudo que vamos usar hoje. Desde então, sai uma versão nova todo ano.'
+      },
+    { type:'milestone', year:'Hoje',
+      title:'Em praticamente tudo',
+      text:'JavaScript roda em navegadores, servidores (Node), apps mobile (React Native), desktop (Electron) e até em hardware (IoT) — uma das linguagens mais usadas do mundo.'
+      },
+    { type:'tips',
+      title:'Por que isso importa pra quem está aprendendo agora',
+      points:[
+        'Quando você ver "ES6" ou "ECMAScript" em tutoriais e documentação, agora sabe do que se trata',
+        'O JavaScript que vamos escrever hoje é todo baseado no ES6+ (2015 em diante)',
+        'Saber que a linguagem evoluiu rápido ajuda a não estranhar sintaxes diferentes em código mais antigo'
+      ]},
+  ]},
+
+  { id:'onde-roda', label:'Onde o JS Roda', icon:'🧭', tags:[
+    { display:'a tag &lt;script&gt;', code:
+`console.log("Já estou rodando! 👋");`,
+      uses:[
+        'O `&lt;script&gt;` pode ficar no `&lt;head&gt;` ou no fim do `&lt;body&gt;`',
+        'No fim do `&lt;body&gt;`, a página carrega antes do JS — mais comum na prática',
+        '`&lt;script src="app.js"&gt;&lt;/script&gt;` separa o JS num arquivo próprio, como o CSS'
+      ]},
+    { type:'tips',
+      title:'O console do navegador',
+      points:[
+        'Abra com F12 (ou clique direito → Inspecionar → aba Console)',
+        '`console.log()` é a ferramenta nº 1 pra testar e depurar código',
+        'Vai ser o "resultado" de quase todo exemplo desta aula'
+      ]},
+  ]},
+
+  { id:'variaveis', label:'Variáveis e Tipos', icon:'📦', tags:[
+    { display:'let e const', code:
+`let idade = 25;
+idade = 26;
+console.log(idade);
+
+const nome = "Ana";
+console.log(nome);`,
+      uses:[
+        '`let` pode ser reatribuído depois; `const` não',
+        'Prefira `const` por padrão — só use `let` quando o valor realmente for mudar',
+        '`var` ainda existe, mas evite — tem comportamentos antigos e confusos'
+      ]},
+    { display:'tipos primitivos', code:
+`console.log(typeof "Ana");
+console.log(typeof 26);
+console.log(typeof true);
+console.log(typeof undefined);
+console.log(typeof null);`,
+      uses:[
+        'string (texto), number (número), boolean (true/false)',
+        'undefined = a variável existe mas ainda não tem valor',
+        '`typeof null` retorna "object" — uma pegadinha clássica do JS'
+      ]},
+    { display:'template literals', code:
+`const nome = "Ana";
+const idade = 26;
+
+console.log(\`Olá, \${nome}! Você tem \${idade} anos.\`);`,
+      uses:[
+        'Crase no lugar de aspas permite inserir variáveis com `${}`',
+        'Muito mais legível do que concatenar texto com `+`',
+        'Também aceita múltiplas linhas sem precisar de `\\n`'
+      ]},
+  ]},
+
+  { id:'operadores', label:'Operadores', icon:'➗', tags:[
+    { display:'aritméticos', code:
+`console.log(10 + 3);
+console.log(10 % 3);
+console.log(2 ** 3);`,
+      uses:[
+        '`+ - * /` funcionam como o esperado',
+        '`%` é o resto da divisão — muito usado pra testar par/ímpar',
+        '`**` é potência (`2 ** 3` = 2 elevado a 3)'
+      ]},
+    { display:'comparação', code:
+`console.log(5 == "5");
+console.log(5 === "5");
+console.log(5 !== "5");`,
+      uses:[
+        '`==` compara só o valor, convertendo o tipo se precisar',
+        '`===` compara valor E tipo — mais seguro e previsível',
+        '`!==` é o "diferente" estrito, equivalente ao `===` negado'
+      ]},
+    { display:'lógicos', code:
+`const idade = 20;
+const temCarteira = true;
+
+console.log(idade >= 18 && temCarteira);
+console.log(idade < 18 || !temCarteira);`,
+      uses:[
+        '`&&` = "e" — só é true se os dois lados forem true',
+        '`||` = "ou" — basta um dos lados ser true',
+        '`!` inverte um valor booleano'
+      ]},
+    { type:'question',
+      title:'== ou ===: por que o time costuma bater o pé no triplo igual?',
+      points:[
+        '`5 == "5"` dá `true` por causa da conversão automática de tipo — fonte clássica de bugs silenciosos',
+        'Com `===`, o comportamento fica previsível: só compara iguais se forem realmente do mesmo tipo',
+        'Times e linters costumam banir `==` por padrão — faz sentido pra vocês?'
+      ]},
+  ]},
+
+  { id:'condicionais', label:'Condicionais', icon:'🔀', tags:[
+    { display:'if / else', code:
+`const idade = 16;
+
+if (idade >= 18) {
+  console.log("Pode dirigir");
+} else {
+  console.log("Ainda não pode dirigir");
+}`,
+      uses:[
+        'Executa um bloco ou outro, dependendo de uma condição',
+        '`else if` permite encadear várias condições',
+        'A condição vira sempre um booleano por baixo dos panos'
+      ]},
+    { display:'switch', code:
+`const dia = "ter";
+
+switch (dia) {
+  case "seg":
+    console.log("Começo de semana");
+    break;
+  case "ter":
+    console.log("Segue o jogo");
+    break;
+  default:
+    console.log("Outro dia");
+}`,
+      uses:[
+        'Compara um valor contra vários casos possíveis',
+        '`break` evita que a execução "vaze" pro próximo case',
+        'Fica mais legível que vários if/else if quando há muitas opções fixas'
+      ]},
+  ]},
+
+  { id:'loops', label:'Loops', icon:'🔁', tags:[
+    { display:'for', code:
+`for (let i = 1; i <= 5; i++) {
+  console.log("Volta número " + i);
+}`,
+      uses:[
+        'Três partes: início, condição de parada, incremento',
+        'Ideal quando você sabe (ou controla) quantas vezes repetir',
+        '`i` é só uma convenção de nome — pode ser qualquer variável'
+      ]},
+    { display:'while', code:
+`let energia = 3;
+
+while (energia > 0) {
+  console.log("Energia: " + energia);
+  energia--;
+}`,
+      uses:[
+        'Repete enquanto a condição for true',
+        'Ideal quando não se sabe de antemão quantas repetições vão acontecer',
+        'Cuidado: esquecer de mudar a condição cria um loop infinito'
+      ]},
+    { display:'for...of', code:
+`const frutas = ["maçã", "banana", "uva"];
+
+for (const fruta of frutas) {
+  console.log(fruta);
+}`,
+      uses:[
+        'Percorre os itens de um array diretamente, sem precisar de índice',
+        'Mais legível que `for` tradicional quando só se quer "cada item"',
+        'Prepara terreno pra métodos como `forEach`, daqui a pouco'
+      ]},
+    { type:'question',
+      title:'for clássico, while ou for...of: como decidir qual usar?',
+      points:[
+        'Sabe o número de repetições, ou precisa do índice? `for` clássico costuma ganhar',
+        'Não sabe quantas vezes vai repetir (ex: esperando uma condição mudar)? `while`',
+        'Só quer percorrer os itens de um array sem se importar com índice? `for...of` é o mais limpo'
+      ]},
+  ]},
+
+  { id:'funcoes', label:'Funções', icon:'🧩', tags:[
+    { display:'função tradicional', code:
+`function somar(a, b) {
+  return a + b;
+}
+
+console.log(somar(2, 3));`,
+      uses:[
+        '`function nome(parâmetros) { ... }` é a forma clássica',
+        '`return` devolve um valor e encerra a função',
+        'Pode ser chamada quantas vezes quiser, com valores diferentes'
+      ]},
+    { display:'arrow function', code:
+`const somar = (a, b) => {
+  return a + b;
+};
+
+console.log(somar(2, 3));
+
+const dobro = n => n * 2;
+console.log(dobro(5));`,
+      uses:[
+        'Sintaxe mais enxuta pra escrever funções',
+        'Com uma única expressão, pode omitir `{ }` e o `return`',
+        'Hoje é a forma mais comum em código JS moderno'
+      ]},
+    { type:'question',
+      title:'Função tradicional ou arrow: existe uma regra?',
+      points:[
+        'Pra lógica simples e callbacks curtos, arrow function deixa o código mais limpo',
+        'Função tradicional ainda aparece bastante em declarações "de topo" e casos mais específicos',
+        'O mais importante: escolher um estilo e manter consistência no time'
+      ]},
+  ]},
+
+  { id:'arrays', label:'Arrays', icon:'📚', tags:[
+    { display:'criar e acessar', code:
+`const frutas = ["maçã", "banana", "uva"];
+
+console.log(frutas[0]);
+console.log(frutas.length);
+
+frutas.push("manga");
+console.log(frutas);`,
+      uses:[
+        'Lista ordenada de valores, acessada por índice (começa em 0)',
+        '`.length` dá a quantidade de itens',
+        '`.push()` adiciona um item no final'
+      ]},
+    { display:'forEach', code:
+`const notas = [8, 6, 9.5, 7];
+
+notas.forEach(nota => {
+  console.log("Nota: " + nota);
+});`,
+      uses:[
+        'Executa uma função pra cada item do array',
+        'Mais direto que `for` quando só se quer "fazer algo com cada item"',
+        'Base de métodos mais avançados que vêm depois (`map`, `filter`...)'
+      ]},
+  ]},
+
+  { id:'objetos', label:'Objetos', icon:'🗂️', tags:[
+    { display:'propriedades', code:
+`const aluno = {
+  nome: "Carlos",
+  idade: 23,
+  aprovado: true
+};
+
+console.log(aluno.nome);
+console.log(aluno["idade"]);`,
+      uses:[
+        'Agrupa dados relacionados em pares chave: valor',
+        'Acesse com `objeto.propriedade` ou `objeto["propriedade"]`',
+        'Pode misturar tipos diferentes dentro do mesmo objeto'
+      ]},
+    { display:'array de objetos', code:
+`const alunos = [
+  { nome: "Carlos", nota: 8 },
+  { nome: "Ana", nota: 9.5 }
+];
+
+alunos.forEach(aluno => {
+  console.log(aluno.nome + ": " + aluno.nota);
+});`,
+      uses:[
+        'Combina tudo que já vimos: array + objeto + forEach',
+        'É exatamente o formato que uma API costuma devolver (spoiler da aula 3)',
+        'Cada item do array é um "registro" com suas próprias propriedades'
+      ]},
+    { type:'question',
+      title:'Por que array de objetos importa tanto daqui pra frente?',
+      points:[
+        'É assim que praticamente toda API devolve uma lista de dados (JSON)',
+        'Dominar `.forEach`/`.map` em array de objetos é o que vai permitir exibir dados reais na tela',
+        'Guardem esse padrão — ele volta com tudo no encontro 3 (consumo de API)'
+      ]},
+  ]},
+
+  { id:'desafio', label:'Desafio Final', icon:'🎯', tags:[
+    { display:'carrinho de compras', code:
+`const carrinho = [
+  { produto: "Caderno", preco: 15, qtd: 2 },
+  { produto: "Caneta", preco: 3, qtd: 5 },
+  { produto: "Mochila", preco: 80, qtd: 1 }
+];
+let total = 0;
+carrinho.forEach(item => {
+  const subtotal = item.preco * item.qtd;
+  console.log(item.produto + ": R$ " + subtotal);
+  total += subtotal;
+});
+console.log("Total: R$ " + total);`,
+      uses:[
+        'Junta variável, loop (`forEach`), array e objeto — tudo que vimos hoje',
+        'Resolve um problema real e familiar: calcular o total de um carrinho',
+        'Ótimo ponto de partida pra um exercício prático em sala'
+      ]},
+  ]},
+
+];
+
+function mono(str){ return str.replace(/`([^`]+)`/g, '<code class="inline">$1</code>'); }
+
+function buildConsoleHTML(code){
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    html,body{margin:0;height:100%;}
+    body{
+      background:#1b1430;
+      color:#eae6f5;
+      font-family:'JetBrains Mono', monospace;
+      font-size:15px;
+      line-height:1.6;
+      padding:14px;
+    }
+    .ln{ display:flex; gap:8px; white-space:pre-wrap; word-break:break-word; margin-bottom:3px; }
+    .ln .arrow{ color:#7cf0c2; flex-shrink:0; }
+    .ln.err{ color:#ff8a8a; }
+    .ln.err .arrow{ color:#ff8a8a; }
+  </style></head><body>
+  <div id="out"></div>
+  <script>
+    var out = document.getElementById('out');
+    function fmt(v){
+      if (typeof v === 'string') return v;
+      try { return JSON.stringify(v); } catch(e){ return String(v); }
+    }
+    console.log = function(){
+      var args = Array.prototype.slice.call(arguments);
+      var div = document.createElement('div');
+      div.className = 'ln';
+      var arrow = document.createElement('span');
+      arrow.className = 'arrow';
+      arrow.textContent = '\u203A';
+      var msg = document.createElement('span');
+      msg.textContent = args.map(fmt).join(' ');
+      div.appendChild(arrow);
+      div.appendChild(msg);
+      out.appendChild(div);
+    };
+    try {
+      ${code}
+    } catch (e) {
+      var div = document.createElement('div');
+      div.className = 'ln err';
+      div.textContent = '✕ ' + e.message;
+      out.appendChild(div);
+    }
+  <\/script>
+  </body></html>`;
+}
+
+function buildDivider(cat){
+  const section = document.createElement('section');
+  section.className = 'divider-slide';
+  const chips = cat.tags.filter(t => !t.type).map(t => {
+    return `<span class="chip fragment fade-in">${t.display}</span>`;
+  }).join('');
+  section.innerHTML = `
+    <div class="divider-icon">${cat.icon}</div>
+    <h2 class="divider-label">${cat.label}</h2>
+    <div class="divider-chips">${chips}</div>
+  `;
+  return section;
+}
+
+function buildQuestionSlide(q){
+  const section = document.createElement('section');
+  section.className = 'question-slide';
+  section.innerHTML = `
+    <div class="q-icon">💭</div>
+    <div class="q-eyebrow">Para discutir</div>
+    <h2 class="q-title">${q.title}</h2>
+    <ul class="q-points"></ul>
+  `;
+  const ul = section.querySelector('.q-points');
+  q.points.forEach(p => {
+    const li = document.createElement('li');
+    li.className = 'fragment fade-up';
+    li.innerHTML = mono(p);
+    ul.appendChild(li);
+  });
+  return section;
+}
+
+function buildTipsSlide(t){
+  const section = document.createElement('section');
+  section.className = 'tips-slide';
+  section.innerHTML = `
+    <div class="tip-icon">✅</div>
+    <div class="tip-eyebrow">Na prática</div>
+    <h2 class="tip-title">${t.title}</h2>
+    <ul class="tip-points"></ul>
+  `;
+  const ul = section.querySelector('.tip-points');
+  t.points.forEach(p => {
+    const li = document.createElement('li');
+    li.className = 'fragment fade-up';
+    li.innerHTML = mono(p);
+    ul.appendChild(li);
+  });
+  return section;
+}
+
+function buildMilestoneSlide(m){
+  const section = document.createElement('section');
+  section.className = 'milestone-slide';
+  section.innerHTML = `
+    <div class="milestone-year">${m.year}</div>
+    <h2 class="milestone-title">${m.title}</h2>
+    <p class="milestone-text fragment fade-in">${m.text}</p>
+  `;
+  return section;
+}
+
+function buildTagSlide(tag){
+  const section = document.createElement('section');
+  section.className = 'tag-slide';
+  section.innerHTML = tag.display ? `<h1 class="tag-name">${tag.display}</h1>` : '';
+  section.innerHTML += `
+    <div class="panels">
+      <div class="panel code-panel fragment fade-in">
+        <div class="panel-header"><span class="ico">⌨</span>Código</div>
+        <pre><code class="language-javascript hljs" data-trim></code><span class="cursor"></span></pre>
+      </div>
+      <div class="panel result-panel fragment fade-in">
+        <div class="panel-header"><span class="ico mint">▶</span>Console</div>
+        <div class="browser-mock">
+          <div class="browser-bar">
+            <span class="bdot r"></span><span class="bdot y"></span><span class="bdot g"></span>
+            <span class="url">🖥 console</span>
+          </div>
+          <div class="loading-bar"></div>
+          <div class="browser-body"><iframe class="live" sandbox="allow-scripts"></iframe></div>
+        </div>
+      </div>
+    </div>
+    <ul class="uses fragment fade-up"></ul>
+  `;
+  section.querySelector('code').textContent = tag.code;
+  section.querySelector('iframe.live').srcdoc = buildConsoleHTML(tag.code);
+  const ul = section.querySelector('.uses');
+  tag.uses.forEach(u => {
+    const li = document.createElement('li');
+    li.innerHTML = mono(u);
+    ul.appendChild(li);
+  });
+  return section;
+}
+
+const slidesRoot = document.querySelector('.reveal .slides');
+
+DECK.forEach(cat => {
+  try {
+    slidesRoot.appendChild(buildDivider(cat));
+  } catch (e) { console.error('Erro ao montar divisor', cat.id, e); }
+  cat.tags.forEach(item => {
+    try {
+      if (item.type === 'question') {
+        slidesRoot.appendChild(buildQuestionSlide(item));
+      } else if (item.type === 'tips') {
+        slidesRoot.appendChild(buildTipsSlide(item));
+      } else if (item.type === 'milestone') {
+        slidesRoot.appendChild(buildMilestoneSlide(item));
+      } else {
+        slidesRoot.appendChild(buildTagSlide(item));
+      }
+    } catch (e) { console.error('Erro ao montar slide', item.display || item.title, e); }
+  });
+});
+
+const end = document.createElement('section');
+end.className = 'end-slide';
+end.innerHTML = `
+  <h2>Pronto</h2>
+  <p class="thanks">No próximo encontro: eventos e interações!</p>
+`;
+slidesRoot.appendChild(end);
+
+Reveal.initialize({
+  hash: true,
+  controls: true,
+  controlsLayout: 'bottom-right',
+  controlsTutorial: false,
+  progress: true,
+  center: false,
+  navigationMode: 'linear',
+  width: 1280,
+  height: 720,
+  margin: 0.06,
+  transition: 'slide',
+  backgroundTransition: 'fade',
+  keyboard: { 38: null, 40: null },
+  plugins: [ RevealHighlight ]
+});
+</script>
+</body>
+</html>
