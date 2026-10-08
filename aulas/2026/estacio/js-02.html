@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript — Parte 2: HTML, DOM e Eventos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+<style>
+:root{--bg:#fff;--panel:#f4f5fa;--panel2:#e9ebf5;--line:rgba(20,18,40,.14);--ink:#15121f;--dim:#514c66;--amber:#b25b06;--mint:#0a8f66;--blue:#2453c9;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif}
+html{font-size:22px}html,.reveal{background:var(--bg)}.reveal{font-family:var(--sans);color:var(--ink)}.reveal .slides section{background:var(--bg);text-align:left}.reveal h1,.reveal h2,.reveal h3{font-family:var(--mono);margin:0}.reveal .controls{color:var(--ink)}.reveal .progress{color:var(--mint);height:8px}.reveal code{font-family:var(--mono)}
+.title-slide,.end-slide,.divider-slide{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.brand{font-family:var(--mono);font-size:clamp(3.5rem,10vw,7rem);font-weight:800}.brand span{color:var(--mint)}.title-slide h1{font:800 clamp(2rem,4.5vw,3.4rem) var(--sans);margin-top:1rem}.subtitle{font-family:var(--mono);font-size:1.2rem;color:var(--dim);margin-top:.8rem}.hint{font-size:.8rem;color:var(--dim);margin-top:2rem}.eyebrow{font:700 .8rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem}.divider-icon{font-size:3.5rem}.divider-label{font:800 2.4rem var(--sans);margin-top:.5rem!important}.chips{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1.4rem}.chip{font:600 .8rem var(--mono);color:var(--mint);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem}
+.tag-slide{height:100%;display:flex;flex-direction:column;justify-content:center}.tag-name{font-size:1.8rem;letter-spacing:-.02em}.panels{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;margin:1rem 0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem;box-shadow:0 8px 24px rgba(20,18,40,.06);min-width:0}.panel-header{font:600 .75rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:.6rem}.panel pre{margin:0;max-height:340px;overflow:auto}.panel code{font-size:1.1rem!important;line-height:1.5!important;white-space:pre!important}.uses{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35rem}.uses li{font-size:.88rem;line-height:1.35}.uses li::before{content:'▸';color:var(--mint);font-weight:800;margin-right:.5rem}.inline{font: .85em var(--mono);color:var(--amber);background:var(--panel2);padding:.05em .25em;border-radius:4px}.demo{background:white;border:1px solid var(--line);border-radius:8px;padding:.8rem;color:var(--ink);font-size:.8rem;min-height:110px}.demo button,.demo input{font:inherit;padding:.35rem .55rem;border:1px solid #b8b5c7;border-radius:5px;margin:.2rem}.demo button{cursor:pointer;background:#e9ebf5}.demo button:hover{border-color:var(--mint)}.demo .primary{background:var(--mint);color:white;border-color:var(--mint)}.demo ul{padding-left:1.2rem}.demo .muted{color:var(--dim)}.demo .success{color:var(--mint);font-weight:700}.question,.tips{height:100%;max-width:80%;margin:auto;display:flex;flex-direction:column;justify-content:center}.question h2,.tips h2{font:800 2rem var(--sans);line-height:1.2;margin:.7rem 0 1rem}.question ul,.tips ul{padding:0;list-style:none}.question li,.tips li{font-size:1.05rem;color:var(--dim);margin:.65rem 0}.question li::before{content:'? ';font-family:var(--mono);font-weight:800;color:var(--amber)}.tips li::before{content:'✓ ';font-family:var(--mono);font-weight:800;color:var(--mint)}.end-slide h2{font:800 3rem var(--sans)}.end-slide p{font-size:1.2rem;color:var(--dim)}
+@media(max-width:700px){.panels{grid-template-columns:1fr}.panel code{font-size: 1.5rem !important}.tag-name{font-size:1.3rem}.uses li{font-size:.75rem}.question h2,.tips h2{font-size:1.5rem}}
+
+code {
+  font-size: 2rem !important;
+}
+
+
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="title-slide"><div class="brand"><span>{</span>js<span>}</span></div><h1>JavaScript — Parte 2</h1><p class="subtitle">HTML, DOM e eventos</p><p class="hint">Da lógica à interação com a página · use as setas para navegar</p></section>
+<section class="divider-slide"><div class="eyebrow">Parte 02 · O navegador</div><div class="divider-icon">🧩</div><h2 class="divider-label">JavaScript + HTML</h2><div class="chips"><span class="chip">document</span><span class="chip">DOM</span><span class="chip">eventos</span><span class="chip">interface</span></div></section>
+
+  <section data-background="#333">
+    <hr>
+    <h1>RENDERING</h1>
+    <hr>
+  </section>
+
+
+
+  <section data-background="../../2025/img/backend/rendering-0.png" data-background-size="80%">
+    <p>No inicio</p>
+    <br><br><br><br><br><br><br><br>
+  </section>
+
+  <section data-background="../../2025/img/backend/rendering-1.png" data-background-size="80%">
+    <p>Depois do Javascripto</p>
+    <br><br><br><br>
+  </section>
+
+  <section>
+    <div style="text-align: left; font-size: 3rem">
+      <h3><em>CSS OM</em></h3>
+      <hr>
+      <p class="fragment">
+        Cascate Style Sheet <em style="color: red;">Object Model</em>
+      </p>
+      <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+        <strong><em> Modelo de Objeto CSS</em></strong>: arvore de seletores e propriedades <br>
+
+      </p>
+    </div>
+  </section>
+
+  <section data-background="../../2025/img/backen/cssom.png" data-background-size="80%">
+
+  </section>
+
+
+
+
+
+<section class="tag-slide"><h2 class="tag-name">01 — HTML é estrutura, JS é comportamento</h2><div class="panels"><div class="panel"><div class="panel-header">HTML · estrutura</div><pre><code class="language-html">&lt;h1 id="titulo"&gt;Olá!&lt;/h1&gt;
+&lt;button id="botao"&gt;
+  Clique aqui
+&lt;/button&gt;
+&lt;script src="app.js" defer&gt;
+&lt;/script&gt;</code></pre></div><div class="panel"><div class="panel-header">JavaScript · comportamento</div><pre><code class="language-javascript">const botao = document
+  .querySelector('#botao');
+
+botao.addEventListener('click', () =&gt; {
+  document.querySelector('#titulo')
+    .textContent = 'Você clicou!';
+});</code></pre></div></div><ul class="uses"><li>HTML descreve o conteúdo e a estrutura.</li><li>JavaScript encontra elementos e reage às ações da pessoa.</li><li><code class="inline">defer</code> faz o script externo executar após o HTML ser analisado.</li></ul></section>
+<section class="tag-slide"><h2 class="tag-name">02 — O que é o DOM?</h2><div class="panels"><div class="panel"><div class="panel-header">HTML escrito</div><pre><code class="language-html">&lt;main&gt;
+  &lt;h1&gt;Minha página&lt;/h1&gt;
+  &lt;p&gt;Aprendendo JavaScript&lt;/p&gt;
+&lt;/main&gt;</code></pre></div><div class="panel"><div class="panel-header">Árvore simplificada</div><pre><code class="language-plaintext">document
+└── html
+    └── body
+        └── main
+            ├── h1
+            │   └── "Minha página"
+            └── p
+                └── "Aprendendo JavaScript"</code></pre></div></div><ul class="uses"><li>DOM significa <em>Document Object Model</em>.</li><li>O navegador representa o documento como objetos organizados em uma árvore.</li><li>O JavaScript pode consultar e modificar essa representação.</li></ul></section>
+
+  <section data-background="../../2025/img/backend/dom.webp" data-background-size="80%">
+
+  </section>
+
+  <section>
+    <div style="text-align: left; font-size: 3rem">
+      <h3><em>DOM</em></h3>
+      <hr>
+      <p class="fragment">
+        Document <em style="color: red;">Object Model</em>
+      </p>
+      <p class="fragment" style="color: #FFF; background-color: #333; padding: 10px">
+        Pode ser <strong><em>HTML ou XML</em></strong> (são as tags em si) <br>
+
+      </p>
+    </div>
+  </section>
+
+
+  <section data-background="../../2025/img/backend/rendering-2.png" data-background-size="80%">
+
+  </section>
+  <section class="tag-slide"><h2 class="tag-name">03 — Encontrando elementos</h2><div class="panels"><div class="panel"><div class="panel-header">HTML</div><pre><code class="language-html">&lt;p id="mensagem"&gt;Texto inicial&lt;/p&gt;
+&lt;p class="aviso"&gt;Atenção&lt;/p&gt;
+&lt;p class="aviso"&gt;Importante&lt;/p&gt;</code></pre></div><div class="panel"><div class="panel-header">JavaScript</div><pre><code class="language-javascript">const mensagem = document
+  .querySelector('#mensagem');
+
+const mensagem = document
+  .getElementById('mensagem');
+
+const aviso = document
+  .querySelector('.aviso');
+
+const avisos = document
+  .querySelectorAll('.aviso');
+
+console.log(avisos.length); // 2</code></pre></div></div><ul class="uses"><li><code class="inline">#id</code> seleciona pelo identificador; <code class="inline">.classe</code> seleciona pela classe.</li><li><code class="inline">querySelector</code> retorna o primeiro elemento correspondente ou <code class="inline">null</code>.</li><li><code class="inline">querySelectorAll</code> retorna uma lista estática dos elementos correspondentes.</li></ul></section>
+<section class="tag-slide"><h2 class="tag-name">04 — Lendo e alterando conteúdo</h2><div class="panels"><div class="panel"><div class="panel-header">Código</div><pre><code class="language-javascript">const titulo = document
+  .querySelector('#titulo');
+
+console.log(titulo.textContent);
+titulo.textContent = 'Novo título';
+
+titulo.classList.add('destaque');
+titulo.classList.toggle('oculto');</code></pre></div><div class="panel"><div class="panel-header">Experimente no slide</div><div class="demo"><h3 id="demo-title">Título original</h3><p id="demo-copy">Este conteúdo pode mudar.</p><button id="change-copy">Alterar texto</button><button id="toggle-class">Alternar destaque</button><style>.demo .highlighted{background:#e0f5ed;padding:.25rem;border-radius:5px;color:#086b4e}.demo .hidden{display:none}</style></div></div></div><ul class="uses"><li><code class="inline">textContent</code> lê ou altera texto sem interpretar HTML.</li><li><code class="inline">classList.add/remove/toggle</code> controlam classes CSS.</li><li>Para texto vindo do usuário, prefira <code class="inline">textContent</code> a <code class="inline">innerHTML</code>.</li></ul></section>
+<section class="tag-slide"><h2 class="tag-name">05 — Eventos: reagindo ao usuário</h2><div class="panels"><div class="panel"><div class="panel-header">JavaScript</div><pre><code class="language-javascript">const botao = document
+  .querySelector('#contar');
+const saida = document
+  .querySelector('#contador');
+let total = 0;
+
+botao.addEventListener('click', () =&gt; {
+  total++;
+  saida.textContent = total;
+});</code></pre></div><div class="panel"><div class="panel-header">Experimente no slide</div><div class="demo"><p>Cliques: <strong id="click-count">0</strong></p><button id="click-counter" class="primary">Clique para contar</button><button id="reset-counter">Zerar</button></div></div></div><ul class="uses"><li>Um evento representa algo que aconteceu: clique, digitação, envio de formulário.</li><li><code class="inline">addEventListener</code> registra uma função para executar quando o evento ocorrer.</li><li>Evite misturar comportamento JavaScript diretamente em atributos como <code class="inline">onclick</code>.</li></ul></section>
+<section class="tag-slide"><h2 class="tag-name">06 — Formulários e preventDefault()</h2><div class="panels"><div class="panel"><div class="panel-header">JavaScript</div><pre><code class="language-javascript">const form = document
+  .querySelector('#form-nome');
+const campo = document
+  .querySelector('#nome');
+const resultado = document
+  .querySelector('#resultado');
+
+form.addEventListener('submit', event =&gt; {
+  event.preventDefault();
+  resultado.textContent =
+    `Olá, ${campo.value}!`;
+});</code></pre></div><div class="panel"><div class="panel-header">Experimente no slide</div><div class="demo"><form id="name-form"><label for="name-input">Seu nome</label><br><input id="name-input" required placeholder="Digite seu nome"><button class="primary" type="submit">Enviar</button></form><p id="name-result" aria-live="polite"></p></div></div></div><ul class="uses"><li><code class="inline">submit</code> é o evento de envio do formulário.</li><li><code class="inline">event.preventDefault()</code> impede o comportamento padrão, como recarregar a página.</li><li><code class="inline">input.value</code> acessa o valor digitado em um campo.</li></ul></section>
+<section class="tag-slide"><h2 class="tag-name">07 — Criando elementos dinamicamente</h2><div class="panels"><div class="panel"><div class="panel-header">JavaScript</div><pre><code class="language-javascript">const lista = document
+  .querySelector('#lista');
+const item = document.createElement('li');
+
+item.textContent = 'Estudar DOM';
+lista.append(item);
+
+// Para remover um elemento:
+item.remove();</code></pre></div><div class="panel"><div class="panel-header">Experimente no slide</div><div class="demo"><form id="task-form"><input id="task-input" required placeholder="Nova tarefa"><button class="primary" type="submit">Adicionar</button></form><ul id="task-list"><li>Aprender HTML</li></ul><p class="muted">Clique em uma tarefa para removê-la.</p></div></div></div><ul class="uses"><li><code class="inline">createElement</code> cria um elemento; <code class="inline">append</code> o adiciona ao documento.</li><li><code class="inline">remove</code> remove o próprio elemento.</li><li>Combine eventos, funções e DOM para criar interfaces pequenas e úteis.</li></ul></section>
+<section class="tag-slide"><h2 class="tag-name">08 — Arrays de objetos viram interface</h2><div class="panels"><div class="panel"><div class="panel-header">Dados + renderização</div><pre><code class="language-javascript">const produtos = [
+  { nome: 'Caderno', preco: 15 },
+  { nome: 'Caneta', preco: 3 },
+  { nome: 'Mochila', preco: 80 }
+];
+
+produtos.forEach(produto =&gt; {
+  const item = document.createElement('li');
+  item.textContent =
+    `${produto.nome}: R$ ${produto.preco}`;
+  lista.append(item);
+});</code></pre></div><div class="panel"><div class="panel-header">O que aparece na página</div><div class="demo"><ul><li>Caderno: R$ 15</li><li>Caneta: R$ 3</li><li>Mochila: R$ 80</li></ul><p class="muted">Dados estruturados → elementos HTML</p></div></div></div><ul class="uses"><li>APIs frequentemente retornam arrays de objetos.</li><li>O DOM permite transformar cada objeto em conteúdo visível.</li><li>Na próxima etapa, esses dados poderão vir de uma API real.</li></ul></section>
+<section class="question"><div class="eyebrow">Para discutir</div><h2>O que deveria ficar no HTML e o que deveria ficar no JavaScript?</h2><ul><li>A estrutura e o conteúdo inicial da página.</li><li>O comportamento que acontece após um clique.</li><li>A criação de itens que dependem dos dados recebidos.</li><li>Como manter o código organizado quando a interação crescer?</li></ul></section>
+<section class="tips"><div class="eyebrow">Boas práticas</div><h2>Pequenas escolhas que evitam problemas</h2><ul><li>Use seletores claros e nomes de variáveis descritivos.</li><li>Use <code class="inline">defer</code> ou carregue o script após o HTML.</li><li>Verifique se um elemento existe antes de usá-lo quando necessário.</li><li>Prefira <code class="inline">textContent</code> para inserir texto não confiável.</li><li>Separe HTML, CSS e JavaScript em arquivos próprios.</li></ul></section>
+<section class="tag-slide">
+  <h2 class="tag-name">Desafio final — Lista de tarefas</h2><div class="panel"><div class="panel-header">Requisitos</div>
+  <ul class="uses">
+    <li>Um campo de texto, um radio de prioridade (alta, baixa, ou media), um select de categoria (estudo, trabalho, lazer, etc) e um botão para adicionar tarefas.</li>
+    <li>Adicionar tarefas à lista sem recarregar a página.</li>
+    <li>Não permitir tarefas vazias.</li>
+    <li>Não permitir tarefas duplicadas (mesmo titulo, prioridade e categoria)</li>
+    <li>Clicar em uma tarefa para marcá-la como concluída.</li>
+    <li>Gravar data e horário que a tarefa for concluida</li>
+    <li>Marcar tarefas como concluidas com um estilo visual diferente</li>
+    <li>Adicionar um botão para remover cada tarefa.</li></ul></div><div class="panel"><div class="panel-header">Conceitos usados</div><p>Seletores · eventos · formulários · <code class="inline">preventDefault()</code> · <code class="inline">createElement()</code> · <code class="inline">classList</code> · <code class="inline">remove()</code></p></div>
+</section>
+<section class="end-slide"><h2>Agora a página responde.</h2><p>Na próxima etapa: consumo de APIs com JavaScript.</p></section>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+Reveal.initialize({hash:true,controls:true,progress:true,center:false,width:1280,height:720,margin:.06,transition:'slide',backgroundTransition:'fade',plugins:[RevealHighlight]});
+const demoTitle=document.querySelector('#demo-title');
+document.querySelector('#change-copy').addEventListener('click',()=>{document.querySelector('#demo-copy').textContent='Texto alterado pelo JavaScript!';});
+document.querySelector('#toggle-class').addEventListener('click',()=>demoTitle.classList.toggle('highlighted'));
+let clicks=0;document.querySelector('#click-counter').addEventListener('click',()=>{document.querySelector('#click-count').textContent=++clicks});document.querySelector('#reset-counter').addEventListener('click',()=>{clicks=0;document.querySelector('#click-count').textContent=clicks});
+document.querySelector('#name-form').addEventListener('submit',event=>{event.preventDefault();document.querySelector('#name-result').textContent=`Olá, ${document.querySelector('#name-input').value}!`;document.querySelector('#name-result').className='success'});
+document.querySelector('#task-form').addEventListener('submit',event=>{event.preventDefault();const input=document.querySelector('#task-input');const value=input.value.trim();if(!value)return;const item=document.createElement('li');item.textContent=value;item.title='Clique para marcar como concluída';item.addEventListener('click',()=>item.classList.toggle('completed'));item.addEventListener('dblclick',()=>item.remove());document.querySelector('#task-list').append(item);input.value='';input.focus()});
+const style=document.createElement('style');style.textContent='.demo li.completed{text-decoration:line-through;color:#777}';document.head.append(style);
+</script>
+</body></html>
