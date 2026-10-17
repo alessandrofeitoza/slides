@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="../dist/reset.css">
     <link rel="stylesheet" href="../dist/reveal-2026.css">
-    <link rel="stylesheet" href="css/theme-dark.css">
+    <link rel="stylesheet" href="css/theme-monokai.css">
 
     <style>
         code {
@@ -17,6 +17,190 @@
 
         .reveal pre code {
             max-height: unset !important;
+        }
+
+        .flow-slide {
+            color: #172033;
+            font-family: "Source Sans Pro", sans-serif;
+        }
+
+        .flow-slide .eyebrow {
+            color: #946500;
+            font-size: .42em;
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            margin-bottom: .35em;
+        }
+
+        .flow-slide h2 {
+            color: #172033;
+            font-size: 1.4em;
+            font-weight: 800;
+            line-height: 1.05;
+            margin: 0 0 .45em;
+        }
+
+        .flow-slide .subtitle {
+            color: #465268;
+            font-size: .55em;
+            margin: 0 auto .8em;
+            max-width: 850px;
+        }
+
+        .flow-line {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 12px;
+            margin: .7em auto 0;
+            max-width: 1100px;
+        }
+
+        .flow-node {
+            display: flex;
+            flex: 1 1 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 165px;
+            min-width: 0;
+            padding: 18px 12px;
+            border: 3px solid #26364f;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 5px 0 #d6dce5;
+            text-align: center;
+        }
+
+        .flow-node .symbol {
+            display: block;
+            font-size: 1.5em;
+            line-height: 1;
+            margin-bottom: 14px;
+        }
+
+        .flow-node strong {
+            display: block;
+            color: #172033;
+            font-size: .65em;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        .flow-node small {
+            display: block;
+            color: #465268;
+            font-size: .38em;
+            line-height: 1.25;
+            margin-top: 8px;
+        }
+
+        .flow-node.po {
+            border-color: #946500;
+        }
+
+        .flow-node.dev {
+            border-color: #176b59;
+        }
+
+        .flow-node.computer {
+            border-color: #285bb5;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #946500;
+            font-size: 1.1em;
+            font-weight: 900;
+            min-width: 24px;
+        }
+
+        .flow-caption {
+            margin: .8em auto 0;
+            color: #465268;
+            font-size: .48em;
+            max-width: 850px;
+        }
+
+        .flow-caption strong {
+            color: #172033;
+        }
+
+        .flow-slide .callout {
+            display: inline-block;
+            margin-top: .7em;
+            padding: 10px 18px;
+            border-left: 5px solid #c38a0a;
+            background: #fff4d6;
+            color: #34270d;
+            font-size: .5em;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .flow-slide .mini-list {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: .65em;
+            flex-wrap: wrap;
+        }
+
+        .flow-slide .mini-list span {
+            border: 2px solid #cbd3df;
+            background: #fff;
+            border-radius: 9px;
+            padding: 8px 14px;
+            color: #26364f;
+            font-size: .48em;
+            font-weight: 700;
+        }
+
+        .flow-slide .big-question {
+            font-size: 1.1em;
+            line-height: 1.15;
+            color: #172033;
+            font-weight: 800;
+            max-width: 850px;
+            margin: .6em auto 0;
+        }
+
+        .flow-slide .big-question em {
+            color: #946500;
+            font-style: normal;
+        }
+
+        @media (max-width: 700px) {
+            .flow-line {
+                gap: 4px;
+            }
+
+            .flow-node {
+                padding: 8px 4px;
+                min-height: 120px;
+                border-width: 2px;
+            }
+
+            .flow-node .symbol {
+                font-size: 1em;
+                margin-bottom: 8px;
+            }
+
+            .flow-node strong {
+                font-size: .48em;
+            }
+
+            .flow-node small {
+                font-size: .3em;
+            }
+
+            .flow-arrow {
+                min-width: 13px;
+                font-size: .7em;
+            }
         }
     </style>
 </head>
@@ -37,7 +221,7 @@
 
 <!-- 1 · Abertura -->
 <section class="cover" data-act="1">
-    <h1>PHP moderno<br>não é trocar <code class="strike">mysql_*</code><br>por Laravel</h1>
+    <h1>PHP moderno<br>não é trocar <code class="strike" style="font-size: 3rem !important;">mysql_*</code><br>por Laravel</h1>
     <hr class="rule">
     <p class="small muted">Alessandro Feitoza &nbsp;/&nbsp; PHPeste 2026</p>
     <aside class="notes">0:30 — Não explique o título ainda. Deixe a pergunta do subtítulo no ar e vá para a apresentação pessoal.</aside>
@@ -282,9 +466,10 @@ return redirect()->route('transfers.show', $transfer);
         <br> Framework <br> não é bala de prata! </h2>
 </section>
 
+<section data-background="img/modernizar/service.jpg" data-background-size="50%"></section>
+
 <!-- 8 · O Service que virou outro controller -->
 <section data-act="2">
-    <h2>O Service que virou outro controller</h2>
     <pre class="compact"><code class="language-php" data-trim data-noescape data-line-numbers="|3|6|11-13|16-18"><script type="text/template">
 final class TransferService
 {
@@ -308,13 +493,22 @@ final class TransferService
     }
 }
 </script></code></pre>
-    <p class="code-caption fragment">Separar o código em classes não significa necessariamente separar responsabilidades.</p>
     <aside class="notes">2:00 — O controller agora tem duas linhas e todo mundo comemora. Mas olhe: recebe o array do request (linha 3), devolve 403 (HTTP!), lança ValidationException (HTTP de novo), e continua com a checagem fora da transação e a chamada síncrona. Mudamos o endereço do problema, não o problema.</aside>
 </section>
 
+<section data-background="../img/gifs/dog-fire.gif">
+    <h2 style="background-color: white; padding-top: 30px; padding-bottom: 30px;">O Service virou controller</h2>
+    <br><br><br><br><br><br><br><br><br><br>
+</section>
+
+    <section style="text-align: center">
+        <p class="" style="font-size: 3rem">Criar várias classes <br> <strong>não garante separação de responsabilidades</strong>.</p>
+
+    </section>
+
 <!-- 9 · O custo aparece na mudança -->
 <section data-act="2">
-    <h2>O custo aparece na mudança</h2>
+    <h2>O dev chora e mãe não vê</h2>
     <div class="impact">
         <div class="change">
             <span>Pedido do negócio</span>
@@ -339,8 +533,14 @@ final class TransferService
 <section data-act="3">
     <h2>Vamos modernizar uma transferência</h2>
     <div class="quote">Uma transferência só pode ser concluída quando respeitar as regras de saldo, limites e autorização.</div>
-    <p class="small muted" style="margin-top: 48px;">O mesmo caso, do controller ao teste. Valores em centavos, como <code>int</code>: dinheiro não é <code>float</code>.</p>
+<!--    <p class="small muted" style="margin-top: 48px;">O mesmo caso, do controller ao teste. Valores em centavos, como <code>int</code>: dinheiro não é <code>float</code>.</p>-->
     <aside class="notes">0:30 — Deixe claro: é uma demonstração didática. Não é "a arquitetura certa para todo projeto"; é uma forma de raciocinar.</aside>
+</section>
+
+<section data-background="../img/gifs/rave.gif" style="">
+    <h2 style="text-align: center; background-color: white; justify-content: space-between; display: flex; align-items: center; color: red;">Em apenas 13 passos &nbsp;&nbsp;<svg height="130" width="130" viewBox="0 0 100 100" xmlns="http://w3.org">
+        <polygon points="50,5 62,38 97,38 69,59 79,93 50,72 21,93 31,59 3,38 38,38" fill="#FF0000"/>
+    </svg></h2>
 </section>
 
 <!-- 11 · Primeiro, identifique as regras -->
@@ -364,14 +564,25 @@ final class TransferService
             <ul><li>avisar o parceiro</li></ul>
         </div>
     </div>
-    <p class="verdict fragment small" style="font-size: 36px;">Ainda não tem pasta nova, interface nem padrão. Só um mapa do que já existe.</p>
+    <p class="verdict fragment small" style="font-size: 36px;">Ainda não tem pasta nova, nem interface, nem padrão. Só um mapa mental.</p>
     <aside class="notes">1:00 — Antes de qualquer arquitetura, separe as perguntas: o que é protocolo, o que é regra, o que é guardar, o que é falar com terceiros. A arquitetura vem depois desse mapa, e proporcional a ele.</aside>
 </section>
+
+    <section data-background="../img/gifs/nazaré.gif">
+        <h2 style="background-color: #333; padding: 10px;">Antes de qualquer arquitetura</h2>
+        <br><br><br><br>
+        <ul>
+            <li style="background-color: #FFF; color: black; padding: 10px;" class="fragment">O que é protocolo?</li>
+            <li style="background-color: #FFF; color: black; padding: 10px;" class="fragment">O que é regra?</li>
+            <li style="background-color: #FFF; color: black; padding: 10px;" class="fragment">O que é guardar?</li>
+            <li style="background-color: #FFF; color: black; padding: 10px;" class="fragment">O que é falar com terceiros?</li>
+        </ul>
+    </section>
 
 <!-- 12 · A regra não deveria depender do transporte -->
 <section data-act="3">
     <h2>A regra não deveria depender do transporte</h2>
-    <pre class="roomy"><code class="language-php" data-trim data-noescape data-line-numbers="|4-9|10-12"><script type="text/template">
+    <pre class="roomy"><code class="language-php" data-trim data-noescape data-line-numbers="|4-9|10-12|"><script type="text/template">
 public function store(TransferRequest $request, TransferMoney $transfer): RedirectResponse
 {
     try {
@@ -388,7 +599,8 @@ public function store(TransferRequest $request, TransferMoney $transfer): Redire
     return redirect()->route('transfers.show', $id);
 }
 </script></code></pre>
-    <p class="code-caption">O controller traduz HTTP para um comando e um erro de negócio para uma resposta HTTP. Só isso.</p>
+    <p class="fragment code-caption">TransferRequest é um FormRequest.</p>
+    <p class="fragment code-caption">O controller traduz HTTP para um comando e um erro de negócio para uma resposta HTTP. Só isso.</p>
     <aside class="notes">0:50 — TransferRequest é um FormRequest comum com as mesmas regras de validação. TransferCommand é um objeto readonly com quatro inteiros. O controller continua sendo Laravel, e deve ser.</aside>
 </section>
 
@@ -412,8 +624,15 @@ final class RunScheduledTransfer implements ShouldQueue
     }
 }
 </script></code></pre>
-    <p class="code-caption fragment">Lembra do job que copiava a regra? Agora ele chama a mesma regra. <strong>Se dá para chamar de um job, dá para chamar de um teste.</strong></p>
+    <p class="code-caption fragment">Lembra do job que copiava a regra? </p>
+    <p class="code-caption fragment">Agora ele chama a mesma regra. </p>
+    <p class="code-caption fragment"> <strong>Se dá para chamar de um job, dá para chamar de um teste.</strong></p>
     <aside class="notes">0:40 — Isso resolve um dos quatro pontos do slide 9 sem nenhuma abstração extra: só tirando a regra do transporte.</aside>
+</section>
+
+<section data-background="../img/gifs/menina-feliz.webp" data-background-size="70%">
+    <br><br><br><br>
+    <h1 style="text-align: center; background-color: #333">Melhoramos (e muito) a testabilidade</h1>
 </section>
 
 <!-- 13 · Dependências explícitas -->
@@ -428,10 +647,10 @@ final readonly class TransferMoney
         private Dispatcher $bus,
     ) {}
 </script></code></pre>
-    <div class="effects" style="grid-template-columns: 360px 1fr; margin-top: 30px;">
+    <div class="effects" style="grid-template-columns: 600px 1fr; margin-top: 30px;">
         <div class="fragment"><code>ConnectionInterface</code></div>
         <div class="fragment">Contrato do próprio Laravel. A transação fica visível, não escondida.</div>
-        <div class="fragment"><code>Accounts</code> <strong class="accent">interface nossa</strong></div>
+        <div class="fragment"><code>Accounts</code> <strong class="accent">interface criada pela gente, sangue do nosso sangue</strong></div>
         <div class="fragment">Fronteira com o banco: o contrato exige trava e leitura consistente do dia.</div>
         <div class="fragment"><code>Dispatcher</code></div>
         <div class="fragment">Contrato do Laravel para agendar efeitos colaterais.</div>
@@ -460,8 +679,16 @@ final readonly class TransferMoney
         <div class="fragment" data-fragment-index="2" style="display:flex;justify-content:center;"><div class="link" style="transform: rotate(180deg); width:100%;"></div></div>
         <div class="node ghost fragment" data-fragment-index="2">EloquentAccounts<small>infraestrutura</small></div>
     </div>
-    <p class="verdict fragment" data-fragment-index="3" style="margin-top: 50px; font-size: 38px;">Não é banir o framework. É decidir <span class="accent">quem depende de quem</span>.</p>
+    <p class="verdict fragment" data-fragment-index="3" style="margin-top: 50px; font-size: 38px;">Não vamos banir o framework.  Vamo botar <span class="accent">ele no lugar dele</span>.</p>
     <aside class="notes">0:45 — Linha de cima: o fluxo de chamada. Embaixo: o caso de uso depende do contrato; a implementação Eloquent aponta para o contrato, não o contrário. O Laravel continua no projeto inteiro: no controller, no job, na implementação de Accounts.</aside>
+</section>
+
+<section>
+    <hr>
+    <p class="verdict fragment" style="margin:50px; font-size: 38px; text-align: center">
+        O framework deve servir ao propósito do negócio, <br> <span class="accent">não o negócio ao propósito do framework</span>.
+    </p>
+    <hr>
 </section>
 
 <section data-act="3">
@@ -479,6 +706,7 @@ final readonly class SourceAccount
 
     public function assertCanTransfer(int $amount, int $requestedBy): void
     {
+        //regras
         if ($requestedBy !== $this->ownerId) throw TransferRejected::notOwner();
         if ($amount <= 0) throw TransferRejected::invalidAmount();
         if ($amount > $this->balance) throw TransferRejected::insufficientBalance();
@@ -486,7 +714,8 @@ final readonly class SourceAccount
     }
 }
 </script></code></pre>
-    <p class="code-caption">Nenhum <code>use Illuminate\…</code>. <code>TransferRejected</code> é uma <code>DomainException</code> com construtores nomeados.</p>
+    <p class="code-caption fragment">Nenhum <code>use Illuminate\…</code>.</p>
+    <p class="code-caption fragment"><code>TransferRejected</code> é uma <code>DomainException</code> com construtores nomeados.</p>
     <aside class="notes">0:45 — Autorização, saldo e limite num só lugar, legível por quem conhece o negócio. A nova regra do slide 9 (limite por tipo de conta) entra aqui e no método que monta este objeto.</aside>
 </section>
 
@@ -517,9 +746,14 @@ final class EloquentAccounts implements Accounts
     <aside class="notes">0:45 — Aqui está a correção do bug de concorrência do slide 7: SELECT ... FOR UPDATE dentro da transação. Importante: só funciona porque o caso de uso abre a transação antes de chamar lockForTransfer. Isso é justamente o que o contrato documenta.</aside>
 </section>
 
+<section data-background="../img/gifs/meninoLouco.gif" data-background-size="70%">
+    <br><br><br><br><br><br><br><br><br>
+    <h1 style="text-align: center; background-color: #333">Bug de concorrência foi mitigado</h1>
+</section>
+
 <!-- 15 · Testar comportamento, não implementação -->
 <section data-act="3">
-    <h2>Testar comportamento, não implementação</h2>
+    <h2>Testar comportamento e não a implementação</h2>
     <pre><code class="language-php" data-trim data-noescape data-line-numbers="|3-10|12-19"><script type="text/template">
 final class SourceAccountTest extends TestCase
 {
@@ -543,12 +777,13 @@ final class SourceAccountTest extends TestCase
 }
 </script></code></pre>
     <p class="code-caption fragment">PHPUnit puro: sem banco, sem HTTP, sem mock.</p>
+    <p class="code-caption fragment">Testes e Negócios, mesma lingua 👅</p>
     <aside class="notes">1:15 — O teste fala a língua do negócio: limite, já enviado, valor. Testa a fronteira exata (20.000 passa, 20.001 não). Não verifica que método foi chamado nem em que ordem, por isso sobrevive a refatorações. contaComLimite() é um helper que cria um SourceAccount com saldo folgado e dono 7. Mocks não sumiram do mundo: só não são necessários para testar uma regra pura.</aside>
 </section>
 
 <!-- 16 · E os efeitos colaterais? -->
 <section data-act="3">
-    <h2>Decidir não é o mesmo que executar efeitos</h2>
+    <h2>GERENCIAR AS CONSEQUÊNCIAS</h2>
     <pre class="roomy"><code class="language-php" data-trim data-noescape data-line-numbers="|4-5|7|9|12"><script type="text/template">
 public function __invoke(TransferCommand $cmd): int
 {
@@ -564,37 +799,84 @@ public function __invoke(TransferCommand $cmd): int
     }, attempts: 3); // repete se o banco abortar por deadlock
 }
 </script></code></pre>
+    <p class="code-caption fragment">Só vai avisar o parceiro se a transferencia der bom</p>
+
     <aside class="notes">1:00 — Decidir e mover o dinheiro acontecem na mesma transação, com a conta travada. Avisar o parceiro é efeito: só deve acontecer se o commit acontecer. afterCommit() garante que o job não sai para a fila antes disso. attempts: 3 porque transferências cruzadas (A para B e B para A ao mesmo tempo) podem gerar deadlock; outra opção é travar as duas contas em ordem de id.</aside>
 </section>
 
+
+    <section>
+        <div class="flow-slide">
+            <div class="flow-line">
+                <div class="flow-node fragment fade-up">
+                    <span class="symbol">🙋‍♀️</span>
+                    <strong>Paciente</strong>
+                    <small style="font-size: 1.3rem">Tem sintomas</small>
+                </div>
+
+                <div class="flow-arrow fragment fade-in">→</div>
+
+                <div class="flow-node po fragment fade-up">
+                    <span class="symbol">🥵</span>
+                    <strong>Sintomas</strong>
+                    <small style="font-size: 1.3rem">São consequências, não o problema em si</small>
+                </div>
+
+                <div class="flow-arrow fragment fade-in">→</div>
+
+                <div class="flow-node dev fragment fade-up">
+                    <span class="symbol">💊</span>
+                    <strong>Tratamento</strong>
+                    <small style="font-size: 1.3rem">dos sintomas</small>
+                </div>
+
+                <div class="flow-arrow fragment fade-in">→</div>
+
+                <div class="flow-node computer fragment fade-up">
+                    <span class="symbol">❤️‍🩹</span>
+                    <strong>Cura</strong>
+                    <small style="font-size: 1.3rem">Resolve o problema de verdade</small>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
 <section data-act="3">
-    <h2>O requisito escolhe o mecanismo</h2>
+    <h2>O requisito define a estratégia</h2>
     <div class="effects">
         <div class="h">Se o requisito é…</div>
         <div class="h">…então</div>
 
-        <div class="fragment">O aviso pode atrasar, mas nunca sair para uma transferência que não aconteceu</div>
-        <div class="fragment">Job na fila com <code>afterCommit()</code></div>
+        <div style="font-size: 2.4rem" class="fragment">O aviso pode atrasar, mas nunca sair para uma transferência que não aconteceu</div>
+        <div style="font-size: 2.4rem" class="fragment">Job na fila com <code>afterCommit()</code></div>
 
-        <div class="fragment">O evento não pode se perder, mesmo se a fila cair</div>
-        <div class="fragment">Gravar o evento na mesma transação (outbox) e publicar depois</div>
+        <div style="font-size: 2.4rem" class="fragment">O evento não pode se perder, mesmo se a fila cair</div>
+        <div style="font-size: 2.4rem" class="fragment">Gravar o evento na mesma transação (outbox) e publicar depois</div>
 
-        <div class="fragment">O parceiro precisa aprovar antes de concluir</div>
-        <div class="fragment">Não é efeito colateral: é parte da decisão, com estado pendente e timeout</div>
+        <div style="font-size: 2.4rem" class="fragment">O parceiro precisa aprovar antes de concluir</div>
+        <div style="font-size: 2.4rem" class="fragment">Status como "Pendente" e estratégia de timeout</div>
     </div>
-    <p class="verdict fragment" style="font-size: 36px; margin-top: 44px;">Fila e evento não são soluções universais. São respostas a garantias específicas.</p>
     <aside class="notes">0:45 — Esta é a parte mais ignorada nas "modernizações". O código antigo chamava o parceiro dentro do request; trocar por evento sem pensar pode perder avisos ou enviar avisos de transferências desfeitas. Pergunte ao negócio qual garantia ele precisa antes de escolher.</aside>
+</section>
+
+<section data-background-size="50%" data-background="../img/gifs/queue.gif">
+    <p style="background-color: #FFF; color: #333; font-size: 4rem; font-style: italic">
+
+        <strong>Filas e eventos</strong> não são soluções universais. <br> São <strong>respostas a garantias específicas.</strong>
+    </p>
 </section>
 
 <!-- 17 · A arquitetura evoluiu (auto-animate) -->
 <section data-act="3" data-auto-animate>
-    <h2>A arquitetura evoluiu</h2>
-    <div class="arch">
-        <div class="box shell" data-id="shell" style="left:0; top:10px; width:1440px; height:330px; padding:22px 28px;">TransferController::store()</div>
-        <div class="box" data-id="http" style="left:30px; top:110px; width:330px; height:190px;"><div>HTTP<small>validate, user()</small></div></div>
-        <div class="box rules" data-id="rules" style="left:382px; top:110px; width:330px; height:190px;"><div>Regras<small>dono, saldo, limite</small></div></div>
-        <div class="box" data-id="persist" style="left:734px; top:110px; width:330px; height:190px;"><div>Persistência<small>transaction, increment</small></div></div>
-        <div class="box" data-id="external" style="left:1086px; top:110px; width:330px; height:190px;"><div>Integração<small>Http::post</small></div></div>
+    <h2>A arquitetura digivolveu</h2>
+    <div class="arch" style="width: 100%">
+        <div class="box shell" data-id="shell" style="font-size: 3rem; left:0; top:10px; width:1640px; height:330px; padding:22px 28px;">TransferController::store()</div>
+        <div class="box" data-id="http" style="font-size: 3rem; left:30px; top:110px; width:380px; height:190px;"><div>HTTP<small>validate, user()</small></div></div>
+        <div class="box rules" data-id="rules" style="font-size: 3rem; left:422px; top:110px; width:380px; height:190px;"><div>Regras<small>dono, saldo, limite</small></div></div>
+        <div class="box" data-id="persist" style="font-size: 3rem; left:814px; top:110px; width:380px; height:190px;"><div>Persistência<small>transaction, increment</small></div></div>
+        <div class="box" data-id="external" style="font-size: 3rem; left:1206px; top:110px; width:380px; height:190px;"><div>Integração<small>Http::post</small></div></div>
     </div>
     <aside class="notes">1:30 (com o próximo) — Este é o diagrama do slide 7: tudo dentro do mesmo método. Avance e deixe a animação mostrar para onde cada responsabilidade foi.</aside>
 </section>
@@ -602,18 +884,18 @@ public function __invoke(TransferCommand $cmd): int
 <section data-act="3" data-auto-animate>
     <h2>A arquitetura evoluiu</h2>
     <div class="arch" style="height: 450px;">
-        <div class="box" data-id="http" style="left:0; top:10px; width:360px; height:130px;"><div>TransferController<small>HTTP vira comando</small></div></div>
-        <div class="box" data-id="usecase" style="left:470px; top:10px; width:400px; height:130px;"><div>TransferMoney<small>caso de uso e transação</small></div></div>
-        <div class="box rules" data-id="rules" style="left:1020px; top:10px; width:420px; height:130px;"><div>SourceAccount<small>regras, PHP puro</small></div></div>
-        <div class="box" data-id="scheduled" style="left:0; top:290px; width:360px; height:130px;"><div>RunScheduledTransfer<small>mesma regra, via fila</small></div></div>
-        <div class="box" data-id="persist" style="left:470px; top:290px; width:400px; height:130px;"><div>Accounts<small>contrato, com trava</small></div></div>
-        <div class="box" data-id="external" style="left:1020px; top:290px; width:420px; height:130px;"><div>NotifyTransferPartner<small>depois do commit</small></div></div>
+        <div class="box" data-id="http" style="font-size: 3rem; left:0; top:10px; width:450px; height:130px;"><div>TransferController<small>HTTP vira comando</small></div></div>
+        <div class="box" data-id="usecase" style="font-size: 3rem; left:590px; top:10px; width:430px; height:130px;"><div>TransferMoney<small>caso de uso e transação</small></div></div>
+        <div class="box rules" data-id="rules" style="font-size: 3rem; left:1250px; top:10px; width:450px; height:130px;"><div>SourceAccount<small>regras, PHP puro</small></div></div>
+        <div class="box" data-id="scheduled" style="font-size: 3rem; left:0; top:290px; width:560px; height:130px;"><div>RunScheduledTransfer<small>mesma regra, via fila</small></div></div>
+        <div class="box" data-id="persist" style="font-size: 3rem; left:600px; top:290px; width:430px; height:130px;"><div>Accounts<small>contrato, com trava</small></div></div>
+        <div class="box" data-id="external" style="font-size: 3rem; left:1220px; top:290px; width:570px; height:130px;"><div>NotifyTransferPartner<small>depois do commit</small></div></div>
 
-        <div class="arrow" style="left:360px; top:75px; width:110px;"></div>
-        <div class="arrow" style="left:870px; top:75px; width:150px;"></div>
-        <div class="arrow" style="left:670px; top:140px; width:150px; transform: rotate(90deg);"></div>
-        <div class="arrow" style="left:870px; top:140px; width:212px; transform: rotate(45deg);"></div>
-        <div class="arrow" style="left:360px; top:290px; width:186px; transform: rotate(-53.7deg);"></div>
+        <div class="arrow" style="left:460px; top:75px; width:110px;"></div>
+        <div class="arrow" style="left:1050px; top:75px; width:150px;"></div>
+        <div class="arrow" style="left:870px; top:140px; width:140px; transform: rotate(90deg);"></div>
+        <div class="arrow" style="left:1070px; top:140px; width:212px; transform: rotate(45deg);"></div>
+        <div class="arrow" style="left:360px; top:290px; width:256px; transform: rotate(-30.7deg);"></div>
     </div>
     <div class="gains" style="margin-top: 26px;">
         <div class="fragment">Regras testáveis sem banco nem HTTP</div>
@@ -630,7 +912,7 @@ public function __invoke(TransferCommand $cmd): int
     <div class="cols">
         <div>
             <div class="tree-title">Um CRUD de categorias</div>
-<div class="tree">app/Domain/Category/
+<div class="tree" style="font-size: 2.2rem">app/Domain/Category/
   Contracts/CategoryRepositoryInterface.php
   Contracts/CategoryServiceInterface.php
   DTOs/CreateCategoryDTO.php
@@ -638,11 +920,11 @@ public function __invoke(TransferCommand $cmd): int
   Factories/CategoryFactoryInterface.php
   Mappers/CategoryMapper.php
   Services/CategoryService.php
-  <span class="dim">… tudo isso para salvar um nome</span></div>
+  <span class="dim">… tudo isso para salvar o diabo de um nome</span></div>
         </div>
         <div class="fragment">
             <div class="tree-title">A transferência</div>
-<div class="tree">app/Transfers/
+<div class="tree" style="font-size: 2.2rem">app/Transfers/
   TransferMoney.php
   TransferCommand.php
   SourceAccount.php
@@ -652,9 +934,17 @@ public function __invoke(TransferCommand $cmd): int
   <span class="dim">uma interface, onde há fronteira</span></div>
         </div>
     </div>
-    <p class="verdict fragment" style="font-size: 38px; margin-top: 46px;">Arquitetura boa não é a que tem mais camadas. É a que resolve o problema sem criar complexidade desnecessária.</p>
+    <p class="verdict fragment" style="font-size: 38px; margin-top: 46px;"> <strong style="color: orange"> Arquitetura boa não é a que tem mais camadas.</strong>
+        <br>
+        É a que resolve o problema sem criar complexidade desnecessária.</p>
     <aside class="notes">1:00 — O exemplo da esquerda é caricatural de propósito, mas todo mundo já viu. Um CRUD sem regra não precisa de domínio rico; pode ser um controller com Eloquent e está ótimo. A transferência tem regra, concorrência e efeito colateral, por isso ganhou estrutura. Proporcionalidade é a palavra.</aside>
 </section>
+
+    <section data-background="../img/backend-arch/arquiteto3.jpeg" data-background-size="60%">
+        <br><br><br><br><br><br><br><br><br>
+        <h1 style="text-align: center; background-color: #333">Arquitetura proporcional ao problema</h1>
+
+    </section>
 
 <!-- =================================================================== -->
 <!-- ATO 4 — Modernizar sem reescrever tudo (8 min)                       -->
@@ -754,8 +1044,8 @@ final class TarifaTransferenciaTest extends TestCase
             </g>
             <g class="fragment" data-fragment-index="6" font-size="25" fill="#57514A">
                 <text x="1290" y="78">Em produção,</text>
-                <text x="1290" y="112">a cada volta.</text>
-                <text x="1290" y="146">Não no fim.</text>
+                <text x="1290" y="112">a cada balão.</text>
+                <text x="1290" y="146">Não só quando acabar (porque nunca acaba)</text>
             </g>
         </svg>
     </div>
@@ -801,7 +1091,7 @@ final class TarifaTransferenciaTest extends TestCase
 
 <!-- 24 · Uma aplicação moderna consegue evoluir -->
 <section data-act="5">
-    <div class="quote" style="font-size: 60px;">Migrar tecnologia é trocar ferramentas.<br>Modernizar software é diminuir o custo de fazê-lo evoluir.</div>
+    <div class="quote" style="font-size: 60px;"><span style="color: cornflowerblue">Migrar tecnologia é trocar ferramentas.</span><br>Modernizar software é diminuir o custo de digivolvê-lo.</div>
     <div class="metrics" style="grid-template-columns: repeat(3, 1fr); margin-top: 70px;">
         <div class="metric fragment"><strong>Arquitetura</strong><span>a mudança tem um lugar certo</span></div>
         <div class="metric fragment"><strong>Qualidade</strong><span>a mudança tem rede de proteção</span></div>
@@ -873,9 +1163,17 @@ final class TarifaTransferenciaTest extends TestCase
 <!--    <aside class="notes">1:00 — Silêncio. Conte até cinco antes de avançar.</aside>-->
 </section>
 
+<section>
+
+    <h1>Modernizar não é trocar tudo.<br>É tornar a próxima mudança menos arriscada do que a anterior.</h1>
+</section>
+
 <!-- 29 · Encerramento -->
 <section class="closing" data-act="5">
-    <h1>Modernizar não é trocar tudo.<br>É tornar a próxima mudança menos arriscada do que a anterior.</h1>
+    <br><br>
+    <h1>Valeu o boi. Valeu o vaqueiro</h1>
+    <p style="color: cornflowerblue">slides.feitoza.tec.br</p>
+    <br><br>
     <div class="signature">
         <div>
             <strong>PHP moderno não é trocar <code>mysql_*</code> por Laravel</strong>
@@ -897,10 +1195,17 @@ final class TarifaTransferenciaTest extends TestCase
 <script src="../plugin/notes/notes2.js"></script>
 <script>
     Reveal.initialize({
-        width: 1600,
-        height: 900,
+        // width: 1600,
+        // height: 900,
+        // margin: 0.05,
+        // center: true,
+
+        center: false,
         margin: 0.05,
-        center: true,
+        width: 1920,
+        height: 1080,
+
+
         hash: true,
         slideNumber: 'c/t',
         transition: 'fade',
