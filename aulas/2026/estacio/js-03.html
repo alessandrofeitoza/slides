@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript — Parte 3: Consumo de APIs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+<style>
+:root{--bg:#fff;--panel:#f4f5fa;--panel2:#e9ebf5;--line:rgba(20,18,40,.14);--ink:#15121f;--dim:#514c66;--amber:#b25b06;--mint:#0a8f66;--blue:#2453c9;--red:#b42318;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif}
+html{font-size:22px}html,.reveal{background:var(--bg)}.reveal{font-family:var(--sans);color:var(--ink)}.reveal .slides section{background:var(--bg);text-align:left}.reveal h1,.reveal h2,.reveal h3{font-family:var(--mono);margin:0;color:var(--ink)}.reveal .controls{color:var(--ink)}.reveal .progress{color:var(--mint);height:8px}.reveal code{font-family:var(--mono)}
+.title-slide,.end-slide,.divider-slide{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.brand{font-family:var(--mono);font-size:clamp(3.5rem,10vw,7rem);font-weight:800}.brand span{color:var(--mint)}.title-slide h1{font:800 clamp(2rem,4.5vw,3.4rem) var(--sans);margin-top:1rem}.subtitle{font-family:var(--mono);font-size:1.1rem;color:var(--dim);margin-top:.8rem}.hint{font-size:.8rem;color:var(--dim);margin-top:2rem}.eyebrow{font:700 .8rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem}.divider-icon{font-size:3.5rem}.divider-label{font:800 2.4rem var(--sans);margin-top:.5rem!important}.chips{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1.4rem}.chip{font:600 .8rem var(--mono);color:var(--mint);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem}
+.tag-slide{height:100%;display:flex;flex-direction:column;justify-content:center}.tag-name{font-size:1.65rem;letter-spacing:-.02em}.panels{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;margin:1rem 0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:.8rem;box-shadow:0 8px 24px rgba(20,18,40,.06);min-width:0}.panel-header{font:600 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem}.panel pre{margin:0;max-height:340px;overflow:auto}.panel code{font-size:.72rem!important;line-height:1.45!important;white-space:pre!important}.uses{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35rem}.uses li{font-size:.82rem;line-height:1.35}.uses li::before{content:'▸';color:var(--mint);font-weight:800;margin-right:.5rem}.inline{font:.85em var(--mono);color:var(--amber);background:var(--panel2);padding:.05em .25em;border-radius:4px}.demo{background:white;border:1px solid var(--line);border-radius:8px;padding:.7rem;color:var(--ink);font-size:.72rem;min-height:110px}.demo button,.demo input,.demo select{font:inherit;padding:.35rem .5rem;border:1px solid #b8b5c7;border-radius:5px;margin:.2rem}.demo button{cursor:pointer;background:#e9ebf5}.demo button:hover{border-color:var(--mint)}.demo .primary{background:var(--mint);color:white;border-color:var(--mint)}.demo ul{padding-left:1.2rem}.demo .muted{color:var(--dim)}.demo .success{color:var(--mint);font-weight:700}.demo .error{color:var(--red);font-weight:700}.demo .status{font-family:var(--mono);font-size:.68rem;color:var(--dim);margin:.35rem 0}.demo .user-card{border:1px solid var(--line);border-radius:6px;padding:.4rem .5rem;margin:.35rem 0}.demo .user-card strong{display:block}.demo .user-card small{color:var(--dim)}.question,.tips{height:100%;max-width:80%;margin:auto;display:flex;flex-direction:column;justify-content:center}.question h2,.tips h2{font:800 2rem var(--sans);line-height:1.2;margin:.7rem 0 1rem}.question ul,.tips ul{padding:0;list-style:none}.question li,.tips li{font-size:1rem;color:var(--dim);margin:.65rem 0}.question li::before{content:'? ';font-family:var(--mono);font-weight:800;color:var(--amber)}.tips li::before{content:'✓ ';font-family:var(--mono);font-weight:800;color:var(--mint)}.end-slide h2{font:800 2.6rem var(--sans)}.end-slide p{font-size:1.1rem;color:var(--dim)}.flow{display:flex;align-items:center;justify-content:center;gap:.5rem;margin:1.5rem 0}.flow span{padding:.7rem .8rem;background:var(--panel);border:1px solid var(--line);border-radius:10px;font:700 .75rem var(--mono)}.flow b{color:var(--mint);font-size:1.2rem}.callout{background:var(--panel2);border-left:5px solid var(--mint);padding:.8rem 1rem;border-radius:0 10px 10px 0;font-size:.9rem}.big-word{font:800 2.5rem var(--mono);color:var(--mint);margin:.5rem 0}.state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-top:1rem}.state{padding:.8rem;border-radius:10px;background:var(--panel);border:1px solid var(--line)}.state strong{display:block;font:700 .8rem var(--mono);margin-bottom:.3rem}.state p{font-size:.75rem;color:var(--dim);margin:0}
+@media(max-width:700px){.panels{grid-template-columns:1fr}.panel code{font-size:.7rem!important}.tag-name{font-size:1.25rem}.uses li{font-size:.7rem}.question h2,.tips h2{font-size:1.5rem}.flow{flex-wrap:wrap}.flow span{font-size:.6rem}.state-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="title-slide"><div class="brand"><span>{</span>js<span>}</span></div><h1>JavaScript — Parte 3</h1><p class="subtitle">Consumo de APIs e programação assíncrona</p><p class="hint">Dos dados locais aos dados reais · use as setas para navegar</p></section>
+
+<section class="divider-slide"><div class="eyebrow">Parte 03 · Dados externos</div><div class="big-word">fetch()</div><h2 class="divider-label">A página conversa com outros sistemas</h2><div class="chips"><span class="chip">HTTP</span><span class="chip">JSON</span><span class="chip">Promise</span><span class="chip">async / await</span></div></section>
+
+<section class="tag-slide"><h2 class="tag-name">01 — Onde estão os dados?</h2><div class="flow"><span>Usuário</span><b>→</b><span>Interface</span><b>→</b><span>API</span><b>→</b><span>Banco de dados</span></div><div class="panels"><div class="panel"><div class="panel-header">Dados locais</div><pre><code class="language-javascript">const usuarios = [
+  { nome: 'Ana', email: 'ana@example.com' },
+  { nome: 'João', email: 'joao@example.com' }
+];</code></pre></div><div class="panel"><div class="panel-header">Dados externos</div><pre><code class="language-javascript">// Os dados chegam de outro sistema
+const resposta = await fetch('/api/usuarios');
+const usuarios = await resposta.json();</code></pre></div></div><ul class="uses"><li>Até agora, os dados dos exemplos estavam escritos no próprio JavaScript.</li><li>Na prática, os dados podem vir de um servidor ou serviço externo.</li><li>Uma API define como outro programa pode solicitar e enviar dados.</li></ul></section>
+
+<section class="tag-slide"><h2 class="tag-name">02 — O que acontece numa requisição?</h2><div class="flow"><span>Requisição HTTP</span><b>→</b><span>Servidor</span><b>→</b><span>Resposta HTTP</span></div><div class="panels"><div class="panel"><div class="panel-header">A requisição pode conter</div><ul class="uses"><li>Endereço (URL) do recurso.</li><li>Método, como <code class="inline">GET</code> ou <code class="inline">POST</code>.</li><li>Cabeçalhos e, em alguns casos, corpo da requisição.</li></ul></div><div class="panel"><div class="panel-header">A resposta contém</div><ul class="uses"><li>Status HTTP, como <code class="inline">200</code> ou <code class="inline">404</code>.</li><li>Cabeçalhos que descrevem a resposta.</li><li>Um corpo que pode conter JSON, texto ou outros dados.</li></ul></div></div><div class="callout">A API não é o banco de dados: é a interface de comunicação entre sistemas.</div></section>
+
+<section class="tag-slide"><h2 class="tag-name">03 — JSON: um formato para trocar dados</h2><div class="panels"><div class="panel"><div class="panel-header">Exemplo de JSON</div><pre><code class="language-json">{
+  "id": 7,
+  "name": "Ana Silva",
+  "email": "ana@example.com",
+  "address": {
+    "city": "Fortaleza"
+  }
+}</code></pre></div><div class="panel"><div class="panel-header">Acessando os dados em JS</div><pre><code class="language-javascript">usuario.name
+// "Ana Silva"
+
+usuario.address.city
+// "Fortaleza"
+
+usuarios.map(usuario => usuario.name);</code></pre></div></div><ul class="uses"><li>JSON significa <em>JavaScript Object Notation</em>.</li><li>É um formato textual muito usado para enviar dados pela web.</li><li>JSON se parece com objetos JavaScript, mas é texto até ser convertido.</li></ul></section>
+
+<section class="tag-slide"><h2 class="tag-name">04 — A primeira requisição com fetch()</h2><div class="panels"><div class="panel"><div class="panel-header">JavaScript</div><pre><code class="language-javascript">fetch('https://jsonplaceholder.typicode.com/users')
+  .then(resposta => resposta.json())
+  .then(usuarios => {
+    console.log(usuarios);
+  });</code></pre></div><div class="panel"><div class="panel-header">O que está acontecendo?</div><ul class="uses"><li><code class="inline">fetch()</code> inicia uma requisição HTTP.</li><li>A resposta chega depois, não imediatamente.</li><li><code class="inline">resposta.json()</code> lê e converte o corpo para dados JavaScript.</li><li>O resultado é uma <code class="inline">Promise</code>.</li></ul></div></div><div class="callout">A chamada não “congela” a página enquanto espera a rede responder.</div></section>
+
+<section class="tag-slide"><h2 class="tag-name">05 — Por que o código é assíncrono?</h2><div class="flow"><span>Inicia pedido</span><b>→</b><span>JavaScript continua</span><b>→</b><span>Resposta chega</span><b>→</b><span>Continua o trabalho</span></div><div class="panels"><div class="panel"><div class="panel-header">Não funciona assim</div><pre><code class="language-javascript">const resposta = fetch('/api/usuarios');
+
+console.log(resposta);
+// Promise, não a lista de usuários</code></pre></div><div class="panel"><div class="panel-header">Uma Promise representa</div><ul class="uses"><li>Uma operação cujo resultado estará disponível no futuro.</li><li>Um resultado concluído ou uma falha.</li><li>Uma forma de encadear o que deve acontecer depois.</li></ul></div></div><ul class="uses"><li>Rede, arquivos e temporizadores podem levar tempo.</li><li>O navegador precisa continuar respondendo às interações durante a espera.</li></ul></section>
+
+<section class="tag-slide"><h2 class="tag-name">06 — async e await deixam o fluxo mais legível</h2><div class="panels"><div class="panel"><div class="panel-header">Com async / await</div><pre><code class="language-javascript">async function carregarUsuarios() {
+  const resposta = await fetch(
+    'https://jsonplaceholder.typicode.com/users'
+  );
+
+  const usuarios = await resposta.json();
+  console.log(usuarios);
+}
+
+carregarUsuarios();</code></pre></div><div class="panel"><div class="panel-header">Ideias principais</div><ul class="uses"><li><code class="inline">async</code> declara uma função assíncrona.</li><li><code class="inline">await</code> espera uma Promise dentro de uma função assíncrona.</li><li>O código fica com aparência sequencial, mas não bloqueia toda a página.</li><li>Use <code class="inline">try/catch</code> para tratar falhas.</li></ul></div></div></section>
+
+<section class="tag-slide"><h2 class="tag-name">07 — Resposta HTTP não é sinônimo de sucesso</h2><div class="panels"><div class="panel"><div class="panel-header">Verifique o status</div><pre><code class="language-javascript">const resposta = await fetch(url);
+
+if (!resposta.ok) {
+  throw new Error(
+    `Erro HTTP: ${resposta.status}`
+  );
+}
+
+const dados = await resposta.json();</code></pre></div><div class="panel"><div class="panel-header">Por que isso importa?</div><ul class="uses"><li><code class="inline">fetch()</code> normalmente não rejeita a Promise só porque recebeu <code class="inline">404</code> ou <code class="inline">500</code>.</li><li><code class="inline">resposta.ok</code> indica status HTTP de sucesso (200–299).</li><li>Erros de rede e erros HTTP são situações diferentes.</li></ul></div></div><div class="callout">Não trate toda resposta recebida como se fosse uma lista válida de dados.</div></section>
+
+<section class="tag-slide"><h2 class="tag-name">08 — Estados da interface</h2><p>Uma interface que depende da rede precisa explicar o que está acontecendo.</p><div class="state-grid"><div class="state"><strong>CARREGANDO</strong><p>A requisição ainda está em andamento.</p></div><div class="state"><strong>SUCESSO</strong><p>Os dados chegaram e podem ser exibidos.</p></div><div class="state"><strong>VAZIO</strong><p>A requisição deu certo, mas não há resultados.</p></div><div class="state"><strong>ERRO</strong><p>Não foi possível obter ou processar os dados.</p></div></div><p style="font-size:.8rem;color:var(--dim);margin-top:1rem">Esses estados evitam uma tela aparentemente travada ou sem explicação.</p></section>
+
+<section class="tag-slide"><h2 class="tag-name">09 — Do JSON para o DOM</h2><div class="panels"><div class="panel"><div class="panel-header">Dados → elementos</div><pre><code class="language-javascript">usuarios.forEach(usuario => {
+  const item = document.createElement('li');
+  item.textContent =
+    `${usuario.name} — ${usuario.email}`;
+  lista.append(item);
+});</code></pre></div><div class="panel"><div class="panel-header">A mesma ideia da aula anterior</div><div class="demo"><ul><li>Ana Silva — ana@example.com</li><li>João Lima — joao@example.com</li><li>Ravi Costa — ravi@example.com</li></ul><p class="muted">Array de objetos → lista de elementos HTML</p></div></div></div><ul class="uses"><li>O DOM continua sendo a forma de apresentar os dados na página.</li><li>A diferença é a origem dos dados: agora eles vêm de uma requisição.</li><li>Limpe a lista antes de renderizar novamente para evitar duplicação.</li></ul></section>
+
+<section class="tag-slide"><h2 class="tag-name">10 — Vamos carregar usuários de verdade</h2><div class="panels"><div class="panel"><div class="panel-header">Exemplo completo</div><pre><code class="language-javascript">async function carregarUsuarios() {
+  status.textContent = 'Carregando...';
+  lista.replaceChildren();
+
+  try {
+    const resposta = await fetch(url);
+    if (!resposta.ok) throw new Error('HTTP');
+
+    const usuarios = await resposta.json();
+    usuarios.forEach(usuario => {
+      const item = document.createElement('li');
+      item.textContent = `${usuario.name} — ${usuario.email}`;
+      lista.append(item);
+    });
+
+    status.textContent = `${usuarios.length} usuários carregados`;
+  } catch (erro) {
+    status.textContent = 'Erro ao carregar usuários';
+  }
+}</code></pre></div><div class="panel"><div class="panel-header">Experimente no slide</div><div class="demo"><button id="load-users" class="primary">Carregar usuários</button><p id="users-status" class="status" aria-live="polite">Clique para iniciar a requisição.</p><input id="user-search" placeholder="Filtrar por nome" aria-label="Filtrar usuários por nome"><div id="users-output"></div></div></div></div><ul class="uses"><li>O exemplo usa a API pública de demonstração JSONPlaceholder.</li><li>É necessário estar conectado à internet para executar a demonstração.</li></ul></section>
+
+<section class="tag-slide"><h2 class="tag-name">11 — Erro também faz parte do fluxo</h2><div class="panels"><div class="panel"><div class="panel-header">Tratamento de falhas</div><pre><code class="language-javascript">try {
+  const resposta = await fetch(url);
+
+  if (!resposta.ok) {
+    throw new Error('Falha na resposta');
+  }
+
+  const dados = await resposta.json();
+} catch (erro) {
+  console.error(erro);
+  status.textContent =
+    'Não foi possível carregar os dados.';
+}</code></pre></div><div class="panel"><div class="panel-header">Boas perguntas</div><ul class="uses"><li>O que a pessoa vê enquanto espera?</li><li>O que acontece se a conexão cair?</li><li>Como ela sabe que pode tentar de novo?</li><li>O erro técnico deve ser mostrado diretamente ao usuário?</li></ul></div></div></section>
+
+<section class="tag-slide"><h2 class="tag-name">12 — Exercício guiado</h2><div class="panel"><div class="panel-header">Construir uma lista de usuários</div><ul class="uses"><li>Buscar os usuários na API <code class="inline">https://jsonplaceholder.typicode.com/users</code>.</li><li>Mostrar nome, e-mail e cidade.</li><li>Exibir uma mensagem enquanto os dados carregam.</li><li>Exibir uma mensagem clara se ocorrer um erro.</li><li>Adicionar um campo para filtrar usuários pelo nome.</li><li>Mostrar uma mensagem quando a busca não encontrar ninguém.</li></ul></div><div class="panel"><div class="panel-header">Conceitos usados</div><p style="font-size:.8rem">fetch · HTTP · JSON · Promise · async/await · try/catch · DOM · eventos · arrays</p></div></section>
+
+<section class="question"><div class="eyebrow">Para discutir</div><h2>O que muda quando os dados vêm da rede?</h2><ul><li>A resposta pode demorar ou falhar.</li><li>Os dados podem mudar sem alterar o código da página.</li><li>A interface precisa representar carregamento, sucesso, vazio e erro.</li><li>Como evitar que a interface mostre dados antigos ou duplicados?</li></ul></section>
+
+<section class="tips"><div class="eyebrow">Boas práticas</div><h2>Pequenas escolhas que evitam problemas</h2><ul><li>Verifique <code class="inline">resposta.ok</code> antes de tratar o corpo como sucesso.</li><li>Use <code class="inline">try/catch</code> para falhas que possam acontecer.</li><li>Mostre feedback durante o carregamento e quando não houver resultados.</li><li>Prefira <code class="inline">textContent</code> ao inserir dados externos como texto.</li><li>Separe a busca dos dados da função que renderiza a interface.</li></ul></section>
+
+<section class="tag-slide"><h2 class="tag-name">Dever de casa — Lista de usuários</h2><div class="panel"><div class="panel-header">Requisitos</div><ul class="uses"><li>Carregar usuários de uma API pública.</li><li>Exibir nome, e-mail e cidade de cada pessoa.</li><li>Permitir busca por nome sem fazer outra requisição a cada tecla.</li><li>Mostrar estados de carregamento, erro e lista vazia.</li><li>Adicionar um botão para recarregar os dados.</li></ul></div><div class="callout" style="margin-top:.8rem">Não precisa de framework. Use HTML, CSS e JavaScript puro para consolidar os fundamentos.</div></section>
+
+<section class="end-slide"><h2>Agora a interface usa dados reais.</h2><p>Parte 1: lógica · Parte 2: interação · Parte 3: integração</p><p style="font-family:var(--mono);font-size:.8rem">Próximo passo: organizar aplicações maiores.</p></section>
+</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+Reveal.initialize({hash:true,controls:true,progress:true,center:false,width:1280,height:720,margin:.06,transition:'slide',backgroundTransition:'fade',plugins:[RevealHighlight]});
+
+const loadButton = document.querySelector('#load-users');
+const status = document.querySelector('#users-status');
+const output = document.querySelector('#users-output');
+const search = document.querySelector('#user-search');
+let users = [];
+
+function renderUsers() {
+  const query = search.value.trim().toLocaleLowerCase('pt-BR');
+  const filtered = users.filter(user =>
+    user.name.toLocaleLowerCase('pt-BR').includes(query)
+  );
+  output.replaceChildren();
+
+  if (filtered.length === 0) {
+    status.textContent = users.length
+      ? 'Nenhum usuário corresponde à busca.'
+      : 'Nenhum usuário para exibir.';
+    return;
+  }
+
+  status.textContent = `${filtered.length} de ${users.length} usuários`;
+  filtered.slice(0, 5).forEach(user => {
+    const card = document.createElement('div');
+    card.className = 'user-card';
+    const name = document.createElement('strong');
+    name.textContent = user.name;
+    const email = document.createElement('small');
+    email.textContent = `${user.email} · ${user.address.city}`;
+    card.append(name, email);
+    output.append(card);
+  });
+
+  if (filtered.length > 5) {
+    const note = document.createElement('p');
+    note.className = 'muted';
+    note.textContent = `Mais ${filtered.length - 5} usuários encontrados.`;
+    output.append(note);
+  }
+}
+
+async function loadUsers() {
+  loadButton.disabled = true;
+  status.className = 'status';
+  status.textContent = 'Carregando usuários...';
+  output.replaceChildren();
+
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    users = await response.json();
+    renderUsers();
+    if (users.length) status.className = 'status success';
+  } catch (error) {
+    users = [];
+    status.className = 'status error';
+    status.textContent = 'Não foi possível carregar os usuários. Verifique a conexão e tente novamente.';
+    console.error(error);
+  } finally {
+    loadButton.disabled = false;
+  }
+}
+
+loadButton.addEventListener('click', loadUsers);
+search.addEventListener('input', renderUsers);
+</script>
+</body>
+</html>

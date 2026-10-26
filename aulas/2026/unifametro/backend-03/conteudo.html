@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 01 — Engenharia de Backend com IA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <style>
+        :root {
+            --ink: #172033;
+            --muted: #64748b;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --surface: #f1f5f9;
+            --line: #cbd5e1;
+            --green: #15803d;
+            --red: #b91c1c;
+        }
+
+        .reveal {
+            color: var(--ink);
+            font-family: Inter, "Aptos", "Segoe UI", sans-serif;
+            font-size: 27px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--ink);
+            font-weight: 750;
+            letter-spacing: -0.04em;
+            text-transform: none;
+        }
+
+        .reveal h1 { font-size: 2.5em; }
+        .reveal h2 { font-size: 1.65em; margin-bottom: 0.45em; }
+        .reveal h3 { font-size: 1em; }
+        .reveal p { line-height: 1.35; }
+        .reveal li { margin-bottom: 0.35em; }
+        .reveal strong { color: var(--accent); }
+        .reveal code {
+            font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+            font-size: 0.82em;
+        }
+        .reveal pre {
+            width: 100%;
+            box-shadow: none;
+            font-size: 0.57em;
+            margin: 0.5em auto;
+        }
+        .reveal pre code {
+            max-height: 480px;
+            padding: 1em;
+            line-height: 1.5;
+        }
+        .reveal .slides section {
+            text-align: left;
+        }
+        .reveal .slides section.centered {
+            text-align: center;
+        }
+        .eyebrow {
+            color: var(--accent);
+            font-size: 0.52em;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            margin-bottom: 1.2em;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 0.95em;
+            max-width: 850px;
+        }
+        .muted { color: var(--muted); }
+        .small { font-size: 0.68em; }
+        .tiny { font-size: 0.53em; }
+        .big-number {
+            color: var(--accent);
+            font-size: 3em;
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            line-height: 1;
+        }
+        .rule {
+            width: 100px;
+            height: 6px;
+            margin: 0.6em 0 1em;
+            background: var(--accent);
+            border-radius: 5px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 0.5em;
+        }
+        .grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .card {
+            padding: 22px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: #fff;
+        }
+        .card h3 { margin: 0 0 0.4em; }
+        .card p { margin: 0; font-size: 0.78em; }
+        .card.accent {
+            border-color: var(--accent);
+            background: #eff6ff;
+        }
+        .card.dark {
+            color: white;
+            background: var(--ink);
+            border-color: var(--ink);
+        }
+        .card.dark h3, .card.dark strong { color: #93c5fd; }
+        .card.dark p { color: #e2e8f0; }
+        .pill {
+            display: inline-block;
+            padding: 0.25em 0.65em;
+            border-radius: 99px;
+            background: var(--accent-light);
+            color: #1d4ed8;
+            font-size: 0.58em;
+            font-weight: 750;
+        }
+        .callout {
+            padding: 20px 24px;
+            border-left: 5px solid var(--accent);
+            background: var(--surface);
+            border-radius: 0 12px 12px 0;
+        }
+        .callout p { margin: 0; }
+        .quote {
+            font-size: 1.45em;
+            font-weight: 750;
+            line-height: 1.3;
+            letter-spacing: -0.03em;
+        }
+        .flow {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 10px;
+            margin: 1.3em 0;
+        }
+        .flow .node {
+            flex: 1;
+            padding: 18px 10px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--surface);
+            text-align: center;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+        .flow .arrow {
+            align-self: center;
+            color: var(--accent);
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+        .checklist {
+            list-style: none !important;
+            margin-left: 0 !important;
+        }
+        .checklist li::before {
+            content: "□";
+            color: var(--accent);
+            font-weight: 800;
+            margin-right: 0.55em;
+        }
+        .good { color: var(--green); }
+        .bad { color: var(--red); }
+        .footer {
+            position: fixed;
+            bottom: 18px;
+            left: 24px;
+            color: #94a3b8;
+            font-size: 12px;
+            z-index: 5;
+        }
+        .reveal .progress { color: var(--accent); }
+        .reveal .controls { color: var(--accent); }
+        .reveal .slide-number {
+            color: var(--muted);
+            background: transparent;
+            font-size: 13px;
+        }
+        .section-slide {
+            background: var(--ink);
+            color: white;
+            padding: 1.2em !important;
+            border-radius: 18px;
+        }
+        .section-slide h1, .section-slide h2 { color: white; }
+        .section-slide .eyebrow { color: #93c5fd; }
+        .section-slide p { color: #cbd5e1; }
+        .section-slide .big-number { color: #93c5fd; }
+        .prompt {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 22px;
+            font-size: 0.72em;
+            line-height: 1.5;
+        }
+        .prompt strong { color: var(--ink); }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+        .metric {
+            padding: 16px;
+            border-top: 3px solid var(--accent);
+            background: var(--surface);
+        }
+        .metric .label { color: var(--muted); font-size: 0.58em; }
+        .metric .value { font-size: 1.1em; font-weight: 800; }
+        .reveal .slides section img {
+            border: 0;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section class="centered">
+            <div class="eyebrow">Pós-graduação · Backend</div>
+            <h1>Engenharia de Backend<br>com IA</h1>
+            <div class="rule" style="margin: 0.7em auto 1em"></div>
+            <p class="subtitle" style="margin: auto">Do requisito ao código verificável</p>
+            <p class="small muted" style="margin-top: 2em">Aula 01 · Oficina prática · API </p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Antes de começar</div>
+            <h2>Vamos calibrar a sala.</h2>
+            <div class="grid">
+                <div class="card accent">
+                    <h3>Mentimeter</h3>
+                    <p>Experiência, confiança e hábitos de desenvolvimento com IA.</p>
+                </div>
+                <div class="card">
+                    <h3>O que queremos descobrir</h3>
+                    <p>O que a turma já sabe, onde há lacunas e quais problemas merecem investigação.</p>
+                </div>
+            </div>
+            <p class="small muted" style="margin-top: 1.1em">Abra o Mentimeter preparado antes da aula. Tempo sugerido: 10 minutos.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Acordo da aula</div>
+            <h2>Não estamos aqui para competir com a IA na digitação.</h2>
+            <div class="grid three">
+                <div class="card">
+                    <div class="big-number">01</div>
+                    <h3>Entender</h3>
+                    <p>Explicitar regras, restrições e consequências.</p>
+                </div>
+                <div class="card">
+                    <div class="big-number">02</div>
+                    <h3>Construir</h3>
+                    <p>Usar ferramentas para reduzir o trabalho mecânico.</p>
+                </div>
+                <div class="card">
+                    <div class="big-number">03</div>
+                    <h3>Provar</h3>
+                    <p>Verificar o comportamento antes de confiar nele.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="centered">
+            <div class="eyebrow">A pergunta central</div>
+            <p class="quote">Se a IA escreveu o código, quem garante que ele está correto?</p>
+            <p class="muted">A resposta não pode ser: “a própria IA disse que está”.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Roteiro do dia</div>
+            <h2>Seis horas de trabalho técnico.</h2>
+            <div class="grid">
+                <div class="card">
+                    <span class="pill">09:00–10:30</span>
+                    <h3>01. Problema e requisitos</h3>
+                    <p>Definir comportamento, regras e invariantes.</p>
+                </div>
+                <div class="card">
+                    <span class="pill">10:30–12:00</span>
+                    <h3>02. Contrato e implementação</h3>
+                    <p>Transformar regras em uma API coerente.</p>
+                </div>
+                <div class="card">
+                    <span class="pill">13:00–14:30</span>
+                    <h3>03. Testes e verificação</h3>
+                    <p>Demonstrar o comportamento com evidências.</p>
+                </div>
+                <div class="card">
+                    <span class="pill">14:30–16:00</span>
+                    <h3>04. Revisão de engenharia</h3>
+                    <p>Questionar decisões, identificar lacunas e apresentar resultados.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-slide">
+            <div class="eyebrow">Bloco 01 · 09:00–10:30</div>
+            <h1>Do problema<br>aos requisitos</h1>
+            <p>Antes de pedir código, descubra o que o sistema precisa garantir.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">O caso da aula</div>
+            <h2>Uma API para pedidos.</h2>
+            <p>Uma pequena loja precisa registrar pedidos, associar produtos e controlar o estoque.</p>
+            <div class="grid three">
+                <div class="card">
+                    <h3>Produtos</h3>
+                    <p>Nome, preço e disponibilidade.</p>
+                </div>
+                <div class="card">
+                    <h3>Pedidos</h3>
+                    <p>Cliente, itens, total e situação.</p>
+                </div>
+                <div class="card">
+                    <h3>Estoque</h3>
+                    <p>Quantidade disponível por produto.</p>
+                </div>
+            </div>
+            <p class="small muted" style="margin-top: 1em">O objetivo não é criar um e-commerce completo. É investigar decisões importantes de backend em um domínio pequeno.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">O problema de negócio</div>
+            <h2>O pedido parece simples.</h2>
+            <div class="flow">
+                <div class="node">Cliente escolhe<br>produtos</div>
+                <div class="arrow">→</div>
+                <div class="node">API valida<br>o pedido</div>
+                <div class="arrow">→</div>
+                <div class="node">Sistema registra<br>o pedido</div>
+                <div class="arrow">→</div>
+                <div class="node">Estoque é<br>atualizado</div>
+            </div>
+            <div class="callout">
+                <p><strong>Mas e se alguma etapa falhar?</strong> E se o cliente enviar um preço adulterado? E se dois pedidos disputarem a última unidade?</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Discussão em duplas</div>
+            <h2>O que ainda não sabemos?</h2>
+            <p>Vocês receberam o seguinte pedido:</p>
+            <div class="prompt">
+                “Precisamos de uma API para criar pedidos. O cliente informa os produtos e as quantidades. O sistema calcula o total e atualiza o estoque.”
+            </div>
+            <p style="margin-top: 1em"><strong>Em cinco minutos, identifiquem pelo menos cinco perguntas que precisam ser respondidas antes da implementação.</strong></p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Requisitos</div>
+            <h2>Uma frase não é uma especificação.</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Requisito funcional</h3>
+                    <p>O sistema permite criar um pedido com um ou mais itens.</p>
+                </div>
+                <div class="card">
+                    <h3>Regra de negócio</h3>
+                    <p>O total do pedido é calculado pelo servidor a partir dos preços válidos dos produtos.</p>
+                </div>
+                <div class="card">
+                    <h3>Restrição</h3>
+                    <p>A quantidade de cada item precisa ser um inteiro positivo.</p>
+                </div>
+                <div class="card">
+                    <h3>Invariante</h3>
+                    <p>Um pedido confirmado não pode deixar o estoque negativo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Invariantes</div>
+            <h2>O que nunca pode deixar de ser verdade?</h2>
+            <ul>
+                <li>Todo item pertence a um produto existente.</li>
+                <li>A quantidade de um item é maior que zero.</li>
+                <li>O total é calculado pelo backend.</li>
+                <li>O estoque não pode ficar negativo.</li>
+                <li>Um pedido não pode ser confirmado pela metade.</li>
+            </ul>
+            <div class="callout" style="margin-top: 1em">
+                <p>Um invariante é uma propriedade que o sistema precisa preservar, inclusive quando algo dá errado.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Um requisito ambíguo</div>
+            <h2>“O pedido precisa ser salvo.”</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Interpretação A</h3>
+                    <p>Salvar o pedido basta, mesmo que a atualização do estoque falhe.</p>
+                </div>
+                <div class="card">
+                    <h3>Interpretação B</h3>
+                    <p>Pedido e estoque precisam permanecer consistentes quando a operação falhar.</p>
+                </div>
+            </div>
+            <p style="margin-top: 1em"><strong>Qual interpretação representa melhor o negócio? Que perguntas precisamos fazer ao responsável pelo produto?</strong></p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Modelagem</div>
+            <h2>Comece pelas responsabilidades.</h2>
+            <div class="flow">
+                <div class="node">Product<br><span class="muted">preço · estoque</span></div>
+                <div class="arrow">→</div>
+                <div class="node">OrderItem<br><span class="muted">produto · qtd. · preço</span></div>
+                <div class="arrow">←</div>
+                <div class="node">Order<br><span class="muted">cliente · total · status</span></div>
+            </div>
+            <p class="small muted">Diagrama conceitual. As decisões de persistência e as relações finais devem ser justificadas durante a implementação.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Modelagem de dados</div>
+            <h2>O preço de qual momento?</h2>
+            <p>Um produto custa R$ 50 hoje. Amanhã, passa a custar R$ 60.</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Preço atual</h3>
+                    <p>Representa o valor vigente no cadastro do produto.</p>
+                </div>
+                <div class="card accent">
+                    <h3>Preço praticado no pedido</h3>
+                    <p>Registra o valor aplicado naquela compra e preserva o histórico financeiro.</p>
+                </div>
+            </div>
+            <p style="margin-top: 1em">Se o pedido antigo for consultado amanhã, qual preço deve aparecer? Por quê?</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Requisito → teste</div>
+            <h2>Se não conseguimos verificar, ainda falta precisão.</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Regra</h3>
+                    <p>Não permitir quantidade igual a zero.</p>
+                </div>
+                <div class="card">
+                    <h3>Verificação</h3>
+                    <p>Enviar um pedido com quantidade zero e comprovar que ele não é criado.</p>
+                </div>
+                <div class="card">
+                    <h3>Regra</h3>
+                    <p>Calcular o total no servidor.</p>
+                </div>
+                <div class="card">
+                    <h3>Verificação</h3>
+                    <p>Enviar um preço adulterado e confirmar que ele não altera o total.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Exercício 01</div>
+            <h2>Escrevam os critérios de aceitação.</h2>
+            <p>Em duplas, descrevam o comportamento esperado para:</p>
+            <ul class="checklist">
+                <li>Criação de pedido válido.</li>
+                <li>Produto inexistente.</li>
+                <li>Quantidade inválida.</li>
+                <li>Estoque insuficiente.</li>
+                <li>Preço enviado pelo cliente.</li>
+                <li>Falha durante a operação.</li>
+            </ul>
+            <p class="small muted">Entrega: critérios claros, verificáveis e sem depender de uma linguagem ou framework.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">IA como parceira</div>
+            <h2>Não peça a implementação antes de entender o problema.</h2>
+            <div class="flow">
+                <div class="node">Contexto</div>
+                <div class="arrow">→</div>
+                <div class="node">Requisitos</div>
+                <div class="arrow">→</div>
+                <div class="node">Decisões</div>
+                <div class="arrow">→</div>
+                <div class="node">Implementação</div>
+            </div>
+            <p>A qualidade da resposta depende, em parte, da qualidade do problema apresentado e das restrições explicitadas.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Prompt de análise</div>
+            <h2>Peça à IA para encontrar as lacunas.</h2>
+            <div class="prompt">
+                Atue como uma pessoa engenheira de software sênior. Analise os requisitos abaixo para uma API de pedidos.
+
+                <p><strong>Não escreva código ainda.</strong></p>
+
+                <p>1. Liste as ambiguidades que precisam ser esclarecidas.<br>
+                    2. Identifique as regras de negócio e os invariantes.<br>
+                    3. Liste cenários de falha e riscos de consistência.<br>
+                    4. Sugira critérios de aceitação verificáveis.<br>
+                    5. Separe fatos fornecidos de suposições.</p>
+
+                <p>Requisitos: criar pedidos com produtos e quantidades, calcular o total e atualizar o estoque.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Revisão crítica</div>
+            <h2>A IA pode inventar decisões de negócio.</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Ela sugeriu</h3>
+                    <p>Cancelar automaticamente o pedido se o estoque for insuficiente.</p>
+                </div>
+                <div class="card">
+                    <h3>Nós precisamos perguntar</h3>
+                    <p>Esse comportamento foi definido pelo negócio ou foi uma suposição do modelo?</p>
+                </div>
+            </div>
+            <p style="margin-top: 1em"><strong>Uma resposta plausível não transforma uma suposição em requisito.</strong></p>
+        </section>
+
+        <section class="centered">
+            <div class="eyebrow">Pausa para consolidação</div>
+            <h2>Antes de abrir o editor...</h2>
+            <p class="quote">Conseguimos explicar o que significa um pedido correto?</p>
+            <p class="muted">Se não conseguimos, ainda não estamos prontos para automatizar a implementação.</p>
+        </section>
+
+        <section class="section-slide">
+            <div class="eyebrow">Bloco 02 · 10:30–12:00</div>
+            <h1>Do requisito<br>à API</h1>
+            <p>Contrato, responsabilidades e primeira implementação.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Contrato da API</div>
+            <h2>Defina a fronteira antes do código.</h2>
+            <div class="card">
+                <p><strong>POST</strong> <code>/api/orders</code></p>
+                <p class="small muted">Cria um pedido com os itens informados pelo cliente.</p>
+                <pre><code class="language-json">{
+  "customer_id": 42,
+  "items": [
+    { "product_id": 10, "quantity": 2 },
+    { "product_id": 15, "quantity": 1 }
+  ]
+}</code></pre>
+            </div>
+            <p class="small muted">O contrato não aceita preço unitário ou total enviados pelo cliente como fonte de verdade.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Contrato da API</div>
+            <h2>O que a API deve devolver?</h2>
+            <pre><code class="language-json">{
+  "data": {
+    "id": 501,
+    "status": "confirmed",
+    "items": [
+      {
+        "product_id": 10,
+        "quantity": 2,
+        "unit_price": "50.00",
+        "subtotal": "100.00"
+      }
+    ],
+    "total": "100.00"
+  }
+}</code></pre>
+            <p class="small muted">Exemplo ilustrativo. A estrutura final deve refletir os requisitos acordados e a política de serialização monetária escolhida.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Contrato da API</div>
+            <h2>O contrato também descreve as falhas.</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>201 Created</h3>
+                    <p>Pedido criado com sucesso.</p>
+                </div>
+                <div class="card">
+                    <h3>422 Unprocessable Content</h3>
+                    <p>Dados de entrada inválidos ou regra de negócio não atendida, conforme o contrato.</p>
+                </div>
+                <div class="card">
+                    <h3>404 Not Found</h3>
+                    <p>Recurso solicitado não encontrado, quando essa for a semântica definida.</p>
+                </div>
+                <div class="card">
+                    <h3>500 Internal Server Error</h3>
+                    <p>Falha inesperada. Sem detalhes internos expostos ao cliente.</p>
+                </div>
+            </div>
+            <p class="small muted">Os códigos e o formato dos erros devem ser consistentes com a API existente.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Arquitetura mínima</div>
+            <h2>Separar responsabilidades não exige criar vinte classes.</h2>
+            <div class="flow">
+                <div class="node">Controller<br><span class="muted">HTTP</span></div>
+                <div class="arrow">→</div>
+                <div class="node">Application / Service<br><span class="muted">caso de uso</span></div>
+                <div class="arrow">→</div>
+                <div class="node">Models + Database<br><span class="muted">persistência</span></div>
+            </div>
+            <ul>
+                <li>Controller: traduz HTTP para a chamada de aplicação.</li>
+                <li>Serviço ou caso de uso: coordena a regra de negócio.</li>
+                <li>Modelos e banco: representam e persistem os dados.</li>
+            </ul>
+            <p class="small muted">A estrutura deve ser proporcional à complexidade. Não criamos abstrações só para preencher pastas.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Laravel</div>
+            <h2>Comecem pela estrutura existente.</h2>
+            <pre><code class="language-bash">php artisan about
+php artisan route:list
+php artisan migrate:status
+php artisan test</code></pre>
+            <p>Antes de gerar código, descubram:</p>
+            <ul>
+                <li>Como o projeto organiza rotas e controladores.</li>
+                <li>Quais convenções já existem.</li>
+                <li>Como os testes são executados.</li>
+                <li>Como o banco de dados é configurado.</li>
+            </ul>
+            <div class="callout">
+                <p><strong>Regra prática:</strong> adapte-se ao projeto antes de pedir que a IA introduza uma nova arquitetura.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Implementação assistida</div>
+            <h2>Trabalhem em incrementos pequenos.</h2>
+            <div class="grid three">
+                <div class="card">
+                    <div class="big-number">1</div>
+                    <h3>Persistência</h3>
+                    <p>Migrations e relacionamentos.</p>
+                </div>
+                <div class="card">
+                    <div class="big-number">2</div>
+                    <h3>Comportamento</h3>
+                    <p>Validação e criação do pedido.</p>
+                </div>
+                <div class="card">
+                    <div class="big-number">3</div>
+                    <h3>Verificação</h3>
+                    <p>Testes e inspeção dos resultados.</p>
+                </div>
+            </div>
+            <p style="margin-top: 1em">Evitem pedir “construa todo o sistema” em uma única interação.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Exemplo de validação</div>
+            <h2>O cliente fornece os itens, não a verdade financeira.</h2>
+            <pre><code class="language-php">public function rules(): array
+{
+    return [
+        'customer_id' => ['required', 'integer', 'exists:customers,id'],
+        'items' => ['required', 'array', 'min:1'],
+        'items.*.product_id' => [
+            'required',
+            'integer',
+            'distinct',
+            'exists:products,id',
+        ],
+        'items.*.quantity' => [
+            'required',
+            'integer',
+            'min:1',
+        ],
+    ];
+}</code></pre>
+            <p class="small muted">Exemplo para uma Form Request. A validação de entrada é necessária, mas não substitui as verificações de negócio nem o controle de concorrência.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Exercício 02</div>
+            <h2>Contrato + esqueleto funcional</h2>
+            <p>Em duplas, construam a primeira fatia vertical:</p>
+            <ul class="checklist">
+                <li>Migration para pedidos e itens.</li>
+                <li>Relacionamentos entre pedido, itens e produtos.</li>
+                <li>Rota para criar um pedido.</li>
+                <li>Validação da entrada.</li>
+                <li>Resposta JSON documentada.</li>
+                <li>Ao menos um teste automatizado.</li>
+            </ul>
+            <p class="small muted">Ao final do bloco, cada dupla deve conseguir explicar o que implementou e o que ainda não garante.</p>
+        </section>
+
+        <section class="centered">
+            <div class="eyebrow">12:00–13:00</div>
+            <h1>Almoço</h1>
+            <p class="subtitle" style="margin: auto">Na volta: testes, comportamento e evidências.</p>
+        </section>
+
+        <section class="section-slide">
+            <div class="eyebrow">Bloco 03 · 13:00–14:30</div>
+            <h1>Implementar<br>não é verificar</h1>
+            <p>O código precisa demonstrar o comportamento esperado.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Estratégia de testes</div>
+            <h2>Teste o comportamento, não a intenção do código.</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Teste de feature</h3>
+                    <p>Envia uma requisição HTTP e verifica status, resposta e efeitos persistidos.</p>
+                </div>
+                <div class="card">
+                    <h3>Teste unitário</h3>
+                    <p>Verifica uma regra isolada quando houver lógica que justifique essa fronteira.</p>
+                </div>
+            </div>
+            <p style="margin-top: 1em">Para esta oficina, comecem pelos testes de feature: eles validam o fluxo que o consumidor realmente utiliza.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Teste de feature</div>
+            <h2>Um exemplo em Laravel</h2>
+            <pre><code class="language-php">public function test_it_creates_an_order(): void
+{
+    $customer = Customer::factory()->create();
+    $product = Product::factory()->create([
+        'price' => 50,
+        'stock' => 5,
+    ]);
+
+    $response = $this->postJson('/api/orders', [
+        'customer_id' => $customer->id,
+        'items' => [
+            [
+                'product_id' => $product->id,
+                'quantity' => 2,
+            ],
+        ],
+    ]);
+
+    $response->assertCreated();
+
+    $this->assertDatabaseHas('orders', [
+        'customer_id' => $customer->id,
+    ]);
+}</code></pre>
+            <p class="small muted">Adaptem os nomes de campos, factories e formato da resposta ao esquema efetivamente implementado.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">A pergunta incômoda</div>
+            <h2>Esse teste prova que o total está correto?</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>O que ele verifica</h3>
+                    <p>Que a requisição retorna sucesso e que um pedido foi persistido.</p>
+                </div>
+                <div class="card accent">
+                    <h3>O que ainda falta</h3>
+                    <p>Verificar itens, total, preço aplicado, atualização de estoque e comportamento diante de falhas.</p>
+                </div>
+            </div>
+            <p style="margin-top: 1em"><strong>Um teste verde só oferece evidência para aquilo que ele realmente verifica.</strong></p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Exercício 03</div>
+            <h2>Transformem regras em testes.</h2>
+            <p>Implementem testes para:</p>
+            <ul class="checklist">
+                <li>Criar pedido com mais de um item.</li>
+                <li>Rejeitar quantidade zero.</li>
+                <li>Rejeitar produto inexistente.</li>
+                <li>Calcular o total a partir do preço confiável.</li>
+                <li>Não criar pedido quando a validação falhar.</li>
+            </ul>
+            <p class="small muted">Executem os testes após cada mudança. Não esperem até o final para descobrir se o projeto está funcionando.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">IA + testes</div>
+            <h2>Peça testes que possam contrariar a implementação.</h2>
+            <div class="prompt">
+                Com base nestes requisitos e no código atual:
+
+                <p>1. Identifique comportamentos não cobertos.<br>
+                    2. Proponha testes de feature para casos válidos e inválidos.<br>
+                    3. Inclua casos de fronteira e possíveis falhas de consistência.<br>
+                    4. Para cada teste, explique qual regra ele protege.<br>
+                    5. Não altere o código de produção ainda.</p>
+
+                <p>Apresente os testes em pequenos incrementos e respeite as convenções existentes no projeto.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Experimento</div>
+            <h2>O teste falha. E agora?</h2>
+            <div class="flow">
+                <div class="node">Teste falha</div>
+                <div class="arrow">→</div>
+                <div class="node">Investigar a causa</div>
+                <div class="arrow">→</div>
+                <div class="node">Corrigir o comportamento</div>
+                <div class="arrow">→</div>
+                <div class="node">Executar novamente</div>
+            </div>
+            <p>Não peça imediatamente à IA para “fazer o teste passar”. Primeiro descubra se o erro está no requisito, no teste ou na implementação.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Evidências</div>
+            <h2>O que significa terminar esta etapa?</h2>
+            <div class="grid three">
+                <div class="metric">
+                    <div class="label">Contrato</div>
+                    <div class="value">Compreensível</div>
+                </div>
+                <div class="metric">
+                    <div class="label">Implementação</div>
+                    <div class="value">Executável</div>
+                </div>
+                <div class="metric">
+                    <div class="label">Testes</div>
+                    <div class="value">Reproduzíveis</div>
+                </div>
+            </div>
+            <p style="margin-top: 1.2em">Código gerado, sozinho, não é evidência de correção.</p>
+        </section>
+
+        <section class="section-slide">
+            <div class="eyebrow">Bloco 04 · 14:30–16:00</div>
+            <h1>Engenharia<br>e revisão crítica</h1>
+            <p>Encontrar o que ainda pode falhar e defender as decisões tomadas.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Revisão em duplas</div>
+            <h2>Troquem de papel.</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Dupla implementadora</h3>
+                    <p>Apresenta o contrato, as regras implementadas, os testes e as limitações conhecidas.</p>
+                </div>
+                <div class="card">
+                    <h3>Dupla revisora</h3>
+                    <p>Tenta encontrar uma situação em que o sistema viole uma regra ou aceite um comportamento indevido.</p>
+                </div>
+            </div>
+            <p style="margin-top: 1em">Depois, invertam os papéis. A revisão precisa produzir uma evidência ou uma hipótese reproduzível, não apenas uma opinião.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Desafio de revisão</div>
+            <h2>O cliente envia um total de R$ 1,00.</h2>
+            <p>O valor real dos produtos soma R$ 500,00.</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Investiguem</h3>
+                    <p>O backend usa o total enviado pelo cliente ou recalcula o valor com base nos dados confiáveis?</p>
+                </div>
+                <div class="card">
+                    <h3>Demonstrem</h3>
+                    <p>Escrevam uma requisição e um teste que evidenciem o comportamento real.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Desafio de revisão</div>
+            <h2>O estoque falha depois de salvar o pedido.</h2>
+            <p>Simulem ou analisem o ponto de falha entre a persistência do pedido e a atualização do estoque.</p>
+            <ul>
+                <li>Quais dados ficam gravados?</li>
+                <li>O pedido pode existir sem a operação estar completa?</li>
+                <li>Uma transação de banco resolve o cenário considerado?</li>
+                <li>Qual teste reproduz a falha e comprova o resultado?</li>
+            </ul>
+            <p class="small muted">Uma transação local pode garantir atomicidade entre operações no mesmo banco transacional. Não resolve automaticamente falhas em serviços externos.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Desafio de revisão</div>
+            <h2>Dois pedidos disputam a última unidade.</h2>
+            <p>Dois clientes tentam comprar o mesmo produto quase simultaneamente.</p>
+            <div class="callout">
+                <p>Uma consulta de estoque seguida de uma atualização simples pode permitir que duas requisições leiam a mesma quantidade antes de qualquer uma atualizar o registro.</p>
+            </div>
+            <p style="margin-top: 1em"><strong>Que estratégia de banco de dados impediria a violação do invariante?</strong></p>
+            <p class="small muted">Investiguem atualização atômica, bloqueio apropriado e transação. Não assumam que uma validação feita antes da transação resolve a concorrência.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Uso responsável de IA</div>
+            <h2>O que revisar no código gerado?</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Comportamento</h3>
+                    <p>O código implementa os requisitos ou acrescenta suposições?</p>
+                </div>
+                <div class="card">
+                    <h3>Persistência</h3>
+                    <p>As relações, restrições e transações protegem as regras?</p>
+                </div>
+                <div class="card">
+                    <h3>Segurança</h3>
+                    <p>O sistema confia em valores controlados pelo cliente?</p>
+                </div>
+                <div class="card">
+                    <h3>Manutenção</h3>
+                    <p>A solução segue as convenções e pode ser compreendida por outra pessoa?</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">A demonstração final</div>
+            <h2>Mostrem o que conseguem provar.</h2>
+            <ul class="checklist">
+                <li>Apresentar o contrato da API.</li>
+                <li>Executar uma requisição válida.</li>
+                <li>Demonstrar um caso inválido.</li>
+                <li>Executar os testes automatizados.</li>
+                <li>Explicar uma decisão de modelagem.</li>
+                <li>Apontar uma limitação que ainda precisa ser resolvida.</li>
+            </ul>
+        </section>
+
+        <section>
+            <div class="eyebrow">Retrospectiva</div>
+            <h2>O que mudou depois de usar IA?</h2>
+            <p>Discutam em grupo:</p>
+            <ul>
+                <li>Em que etapa a IA mais ajudou?</li>
+                <li>Qual sugestão exigiu mais revisão?</li>
+                <li>Qual regra de negócio estava ambígua?</li>
+                <li>Que comportamento só foi descoberto por meio de um teste?</li>
+            </ul>
+        </section>
+
+        <section class="centered">
+            <div class="eyebrow">Encerramento</div>
+            <p class="quote">A pergunta não é quanto código produzimos.</p>
+            <h2>É o que conseguimos garantir sobre ele.</h2>
+            <div class="rule" style="margin: 1em auto"></div>
+            <p class="subtitle" style="margin: auto">Na próxima etapa: aprofundar falhas, segurança, consistência e evolução da API.</p>
+        </section>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        progress: true,
+        controls: true,
+        transition: "fade",
+        backgroundTransition: "fade",
+        width: 1280,
+        height: 720,
+        margin: 0.06,
+        minScale: 0.2,
+        maxScale: 1.5
+    });
+
+    hljs.highlightAll();
+</script>
+</body>
+</html>
