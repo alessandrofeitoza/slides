@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Introdução ao PHP</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+
+<style>
+:root{
+  --bg:#fff;
+  --panel:#f4f5fa;
+  --panel2:#e9ebf5;
+  --line:rgba(20,18,40,.14);
+  --ink:#15121f;
+  --dim:#514c66;
+  --amber:#b25b06;
+  --mint:#0a8f66;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',sans-serif;
+}
+
+html{ font-size:22px; }
+html,.reveal{ background:var(--bg); }
+.reveal{ font-family:var(--sans); color:var(--ink); }
+.reveal .slides section{ background:var(--bg); text-align:left; }
+.reveal h1,.reveal h2,.reveal h3{ font-family:var(--mono); margin:0; color:var(--ink); }
+.reveal .controls{ color:var(--ink); }
+.reveal .progress{ color:var(--mint); height:8px; }
+.reveal code{ font-family:var(--mono); }
+
+/* slides de abertura / divisor / encerramento */
+.title-slide,.end-slide,.divider-slide{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.brand{ font:800 clamp(3.5rem,10vw,7rem) var(--mono); }
+.brand span{ color:var(--mint); }
+.title-slide h1{ font:800 clamp(2rem,4.5vw,3.4rem) var(--sans); margin-top:1rem; }
+.subtitle{ font:1.05rem var(--mono); color:var(--dim); margin-top:.8rem; }
+.hint{ font-size:.8rem; color:var(--dim); margin-top:2rem; }
+.eyebrow{
+  font:700 .8rem var(--mono);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:.6rem;
+}
+.divider-label{ font:800 2.2rem var(--sans); margin-top:.5rem!important; }
+.chips{ display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:1.4rem; }
+.chip{
+  font:600 .75rem var(--mono);
+  color:var(--mint);
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:.4rem .8rem;
+}
+
+/* slides de conteúdo */
+.tag-slide{ height:100%; display:flex; flex-direction:column; justify-content:center; }
+.tag-name{ font-size:1.6rem; letter-spacing:-.02em; }
+.panels{ display:grid; grid-template-columns:1.1fr 1fr; gap:1rem; margin:1rem 0; }
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:.8rem;
+  box-shadow:0 8px 24px #1412280f;
+  min-width:0;
+}
+.panel-header{
+  font:600 .7rem var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:.5rem;
+}
+.panel pre{ margin:0; max-height:340px; overflow:auto; }
+.panel code{ font-size:1.3rem!important; line-height:1.45!important; white-space:pre!important; }
+
+.uses{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.35rem; }
+.uses li{ font-size:.82rem; line-height:1.35; }
+.uses li:before{ content:'▸'; color:var(--mint); font-weight:800; margin-right:.5rem; }
+
+.inline{
+  font:.85em var(--mono);
+  color:var(--amber);
+  background:var(--panel2);
+  padding:.05em .25em;
+  border-radius:4px;
+}
+
+.demo{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:.7rem;
+  color:var(--ink);
+  font-size:.72rem;
+  min-height:110px;
+}
+.demo ul{ padding-left:1.2rem; }
+.demo .muted{ color:var(--dim); }
+
+.callout{
+  background:var(--panel2);
+  border-left:5px solid var(--mint);
+  padding:.8rem 1rem;
+  border-radius:0 10px 10px 0;
+  font-size:.85rem;
+}
+
+/* linha do tempo */
+.timeline{ display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; margin-top:1rem; }
+.milestone{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:.7rem; }
+.year{ font:800 1.15rem var(--mono); color:var(--mint); }
+.milestone strong{ display:block; font-size:.78rem; margin:.2rem 0; }
+.milestone p{ font-size:1.1rem; color:var(--dim); line-height:1.35; margin:0; }
+
+.big-word{ font:800 2.5rem var(--mono); color:var(--mint); margin:.5rem 0; }
+
+.flow{ display:flex; align-items:center; justify-content:center; gap:.5rem; margin:1.2rem 0; }
+.flow span{ padding:.7rem .8rem; background:var(--panel); border:1px solid var(--line); border-radius:10px; font:700 .72rem var(--mono); }
+.flow b{ color:var(--mint); font-size:1.2rem; }
+
+/* pergunta / boas práticas */
+.question,.tips{ height:100%; max-width:80%; margin:auto; display:flex; flex-direction:column; justify-content:center; }
+.question h2,.tips h2{ font:800 2rem var(--sans); line-height:1.2; margin:.7rem 0 1rem; }
+.question ul,.tips ul{ padding:0; list-style:none; }
+.question li,.tips li{ font-size:1rem; color:var(--dim); margin:.65rem 0; }
+.question li:before{ content:'? '; font-family:var(--mono); font-weight:800; color:var(--amber); }
+.tips li:before{ content:'✓ '; font-family:var(--mono); font-weight:800; color:var(--mint); }
+
+.end-slide h2{ font:800 2.5rem var(--sans); }
+.end-slide p{ font-size:1.05rem; color:var(--dim); }
+
+@media(max-width:700px){
+  .panels{ grid-template-columns:1fr; }
+  .panel code{ font-size:1.2rem!important; }
+  .tag-name{ font-size:1.2rem; }
+  .uses li{ font-size:.7rem; }
+  .question h2,.tips h2{ font-size:1.5rem; }
+  .flow{ flex-wrap:wrap; }
+  .flow span{ font-size:.6rem; }
+  .timeline{ grid-template-columns:repeat(2,1fr); }
+}
+
+/*code, pre {*/
+/*    font-size: 3rem !important;*/
+/*}*/
+
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section class="title-slide">
+      <div class="brand"><span>&lt;?</span>php<span>?&gt;</span></div>
+      <h1>Introdução ao PHP</h1>
+      <p class="subtitle">da história da web ao primeiro script</p>
+      <p class="hint">use as setas do teclado para navegar</p>
+    </section>
+
+    <section class="divider-slide">
+      <div class="eyebrow">Parte 01 · A ideia</div>
+      <div class="big-word">PHP</div>
+      <h2 class="divider-label">Código que roda no servidor</h2>
+      <div class="chips">
+        <span class="chip">web</span>
+        <span class="chip">HTML</span>
+        <span class="chip">servidor</span>
+        <span class="chip">dados</span>
+      </div>
+    </section>
+
+
+      <section data-background="../../2025/img/backend/server-side3.png" data-background-size="70%">
+
+      </section>
+
+      <section data-background="../../../img/req-res.png" data-background-size="80%">
+
+      </section>
+      <section data-background="../../../img/monolitico.png" data-background-size="70%">
+      </section>
+
+      <section data-background="../../../2025/img/design-principles/camadas.png" data-background-size="40%">
+      </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">01 — Antes do PHP: páginas estáticas</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">HTML enviado ao navegador</div>
+          <pre><code class="language-html">&lt;h1&gt;Olá, visitante!&lt;/h1&gt;
+&lt;p&gt;Hoje é dia 28 de outubro.&lt;/p&gt;</code></pre>
+        </div>
+        <div class="panel">
+          <div class="panel-header">O limite</div>
+          <ul class="uses">
+            <li>HTML descreve conteúdo e estrutura.</li>
+            <li>Conteúdo personalizado precisa ser gerado ou alterado.</li>
+            <li>Contas, formulários e dados de banco exigem lógica além do HTML estático.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">A web precisava de uma forma prática de gerar conteúdo dinamicamente no servidor.</div>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">02 — A história começa com uma necessidade</h2>
+      <div class="timeline">
+        <div class="milestone">
+          <div class="year">1994</div>
+          <strong>PHP Tools</strong>
+          <p>Rasmus Lerdorf cria scripts CGI em C para acompanhar visitas ao seu currículo online.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">1995</div>
+          <strong>Código aberto</strong>
+          <p>As ferramentas são disponibilizadas publicamente e ganham recursos e usuários.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">1997–98</div>
+          <strong>PHP/FI → PHP 3</strong>
+          <p>Rasmus, Andi Gutmans e Zeev Suraski colaboram na reescrita que dá forma ao PHP moderno.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">2000</div>
+          <strong>PHP 4</strong>
+          <p>O Zend Engine melhora desempenho e estrutura o núcleo da linguagem.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">2004</div>
+          <strong>PHP 5</strong>
+          <p>O Zend Engine 2 traz um modelo de objetos mais robusto.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">2015</div>
+          <strong>PHP 7</strong>
+          <p>Grande evolução de desempenho e uso de memória, com o Zend Engine 3.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">2020</div>
+          <strong>PHP 8</strong>
+          <p>Tipos de união, atributos, argumentos nomeados, match, operador nullsafe e JIT.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">Hoje</div>
+          <strong>PHP moderno</strong>
+          <p>Tipagem mais expressiva, ferramentas maduras e versões evoluindo continuamente.</p>
+        </div>
+        <div class="milestone">
+          <div class="year">A ideia central</div>
+          <strong>Resolver problemas reais</strong>
+          <p>De ferramentas pessoais a uma linguagem para aplicações web de diferentes portes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">03 — O nome PHP mudou de significado</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">Origem</div>
+          <p style="font:800 1.2rem var(--mono);color:var(--mint)">Personal Home Page Tools</p>
+          <p style="font-size:.8rem;color:var(--dim)">Um conjunto de ferramentas para páginas pessoais.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-header">Significado atual</div>
+          <p style="font:800 1.2rem var(--mono);color:var(--mint)">PHP: Hypertext Preprocessor</p>
+          <p style="font-size:.8rem;color:var(--dim)">Um acrônimo recursivo: o próprio PHP aparece na expansão do nome.</p>
+        </div>
+      </div>
+      <ul class="uses">
+        <li>PHP não nasceu como uma linguagem inteiramente planejada desde o primeiro dia.</li>
+        <li>Cresceu conforme desenvolvedores precisavam resolver problemas concretos da web.</li>
+        <li>A história ajuda a entender a integração da linguagem com HTML.</li>
+      </ul>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">04 — PHP não é JavaScript</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">PHP · servidor</div>
+          <pre><code class="language-php">&lt;?php
+$nome = 'Ana';
+echo "Olá, {$nome}!";
+</code></pre>
+          <ul class="uses">
+            <li>Executa no servidor.</li>
+            <li>Pode consultar banco e aplicar regras de negócio.</li>
+            <li>O resultado pode ser HTML ou JSON.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-header">JavaScript · navegador</div>
+          <pre><code class="language-javascript">const nome = 'Ana';
+
+document.querySelector('h1')
+  .textContent = `Olá, ${nome}!`;</code></pre>
+          <ul class="uses">
+            <li>Controla a interface e reage às ações.</li>
+            <li>Também pode executar no servidor com Node.js.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">A diferença principal não é “um é melhor”: é onde o código executa e qual responsabilidade assume.</div>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">05 — Como uma página PHP chega ao navegador?</h2>
+      <div class="flow"><span>Navegador</span><b>→</b><span>Servidor web</span><b>→</b><span>PHP</span></div>
+      <div class="flow"><span>PHP processa</span><b>→</b><span>HTML resultante</span><b>→</b><span>Navegador</span></div>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">Arquivo no servidor</div>
+          <pre><code class="language-php">&lt;h1&gt;
+  Olá, &lt;?= htmlspecialchars($nome) ?&gt;!
+&lt;/h1&gt;</code></pre>
+        </div>
+        <div class="panel">
+          <div class="panel-header">Resposta enviada</div>
+          <pre><code class="language-html">&lt;h1&gt;
+  Olá, Ana!
+&lt;/h1&gt;</code></pre>
+        </div>
+      </div>
+      <ul class="uses">
+        <li>O navegador recebe a resposta gerada, não o código PHP original.</li>
+        <li>PHP pode misturar lógica e HTML; projetos maiores se beneficiam de separar responsabilidades.</li>
+      </ul>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">06 — Seu primeiro script</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">hello.php</div>
+          <pre><code class="language-php">&lt;?php
+
+echo 'Olá, mundo!';</code></pre>
+        </div>
+        <div class="panel">
+          <div class="panel-header">O que significa?</div>
+          <ul class="uses">
+            <li><code class="inline">&lt;?php</code> inicia o código PHP.</li>
+            <li><code class="inline">echo</code> escreve conteúdo na saída.</li>
+            <li>O ponto e vírgula encerra a instrução.</li>
+            <li>Em arquivos PHP puros, normalmente omitimos a tag de fechamento.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">O arquivo precisa ser executado pelo PHP. Abrir um .php diretamente como arquivo local não substitui um servidor PHP.</div>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">07 — Variáveis e tipos</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">PHP</div>
+          <pre><code class="language-php">$nome = 'Chiquim';
+$idade = 42;
+$ativo = true;
+$saldo = 125.50;
+
+echo $nome;
+echo $idade;</code></pre>
+        </div>
+        <div class="panel">
+          <div class="panel-header">Pontos importantes</div>
+          <ul class="uses">
+            <li>Variáveis começam com <code class="inline">$</code>.</li>
+            <li>Nomes diferenciam maiúsculas de minúsculas.</li>
+            <li>O tipo é inferido a partir do valor atribuído.</li>
+            <li>Strings, inteiros, floats, booleanos, arrays e objetos são tipos comuns.</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:.8rem;color:var(--dim)">Use nomes claros e valores que representem o problema.</p>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">08 — Condições e repetição</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">Decisão</div>
+          <pre><code class="language-php">$nota = 8;
+
+if ($nota >= 7) {
+    echo 'Aprovado';
+} else {
+    echo 'Precisa recuperar';
+}</code></pre>
+        </div>
+        <div class="panel">
+          <div class="panel-header">Repetição</div>
+          <pre><code class="language-php">$nomes = ['Ana', 'João', 'Ravi'];
+
+foreach ($nomes as $nome) {
+    echo $nome . '&lt;br&gt;';
+}</code></pre>
+        </div>
+      </div>
+      <ul class="uses">
+        <li>As estruturas lembram as que você já viu em JavaScript.</li>
+        <li><code class="inline">foreach</code> é muito usado para percorrer arrays e coleções.</li>
+        <li>O operador <code class="inline">.</code> concatena strings em PHP.</li>
+      </ul>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">09 — PHP pode gerar HTML dinamicamente</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">PHP + HTML</div>
+          <pre><code class="language-php">&lt;?php
+$produtos = [
+    ['nome' =&gt; 'Caderno', 'preco' =&gt; 15],
+    ['nome' =&gt; 'Caneta', 'preco' =&gt; 3],
+];
+?&gt;
+&lt;ul&gt;
+  &lt;?php foreach ($produtos as $produto): ?&gt;
+    &lt;li&gt;
+      &lt;?= htmlspecialchars($produto['nome']) ?&gt;:
+      R$ &lt;?= number_format($produto['preco'], 2, ',', '.') ?&gt;
+    &lt;/li&gt;
+  &lt;?php endforeach; ?&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+        <div class="panel">
+          <div class="panel-header">Resultado esperado</div>
+          <div class="demo">
+            <ul>
+              <li>Caderno: R$ 15,00</li>
+              <li>Caneta: R$ 3,00</li>
+            </ul>
+            <p class="muted">Array de dados → HTML gerado no servidor</p>
+          </div>
+        </div>
+      </div>
+      <ul class="uses">
+        <li>PHP decide quais elementos HTML serão enviados.</li>
+        <li><code class="inline">htmlspecialchars()</code> ajuda a exibir texto com segurança no HTML.</li>
+      </ul>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">10 — Onde o PHP entra numa aplicação?</h2>
+      <div class="flow"><span>Requisição HTTP</span><b>→</b><span>Rota / controlador</span><b>→</b><span>Regra de negócio</span></div>
+      <div class="flow"><span>Banco de dados</span><b>↔</b><span>PHP</span><b>→</b><span>HTML ou JSON</span></div>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">PHP pode cuidar de</div>
+          <ul class="uses">
+            <li>Validar dados recebidos.</li>
+            <li>Aplicar regras de negócio.</li>
+            <li>Consultar ou atualizar banco de dados.</li>
+            <li>Controlar autenticação e autorização.</li>
+            <li>Gerar páginas ou respostas de API.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-header">Mas PHP não é...</div>
+          <ul class="uses">
+            <li>Um banco de dados.</li>
+            <li>Um servidor web por si só.</li>
+            <li>Um framework específico.</li>
+            <li>Uma garantia automática de segurança ou boa arquitetura.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">11 — Linguagem, ferramentas e frameworks</h2>
+      <div class="panels">
+        <div class="panel">
+          <div class="panel-header">A linguagem</div>
+          <p style="font:800 1.2rem var(--mono);color:var(--mint)">PHP</p>
+          <p style="font-size:.8rem;color:var(--dim)">Sintaxe, tipos, funções, classes, arrays, exceções e recursos da linguagem.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-header">Ecossistema</div>
+          <ul class="uses">
+            <li>Composer: dependências e autoload.</li>
+            <li>PHPUnit: testes automatizados.</li>
+            <li>Laravel e Symfony: frameworks para estruturar aplicações.</li>
+            <li>PHP-FPM, Apache ou outros servidores: integração com HTTP.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">Aprender a linguagem ajuda a entender o que o framework resolve — e o que ele não resolve.</div>
+    </section>
+
+    <section class="question">
+      <div class="eyebrow">Para discutir</div>
+      <h2>Se o PHP roda no servidor, o que o navegador recebe?</h2>
+      <ul>
+        <li>O código PHP original?</li>
+        <li>O HTML que o PHP gerou?</li>
+        <li>Os dois?</li>
+        <li>Como confirmar isso com “Exibir código-fonte”?</li>
+      </ul>
+    </section>
+
+    <section class="tips">
+      <div class="eyebrow">Boas práticas desde o começo</div>
+      <h2>Pequenas escolhas que evitam problemas</h2>
+      <ul>
+        <li>Use nomes de variáveis claros e consistentes.</li>
+        <li>Valide os dados recebidos; nunca confie cegamente na entrada do usuário.</li>
+        <li>Escape dados de acordo com o contexto de saída, como HTML.</li>
+        <li>Separe acesso a dados, regras de negócio e apresentação quando necessário.</li>
+        <li>Use versões suportadas do PHP e consulte a documentação oficial.</li>
+      </ul>
+    </section>
+
+    <section class="tag-slide">
+      <h2 class="tag-name">Desafio final — Catálogo de produtos</h2>
+      <div class="panel">
+        <div class="panel-header">Requisitos</div>
+        <ul class="uses">
+          <li>Crie um arquivo PHP com uma lista de produtos com nome e preço.</li>
+          <li>Use <code class="inline">foreach</code> para gerar uma lista HTML.</li>
+          <li>Formate os preços para reais.</li>
+          <li>Mostre uma mensagem diferente se a lista estiver vazia.</li>
+          <li>Destaque produtos com preço acima de R$ 50.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="panel-header">Conceitos praticados</div>
+        <p style="font-size:.8rem">PHP · variáveis · arrays · condições · foreach · HTML dinâmico · escaping de saída</p>
+      </div>
+    </section>
+
+    <section class="end-slide">
+      <h2>PHP começou pequeno.</h2>
+      <p>Hoje, é uma linguagem madura para construir aplicações web.</p>
+      <p style="font-family:var(--mono);font-size:.8rem">Próximo passo: executar PHP localmente e aprofundar a sintaxe.</p>
+      <p style="font-size:.62rem;margin-top:1rem">História: documentação oficial · php.net/manual/pt_BR/history.php.php</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+
+<script>
+Reveal.initialize({
+  hash:true,
+  controls:true,
+  progress:true,
+  center:false,
+  width:1280,
+  height:720,
+  margin:.06,
+  transition:'slide',
+  backgroundTransition:'fade',
+  plugins:[RevealHighlight]
+});
+</script>
+</body>
+</html>
