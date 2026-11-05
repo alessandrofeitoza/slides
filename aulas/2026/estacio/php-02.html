@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 02 e 03 — Do navegador ao banco de dados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+<style>
+:root{--bg:#fff;--ink:#15121f;--muted:#514c66;--panel:#f1f2f7;--panel2:#e7eaf2;--line:#cdd1dd;--green:#087e5b;--orange:#a94f00;--blue:#174e91;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif}
+html{font-size:28px}html,.reveal{background:var(--bg)}.reveal{font-family:var(--sans);color:var(--ink)}
+.reveal .slides section{background:var(--bg);text-align:left;padding:18px 24px;box-sizing:border-box}
+.reveal h1,.reveal h2,.reveal h3{font-family:var(--sans);color:var(--ink);font-weight:900;letter-spacing:-.035em;text-transform:none}
+.reveal h1{font-size:2.3em;line-height:1.05}.reveal h2{font-size:1.55em;line-height:1.12;margin:0 0 .55em}.reveal h3{font-size:1.05em}
+.reveal p,.reveal li{font-size:.78em;line-height:1.35}.reveal ul{margin:.3em 0}.reveal li{margin:.22em 0}
+.reveal .controls{color:var(--green)}.reveal .progress{height:8px;color:var(--green)}.reveal code{font-family:var(--mono)}
+.kicker{font:800 .48em var(--mono);text-transform:uppercase;letter-spacing:.13em;color:var(--orange);margin-bottom:.8em}
+.subtitle{font:700 .72em var(--mono);color:var(--muted);margin-top:1em}
+.big{font:900 2.6em var(--mono);letter-spacing:-.08em;color:var(--green);line-height:1}
+.center{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.center h1,.center h2,.center p{text-align:center}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.card h3{margin:0 0 .4em;color:var(--green)}
+.card p,.card li{font-size:.68em}
+.card pre{margin:0;max-height:390px;overflow:auto}
+.card pre code{font-size:.62em;line-height:1.4;white-space:pre}
+.codewide pre{margin:0;max-height:440px;overflow:auto;background:#f1f2f7;border:2px solid var(--line);border-radius:14px;padding:18px}
+.codewide code{font-size:.68em;line-height:1.4}
+.callout{border-left:8px solid var(--green);background:var(--panel2);padding:15px 20px;border-radius:0 12px 12px 0;font-size:.75em;line-height:1.3;margin-top:16px}
+.flow{display:flex;align-items:stretch;justify-content:center;gap:9px;margin:22px 0;flex-wrap:nowrap}
+.node{flex:1;background:var(--panel);border:3px solid var(--line);border-radius:13px;padding:15px 10px;text-align:center;font:800 .68em var(--mono);display:flex;flex-direction:column;justify-content:center;min-height:95px}
+.node small{font:600 .68em var(--sans);color:var(--muted);display:block;margin-top:7px}
+.arrow{font:900 1.2em var(--mono);color:var(--green);align-self:center}
+.stack{display:flex;flex-direction:column;gap:8px;max-width:900px;margin:20px auto}
+.stack .node{min-height:65px;flex-direction:row;align-items:center;gap:20px;font-size:.8em}
+.stack .node small{margin:0;font-size:.8em}
+.tag{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:3px 9px;font:700 .62em var(--mono);color:var(--blue)}
+.bigquote{font-size:1.25em!important;font-weight:800;line-height:1.2!important;max-width:950px}
+.reveal table{font-size:.65em;width:100%;border-collapse:collapse}
+.reveal th,.reveal td{padding:10px;border-bottom:2px solid var(--line);text-align:left}
+.reveal th{color:var(--green);font-family:var(--mono)}
+.reveal .slides section img{max-height:420px}
+@media(max-width:800px){html{font-size:20px}.cols{grid-template-columns:1fr}.flow{flex-wrap:wrap}.node{min-width:28%}.arrow{display:none}.stack .node{flex-direction:column;gap:4px}.reveal .slides section{padding:12px}}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="center">
+  <div class="big">&lt;web&gt;</div>
+  <h1>Do navegador ao banco de dados</h1>
+  <p class="subtitle">HTML · CSS · JavaScript · PHP · SQL</p>
+  <p style="font-size:.58em;color:var(--muted);margin-top:2em">Aulas 02 e 03 · Revisão do ciclo de uma aplicação web</p>
+</section>
+
+<section>
+  <div class="kicker">Abertura · Recapitulando</div>
+  <h2>Uma aplicação web é uma conversa.</h2>
+  <p class="bigquote">O usuário faz uma ação. O navegador envia uma requisição. O servidor processa. Os dados são consultados ou gravados. Uma resposta volta.</p>
+  <div class="flow">
+    <div class="node">USUÁRIO<small>interage</small></div><div class="arrow">→</div>
+    <div class="node">NAVEGADOR<small>monta a requisição</small></div><div class="arrow">→</div>
+    <div class="node">SERVIDOR<small>processa</small></div><div class="arrow">→</div>
+    <div class="node">RESPOSTA<small>volta à tela</small></div>
+  </div>
+</section>
+
+<section>
+  <div class="kicker">O mapa da aula</div><h2>Cada tecnologia tem uma responsabilidade.</h2>
+  <div class="stack">
+    <div class="node">HTML <small>estrutura e significado do conteúdo</small></div>
+    <div class="node">CSS <small>aparência, layout e adaptação de tela</small></div>
+    <div class="node">JavaScript <small>eventos e comportamento no navegador</small></div>
+    <div class="node">PHP <small>regras, validação e processamento no servidor</small></div>
+    <div class="node">BANCO DE DADOS <small>persistência e consulta das informações</small></div>
+  </div>
+  <div class="callout">Não são cinco maneiras de fazer a mesma coisa. São peças diferentes trabalhando juntas.</div>
+</section>
+
+<section>
+  <div class="kicker">Parte 01 · Frontend</div><h2>HTML: a estrutura.</h2>
+  <div class="cols">
+    <div class="card"><h3>HTML descreve</h3><ul><li>Campos e formulários</li><li>Títulos e textos</li><li>Botões e links</li><li>Seções e navegação</li></ul></div>
+    <div class="card codewide"><pre><code class="language-html">&lt;form id="cadastro"&gt;
+  &lt;label for="nome"&gt;Nome&lt;/label&gt;
+  &lt;input id="nome" name="nome"&gt;
+
+  &lt;button type="submit"&gt;
+    Cadastrar
+  &lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+  </div>
+  <div class="callout">HTML não valida regras de negócio nem salva os dados. Ele estrutura a interface e os controles.</div>
+</section>
+
+<section>
+  <div class="kicker">Parte 01 · Frontend</div><h2>CSS: apresentação e organização visual.</h2>
+  <div class="cols">
+    <div class="card"><h3>CSS controla</h3><ul><li>Cores e tipografia</li><li>Espaçamento</li><li>Flexbox e Grid</li><li>Responsividade</li><li>Estados visuais</li></ul></div>
+    <div class="card codewide"><pre><code class="language-css">.formulario {
+  display: grid;
+  gap: 16px;
+  max-width: 560px;
+}
+
+button {
+  padding: 14px 20px;
+  cursor: pointer;
+}</code></pre></div>
+  </div>
+  <p class="bigquote">CSS muda como a interface aparece. Não muda a regra de negócio.</p>
+</section>
+
+<section>
+  <div class="kicker">Parte 01 · Frontend</div><h2>JavaScript: comportamento no navegador.</h2>
+  <div class="flow">
+    <div class="node">EVENTO<small>clique / submit / input</small></div><div class="arrow">→</div>
+    <div class="node">JAVASCRIPT<small>executa uma função</small></div><div class="arrow">→</div>
+    <div class="node">DOM<small>atualiza a interface</small></div>
+  </div>
+  <div class="codewide"><pre><code class="language-javascript">const formulario = document.querySelector('#cadastro');
+
+formulario.addEventListener('submit', (evento) => {
+  evento.preventDefault();
+
+  const nome = document.querySelector('#nome').value;
+  document.querySelector('#resultado').textContent =
+    `Olá, ${nome}!`;
+});</code></pre></div>
+  <div class="callout">O DOM é a representação da página que o JavaScript consegue consultar e modificar.</div>
+</section>
+
+<section>
+  <div class="kicker">Conectando as peças</div><h2>O navegador não é o servidor.</h2>
+  <div class="cols">
+    <div class="card"><h3>No navegador</h3><p class="bigquote">HTML + CSS + JavaScript</p><p>Interface, interação, feedback imediato e preparação dos dados.</p></div>
+    <div class="card"><h3>No servidor</h3><p class="bigquote">PHP</p><p>Recebe requisições, valida dados, aplica regras e conversa com o banco.</p></div>
+  </div>
+  <div class="callout">O JavaScript pode ajudar na experiência, mas a validação importante precisa acontecer também no servidor.</div>
+</section>
+
+<section>
+  <div class="kicker">Parte 02 · HTTP</div><h2>Como o navegador envia os dados?</h2>
+  <div class="flow">
+    <div class="node">FORMULÁRIO<small>dados preenchidos</small></div><div class="arrow">→</div>
+    <div class="node">HTTP REQUEST<small>método + endereço + dados</small></div><div class="arrow">→</div>
+    <div class="node">PHP<small>recebe e processa</small></div>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>GET</h3><p>Dados geralmente aparecem na URL.</p><p>Útil para consultas, filtros e buscas.</p><span class="tag">$_GET</span></div>
+    <div class="card"><h3>POST</h3><p>Dados são enviados no corpo da requisição.</p><p>Comum em cadastros e alterações.</p><span class="tag">$_POST</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="kicker">HTTP · Formulário</div><h2>O atributo <code>name</code> identifica o dado enviado.</h2>
+  <div class="codewide"><pre><code class="language-html">&lt;form action="processar.php" method="POST"&gt;
+  &lt;label for="email"&gt;E-mail&lt;/label&gt;
+  &lt;input type="email" id="email" name="email"&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+  <div class="callout">O <code>id</code> identifica o elemento na página. O <code>name</code> define a chave enviada ao servidor.</div>
+</section>
+
+<section>
+  <div class="kicker">Parte 03 · PHP</div><h2>PHP recebe os dados da requisição.</h2>
+  <div class="codewide"><pre><code class="language-php">&lt;?php
+
+$nome = $_POST['nome'] ?? '';
+$email = $_POST['email'] ?? '';
+
+echo 'Nome: ' . htmlspecialchars($nome);
+echo 'E-mail: ' . htmlspecialchars($email);</code></pre></div>
+  <p class="bigquote">O PHP não acessa o campo visualmente. Ele recebe os dados enviados na requisição HTTP.</p>
+</section>
+
+<section>
+  <div class="kicker">PHP · Validação</div><h2>Dados recebidos não são dados confiáveis.</h2>
+  <div class="cols">
+    <div class="card"><h3>Validar</h3><p>O dado atende à regra?</p><ul><li>Está preenchido?</li><li>Tem formato válido?</li><li>Está dentro do limite?</li></ul></div>
+    <div class="card"><h3>Escapar</h3><p>Como exibir o dado com segurança?</p><ul><li>HTML: <code>htmlspecialchars()</code></li><li>SQL: consultas preparadas</li></ul></div>
+  </div>
+  <div class="codewide" style="margin-top:14px"><pre><code class="language-php">$email = trim($_POST['email'] ?? '');
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo 'E-mail inválido';
+}</code></pre></div>
+</section>
+
+<section>
+  <div class="kicker">O ciclo completo · Até aqui</div><h2>Da interação à regra de negócio.</h2>
+  <div class="stack">
+    <div class="node">1. HTML <small>formulário com campos</small></div>
+    <div class="node">2. CSS <small>interface legível e responsiva</small></div>
+    <div class="node">3. JavaScript <small>evento submit, feedback e interação</small></div>
+    <div class="node">4. HTTP <small>envia os dados para o servidor</small></div>
+    <div class="node">5. PHP <small>recebe, valida e processa</small></div>
+  </div>
+  <p class="bigquote">Mas, se o PHP terminar de executar, onde os dados ficam?</p>
+</section>
+
+<section class="center">
+  <div class="kicker">Aula 03 · Persistência</div>
+  <div class="big">SQL</div>
+  <h1>Os dados precisam continuar existindo.</h1>
+  <p class="subtitle">PHP + banco de dados</p>
+</section>
+
+<section>
+  <div class="kicker">Banco de dados</div><h2>Variável não é persistência.</h2>
+  <div class="cols">
+    <div class="card"><h3>Memória durante a execução</h3><pre><code class="language-php">$nome = 'Ana';</code></pre><p>Quando a requisição termina, essa variável deixa de existir.</p></div>
+    <div class="card"><h3>Banco de dados</h3><p>Armazena informações para serem recuperadas em outras requisições, sessões e dias.</p><p class="bigquote">Persistência</p></div>
+  </div>
+  <div class="callout">Cada requisição PHP normalmente começa uma nova execução. O banco mantém os dados entre elas.</div>
+</section>
+
+<section>
+  <div class="kicker">Banco de dados relacional</div><h2>Uma tabela organiza registros.</h2>
+  <table>
+    <thead><tr><th>id</th><th>nome</th><th>email</th><th>curso</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Ana Lima</td><td>ana@email.com</td><td>HTML</td></tr>
+      <tr><td>2</td><td>João Souza</td><td>joao@email.com</td><td>PHP</td></tr>
+      <tr><td>3</td><td>Ravi Alves</td><td>ravi@email.com</td><td>CSS</td></tr>
+    </tbody>
+  </table>
+  <div class="cols" style="margin-top:18px">
+    <div class="card"><h3>Coluna</h3><p>Define um atributo, como nome ou e-mail.</p></div>
+    <div class="card"><h3>Linha</h3><p>Representa um registro armazenado.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="kicker">SQL · Consultar</div><h2>SELECT busca informações.</h2>
+  <div class="codewide"><pre><code class="language-sql">SELECT id, nome, email
+FROM alunos
+WHERE curso = 'PHP'
+ORDER BY nome;</code></pre></div>
+  <div class="flow">
+    <div class="node">SELECT<small>quais colunas?</small></div><div class="arrow">→</div>
+    <div class="node">FROM<small>qual tabela?</small></div><div class="arrow">→</div>
+    <div class="node">WHERE<small>qual condição?</small></div>
+  </div>
+  <p class="bigquote">SQL é a linguagem usada para consultar e manipular dados em bancos relacionais.</p>
+</section>
+
+<section>
+  <div class="kicker">SQL · Alterar dados</div><h2>As quatro operações fundamentais.</h2>
+  <div class="cols">
+    <div class="card"><h3>CREATE / INSERT</h3><p>Criar registro</p><pre><code class="language-sql">INSERT INTO alunos
+(nome, email)
+VALUES ('Ana', 'ana@email.com');</code></pre></div>
+    <div class="card"><h3>READ / SELECT</h3><p>Consultar registros</p><pre><code class="language-sql">SELECT *
+FROM alunos;</code></pre></div>
+    <div class="card"><h3>UPDATE</h3><p>Atualizar registro</p><pre><code class="language-sql">UPDATE alunos
+SET curso = 'PHP'
+WHERE id = 1;</code></pre></div>
+    <div class="card"><h3>DELETE</h3><p>Excluir registro</p><pre><code class="language-sql">DELETE FROM alunos
+WHERE id = 1;</code></pre></div>
+  </div>
+  <div class="callout">CRUD: Create, Read, Update e Delete. A base de quase todo sistema de cadastro.</div>
+</section>
+
+<section>
+  <div class="kicker">PHP + banco de dados</div><h2>O PHP conversa com o banco usando PDO.</h2>
+  <div class="flow">
+    <div class="node">NAVEGADOR<small>envia formulário</small></div><div class="arrow">→</div>
+    <div class="node">PHP<small>valida e prepara SQL</small></div><div class="arrow">↔</div>
+    <div class="node">MYSQL<small>consulta ou grava</small></div>
+  </div>
+  <div class="callout">PDO é uma interface do PHP para acessar bancos de dados. A aplicação não deve montar SQL concatenando dados do usuário.</div>
+</section>
+
+<section>
+  <div class="kicker">PDO · Conexão</div><h2>Conectar ao banco.</h2>
+  <div class="codewide"><pre><code class="language-php">$pdo = new PDO(
+    'mysql:host=localhost;dbname=escola;charset=utf8mb4',
+    'usuario',
+    'senha',
+    [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]
+);</code></pre></div>
+  <p>Uma conexão permite que o PHP envie comandos SQL ao banco e receba resultados.</p>
+</section>
+
+<section>
+  <div class="kicker">PDO · Inserção segura</div><h2>INSERT com parâmetros.</h2>
+  <div class="codewide"><pre><code class="language-php">$sql = 'INSERT INTO alunos (nome, email)
+        VALUES (:nome, :email)';
+
+$stmt = $pdo->prepare($sql);
+
+$stmt->execute([
+    'nome' => $nome,
+    'email' => $email
+]);</code></pre></div>
+  <div class="callout">Consultas preparadas separam o comando SQL dos valores enviados pelo usuário. Isso ajuda a prevenir SQL Injection.</div>
+</section>
+
+<section>
+  <div class="kicker">PDO · Consulta</div><h2>SELECT e recuperação dos resultados.</h2>
+  <div class="codewide"><pre><code class="language-php">$stmt = $pdo->query(
+    'SELECT id, nome, email FROM alunos'
+);
+
+$alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($alunos as $aluno) {
+    echo htmlspecialchars($aluno['nome']);
+}</code></pre></div>
+  <p>O PHP recebe os registros e pode transformá-los em HTML para o navegador.</p>
+</section>
+
+<section>
+  <div class="kicker">Arquitetura do ciclo</div><h2>Agora temos uma aplicação completa.</h2>
+  <div class="stack">
+    <div class="node">USUÁRIO <small>preenche e envia o formulário</small></div>
+    <div class="node">HTML + CSS + JAVASCRIPT <small>interface, estilo e eventos DOM</small></div>
+    <div class="node">HTTP <small>requisição POST</small></div>
+    <div class="node">PHP <small>recebe, valida e aplica regras</small></div>
+    <div class="node">PDO + SQL <small>consulta ou altera os dados</small></div>
+    <div class="node">BANCO DE DADOS <small>armazena de forma persistente</small></div>
+    <div class="node">PHP → HTTP → NAVEGADOR <small>resposta e atualização da tela</small></div>
+  </div>
+</section>
+
+<section>
+  <div class="kicker">Responsabilidades</div><h2>Quem faz o quê?</h2>
+  <table>
+    <thead><tr><th>Camada</th><th>Responsabilidade</th><th>Exemplo</th></tr></thead>
+    <tbody>
+      <tr><td>HTML</td><td>Estrutura</td><td>Campo de e-mail</td></tr>
+      <tr><td>CSS</td><td>Apresentação</td><td>Layout responsivo</td></tr>
+      <tr><td>JavaScript</td><td>Interação</td><td>Evento submit</td></tr>
+      <tr><td>PHP</td><td>Processamento</td><td>Validar cadastro</td></tr>
+      <tr><td>SQL / Banco</td><td>Persistência</td><td>INSERT / SELECT</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">Separar responsabilidades facilita manutenção, testes e evolução do sistema.</div>
+</section>
+
+<section>
+  <div class="kicker">Para discutir</div><h2>O que acontece quando clico em “Cadastrar”?</h2>
+  <p class="bigquote">Explique o caminho completo dos dados, desde o campo HTML até o registro no banco.</p>
+  <ul><li>Qual tecnologia captura o clique ou submit?</li><li>Quem envia a requisição?</li><li>Quem valida os dados de verdade?</li><li>Quem executa o INSERT?</li><li>Onde o dado fica depois que a requisição termina?</li></ul>
+</section>
+
+<section>
+  <div class="kicker">Desafio guiado</div><h2>Cadastro simples de alunos.</h2>
+  <div class="cols">
+    <div class="card"><h3>Funcionalidades</h3><ul><li>Formulário com nome e e-mail</li><li>Validação no PHP</li><li>Inserção no MySQL</li><li>Listagem dos alunos</li><li>Mensagem de sucesso ou erro</li></ul></div>
+    <div class="card"><h3>Entrega técnica</h3><ul><li>HTML semântico</li><li>CSS organizado</li><li>JavaScript para interação</li><li>PHP para processamento</li><li>PDO e SQL para persistência</li></ul></div>
+  </div>
+</section>
+
+<section class="center">
+  <div class="big">FIM?</div>
+  <h1>Uma aplicação web é um ciclo.</h1>
+  <p class="subtitle">Interface → requisição → processamento → persistência → resposta</p>
+  <p style="font-size:.62em;color:var(--muted);margin-top:2em">Próximo passo: transformar esse fluxo em um CRUD completo.</p>
+</section>
+
+</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+Reveal.initialize({
+  hash:true, controls:true, progress:true, center:false,
+  width:1360, height:765, margin:.045,
+  transition:'slide', backgroundTransition:'fade',
+  plugins:[RevealHighlight]
+});
+</script>
+</body></html>
