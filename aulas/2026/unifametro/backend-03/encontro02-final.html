@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backend de qualidade — Mentimeter e discussão</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/white.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/highlight/monokai.css">
+
+  <style>
+    :root {
+      --ink: #14213D;
+      --muted: #5B6782;
+      --paper: #F6F8FC;
+      --line: #DCE3EF;
+      --blue: #2F5BEA;
+      --blue-soft: #E7EDFF;
+      --blue-line: #B9C8FA;
+      --green: #178A5C;
+      --green-soft: #E3F5EC;
+      --green-line: #A9DDC4;
+      --red: #CC3B3B;
+      --red-soft: #FCE9E9;
+      --red-line: #F1B5B5;
+      --amber: #B7791F;
+      --amber-soft: #FFF3DC;
+      --amber-line: #F2D49B;
+      --code-bg: #101827;
+      --sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    /* ---------- base ---------- */
+    .reveal-viewport { background: var(--paper); }
+    .reveal { font-family: var(--sans); color: var(--ink); font-size: 26px; }
+    .reveal .slides { text-align: left; }
+    .reveal .slides section { box-sizing: border-box; }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: var(--sans); color: var(--ink); text-transform: none;
+      letter-spacing: -0.025em; font-weight: 800;
+    }
+    .reveal h1 { font-size: 68px; line-height: 1.02; margin: 0 0 22px; }
+    .reveal h2 { font-size: 44px; line-height: 1.08; margin: 0 0 16px; }
+    .reveal h3 { font-size: 24px; margin: 0 0 6px; }
+    .reveal p { font-size: 24px; line-height: 1.4; margin: 0 0 12px; }
+    .reveal ul, .reveal ol { margin: 0; }
+    .reveal li { font-size: 24px; line-height: 1.35; margin: 6px 0; }
+    .reveal strong { font-weight: 700; }
+
+    .muted { color: var(--muted); }
+    .good  { color: var(--green); }
+    .bad   { color: var(--red); }
+    .center { text-align: center !important; }
+
+    /* ---------- cabeçalho de pergunta ---------- */
+    .kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 17px; font-weight: 600; color: var(--muted); }
+    .kicker .n { background: var(--ink); color: #fff; border-radius: 6px; padding: 3px 9px; font-variant-numeric: tabular-nums; font-weight: 700; }
+    .kicker .t { border: 1.5px solid var(--line); background: #fff; border-radius: 999px; padding: 3px 12px; }
+    .kicker .t.menti { border-color: var(--amber-line); background: var(--amber-soft); color: var(--amber); }
+
+    .pergunta {
+      font-size: 27px; font-weight: 600; line-height: 1.3;
+      background: #fff; border-left: 6px solid var(--blue);
+      border-radius: 0 12px 12px 0; padding: 14px 22px; margin: 0 0 20px;
+      max-width: 1060px; box-shadow: 0 1px 0 var(--line);
+    }
+    .pergunta.compacta { font-size: 23px; padding: 10px 18px; margin-bottom: 12px; }
+
+    .afirmacao { font-size: 32px; font-weight: 800; line-height: 1.15; letter-spacing: -0.015em; margin: 18px 0 0; }
+    .afirmacao.menor { font-size: 26px; }
+    .nota { font-size: 20px; color: var(--muted); margin-top: 18px; }
+
+    /* ---------- blocos ---------- */
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid.tres { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.quatro { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+    .duas.larga { grid-template-columns: 1.3fr .7fr; }
+    .duas.estreita { grid-template-columns: .9fr 1.1fr; }
+
+    .painel { background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+    .painel h3 { font-size: 23px; }
+    .painel p { font-size: 20px; color: var(--muted); line-height: 1.35; margin: 0; }
+    .painel.azul  { background: var(--blue-soft);  border-color: var(--blue-line); }
+    .painel.verde { background: var(--green-soft); border-color: var(--green-line); }
+    .painel.vermelho { background: var(--red-soft); border-color: var(--red-line); }
+    .painel .num { display: inline-block; font-size: 15px; font-weight: 800; color: var(--blue); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+
+    .destaque { border-left: 6px solid var(--ink); padding: 6px 0 6px 20px; margin-top: 22px; }
+    .destaque.vermelho { border-color: var(--red); }
+    .destaque.verde { border-color: var(--green); }
+
+    .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 14px; }
+    .chip { background: #fff; border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 16px; font-size: 19px; font-weight: 600; }
+    .chip.azul { background: var(--blue-soft); border-color: var(--blue-line); color: var(--blue); }
+    .chip.verde { background: var(--green-soft); border-color: var(--green-line); color: var(--green); }
+    .chip.escuro { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .chips .seta { color: var(--muted); font-weight: 700; font-size: 22px; }
+
+    /* ---------- código ---------- */
+    .reveal pre {
+      width: 100%; margin: 10px 0; box-shadow: none; font-size: 19px;
+      border-radius: 12px; overflow: hidden; font-family: var(--mono);
+    }
+    .reveal pre code {
+      font-family: var(--mono); background: var(--code-bg); padding: 18px 22px;
+      line-height: 1.5; max-height: 540px; border-radius: 12px;
+      font-variant-ligatures: none;
+    }
+    .reveal pre.longo { font-size: 16px; }
+    .reveal pre code.hljs { background: var(--code-bg); }
+    .reveal .hljs-ln-numbers { color: #64708a; padding-right: 14px !important; }
+    .reveal .hljs.has-highlights tr:not(.highlight-line) { opacity: .28; }
+    .reveal code.inline, .reveal p code, .reveal li code {
+      font-family: var(--mono); font-size: .86em; background: #EAEFF7; padding: 1px 6px; border-radius: 5px;
+    }
+    .rotulo-codigo { font-size: 16px; font-weight: 700; color: var(--muted); margin: 6px 0 -4px; }
+    .rotulo-codigo.bad { color: var(--red); }
+    .rotulo-codigo.good { color: var(--green); }
+
+    /* ---------- resposta HTTP ---------- */
+    .resposta { background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 18px 20px; position: relative; }
+    .resposta .status { display: inline-block; font-family: var(--mono); font-weight: 600; font-size: 20px; padding: 4px 12px; border-radius: 8px; }
+    .resposta .status.ok { background: var(--green-soft); color: var(--green); }
+    .resposta .corpo { font-family: var(--mono); font-size: 17px; margin-top: 12px; color: var(--ink); white-space: pre; line-height: 1.5; }
+    .carimbo {
+      position: absolute; right: 14px; bottom: -26px; transform: rotate(-6deg);
+      border: 3px solid var(--red); color: var(--red); background: #fff;
+      font-weight: 800; font-size: 20px; padding: 6px 14px; border-radius: 8px;
+    }
+
+    /* ---------- navegador (IDOR) ---------- */
+    .navegador { background: #fff; border: 1.5px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .navegador .barra { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #EEF2F8; border-bottom: 1.5px solid var(--line); }
+    .navegador .bolinhas { display: flex; gap: 6px; }
+    .navegador .bolinhas i { width: 11px; height: 11px; border-radius: 50%; background: #C9D2E0; display: block; }
+    .navegador .url { flex: 1; background: #fff; border-radius: 8px; padding: 6px 12px; font-family: var(--mono); font-size: 17px; }
+    .navegador .url b { font-weight: 600; }
+    .navegador .sessao { font-size: 15px; color: var(--muted); padding: 8px 14px 0; }
+    .navegador .conteudo { font-family: var(--mono); font-size: 17px; line-height: 1.5; padding: 8px 14px 16px; white-space: pre; }
+    .navegador .conteudo .bad { font-weight: 600; }
+    .navegador .r-stack > * { margin: 0 !important; }
+
+    /* ---------- SVG ---------- */
+    .diagrama { display: block; width: 100%; height: auto; overflow: visible; }
+    .diagrama text { font-family: var(--sans); fill: var(--ink); }
+    .diagrama .t  { font-size: 21px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+    .diagrama .ts { font-size: 16px; font-weight: 500; fill: var(--muted); text-anchor: middle; dominant-baseline: middle; }
+    .diagrama .tm { font-family: var(--mono); font-size: 15px; text-anchor: middle; dominant-baseline: middle; }
+    .diagrama .no      { fill: #fff; stroke: var(--line); stroke-width: 2; }
+    .diagrama .no.azul { fill: var(--blue-soft); stroke: var(--blue-line); }
+    .diagrama .no.verde{ fill: var(--green-soft); stroke: var(--green-line); }
+    .diagrama .no.vermelho { fill: var(--red-soft); stroke: var(--red-line); }
+    .diagrama .no.ambar { fill: var(--amber-soft); stroke: var(--amber-line); }
+    .diagrama .aresta { fill: none; stroke: var(--muted); stroke-width: 2.5; marker-end: url(#seta); }
+    .diagrama .aresta.azul { stroke: var(--blue); marker-end: url(#seta-azul); }
+    .diagrama .aresta.verde { stroke: var(--green); marker-end: url(#seta-verde); }
+    .diagrama .aresta.vermelha { stroke: var(--red); marker-end: url(#seta-vermelha); }
+    .diagrama .tracejada { stroke-dasharray: 7 6; }
+    .diagrama .vida { stroke: var(--line); stroke-width: 2; stroke-dasharray: 4 6; }
+
+    /* arestas que se "desenham" quando o fragmento aparece */
+    .reveal .fragment .desenha { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .7s ease .1s; }
+    .reveal .fragment.visible .desenha { stroke-dashoffset: 0; }
+
+    /* ---------- slides escuros ---------- */
+    .reveal section.escuro, .reveal section.escuro h1, .reveal section.escuro h2, .reveal section.escuro p { color: #fff; }
+    .reveal section.escuro .muted { color: #A9B4CC; }
+    .reveal section.escuro .diagrama text { fill: #fff; }
+    .reveal section.escuro .diagrama .ts { fill: #A9B4CC; }
+
+    .capa { display: grid; grid-template-columns: 1.25fr .75fr; gap: 40px; align-items: center; height: 560px; }
+    .capa .sub { font-size: 26px; color: #C4CCDD; max-width: 640px; }
+    .capa .linha2 { font-weight: 500; color: #8EA8FF; }
+    .capa .dinamica { margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .capa .dinamica span.passo { border: 1.5px solid rgba(255,255,255,.28); border-radius: 999px; padding: 6px 14px; font-size: 18px; font-weight: 600; }
+    .capa .dinamica span.s { color: #8EA8FF; font-weight: 800; }
+    .atalhos { font-size: 15px; color: #8C97B0; margin-top: 10px; }
+    .atalhos kbd { font-family: var(--mono); border: 1px solid #4A5675; border-radius: 4px; padding: 0 6px; margin: 0 2px; }
+
+    .pacote { animation: pacote 3.2s ease-in-out infinite; transform-box: fill-box; }
+    @keyframes pacote {
+      0%, 8%   { transform: translateY(0); }
+      42%, 58% { transform: translateY(232px); }
+      92%,100% { transform: translateY(0); }
+    }
+
+    .transicao h1 { font-size: 92px; letter-spacing: -0.035em; }
+
+    /* ---------- checklist ---------- */
+    .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+    .checklist li { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 14px 18px; margin: 0; }
+    .checklist .caixa { width: 30px; height: 30px; border: 2.5px solid var(--blue); border-radius: 7px; margin-top: 3px; }
+    .checklist strong { display: block; font-size: 23px; }
+    .checklist span.p { font-size: 18px; color: var(--muted); }
+
+    /* ---------- botões flutuantes ---------- */
+    .menti-btn {
+      position: fixed; left: 18px; bottom: 16px; z-index: 40;
+      display: none; align-items: center; gap: 8px;
+      background: var(--amber-soft); color: #7A4F0C; border: 1.5px solid var(--amber-line);
+      font: 600 15px var(--sans); padding: 8px 14px; border-radius: 999px; cursor: pointer; text-decoration: none;
+    }
+    .menti-btn.ativo { display: inline-flex; }
+    .menti-btn kbd { font-family: var(--mono); font-size: 13px; background: #fff; border: 1px solid var(--amber-line); border-radius: 4px; padding: 0 5px; }
+    .menti-btn:focus-visible, .timer:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+    .timer {
+      position: fixed; top: 16px; right: 18px; z-index: 40; display: none;
+      width: 88px; height: 88px; border: 0; background: transparent; cursor: pointer; padding: 0;
+    }
+    .timer.ativo { display: block; }
+    .timer svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .timer .fundo { fill: #fff; stroke: var(--line); stroke-width: 6; }
+    .timer .anel { fill: none; stroke: var(--amber); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+    .timer .valor { position: absolute; inset: 0; display: grid; place-items: center; font: 800 26px var(--sans); color: var(--ink); font-variant-numeric: tabular-nums; }
+    .timer.fim .anel { stroke: var(--red); }
+
+    .reveal .controls { color: var(--blue); }
+    .reveal .progress { color: var(--blue); height: 5px; }
+    .reveal .slide-number { font: 600 15px var(--sans); color: var(--muted); background: transparent; right: 100px; bottom: 16px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pacote { animation: none; }
+      .reveal .fragment .desenha { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Definições compartilhadas pelos diagramas -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B6782"/></marker>
+    <marker id="seta-azul" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5BEA"/></marker>
+    <marker id="seta-verde" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#178A5C"/></marker>
+    <marker id="seta-vermelha" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#CC3B3B"/></marker>
+    <marker id="seta-clara" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8EA8FF"/></marker>
+    <linearGradient id="escala" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#CC3B3B"/>
+      <stop offset=".5" stop-color="#E0A030"/>
+      <stop offset="1" stop-color="#178A5C"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ================================================================ CAPA -->
+<section class="escuro" data-background-color="#14213D">
+  <div class="capa">
+    <div>
+      <h1>Backend de qualidade<br><span class="linha2">além do código</span></h1>
+      <p class="sub">Diagnóstico, discussão e aplicação: o Mentimeter ouve a turma, estes slides aprofundam as respostas.</p>
+      <div class="dinamica">
+        <span class="passo fragment">Contexto</span><span class="s fragment">→</span>
+        <span class="passo fragment">Votação</span><span class="s fragment">→</span>
+        <span class="passo fragment">Resultado</span><span class="s fragment">→</span>
+        <span class="passo fragment">Discussão</span>
+      </div>
+    </div>
+    <svg class="diagrama" viewBox="0 0 420 440" role="img" aria-label="Uma requisição viaja do cliente até a API e o banco de dados e volta">
+      <g>
+        <rect x="100" y="14" width="220" height="96" rx="14" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <circle cx="122" cy="34" r="5" fill="#8C97B0"/><circle cx="140" cy="34" r="5" fill="#8C97B0"/><circle cx="158" cy="34" r="5" fill="#8C97B0"/>
+        <text class="t" x="210" y="72">Cliente</text>
+      </g>
+      <path d="M210,110 V172" stroke="#4A5675" stroke-width="3"/>
+      <circle class="pacote" cx="210" cy="96" r="8" fill="#6EE0A8"/>
+      <g>
+        <rect x="100" y="172" width="220" height="96" rx="14" fill="#2F5BEA"/>
+        <text class="t" x="210" y="210">API</text>
+        <text x="210" y="240" font-family="JetBrains Mono, monospace" font-size="15" fill="#DCE5FF" text-anchor="middle">POST /pedidos</text>
+      </g>
+      <path d="M210,268 V318" stroke="#4A5675" stroke-width="3"/>
+      <g>
+        <path d="M120,336 V408 A90,18 0 0 0 300,408 V336" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <ellipse cx="210" cy="336" rx="90" ry="18" fill="#1F2E52" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <text class="t" x="210" y="384">Banco</text>
+      </g>
+    </svg>
+  </div>
+  <p class="atalhos"><kbd>←</kbd><kbd>→</kbd> navegar &nbsp; <kbd>↓</kbd> aprofundar &nbsp; <kbd>M</kbd> Mentimeter &nbsp; <kbd>T</kbd> cronômetro &nbsp; <kbd>S</kbd> notas &nbsp; <kbd>F</kbd> tela cheia</p>
+  <aside class="notes">Mostre a dinâmica antes de começar. Os slides de pergunta escondem a discussão: ela só aparece quando você avança, depois da votação.</aside>
+</section>
+
+<!-- ================================================================ DINÂMICA -->
+<section>
+  <h2>Uma pergunta, uma conversa, um aprendizado</h2>
+  <p class="muted">Cada bloco segue o mesmo ciclo. A discussão de cada pergunta só aparece depois da votação.</p>
+  <svg class="diagrama" viewBox="0 0 1100 260" role="img" aria-label="Ciclo: contexto, participação, resultado e discussão, depois a próxima pergunta">
+    <g>
+      <rect class="no azul" x="20" y="40" width="220" height="110" rx="14"/>
+      <circle cx="52" cy="70" r="16" fill="#2F5BEA"/><text x="52" y="71" fill="#fff" font-size="16" font-weight="800" text-anchor="middle" dominant-baseline="middle" style="fill:#fff">1</text>
+      <text class="t" x="130" y="98">Contexto</text>
+      <text class="ts" x="130" y="126">Reveal.js</text>
+    </g>
+    <g class="fragment">
+      <path class="aresta desenha" pathLength="1" d="M244,95 H294"/>
+      <rect class="no ambar" x="300" y="40" width="220" height="110" rx="14"/>
+      <circle cx="332" cy="70" r="16" fill="#B7791F"/><text x="332" y="71" font-size="16" font-weight="800" text-anchor="middle" dominant-baseline="middle" style="fill:#fff">2</text>
+      <text class="t" x="410" y="98">Participação</text>
+      <text class="ts" x="410" y="126">Mentimeter</text>
+    </g>
+    <g class="fragment">
+      <path class="aresta desenha" pathLength="1" d="M524,95 H574"/>
+      <rect class="no ambar" x="580" y="40" width="220" height="110" rx="14"/>
+      <circle cx="612" cy="70" r="16" fill="#B7791F"/><text x="612" y="71" font-size="16" font-weight="800" text-anchor="middle" dominant-baseline="middle" style="fill:#fff">3</text>
+      <text class="t" x="690" y="98">Resultado</text>
+      <text class="ts" x="690" y="126">Mentimeter</text>
+    </g>
+    <g class="fragment">
+      <path class="aresta desenha" pathLength="1" d="M804,95 H854"/>
+      <rect class="no azul" x="860" y="40" width="220" height="110" rx="14"/>
+      <circle cx="892" cy="70" r="16" fill="#2F5BEA"/><text x="892" y="71" font-size="16" font-weight="800" text-anchor="middle" dominant-baseline="middle" style="fill:#fff">4</text>
+      <text class="t" x="970" y="98">Discussão</text>
+      <text class="ts" x="970" y="126">Reveal.js</text>
+    </g>
+    <g class="fragment">
+      <path class="aresta azul tracejada" d="M970,154 C970,245 130,245 130,158"/>
+      <text class="ts" x="550" y="222" style="fill:#2F5BEA;font-weight:700">próxima pergunta</text>
+    </g>
+  </svg>
+  <div class="destaque fragment"><p class="afirmacao menor">Não procuramos só a alternativa correta. Queremos entender o raciocínio por trás dela.</p></div>
+</section>
+
+<!-- ================================================================ P01 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">01</span><span class="t menti">Nuvem de palavras</span></div>
+  <h2>Backend de qualidade</h2>
+  <div class="pergunta">Quando você ouve “backend de qualidade”, qual é a primeira palavra que vem à sua cabeça?</div>
+  <div class="grid tres" style="margin-top:28px">
+    <div class="painel fragment fade-up"><h3>Confiabilidade</h3><p>Faz o que deveria fazer, inclusive diante de falhas.</p></div>
+    <div class="painel fragment fade-up"><h3>Segurança</h3><p>Protege dados, operações e usuários.</p></div>
+    <div class="painel fragment fade-up"><h3>Evolução</h3><p>Pode mudar sem se tornar impossível de manter.</p></div>
+  </div>
+  <p class="nota fragment">Atributos observáveis, não preferência pessoal. “Funcionar” é suficiente?</p>
+  <aside class="notes">Vote primeiro (tecla M abre o Mentimeter, T inicia o cronômetro). Depois da nuvem, avance para revelar os três atributos. Destaque palavras recorrentes e pergunte se “funcionar” é suficiente.</aside>
+</section>
+
+<!-- ================================================================ DISCUSSÃO 01 -->
+<section>
+  <div class="kicker"><span class="t">Discussão 01</span></div>
+  <h2>HTTP 200 não é certificado de qualidade</h2>
+  <div class="duas larga">
+    <div>
+      <p class="rotulo-codigo">pedidos.js</p>
+      <pre><code class="language-javascript" data-trim data-line-numbers="1-5|2|3|4">
+app.post('/pedidos', async (req, res) => {
+  const pedido = await db.pedidos.criar(req.body);
+  estoque.reservar(pedido.itens);   // promise sem await
+  res.status(200).json({ status: 'confirmado' });
+});
+      </code></pre>
+    </div>
+    <div style="padding-top:34px">
+      <div class="resposta">
+        <span class="status ok">200 OK</span>
+        <div class="corpo">{
+  "status": "confirmado"
+}</div>
+        <div class="carimbo fragment zoom-in">Estoque não reservado</div>
+      </div>
+    </div>
+  </div>
+  <div class="destaque vermelho fragment" style="margin-top:40px"><p class="afirmacao">Uma API pode responder rápido, com status 200, e ainda produzir um resultado errado.</p></div>
+  <aside class="notes">Percorra as linhas: o pedido é salvo, a reserva é disparada sem await (se falhar, ninguém fica sabendo) e a resposta diz “confirmado” mesmo assim. Peça outros exemplos de 200 que escondem erro de negócio.</aside>
+</section>
+
+<!-- ================================================================ P02 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">02</span><span class="t menti">Frequência</span></div>
+  <h2>IA no desenvolvimento</h2>
+  <div class="pergunta">Com que frequência você utiliza IA durante o desenvolvimento?</div>
+  <svg class="diagrama" viewBox="0 0 1100 250" role="img" aria-label="Linha do tempo: antes, durante e depois do código, e ao longo de todo o ciclo">
+    <path d="M60,70 H1040" stroke="#DCE3EF" stroke-width="4" marker-end="url(#seta)"/>
+    <g class="fragment">
+      <circle cx="190" cy="70" r="14" fill="#2F5BEA"/>
+      <text class="t" x="190" y="32">Antes do código</text>
+      <text class="ts" x="190" y="110">Entender requisitos,</text>
+      <text class="ts" x="190" y="132">explorar alternativas e modelar</text>
+    </g>
+    <g class="fragment">
+      <circle cx="550" cy="70" r="14" fill="#2F5BEA"/>
+      <text class="t" x="550" y="32">Durante o código</text>
+      <text class="ts" x="550" y="110">Implementar, explicar,</text>
+      <text class="ts" x="550" y="132">refatorar e investigar erros</text>
+    </g>
+    <g class="fragment">
+      <circle cx="910" cy="70" r="14" fill="#2F5BEA"/>
+      <text class="t" x="910" y="32">Depois do código</text>
+      <text class="ts" x="910" y="110">Gerar testes, revisar e</text>
+      <text class="ts" x="910" y="132">procurar vulnerabilidades</text>
+    </g>
+    <g class="fragment">
+      <rect x="60" y="176" width="980" height="52" rx="26" class="no verde"/>
+      <text class="t" x="550" y="203" style="font-size:19px">Ao longo do ciclo: documentar decisões e apoiar a evolução</text>
+    </g>
+  </svg>
+  <aside class="notes">Use o resultado para ver se a turma associa IA só à geração de código ou ao ciclo inteiro. Revele a linha do tempo estação por estação.</aside>
+</section>
+
+<!-- ================================================================ P03 (vertical) -->
+<section>
+  <section class="q" data-menti="">
+    <div class="kicker"><span class="n">03</span><span class="t menti">Escala de 0 a 10</span></div>
+    <h2>Confiança no código gerado</h2>
+    <div class="pergunta">Quanto você confia em código gerado por IA sem revisar linha por linha?</div>
+    <svg class="diagrama" viewBox="0 0 1100 140" role="img" aria-label="Escala de 0, não confio, a 10, confio sem revisar">
+      <rect x="50" y="30" width="1000" height="20" rx="10" fill="url(#escala)"/>
+      <g font-size="16" font-weight="700">
+        <text class="tm" x="50" y="78">0</text><text class="tm" x="150" y="78">1</text><text class="tm" x="250" y="78">2</text><text class="tm" x="350" y="78">3</text><text class="tm" x="450" y="78">4</text><text class="tm" x="550" y="78">5</text><text class="tm" x="650" y="78">6</text><text class="tm" x="750" y="78">7</text><text class="tm" x="850" y="78">8</text><text class="tm" x="950" y="78">9</text><text class="tm" x="1050" y="78">10</text>
+      </g>
+      <text class="ts" x="50" y="112" style="text-anchor:start">Não confio</text>
+      <text class="ts" x="550" y="112">Depende</text>
+      <text class="ts" x="1050" y="112" style="text-anchor:end">Confio sem revisar</text>
+    </svg>
+    <h3 class="fragment" style="margin-top:22px">O que transforma código gerado em código confiável?</h3>
+    <div class="chips">
+      <span class="chip escuro fragment">Código gerado</span>
+      <span class="seta fragment">→</span>
+      <span class="chip azul fragment">Revisão</span>
+      <span class="chip azul fragment">Testes</span>
+      <span class="chip azul fragment">Conhecimento do domínio</span>
+      <span class="chip azul fragment">Validação de segurança</span>
+      <span class="seta fragment">→</span>
+      <span class="chip verde fragment">Código confiável</span>
+    </div>
+    <p class="nota fragment">↓ Aprofundar: um exemplo que passa na revisão rápida</p>
+    <aside class="notes">Não trate confiança como nota moral. Pergunte quais evidências justificariam uma nota alta. Diferencie revisar cada linha de verificar comportamento e riscos de forma sistemática. Desça (↓) para o exemplo.</aside>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="t">Aprofundamento 03</span></div>
+    <h2>Parece certo. Até alguém testar o limite.</h2>
+    <div class="duas">
+      <div>
+        <p class="rotulo-codigo">gerado pela IA</p>
+        <pre><code class="language-javascript" data-trim data-line-numbers="1-3|2">
+function aplicarDesconto(preco, percentual) {
+  return preco - (preco * percentual) / 100;
+}
+        </code></pre>
+        <div class="fragment">
+          <p class="rotulo-codigo bad">console</p>
+          <pre><code class="language-javascript" data-trim>
+aplicarDesconto(50, 10)   // 45   ✓
+aplicarDesconto(50, 150)  // -25  ✗ preço negativo
+          </code></pre>
+        </div>
+      </div>
+      <div>
+        <div class="fragment">
+          <p class="rotulo-codigo good">o teste que encontra o defeito</p>
+          <pre><code class="language-javascript" data-trim data-line-numbers="2-4|5-7">
+describe('aplicarDesconto', () => {
+  test('rejeita percentual acima de 100', () => {
+    expect(() => aplicarDesconto(50, 150)).toThrow(RangeError);
+  });
+  test('rejeita percentual negativo', () => {
+    expect(() => aplicarDesconto(50, -5)).toThrow(RangeError);
+  });
+});
+          </code></pre>
+        </div>
+        <p class="afirmacao menor fragment">A confiança vem da evidência, não da aparência do código.</p>
+      </div>
+    </div>
+    <aside class="notes">Pergunte à turma, antes de revelar o console: o que acontece com 150%? Quem escreveu o teste precisou conhecer a regra de negócio, e isso a IA não sabia.</aside>
+  </section>
+</section>
+
+<!-- ================================================================ P04 (vertical) -->
+<section>
+  <section class="q" data-menti="">
+    <div class="kicker"><span class="n">04</span><span class="t menti">Múltipla escolha</span></div>
+    <h2>API gerada por IA: e agora?</h2>
+    <div class="pergunta compacta">O que fazer primeiro quando a IA gera uma API que funciona no cenário ideal?</div>
+    <svg class="diagrama" viewBox="0 0 1100 310" role="img" aria-label="Fluxograma: a requisição passa por validação, autorização e banco; cada etapa tem um caminho de falha">
+      <rect class="no" x="10" y="40" width="160" height="64" rx="12"/><text class="t" x="90" y="72">Requisição</text>
+      <path class="aresta" d="M172,72 H231"/>
+      <polygon class="no azul" points="330,20 425,72 330,124 235,72"/><text class="t" x="330" y="62" style="font-size:18px">Dados</text><text class="t" x="330" y="84" style="font-size:18px">válidos?</text>
+      <path class="aresta" d="M427,72 H481"/><text class="ts" x="454" y="58">sim</text>
+      <polygon class="no azul" points="580,20 675,72 580,124 485,72"/><text class="t" x="580" y="72" style="font-size:18px">Autorizado?</text>
+      <path class="aresta" d="M677,72 H731"/><text class="ts" x="704" y="58">sim</text>
+      <polygon class="no azul" points="830,20 925,72 830,124 735,72"/><text class="t" x="830" y="72" style="font-size:18px">Banco OK?</text>
+      <path class="aresta verde" d="M927,72 H956"/>
+      <rect class="no verde" x="960" y="40" width="130" height="64" rx="12"/><text class="t" x="1025" y="64" style="font-size:19px">201</text><text class="ts" x="1025" y="86">Created</text>
+      <text class="ts" x="550" y="0" style="fill:#178A5C;font-weight:700">happy path</text>
+
+      <g class="fragment">
+        <path class="aresta vermelha desenha" pathLength="1" d="M330,126 V214"/><text class="ts" x="350" y="168" style="text-anchor:start;fill:#CC3B3B">não</text>
+        <rect class="no vermelho" x="250" y="218" width="160" height="72" rx="12"/><text class="t" x="330" y="243" style="font-size:19px">422</text><text class="ts" x="330" y="268">Dados inválidos</text>
+      </g>
+      <g class="fragment">
+        <path class="aresta vermelha desenha" pathLength="1" d="M580,126 V214"/><text class="ts" x="600" y="168" style="text-anchor:start;fill:#CC3B3B">não</text>
+        <rect class="no vermelho" x="500" y="218" width="160" height="72" rx="12"/><text class="t" x="580" y="243" style="font-size:19px">403</text><text class="ts" x="580" y="268">Sem permissão</text>
+      </g>
+      <g class="fragment">
+        <path class="aresta vermelha desenha" pathLength="1" d="M830,126 V214"/><text class="ts" x="850" y="168" style="text-anchor:start;fill:#CC3B3B">não</text>
+        <rect class="no vermelho" x="750" y="218" width="160" height="72" rx="12"/><text class="t" x="830" y="243" style="font-size:19px">503</text><text class="ts" x="830" y="268">Banco indisponível</text>
+      </g>
+    </svg>
+    <div class="destaque fragment"><p class="afirmacao menor">Não basta perguntar “funciona?”. Precisamos descobrir em quais condições deixa de funcionar.</p></div>
+    <aside class="notes">Não revele os caminhos de falha antes da votação. Depois, pergunte que teste fariam primeiro e por quê. Desça (↓) para ver os testes.</aside>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="t">Aprofundamento 04</span></div>
+    <h2>Um teste para cada caminho vermelho</h2>
+    <pre class="longo"><code class="language-javascript" data-trim data-line-numbers="2-6|8-13|15-21">
+describe('POST /pedidos', () => {
+  it('422 quando a quantidade é inválida', async () => {
+    const res = await api.post('/pedidos').set(auth(maria))
+      .send({ produtoId: 7, quantidade: -2 });
+    expect(res.status).toBe(422);
+  });
+
+  it('403 quando o usuário não pode comprar para o cliente', async () => {
+    const res = await api.post('/pedidos').set(auth(joao))
+      .send({ clienteId: maria.id, produtoId: 7, quantidade: 1 });
+    expect(res.status).toBe(403);
+  });
+
+  it('503 e nada salvo quando o banco cai', async () => {
+    jest.spyOn(repo, 'salvar').mockRejectedValue(new Error('timeout'));
+    const res = await api.post('/pedidos').set(auth(maria))
+      .send({ produtoId: 7, quantidade: 1 });
+    expect(res.status).toBe(503);
+    expect(await repo.contar()).toBe(0);
+  });
+});
+    </code></pre>
+    <aside class="notes">Cada bloco destacado corresponde a um caminho vermelho do fluxograma. O terceiro teste verifica também o efeito colateral: nada pode ficar salvo pela metade.</aside>
+  </section>
+</section>
+
+<!-- ================================================================ P05 (vertical) -->
+<section>
+  <section class="q" data-menti="">
+    <div class="kicker"><span class="n">05</span><span class="t menti">Múltipla escolha</span></div>
+    <h2>Duas requisições. Uma unidade.</h2>
+    <div class="pergunta compacta">Dois pedidos tentam comprar a última unidade de um produto ao mesmo tempo. Qual é o risco?</div>
+    <svg class="diagrama" viewBox="0 0 1100 345" role="img" aria-label="Diagrama de sequência: os pedidos A e B leem estoque igual a 1 e os dois gravam estoque 0">
+      <rect class="no azul" x="80" y="6" width="180" height="44" rx="10"/><text class="t" x="170" y="29">Pedido A</text>
+      <rect class="no" x="460" y="6" width="180" height="44" rx="10"/><text class="t" x="550" y="29">Banco</text>
+      <rect class="no azul" x="840" y="6" width="180" height="44" rx="10"/><text class="t" x="930" y="29">Pedido B</text>
+      <path class="vida" d="M170,52 V300 M550,52 V300 M930,52 V300"/>
+
+      <g class="fragment">
+        <path class="aresta" d="M172,88 H546"/><text class="tm" x="360" y="74">SELECT estoque</text>
+        <path class="aresta tracejada" d="M548,118 H174"/><text class="tm" x="360" y="106" style="fill:#2F5BEA">estoque = 1</text>
+      </g>
+      <g class="fragment">
+        <path class="aresta" d="M928,150 H554"/><text class="tm" x="740" y="136">SELECT estoque</text>
+        <path class="aresta tracejada" d="M552,180 H926"/><text class="tm" x="740" y="168" style="fill:#2F5BEA">estoque = 1</text>
+      </g>
+      <g class="fragment">
+        <path class="aresta" d="M172,220 H546"/><text class="tm" x="360" y="206">UPDATE estoque = 0</text>
+        <text class="ts" x="60" y="220" style="text-anchor:middle;fill:#178A5C;font-weight:700">aprovado</text>
+      </g>
+      <g class="fragment">
+        <path class="aresta vermelha" d="M928,258 H554"/><text class="tm" x="740" y="244" style="fill:#CC3B3B">UPDATE estoque = 0</text>
+        <text class="ts" x="1040" y="258" style="text-anchor:middle;fill:#178A5C;font-weight:700">aprovado</text>
+      </g>
+      <g class="fragment">
+        <rect x="380" y="296" width="340" height="44" rx="10" fill="#CC3B3B"/>
+        <text class="t" x="550" y="319" style="fill:#fff;font-size:19px">Duas vendas, uma unidade</text>
+      </g>
+    </svg>
+    <div class="chips fragment" style="margin-top:6px">
+      <span class="chip">Concorrência</span><span class="chip">Atomicidade</span><span class="chip">Transações</span><span class="chip">Bloqueio</span>
+    </div>
+    <aside class="notes">Cada requisição parece correta isoladamente; o defeito aparece no entrelaçamento (interleaving). Revele a sequência mensagem por mensagem. Pergunte como protegeriam a regra no banco. Desça (↓) para o código.</aside>
+  </section>
+
+  <section data-auto-animate>
+    <div class="kicker"><span class="t">Aprofundamento 05</span></div>
+    <h2>Ler, decidir, gravar: a janela da corrida</h2>
+    <p class="rotulo-codigo bad">vulnerável a condição de corrida</p>
+    <pre data-id="compra"><code class="language-javascript" data-trim data-line-numbers="2-3|4|5|6-8">
+async function comprar(produtoId) {
+  const { rows } = await db.query(
+    'SELECT estoque FROM produtos WHERE id = $1', [produtoId]);
+  if (rows[0].estoque &lt; 1) throw new Error('Esgotado');
+  // outra requisição pode ler o mesmo valor aqui
+  await db.query(
+    'UPDATE produtos SET estoque = $1 WHERE id = $2',
+    [rows[0].estoque - 1, produtoId]);
+}
+    </code></pre>
+    <aside class="notes">O intervalo entre o SELECT e o UPDATE é a janela onde a outra requisição entra. Avance (↓) para ver a versão atômica com animação.</aside>
+  </section>
+
+  <section data-auto-animate>
+    <div class="kicker"><span class="t">Aprofundamento 05</span></div>
+    <h2>Correção: deixe o banco decidir</h2>
+    <p class="rotulo-codigo good">operação atômica</p>
+    <pre data-id="compra"><code class="language-javascript" data-trim data-line-numbers="|2-4|5">
+async function comprar(produtoId) {
+  const { rowCount } = await db.query(
+    `UPDATE produtos SET estoque = estoque - 1
+      WHERE id = $1 AND estoque >= 1`, [produtoId]);
+  if (rowCount === 0) throw new Error('Esgotado');
+}
+    </code></pre>
+    <div class="grid tres" style="margin-top:14px">
+      <div class="painel verde fragment"><h3>UPDATE condicional</h3><p>Verificação e escrita numa única instrução.</p></div>
+      <div class="painel fragment"><h3>SELECT … FOR UPDATE</h3><p>Bloqueia a linha dentro de uma transação.</p></div>
+      <div class="painel fragment"><h3>CHECK (estoque >= 0)</h3><p>Rede de segurança no próprio esquema.</p></div>
+    </div>
+    <aside class="notes">A verificação e a escrita acontecem no mesmo comando; o banco serializa. As outras duas alternativas são complementares: bloqueio explícito e restrição no esquema.</aside>
+  </section>
+</section>
+
+<!-- ================================================================ P06 (vertical) -->
+<section>
+  <section class="q" data-menti="">
+    <div class="kicker"><span class="n">06</span><span class="t menti">Múltipla escolha</span></div>
+    <h2>Autenticado não significa autorizado</h2>
+    <div class="pergunta compacta">Um usuário altera o ID do pedido na URL e consegue acessar o pedido de outra pessoa. Qual é o problema?</div>
+    <div class="duas estreita">
+      <div class="navegador">
+        <div class="barra">
+          <span class="bolinhas"><i></i><i></i><i></i></span>
+          <div class="url r-stack" style="justify-items:start">
+            <span class="fragment fade-out" data-fragment-index="1">GET /api/pedidos/<b>123</b></span>
+            <span class="fragment" data-fragment-index="1">GET /api/pedidos/<b class="bad">124</b></span>
+          </div>
+        </div>
+        <div class="sessao">Sessão: Maria (token válido)</div>
+        <div class="r-stack" style="justify-items:start">
+          <div class="conteudo fragment fade-out" data-fragment-index="1">{
+  "id": 123,
+  "cliente": "Maria",
+  "total": 89.90
+}</div>
+          <div class="conteudo fragment" data-fragment-index="1">{
+  "id": 124,
+  "cliente": <span class="bad">"João"</span>,
+  "endereco": <span class="bad">"Rua das Flores, 12"</span>
+}</div>
+        </div>
+      </div>
+      <div style="display:grid;gap:14px">
+        <div class="painel fragment" data-fragment-index="2"><h3>Autenticação</h3><p>Quem está fazendo a requisição?</p></div>
+        <div class="painel azul fragment" data-fragment-index="3"><h3>Autorização</h3><p>Essa pessoa pode acessar <em>este</em> recurso?</p></div>
+        <div class="destaque vermelho fragment" data-fragment-index="4" style="margin-top:4px"><p style="font-size:21px;margin:0"><strong>IDOR:</strong> a API precisa verificar a permissão sobre o recurso, não apenas a validade do token.</p></div>
+      </div>
+    </div>
+    <aside class="notes">Avance uma vez para trocar 123 por 124 na URL. Pergunte por que esconder o botão na interface não resolve. A autorização deve ser verificada no servidor em cada operação. Desça (↓) para o código.</aside>
+  </section>
+
+  <section data-auto-animate>
+    <div class="kicker"><span class="t">Aprofundamento 06</span></div>
+    <h2>O token diz quem é. A consulta precisa dizer de quem é.</h2>
+    <p class="rotulo-codigo bad">vulnerável</p>
+    <pre data-id="idor"><code class="language-javascript" data-trim data-line-numbers="1|2|3">
+app.get('/api/pedidos/:id', autenticar, async (req, res) => {
+  const pedido = await Pedido.buscar({ id: req.params.id });
+  res.json(pedido);
+});
+    </code></pre>
+    <aside class="notes">O middleware autenticar só garante que existe um usuário logado. Nada liga o pedido ao usuário.</aside>
+  </section>
+
+  <section data-auto-animate>
+    <div class="kicker"><span class="t">Aprofundamento 06</span></div>
+    <h2>O token diz quem é. A consulta precisa dizer de quem é.</h2>
+    <p class="rotulo-codigo good">corrigido</p>
+    <pre data-id="idor"><code class="language-javascript" data-trim data-line-numbers="|2-5|6">
+app.get('/api/pedidos/:id', autenticar, async (req, res) => {
+  const pedido = await Pedido.buscar({
+    id: req.params.id,
+    clienteId: req.usuario.id,   // o dono do recurso
+  });
+  if (!pedido) return res.status(404).end();
+  res.json(pedido);
+});
+    </code></pre>
+    <p class="nota fragment">Por que 404 e não 403? Responder 403 confirma que o pedido 124 existe.</p>
+    <aside class="notes">Discuta a escolha 404 vs 403: ambas são defensáveis; 404 evita revelar a existência do recurso.</aside>
+  </section>
+</section>
+
+<!-- ================================================================ P07 (vertical) -->
+<section>
+  <section class="q" data-menti="">
+    <div class="kicker"><span class="n">07</span><span class="t menti">Múltipla escolha</span></div>
+    <h2>Pedido salvo. Estoque não reservado.</h2>
+    <div class="pergunta compacta">O pedido foi salvo, mas a reserva do estoque falhou. O que deveria acontecer?</div>
+    <svg class="diagrama" viewBox="0 0 1100 250" role="img" aria-label="Criar pedido e registrar itens funcionam, reservar estoque falha e o rollback desfaz tudo">
+      <rect class="no verde" x="20" y="30" width="240" height="96" rx="14"/><text class="t" x="140" y="66">Criar pedido</text><text class="ts" x="140" y="98" style="fill:#178A5C;font-weight:700">✓ OK</text>
+      <path class="aresta" d="M262,78 H424"/>
+      <rect class="no verde" x="430" y="30" width="240" height="96" rx="14"/><text class="t" x="550" y="66">Registrar itens</text><text class="ts" x="550" y="98" style="fill:#178A5C;font-weight:700">✓ OK</text>
+      <path class="aresta" d="M672,78 H834"/>
+      <rect class="no vermelho" x="840" y="30" width="240" height="96" rx="14"/><text class="t" x="960" y="66">Reservar estoque</text><text class="ts" x="960" y="98" style="fill:#CC3B3B;font-weight:700">✗ Falhou</text>
+
+      <g class="fragment">
+        <path class="aresta vermelha tracejada" d="M960,128 C960,232 140,232 140,132"/>
+        <rect x="470" y="196" width="160" height="38" rx="8" fill="#CC3B3B"/>
+        <text class="t" x="550" y="216" style="fill:#fff;font-size:17px;font-family:'JetBrains Mono',monospace">ROLLBACK</text>
+      </g>
+      <g class="fragment">
+        <rect x="20" y="30" width="240" height="96" rx="14" fill="rgba(246,248,252,.85)"/>
+        <rect x="430" y="30" width="240" height="96" rx="14" fill="rgba(246,248,252,.85)"/>
+        <text class="t" x="140" y="78" style="fill:#5B6782">desfeito</text>
+        <text class="t" x="550" y="78" style="fill:#5B6782">desfeito</text>
+      </g>
+    </svg>
+    <div class="destaque fragment"><p class="afirmacao menor">A operação precisa preservar a consistência do negócio: ou tudo, ou nada.</p></div>
+    <aside class="notes">Depois da votação, revele o rollback. Discuta o limite da transação: efeitos externos (pagamento em outro serviço) exigem compensação ou saga. Desça (↓) para o código.</aside>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="t">Aprofundamento 07</span></div>
+    <h2>Transação local com node-postgres</h2>
+    <div class="duas larga">
+      <pre><code class="language-javascript" data-trim data-line-numbers="1-3|4-6|7|8-10|11-13">
+const client = await pool.connect();
+try {
+  await client.query('BEGIN');
+  const pedido = await criarPedido(client, dados);
+  await registrarItens(client, pedido.id, dados.itens);
+  await reservarEstoque(client, dados.itens); // lança erro
+  await client.query('COMMIT');
+} catch (erro) {
+  await client.query('ROLLBACK');
+  throw erro;
+} finally {
+  client.release();
+}
+      </code></pre>
+      <div style="display:grid;gap:14px;padding-top:10px">
+        <div class="painel fragment"><h3>Mesmo <code>client</code></h3><p>Todas as etapas usam a mesma conexão; senão, não estão na mesma transação.</p></div>
+        <div class="painel vermelho fragment"><h3>O limite</h3><p>ROLLBACK não desfaz um e-mail enviado ou um pagamento em outro serviço.</p></div>
+        <div class="painel azul fragment"><h3>Além do banco</h3><p>Compensação, saga ou outbox para efeitos externos.</p></div>
+      </div>
+    </div>
+    <aside class="notes">Não prometa que um rollback SQL desfaz qualquer efeito externo. Esse é o gancho para padrões de compensação.</aside>
+  </section>
+</section>
+
+<!-- ================================================================ P08 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">08</span><span class="t menti">Resposta aberta</span></div>
+  <h2>O que você quer melhorar?</h2>
+  <div class="pergunta">O que você gostaria de melhorar no desenvolvimento backend?</div>
+  <div class="grid tres" style="margin-top:28px">
+    <div class="painel fragment fade-up"><h3>Projetar</h3><p>Arquitetura, modelagem e APIs.</p></div>
+    <div class="painel fragment fade-up"><h3>Construir</h3><p>Implementação, banco e performance.</p></div>
+    <div class="painel fragment fade-up"><h3>Garantir</h3><p>Testes, segurança e observabilidade.</p></div>
+  </div>
+  <aside class="notes">Agrupe as respostas nesses três temas. Guarde os pontos recorrentes para a clínica dos projetos.</aside>
+</section>
+
+<!-- ================================================================ TRANSIÇÃO -->
+<section class="escuro transicao" data-background-color="#14213D" data-transition="zoom">
+  <div style="display:flex;flex-direction:column;justify-content:center;height:600px">
+    <h1>Agora, vamos<br>sair do código.</h1>
+    <p class="muted fragment fade-up" style="font-size:30px;max-width:820px">Vamos olhar para o problema que o software precisa resolver, e para quem precisa dele.</p>
+  </div>
+</section>
+
+<!-- ================================================================ P09 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">09</span><span class="t menti">Múltipla escolha</span></div>
+  <h2>O cliente pediu uma funcionalidade</h2>
+  <div class="duas" style="grid-template-columns:1.1fr .9fr">
+    <div>
+      <div class="pergunta compacta">Um cliente solicita uma funcionalidade. Qual deve ser sua primeira preocupação?</div>
+      <div class="painel" style="margin-top:14px">
+        <h3>“Preciso de um botão para exportar meus relatórios.”</h3>
+        <p>O pedido é a ponta visível. O que está por baixo decide se o botão é a resposta certa.</p>
+      </div>
+      <div class="destaque fragment" data-fragment-index="5"><p class="afirmacao">Pedido de funcionalidade não é definição de problema.</p></div>
+    </div>
+    <svg class="diagrama" viewBox="0 0 460 440" role="img" aria-label="Iceberg: o botão de exportar está acima da água; as perguntas sobre o problema estão submersas">
+      <rect x="0" y="120" width="460" height="320" rx="16" fill="#E7EDFF"/>
+      <path d="M0,120 Q30,110 60,120 T120,120 T180,120 T240,120 T300,120 T360,120 T420,120 T480,120" fill="none" stroke="#B9C8FA" stroke-width="3"/>
+      <polygon points="175,120 222,52 248,70 290,120" fill="#fff" stroke="#B9C8FA" stroke-width="2"/>
+      <text class="t" x="230" y="26" style="font-size:19px">Botão de exportar</text>
+      <polygon points="175,122 290,122 380,215 400,320 330,420 150,428 70,330 95,215" fill="#fff" stroke="#B9C8FA" stroke-width="2" opacity=".95"/>
+      <text class="t fragment" data-fragment-index="1" x="235" y="175" style="font-size:19px">Quem precisa do relatório?</text>
+      <text class="t fragment" data-fragment-index="2" x="235" y="235" style="font-size:19px">Que decisão será tomada?</text>
+      <text class="t fragment" data-fragment-index="3" x="235" y="295" style="font-size:19px">Qual a dificuldade hoje?</text>
+      <text class="t fragment" data-fragment-index="4" x="235" y="355" style="font-size:19px;fill:#2F5BEA">O botão resolve?</text>
+    </svg>
+  </div>
+  <aside class="notes">Revele as perguntas submersas uma a uma. Entender o problema não significa ignorar o pedido: significa investigar se a solução pedida é a melhor resposta para a necessidade.</aside>
+</section>
+
+<!-- ================================================================ P10 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">10</span><span class="t menti">Escala de 0 a 10</span></div>
+  <h2>Impacto para o usuário</h2>
+  <div class="pergunta">Quanto você considera o impacto para o usuário antes de implementar uma funcionalidade?</div>
+  <div class="duas" style="margin-top:22px">
+    <div class="painel">
+      <h3>Entrega técnica</h3>
+      <ul class="muted" style="padding-left:22px">
+        <li class="fragment" data-fragment-index="1" style="font-size:20px">Endpoint criado</li>
+        <li class="fragment" data-fragment-index="2" style="font-size:20px">Tabela adicionada</li>
+        <li class="fragment" data-fragment-index="3" style="font-size:20px">Botão implementado</li>
+      </ul>
+    </div>
+    <div class="painel verde">
+      <h3>Resultado para o usuário</h3>
+      <ul style="padding-left:22px">
+        <li class="fragment" data-fragment-index="1" style="font-size:20px">Problema resolvido</li>
+        <li class="fragment" data-fragment-index="2" style="font-size:20px">Tempo economizado</li>
+        <li class="fragment" data-fragment-index="3" style="font-size:20px">Tarefa concluída</li>
+      </ul>
+    </div>
+  </div>
+  <div class="destaque fragment"><p class="afirmacao">Valor não é medido pela quantidade de código.</p></div>
+  <aside class="notes">Cada item técnico aparece junto com o resultado que deveria produzir. Pergunte se uma funcionalidade pode estar pronta tecnicamente sem melhorar o resultado do usuário.</aside>
+</section>
+
+<!-- ================================================================ P11 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">11</span><span class="t menti">Múltipla escolha</span></div>
+  <h2>Entrega incremental</h2>
+  <div class="pergunta compacta">Em um projeto com prazo de duas semanas, qual abordagem você considera melhor?</div>
+  <svg class="diagrama" viewBox="0 0 1100 300" role="img" aria-label="Comparação: a abordagem A entrega tudo no último dia; a abordagem B faz cinco entregas pequenas com feedback">
+    <g font-size="14">
+      <text class="ts" x="224" y="290" style="font-size:14px">Dia 1</text><text class="ts" x="312" y="290" style="font-size:14px">2</text><text class="ts" x="400" y="290" style="font-size:14px">3</text><text class="ts" x="488" y="290" style="font-size:14px">4</text><text class="ts" x="576" y="290" style="font-size:14px">5</text><text class="ts" x="664" y="290" style="font-size:14px">6</text><text class="ts" x="752" y="290" style="font-size:14px">7</text><text class="ts" x="840" y="290" style="font-size:14px">8</text><text class="ts" x="928" y="290" style="font-size:14px">9</text><text class="ts" x="1016" y="290" style="font-size:14px">10</text>
+    </g>
+    <g>
+      <text class="t" x="20" y="72" style="text-anchor:start">Abordagem A</text>
+      <rect x="180" y="47" width="860" height="50" rx="10" fill="#EEF1F6" stroke="#DCE3EF" stroke-width="2"/>
+      <text class="ts" x="600" y="72">construindo tudo, sem nada para mostrar</text>
+      <polygon points="1060,52 1080,72 1060,92 1040,72" fill="#B7791F"/>
+      <text class="ts" x="1060" y="116" style="fill:#B7791F;font-weight:700">entrega única</text>
+    </g>
+    <g class="fragment">
+      <text class="t" x="20" y="212" style="text-anchor:start">Abordagem B</text>
+      <rect class="no verde" x="180" y="187" width="164" height="50" rx="10"/><text class="ts" x="262" y="212" style="fill:#178A5C;font-weight:700">Fatia 1 ✓</text>
+      <rect class="no verde" x="358" y="187" width="164" height="50" rx="10"/><text class="ts" x="440" y="212" style="fill:#178A5C;font-weight:700">Fatia 2 ✓</text>
+      <rect class="no verde" x="536" y="187" width="164" height="50" rx="10"/><text class="ts" x="618" y="212" style="fill:#178A5C;font-weight:700">Fatia 3 ✓</text>
+      <rect class="no verde" x="714" y="187" width="164" height="50" rx="10"/><text class="ts" x="796" y="212" style="fill:#178A5C;font-weight:700">Fatia 4 ✓</text>
+      <rect class="no verde" x="892" y="187" width="164" height="50" rx="10"/><text class="ts" x="974" y="212" style="fill:#178A5C;font-weight:700">Fatia 5 ✓</text>
+    </g>
+    <g class="fragment">
+      <path class="aresta azul" d="M320,185 C320,152 382,152 382,183"/>
+      <path class="aresta azul" d="M498,185 C498,152 560,152 560,183"/>
+      <path class="aresta azul" d="M676,185 C676,152 738,152 738,183"/>
+      <path class="aresta azul" d="M854,185 C854,152 916,152 916,183"/>
+      <text class="ts" x="618" y="146" style="fill:#2F5BEA;font-weight:700">feedback a cada entrega</text>
+    </g>
+  </svg>
+  <p class="nota fragment">Entregar em partes não é entregar pedaços incompletos: é entregar pequenos fluxos que já resolvem alguma coisa.</p>
+  <aside class="notes">Conecte com o Elephant Carpaccio. Na abordagem A, o primeiro feedback chega no dia 10. Peça que identifiquem uma entrega pequena que possa ser demonstrada e validada.</aside>
+</section>
+
+<!-- ================================================================ P12 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">12</span><span class="t menti">Múltipla escolha</span></div>
+  <h2>O que gera mais valor?</h2>
+  <div class="pergunta compacta">Qual entrega cria mais valor para alguém que precisa vender um produto?</div>
+  <svg class="diagrama" viewBox="0 0 1100 290" role="img" aria-label="O fluxo do usuário no topo; banco, CRUD, autenticação e documentação embaixo, servindo ao fluxo">
+    <text class="ts" x="110" y="10" style="text-anchor:start;fill:#178A5C;font-weight:700">O que a pessoa precisa fazer</text>
+    <rect class="no verde" x="110" y="24" width="240" height="70" rx="12"/><text class="t" x="230" y="59">Selecionar produto</text>
+    <path class="aresta verde" d="M352,59 H424"/>
+    <rect class="no verde" x="430" y="24" width="240" height="70" rx="12"/><text class="t" x="550" y="59">Informar dados</text>
+    <path class="aresta verde" d="M672,59 H744"/>
+    <rect class="no verde" x="750" y="24" width="240" height="70" rx="12"/><text class="t" x="870" y="59">Confirmar pedido</text>
+
+    <g class="fragment">
+      <rect class="no" x="40" y="210" width="220" height="58" rx="12"/><text class="t" x="150" y="239" style="font-size:19px">Banco de dados</text>
+      <rect class="no" x="310" y="210" width="220" height="58" rx="12"/><text class="t" x="420" y="239" style="font-size:19px">CRUD</text>
+      <rect class="no" x="580" y="210" width="220" height="58" rx="12"/><text class="t" x="690" y="239" style="font-size:19px">Autenticação</text>
+      <rect class="no" x="850" y="210" width="220" height="58" rx="12"/><text class="t" x="960" y="239" style="font-size:19px">Documentação</text>
+      <text class="ts" x="40" y="194" style="text-anchor:start">Peças técnicas</text>
+    </g>
+    <g class="fragment">
+      <path class="aresta tracejada" d="M150,208 L220,98"/>
+      <path class="aresta tracejada" d="M420,208 L520,98"/>
+      <path class="aresta tracejada" d="M690,208 L590,98"/>
+      <path class="aresta tracejada" d="M960,208 L880,98"/>
+      <text class="ts" x="550" y="158" style="fill:#2F5BEA;font-weight:700">servem ao fluxo</text>
+    </g>
+  </svg>
+  <div class="destaque fragment"><p class="afirmacao menor">O usuário não compra arquitetura. Ele precisa realizar uma atividade.</p></div>
+  <aside class="notes">Evite desvalorizar arquitetura. A ideia é discutir sequência e valor observável, não dizer que qualidade técnica é dispensável.</aside>
+</section>
+
+<!-- ================================================================ P13 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">13</span><span class="t menti">Resposta aberta</span></div>
+  <h2>Antes de começar a programar</h2>
+  <div class="pergunta">O que você precisaria descobrir antes de começar a programar?</div>
+  <div class="grid" style="margin-top:24px">
+    <div class="painel fragment fade-right"><span class="num">1</span><h3>Quem é o usuário?</h3><p>Perfil, contexto e frequência de uso.</p></div>
+    <div class="painel fragment fade-right"><span class="num">2</span><h3>Qual problema enfrenta?</h3><p>A dor concreta, em palavras do usuário.</p></div>
+    <div class="painel fragment fade-right"><span class="num">3</span><h3>Como resolve hoje?</h3><p>Planilha, papel, outro sistema, ninguém resolve?</p></div>
+    <div class="painel azul fragment fade-right"><span class="num">4</span><h3>Como saberemos se funcionou?</h3><p>O indicador que muda quando a entrega dá certo.</p></div>
+  </div>
+  <aside class="notes">Use as respostas para distinguir descoberta de produto de detalhamento técnico. O objetivo é reduzir o risco de construir a solução errada.</aside>
+</section>
+
+<!-- ================================================================ P14 (vertical) -->
+<section>
+  <section class="q" data-menti="">
+    <div class="kicker"><span class="n">14</span><span class="t menti">Múltipla escolha</span></div>
+    <h2>Primeira entrega de uma API de pedidos</h2>
+    <div class="pergunta compacta">Qual seria a melhor primeira entrega para validar uma hipótese de negócio?</div>
+    <svg class="diagrama" viewBox="0 0 1100 310" role="img" aria-label="Grade de camadas e funcionalidades: uma camada horizontal não é demonstrável, uma fatia vertical é">
+      <g class="ts" style="font-size:15px">
+        <text class="ts" x="288" y="30" style="font-size:16px">Receber pedido</text>
+        <text class="ts" x="464" y="30" style="font-size:16px">Pagamento</text>
+        <text class="ts" x="640" y="30" style="font-size:16px">Notificação</text>
+        <text class="ts" x="816" y="30" style="font-size:16px">Relatórios</text>
+        <text class="ts" x="992" y="30" style="font-size:16px">Cupons</text>
+      </g>
+      <g>
+        <text class="t" x="20" y="78" style="text-anchor:start;font-size:19px">Interface</text>
+        <text class="t" x="20" y="134" style="text-anchor:start;font-size:19px">API</text>
+        <text class="t" x="20" y="190" style="text-anchor:start;font-size:19px">Regras</text>
+        <text class="t" x="20" y="246" style="text-anchor:start;font-size:19px">Banco</text>
+      </g>
+      <g fill="#fff" stroke="#DCE3EF" stroke-width="2">
+        <rect x="203" y="53" width="170" height="50" rx="8"/><rect x="379" y="53" width="170" height="50" rx="8"/><rect x="555" y="53" width="170" height="50" rx="8"/><rect x="731" y="53" width="170" height="50" rx="8"/><rect x="907" y="53" width="170" height="50" rx="8"/>
+        <rect x="203" y="109" width="170" height="50" rx="8"/><rect x="379" y="109" width="170" height="50" rx="8"/><rect x="555" y="109" width="170" height="50" rx="8"/><rect x="731" y="109" width="170" height="50" rx="8"/><rect x="907" y="109" width="170" height="50" rx="8"/>
+        <rect x="203" y="165" width="170" height="50" rx="8"/><rect x="379" y="165" width="170" height="50" rx="8"/><rect x="555" y="165" width="170" height="50" rx="8"/><rect x="731" y="165" width="170" height="50" rx="8"/><rect x="907" y="165" width="170" height="50" rx="8"/>
+        <rect x="203" y="221" width="170" height="50" rx="8"/><rect x="379" y="221" width="170" height="50" rx="8"/><rect x="555" y="221" width="170" height="50" rx="8"/><rect x="731" y="221" width="170" height="50" rx="8"/><rect x="907" y="221" width="170" height="50" rx="8"/>
+      </g>
+      <g class="fragment fade-out" data-fragment-index="2">
+        <g class="fragment" data-fragment-index="1">
+          <rect x="197" y="216" width="886" height="60" rx="10" fill="rgba(204,59,59,.14)" stroke="#CC3B3B" stroke-width="3"/>
+          <text class="ts" x="640" y="300" style="fill:#CC3B3B;font-weight:700">Camada horizontal: todo o banco pronto, nada para demonstrar</text>
+        </g>
+      </g>
+      <g class="fragment" data-fragment-index="2">
+        <rect x="197" y="47" width="182" height="230" rx="10" fill="rgba(23,138,92,.16)" stroke="#178A5C" stroke-width="3"/>
+        <text class="ts" x="640" y="300" style="fill:#178A5C;font-weight:700">Fatia vertical: pequena, completa e demonstrável</text>
+      </g>
+    </svg>
+    <div class="destaque verde fragment" data-fragment-index="3"><p class="afirmacao menor">Uma fatia atravessa todas as camadas necessárias para entregar um comportamento útil.</p></div>
+    <aside class="notes">Primeiro avanço: a camada horizontal (tentação comum). Segundo: a fatia vertical. Retome o Elephant Carpaccio. Desça (↓) para ver a fatia em código.</aside>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="t">Aprofundamento 14</span></div>
+    <h2>A fatia vertical em 7 linhas</h2>
+    <div class="chips" style="margin:0 0 6px">
+      <span class="chip">Receber</span><span class="seta">→</span><span class="chip">Validar</span><span class="seta">→</span><span class="chip">Calcular total</span><span class="seta">→</span><span class="chip">Persistir</span><span class="seta">→</span><span class="chip verde">Confirmar</span>
+    </div>
+    <pre><code class="language-javascript" data-trim data-line-numbers="1|2-3|4|5|6">
+app.post('/pedidos', autenticar, async (req, res) => {
+  const erros = validarPedido(req.body);
+  if (erros.length) return res.status(422).json({ erros });
+  const total = calcularTotal(req.body.itens);
+  const pedido = await repo.salvar({ ...req.body, total, clienteId: req.usuario.id });
+  res.status(201).json({ id: pedido.id, total });
+});
+    </code></pre>
+    <p class="nota fragment">Sem pagamento, sem cupom, sem relatório. Mas já dá para mostrar a alguém e perguntar: é isso?</p>
+    <aside class="notes">Cada destaque corresponde a uma etapa do fluxo acima. O que fica de fora é decisão consciente, não esquecimento.</aside>
+  </section>
+</section>
+
+<!-- ================================================================ P15 (vertical) -->
+<section>
+  <section class="q" data-menti="">
+    <div class="kicker"><span class="n">15</span><span class="t menti">Múltipla escolha</span></div>
+    <h2>O papel humano no desenvolvimento com IA</h2>
+    <div class="pergunta compacta">Se a IA consegue implementar uma funcionalidade em poucos minutos, o que ainda precisa ser decidido pelo ser humano?</div>
+    <div class="grid quatro" style="margin-top:18px">
+      <div class="painel fragment fade-up"><h3>O que construir?</h3><p>Objetivo e escopo.</p></div>
+      <div class="painel fragment fade-up"><h3>Para quem?</h3><p>Usuário e contexto.</p></div>
+      <div class="painel fragment fade-up"><h3>Quais limites?</h3><p>Regras e restrições.</p></div>
+      <div class="painel fragment fade-up"><h3>Como validar?</h3><p>Critérios e resultados.</p></div>
+    </div>
+    <div class="destaque fragment"><p class="afirmacao">A IA acelera a execução. Não define sozinha o que merece ser construído.</p></div>
+    <aside class="notes">Pergunte o que acontece quando um prompt não define regras, restrições ou critérios de aceitação: a IA preenche as lacunas com suposições. Desça (↓) para comparar dois prompts.</aside>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="t">Aprofundamento 15</span></div>
+    <h2>As decisões humanas aparecem no prompt</h2>
+    <div class="duas" style="grid-template-columns:.7fr 1.3fr">
+      <div>
+        <p class="rotulo-codigo bad">prompt vago</p>
+        <pre><code class="language-plaintext" data-trim>
+Crie uma API de pedidos em Node.
+        </code></pre>
+        <p class="nota fragment" data-fragment-index="1">A IA vai decidir sozinha: validações, permissões, códigos de erro, testes.</p>
+      </div>
+      <div class="fragment" data-fragment-index="2">
+        <p class="rotulo-codigo good">prompt com decisões</p>
+        <pre><code class="language-plaintext" data-trim data-line-numbers="1-2|3-4|5-6|7-8" data-fragment-index="2">
+Contexto: vendedores registram pedidos pelo celular,
+durante a visita ao cliente.
+Escopo: apenas POST /pedidos em Node/Express.
+Fora do escopo: pagamento e cupons.
+Regras: quantidade entre 1 e 50; total calculado no servidor;
+só o dono acessa o pedido; estoque nunca negativo.
+Aceite: 201 com id e total; 422 para dados inválidos;
+testes Jest para cada regra.
+        </code></pre>
+      </div>
+    </div>
+    <aside class="notes">Mapeie cada par de linhas para um dos quatro cartões: para quem, o que construir, quais limites, como validar.</aside>
+  </section>
+</section>
+
+<!-- ================================================================ P16 -->
+<section class="q" data-menti="">
+  <div class="kicker"><span class="n">16</span><span class="t menti">Nuvem de palavras</span></div>
+  <h2>Product Engineer</h2>
+  <div class="pergunta compacta">Além de escrever código, o que um engenheiro de produto deveria conhecer?</div>
+  <div class="duas" style="grid-template-columns:.95fr 1.05fr;align-items:center">
+    <svg class="diagrama" viewBox="0 0 520 430" role="img" aria-label="Quatro áreas sobrepostas, negócio, usuários, tecnologia e experimentação, com o engenheiro de produto no centro">
+      <circle class="fragment" data-fragment-index="1" cx="195" cy="150" r="125" fill="rgba(47,91,234,.16)" stroke="#2F5BEA" stroke-width="2"/>
+      <circle class="fragment" data-fragment-index="2" cx="325" cy="150" r="125" fill="rgba(23,138,92,.16)" stroke="#178A5C" stroke-width="2"/>
+      <circle class="fragment" data-fragment-index="3" cx="195" cy="280" r="125" fill="rgba(183,121,31,.16)" stroke="#B7791F" stroke-width="2"/>
+      <circle class="fragment" data-fragment-index="4" cx="325" cy="280" r="125" fill="rgba(204,59,59,.13)" stroke="#CC3B3B" stroke-width="2"/>
+      <text class="t fragment" data-fragment-index="1" x="140" y="100">Negócio</text>
+      <text class="t fragment" data-fragment-index="2" x="380" y="100">Usuários</text>
+      <text class="t fragment" data-fragment-index="3" x="135" y="335">Tecnologia</text>
+      <text class="t fragment" data-fragment-index="4" x="385" y="335">Experimentação</text>
+      <g class="fragment" data-fragment-index="5">
+        <rect x="160" y="196" width="200" height="38" rx="19" fill="#14213D"/>
+        <text class="t" x="260" y="216" style="fill:#fff;font-size:17px">Product Engineer</text>
+      </g>
+    </svg>
+    <div style="display:grid;gap:12px">
+      <div class="painel fragment" data-fragment-index="1"><h3 style="color:#2F5BEA">Negócio</h3><p>Objetivos, restrições e resultados.</p></div>
+      <div class="painel fragment" data-fragment-index="2"><h3 style="color:#178A5C">Usuários</h3><p>Necessidades, contexto e experiência.</p></div>
+      <div class="painel fragment" data-fragment-index="3"><h3 style="color:#B7791F">Tecnologia</h3><p>Arquitetura, qualidade e operação.</p></div>
+      <div class="painel fragment" data-fragment-index="4"><h3 style="color:#CC3B3B">Experimentação</h3><p>Hipóteses, validação e evolução.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Product Engineer não substitui Product Owner ou Designer. A ideia é que a engenharia compreenda o contexto e participe das decisões sobre resultado.</aside>
+</section>
+
+<!-- ================================================================ SÍNTESE -->
+<section class="escuro" data-background-color="#14213D">
+  <div class="duas" style="grid-template-columns:1fr 1fr;align-items:center;height:600px">
+    <div>
+      <h1 style="font-size:58px">O código é apenas<br><span style="color:#8EA8FF;font-weight:500">uma parte da entrega.</span></h1>
+      <p class="fragment fade-up" data-fragment-index="7" style="font-size:28px;font-weight:700;line-height:1.3;margin-top:28px;border-left:6px solid #8EA8FF;padding-left:20px">Estamos construindo a solução certa, da maneira certa, e temos evidências de que ela funciona?</p>
+    </div>
+    <svg class="diagrama" viewBox="0 0 600 470" role="img" aria-label="Ciclo: problema, produto, arquitetura, código, validação e evolução, voltando ao problema">
+      <circle cx="300" cy="240" r="150" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="2"/>
+      <g class="fragment" data-fragment-index="1"><circle cx="300" cy="90" r="24" fill="#2F5BEA"/><text class="t" x="300" y="91" style="font-size:17px">1</text><text class="t" x="300" y="48">Problema</text></g>
+      <g class="fragment" data-fragment-index="2"><path d="M333.7,93.8 A150,150 0 0 1 407.9,135.8" fill="none" stroke="#8EA8FF" stroke-width="2.5" marker-end="url(#seta-clara)"/><circle cx="429.9" cy="165" r="24" fill="#2F5BEA"/><text class="t" x="429.9" y="166" style="font-size:17px">2</text><text class="t" x="471.5" y="141" style="text-anchor:start">Produto</text></g>
+      <g class="fragment" data-fragment-index="3"><path d="M443.4,196.1 A150,150 0 0 1 444.2,281.3" fill="none" stroke="#8EA8FF" stroke-width="2.5" marker-end="url(#seta-clara)"/><circle cx="429.9" cy="315" r="24" fill="#2F5BEA"/><text class="t" x="429.9" y="316" style="font-size:17px">3</text><text class="t" x="471.5" y="339" style="text-anchor:start">Arquitetura</text></g>
+      <g class="fragment" data-fragment-index="4"><path d="M409.7,342.3 A150,150 0 0 1 336.3,385.5" fill="none" stroke="#8EA8FF" stroke-width="2.5" marker-end="url(#seta-clara)"/><circle cx="300" cy="390" r="24" fill="#2F5BEA"/><text class="t" x="300" y="391" style="font-size:17px">4</text><text class="t" x="300" y="444">Código</text></g>
+      <g class="fragment" data-fragment-index="5"><path d="M266.3,386.2 A150,150 0 0 1 192.1,344.2" fill="none" stroke="#8EA8FF" stroke-width="2.5" marker-end="url(#seta-clara)"/><circle cx="170.1" cy="315" r="24" fill="#2F5BEA"/><text class="t" x="170.1" y="316" style="font-size:17px">5</text><text class="t" x="128.5" y="339" style="text-anchor:end">Validação</text></g>
+      <g class="fragment" data-fragment-index="6"><path d="M156.6,283.9 A150,150 0 0 1 155.8,198.7" fill="none" stroke="#8EA8FF" stroke-width="2.5" marker-end="url(#seta-clara)"/><circle cx="170.1" cy="165" r="24" fill="#2F5BEA"/><text class="t" x="170.1" y="166" style="font-size:17px">6</text><text class="t" x="128.5" y="141" style="text-anchor:end">Evolução</text>
+        <path d="M190.3,137.7 A150,150 0 0 1 263.7,94.5" fill="none" stroke="#8EA8FF" stroke-width="2.5" stroke-dasharray="6 6" marker-end="url(#seta-clara)"/>
+        <text class="ts" x="300" y="232">um ciclo,</text><text class="ts" x="300" y="256">não uma linha reta</text>
+      </g>
+    </svg>
+  </div>
+  <aside class="notes">Construa o ciclo etapa por etapa e termine com a pergunta-síntese. O código é a etapa 4 de 6.</aside>
+</section>
+
+<!-- ================================================================ PRÓXIMA ETAPA -->
+<section>
+  <h2>Agora, vamos olhar para os projetos</h2>
+  <p class="muted">Um roteiro para a clínica: cada projeto responde às quatro perguntas.</p>
+  <ul class="checklist" style="margin-top:20px">
+    <li class="fragment fade-up"><span class="caixa"></span><div><strong>Problema e usuário</strong><span class="p">Está claro quem precisa da solução e por quê?</span></div></li>
+    <li class="fragment fade-up"><span class="caixa"></span><div><strong>MVP e valor</strong><span class="p">Qual é o menor fluxo completo que já resolve algo?</span></div></li>
+    <li class="fragment fade-up"><span class="caixa"></span><div><strong>Arquitetura e API</strong><span class="p">As decisões são proporcionais ao problema?</span></div></li>
+    <li class="fragment fade-up"><span class="caixa"></span><div><strong>Testes e evidências</strong><span class="p">Como provamos que as regras funcionam?</span></div></li>
+  </ul>
+</section>
+
+</div>
+</div>
+
+<!-- Botão do Mentimeter (aparece só nos slides de pergunta) e cronômetro de votação -->
+<a class="menti-btn" id="mentiBtn" href="#" target="_blank" rel="noopener">Abrir Mentimeter <kbd>M</kbd></a>
+<button class="timer" id="timer" type="button" aria-label="Cronômetro de votação; clique para parar">
+  <svg viewBox="0 0 100 100"><circle class="fundo" cx="50" cy="50" r="44"/><circle class="anel" id="anel" cx="50" cy="50" r="44" stroke-dasharray="276.5" stroke-dashoffset="0"/></svg>
+  <span class="valor" id="timerValor">60</span>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/zoom/zoom.js"></script>
+<script>
+  /* ====== CONFIGURAÇÃO ======
+     Cole aqui o link da sua apresentação no Mentimeter.
+     Para uma pergunta específica, preencha data-menti="https://..." no <section> dela. */
+  const MENTIMETER_URL = 'https://www.menti.com/';
+  const TEMPO_VOTACAO = 60; // segundos
+
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    width: 1280,
+    height: 720,
+    margin: 0.06,
+    minScale: 0.4,
+    maxScale: 1.6,
+    autoAnimateDuration: 0.8,
+    highlight: { highlightOnLoad: true },
+    plugins: [ RevealHighlight, RevealNotes, RevealZoom ]
+  });
+
+  /* ---- Mentimeter ---- */
+  const mentiBtn = document.getElementById('mentiBtn');
+  function linkMenti(slide) {
+    const especifico = slide && slide.dataset.menti;
+    return especifico ? especifico : MENTIMETER_URL;
+  }
+  function atualizarMenti(slide) {
+    const ehPergunta = slide && slide.classList.contains('q');
+    mentiBtn.classList.toggle('ativo', !!ehPergunta);
+    mentiBtn.href = linkMenti(slide);
+  }
+  Reveal.on('ready', e => atualizarMenti(e.currentSlide));
+  Reveal.on('slidechanged', e => atualizarMenti(e.currentSlide));
+  Reveal.addKeyBinding({ keyCode: 77, key: 'M', description: 'Abrir o Mentimeter' }, () => {
+    window.open(linkMenti(Reveal.getCurrentSlide()), '_blank', 'noopener');
+  });
+
+  /* ---- Cronômetro de votação ---- */
+  const timer = document.getElementById('timer');
+  const anel = document.getElementById('anel');
+  const valor = document.getElementById('timerValor');
+  const CIRC = 276.5;
+  let restante = 0, intervalo = null;
+
+  function pararTimer() {
+    clearInterval(intervalo); intervalo = null;
+    timer.classList.remove('ativo', 'fim');
+  }
+  function iniciarTimer() {
+    pararTimer();
+    restante = TEMPO_VOTACAO;
+    valor.textContent = restante;
+    anel.style.strokeDashoffset = 0;
+    timer.classList.add('ativo');
+    intervalo = setInterval(() => {
+      restante -= 1;
+      valor.textContent = Math.max(restante, 0);
+      anel.style.strokeDashoffset = CIRC * (1 - restante / TEMPO_VOTACAO);
+      if (restante <= 10) timer.classList.add('fim');
+      if (restante <= 0) { clearInterval(intervalo); intervalo = null; setTimeout(pararTimer, 2500); }
+    }, 1000);
+  }
+  Reveal.addKeyBinding({ keyCode: 84, key: 'T', description: 'Iniciar ou parar o cronômetro de votação' }, () => {
+    intervalo ? pararTimer() : iniciarTimer();
+  });
+  timer.addEventListener('click', pararTimer);
+</script>
+</body>
+</html>

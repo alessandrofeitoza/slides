@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backend de qualidade — Mentimeter e discussão</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/white.css">
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #526078;
+      --accent: #155eef;
+      --soft: #edf3ff;
+      --line: #d8dfeb;
+      --good: #087443;
+      --bad: #b42318;
+    }
+    .reveal { color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+    .reveal .slides { text-align: left; }
+    .reveal h1, .reveal h2, .reveal h3 { color: var(--ink); text-transform: none; letter-spacing: -0.035em; }
+    .reveal h1 { font-size: 2.05em; line-height: 1.05; }
+    .reveal h2 { font-size: 1.48em; line-height: 1.12; margin-bottom: .45em; }
+    .reveal h3 { font-size: .92em; margin: 0 0 .35em; }
+    .reveal p, .reveal li { font-size: .66em; line-height: 1.35; }
+    .reveal ul, .reveal ol { margin-top: .3em; }
+    .reveal li { margin: .22em 0; }
+    .eyebrow { color: var(--accent); font-size: .34em; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.2em; }
+    .subtitle { color: var(--muted); font-size: .72em !important; max-width: 900px; }
+    .big-statement { font-size: 1.18em !important; font-weight: 800; line-height: 1.15 !important; letter-spacing: -.035em; }
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent); }
+    .good { color: var(--good); }
+    .bad { color: var(--bad); }
+    .small { font-size: .48em !important; color: var(--muted); }
+    .tiny { font-size: .38em !important; color: var(--muted); }
+    .tag { display: inline-block; border: 2px solid var(--line); border-radius: 999px; padding: .18em .65em; font-size: .4em; font-weight: 700; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 22px; }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { background: #f4f6fa; border: 2px solid var(--line); border-radius: 16px; padding: 20px 22px; min-height: 120px; }
+    .panel p { margin: .2em 0 0; }
+    .panel strong { font-size: .72em; }
+    .panel .desc { font-size: .48em; color: var(--muted); line-height: 1.3; }
+    .callout { border-left: 8px solid var(--accent); background: var(--soft); padding: 18px 24px; border-radius: 0 14px 14px 0; margin-top: 24px; }
+    .callout p { margin: 0; font-size: .68em; }
+    .question { background: #f4f6fa; border: 2px solid var(--line); border-radius: 18px; padding: 22px 26px; margin: 22px 0; }
+    .question .q { font-size: .9em; font-weight: 800; line-height: 1.15; }
+    .flow { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 28px 0; flex-wrap: wrap; }
+    .step { background: var(--soft); border: 2px solid #c7d7fe; border-radius: 12px; padding: 16px 18px; min-width: 150px; text-align: center; font-size: .55em; font-weight: 800; }
+    .arrow { font-size: .75em; color: var(--accent); font-weight: 900; }
+    .code { background: #111827; color: #f9fafb; border-radius: 14px; padding: 18px 22px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .48em; line-height: 1.4; white-space: pre-wrap; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+    .number { font-size: 1.8em; font-weight: 900; color: var(--accent); line-height: 1; }
+    .center { text-align: center !important; }
+    .center .subtitle { margin-left: auto; margin-right: auto; }
+    .reveal .controls { color: var(--accent); }
+    .reveal .progress { color: var(--accent); height: 5px; }
+    .reveal .slide-number { font-size: 16px; color: var(--muted); }
+    .speaker-note { display: none; }
+    @media (max-width: 700px) {
+      .grid, .grid.three, .two-col { grid-template-columns: 1fr; }
+      .panel { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section class="center">
+  <div class="eyebrow">Aula prática · Engenharia de Backend com IA</div>
+  <h1>Backend de qualidade<br><span class="accent">além do código</span></h1>
+  <p class="subtitle">Diagnóstico, discussão e aplicação — use o Mentimeter para ouvir a turma e estes slides para aprofundar as respostas.</p>
+  <div class="callout" style="text-align:left">
+    <p><strong>Dinâmica:</strong> apresente o contexto → alterne para o Mentimeter → vote → volte para discutir.</p>
+  </div>
+  <p class="small">Navegação: ← → ou espaço · tecla F para tela cheia · tecla S para notas do apresentador</p>
+</section>
+
+<section>
+  <div class="eyebrow">Como vamos trabalhar</div>
+  <h2>Uma pergunta, uma conversa, um aprendizado</h2>
+  <div class="flow">
+    <div class="step">CONTEXTO<br><span class="muted">Reveal.js</span></div><div class="arrow">→</div>
+    <div class="step">PARTICIPAÇÃO<br><span class="muted">Mentimeter</span></div><div class="arrow">→</div>
+    <div class="step">RESULTADO<br><span class="muted">Mentimeter</span></div><div class="arrow">→</div>
+    <div class="step">DISCUSSÃO<br><span class="muted">Reveal.js</span></div>
+  </div>
+  <div class="callout"><p>Não estamos procurando apenas a alternativa correta. Queremos entender o raciocínio por trás dela.</p></div>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 01 · Nuvem de palavras</div>
+  <h2>Backend de qualidade</h2>
+  <div class="question"><div class="q">Quando você ouve “backend de qualidade”, qual é a primeira palavra que vem à sua cabeça?</div></div>
+  <div class="grid three">
+    <div class="panel"><strong>Confiabilidade</strong><p class="desc">Faz o que deveria fazer, inclusive diante de falhas.</p></div>
+    <div class="panel"><strong>Segurança</strong><p class="desc">Protege dados, operações e usuários.</p></div>
+    <div class="panel"><strong>Evolução</strong><p class="desc">Pode mudar sem se tornar impossível de manter.</p></div>
+  </div>
+  <aside class="notes">Depois da nuvem: destaque palavras recorrentes. Pergunte se “funcionar” é suficiente. Conecte qualidade a atributos observáveis, não a preferência pessoal.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Discussão 01</div>
+  <h2>HTTP 200 não é certificado de qualidade</h2>
+  <div class="two-col">
+    <div class="panel"><strong>O endpoint respondeu?</strong><p class="desc">É uma evidência de que uma requisição foi processada.</p></div>
+    <div class="panel"><strong>O sistema se comportou corretamente?</strong><p class="desc">É preciso verificar regras, permissões, consistência e falhas.</p></div>
+  </div>
+  <div class="callout"><p class="big-statement">Uma API pode responder rápido, com status 200, e ainda produzir um resultado errado.</p></div>
+  <aside class="notes">Peça um exemplo de resposta HTTP 200 que represente um erro de negócio. Ex.: pedido confirmado sem reservar estoque.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 02 · Frequência</div>
+  <h2>IA no desenvolvimento</h2>
+  <div class="question"><div class="q">Com que frequência você utiliza IA durante o desenvolvimento?</div></div>
+  <div class="grid">
+    <div class="panel"><strong>Antes do código</strong><p class="desc">Entender requisitos, explorar alternativas e modelar.</p></div>
+    <div class="panel"><strong>Durante o código</strong><p class="desc">Implementar, explicar, refatorar e investigar erros.</p></div>
+    <div class="panel"><strong>Depois do código</strong><p class="desc">Gerar testes, revisar e procurar vulnerabilidades.</p></div>
+    <div class="panel"><strong>Ao longo do ciclo</strong><p class="desc">Documentar decisões e apoiar a evolução.</p></div>
+  </div>
+  <aside class="notes">Use o resultado para identificar se a turma associa IA apenas à geração de código ou ao ciclo completo de desenvolvimento.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 03 · Escala de 0 a 10</div>
+  <h2>Confiança no código gerado</h2>
+  <div class="question"><div class="q">Quanto você confia em código gerado por IA sem revisar linha por linha?</div></div>
+  <div class="flow">
+    <div class="step"><span class="number bad">0</span><br>Confiança cega</div>
+    <div class="step"><span class="number">5</span><br>Incerteza</div>
+    <div class="step"><span class="number good">10</span><br>Confiança total</div>
+  </div>
+  <div class="callout"><p><strong>O que transforma código gerado em código confiável?</strong> Revisão, testes, conhecimento do domínio e validação de segurança.</p></div>
+  <aside class="notes">Não trate confiança como uma nota moral. Pergunte quais evidências justificariam uma nota alta. Diferencie revisar cada linha de verificar comportamento e riscos de forma sistemática.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 04 · Múltipla escolha</div>
+  <h2>API gerada por IA: e agora?</h2>
+  <div class="question"><div class="q">O que fazer primeiro quando a IA gera uma API que funciona no cenário ideal?</div></div>
+  <div class="grid">
+    <div class="panel"><strong>Happy path</strong><p class="desc">Dados válidos, usuário autorizado e dependências disponíveis.</p></div>
+    <div class="panel"><strong>Casos de falha</strong><p class="desc">Dados inválidos, recurso inexistente e falha de persistência.</p></div>
+  </div>
+  <div class="callout"><p class="big-statement">Não basta perguntar “funciona?”. Precisamos descobrir em quais condições deixa de funcionar.</p></div>
+  <aside class="notes">Depois da votação, pergunte que teste fariam primeiro e por quê. Não revele a alternativa correta antes da participação.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 05 · Múltipla escolha</div>
+  <h2>Duas requisições. Uma unidade.</h2>
+  <div class="question"><div class="q">Dois pedidos tentam comprar a última unidade de um produto simultaneamente. Qual é o risco?</div></div>
+  <div class="flow">
+    <div class="step">Pedido A<br><span class="muted">lê estoque = 1</span></div>
+    <div class="step">Pedido B<br><span class="muted">lê estoque = 1</span></div>
+  </div>
+  <div class="flow">
+    <div class="step">A aprova a compra</div><div class="arrow">+</div><div class="step">B aprova a compra</div>
+  </div>
+  <div class="callout"><p class="big-statement bad">Uma unidade foi vendida duas vezes.</p><p>Conceitos: concorrência, atomicidade, transações e bloqueio.</p></div>
+  <aside class="notes">Explique que cada requisição pode parecer correta isoladamente. O defeito aparece na interleaving das operações. Pergunte como protegeriam a regra no banco de dados.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 06 · Múltipla escolha</div>
+  <h2>Autenticado não significa autorizado</h2>
+  <div class="question"><div class="q">Um usuário altera o ID do pedido na URL e consegue acessar o pedido de outra pessoa. Qual é o problema?</div></div>
+  <div class="code">GET /api/pedidos/123
+Authorization: Bearer &lt;token&gt;</div>
+  <div class="grid">
+    <div class="panel"><strong>Autenticação</strong><p class="desc">Quem está fazendo a requisição?</p></div>
+    <div class="panel"><strong>Autorização</strong><p class="desc">Essa pessoa pode acessar este recurso?</p></div>
+  </div>
+  <div class="callout"><p><strong>IDOR:</strong> a API precisa verificar a permissão sobre o recurso, não apenas a validade do token.</p></div>
+  <aside class="notes">Pergunte por que esconder o botão na interface não resolve. Reforce que a autorização deve ser verificada no servidor em cada operação relevante.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 07 · Múltipla escolha</div>
+  <h2>Pedido salvo. Estoque não reservado.</h2>
+  <div class="question"><div class="q">O pedido foi salvo, mas a reserva do estoque falhou. O que deveria acontecer?</div></div>
+  <div class="flow">
+    <div class="step">Criar pedido<br><span class="good">OK</span></div><div class="arrow">→</div>
+    <div class="step">Registrar itens<br><span class="good">OK</span></div><div class="arrow">→</div>
+    <div class="step">Reservar estoque<br><span class="bad">Falhou</span></div>
+  </div>
+  <div class="callout"><p class="big-statement">A operação precisa preservar a consistência do negócio.</p><p>Quando as etapas pertencem à mesma transação local, o rollback desfaz as alterações parciais.</p></div>
+  <aside class="notes">Discuta o limite da transação: operações externas, como pagamento em outro serviço, exigem outras estratégias, como compensação ou saga. Não prometa que um rollback SQL desfaz qualquer efeito externo.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 08 · Resposta aberta</div>
+  <h2>O que você quer melhorar?</h2>
+  <div class="question"><div class="q">O que você gostaria de melhorar no desenvolvimento backend?</div></div>
+  <div class="grid three">
+    <div class="panel"><strong>Projetar</strong><p class="desc">Arquitetura, modelagem e APIs.</p></div>
+    <div class="panel"><strong>Construir</strong><p class="desc">Implementação, banco e performance.</p></div>
+    <div class="panel"><strong>Garantir</strong><p class="desc">Testes, segurança e observabilidade.</p></div>
+  </div>
+  <aside class="notes">Agrupe respostas por tema. Guarde os pontos recorrentes para retomá-los durante a clínica dos projetos.</aside>
+</section>
+
+<section class="center">
+  <div class="eyebrow">Transição</div>
+  <h1>Agora, vamos sair do código.</h1>
+  <p class="subtitle">Vamos olhar para o problema que o software precisa resolver — e para quem precisa dele.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 09 · Múltipla escolha</div>
+  <h2>O cliente pediu uma funcionalidade</h2>
+  <div class="question"><div class="q">Um cliente solicita uma funcionalidade. Qual deve ser sua primeira preocupação?</div></div>
+  <div class="panel">
+    <strong>Exemplo: “Preciso de um botão para exportar meus relatórios.”</strong>
+    <p class="desc">Quem precisa do relatório? Que decisão será tomada com ele? Qual dificuldade existe hoje? O botão resolve o problema?</p>
+  </div>
+  <div class="callout"><p class="big-statement">Pedido de funcionalidade não é definição de problema.</p></div>
+  <aside class="notes">Reforce que entender o problema não significa ignorar o pedido do cliente. Significa investigar se a solução solicitada é a melhor resposta para a necessidade.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 10 · Escala de 0 a 10</div>
+  <h2>Impacto para o usuário</h2>
+  <div class="question"><div class="q">Quanto você considera o impacto para o usuário antes de implementar uma funcionalidade?</div></div>
+  <div class="two-col">
+    <div class="panel"><strong>Entrega técnica</strong><p class="desc">Endpoint criado. Tabela adicionada. Botão implementado.</p></div>
+    <div class="panel"><strong>Resultado para o usuário</strong><p class="desc">Problema resolvido. Tempo economizado. Tarefa concluída.</p></div>
+  </div>
+  <div class="callout"><p class="big-statement">Valor não é medido pela quantidade de código.</p></div>
+  <aside class="notes">Pergunte se uma funcionalidade pode estar tecnicamente pronta sem melhorar a experiência ou o resultado do usuário.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 11 · Múltipla escolha</div>
+  <h2>Entrega incremental</h2>
+  <div class="question"><div class="q">Em um projeto com prazo de duas semanas, qual abordagem você considera melhor?</div></div>
+  <div class="two-col">
+    <div class="panel"><strong>Abordagem A</strong><p class="desc">Duas semanas construindo tudo. Uma entrega no último dia.</p></div>
+    <div class="panel"><strong>Abordagem B</strong><p class="desc">Pequenas entregas funcionais, validação e evolução contínua.</p></div>
+  </div>
+  <div class="callout"><p>Entregar em partes não significa entregar pedaços incompletos. Significa entregar pequenos fluxos que já resolvem alguma coisa.</p></div>
+  <aside class="notes">Conecte com Elephant Carpaccio já apresentado. Peça que identifiquem uma entrega pequena que possa ser demonstrada e validada.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 12 · Múltipla escolha</div>
+  <h2>O que gera mais valor?</h2>
+  <div class="question"><div class="q">Qual entrega cria mais valor para alguém que precisa vender um produto?</div></div>
+  <div class="flow">
+    <div class="step">Selecionar produto</div><div class="arrow">→</div>
+    <div class="step">Informar dados</div><div class="arrow">→</div>
+    <div class="step">Confirmar pedido</div>
+  </div>
+  <div class="callout"><p class="big-statement">O usuário não compra arquitetura. Ele precisa realizar uma atividade.</p><p>Banco, CRUD, autenticação e documentação são importantes, mas precisam servir ao fluxo de valor.</p></div>
+  <aside class="notes">Evite desvalorizar arquitetura. A ideia é discutir sequência e valor observável, não dizer que infraestrutura ou qualidade técnica são dispensáveis.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 13 · Resposta aberta</div>
+  <h2>Antes de começar a programar</h2>
+  <div class="question"><div class="q">O que você precisaria descobrir antes de começar a programar?</div></div>
+  <div class="grid">
+    <div class="panel"><span class="number">01</span><strong> Quem é o usuário?</strong></div>
+    <div class="panel"><span class="number">02</span><strong> Qual problema enfrenta?</strong></div>
+    <div class="panel"><span class="number">03</span><strong> Como resolve hoje?</strong></div>
+    <div class="panel"><span class="number">04</span><strong> Como saberemos se funcionou?</strong></div>
+  </div>
+  <aside class="notes">Use as respostas para distinguir descoberta de produto de detalhamento técnico. O objetivo é reduzir o risco de construir a solução errada.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 14 · Múltipla escolha</div>
+  <h2>Primeira entrega de uma API de pedidos</h2>
+  <div class="question"><div class="q">Qual seria a melhor primeira entrega para validar uma hipótese de negócio?</div></div>
+  <div class="flow">
+    <div class="step">Receber pedido</div><div class="arrow">→</div>
+    <div class="step">Validar dados</div><div class="arrow">→</div>
+    <div class="step">Calcular total</div><div class="arrow">→</div>
+    <div class="step">Persistir</div><div class="arrow">→</div>
+    <div class="step">Confirmar</div>
+  </div>
+  <div class="callout"><p class="big-statement good">Uma fatia vertical: pequena, completa e demonstrável.</p></div>
+  <aside class="notes">Retome a ideia do Elephant Carpaccio: uma fatia atravessa as camadas necessárias para entregar um comportamento útil. Não é apenas uma tarefa técnica isolada.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 15 · Múltipla escolha</div>
+  <h2>O papel humano no desenvolvimento com IA</h2>
+  <div class="question"><div class="q">Se a IA consegue implementar uma funcionalidade em poucos minutos, o que ainda precisa ser decidido pelo ser humano?</div></div>
+  <div class="grid">
+    <div class="panel"><strong>O que construir?</strong><p class="desc">Objetivo e escopo.</p></div>
+    <div class="panel"><strong>Para quem?</strong><p class="desc">Usuário e contexto.</p></div>
+    <div class="panel"><strong>Quais limites?</strong><p class="desc">Regras e restrições.</p></div>
+    <div class="panel"><strong>Como validar?</strong><p class="desc">Critérios e resultados.</p></div>
+  </div>
+  <div class="callout"><p class="big-statement">A IA acelera a execução. Não define sozinha o que merece ser construído.</p></div>
+  <aside class="notes">Pergunte o que acontece quando um prompt não define regras, restrições ou critérios de aceitação. A IA tende a preencher lacunas com suposições.</aside>
+</section>
+
+<section>
+  <div class="eyebrow">Pergunta 16 · Nuvem de palavras</div>
+  <h2>Product Engineer</h2>
+  <div class="question"><div class="q">Além de escrever código, o que um engenheiro de produto deveria conhecer?</div></div>
+  <div class="grid">
+    <div class="panel"><strong>Negócio</strong><p class="desc">Objetivos, restrições e resultados.</p></div>
+    <div class="panel"><strong>Usuários</strong><p class="desc">Necessidades, contexto e experiência.</p></div>
+    <div class="panel"><strong>Tecnologia</strong><p class="desc">Arquitetura, qualidade e operação.</p></div>
+    <div class="panel"><strong>Experimentação</strong><p class="desc">Hipóteses, validação e evolução.</p></div>
+  </div>
+  <aside class="notes">Esclareça: Product Engineer não substitui Product Owner ou Designer. A ideia é que engenharia compreenda o contexto e participe das decisões sobre resultado.</aside>
+</section>
+
+<section class="center">
+  <div class="eyebrow">Síntese</div>
+  <h1>O código é apenas<br><span class="accent">uma parte da entrega.</span></h1>
+  <div class="flow">
+    <div class="step">Problema</div><div class="arrow">→</div>
+    <div class="step">Produto</div><div class="arrow">→</div>
+    <div class="step">Arquitetura</div><div class="arrow">→</div>
+    <div class="step">Código</div>
+  </div>
+  <div class="flow">
+    <div class="step">Validação</div><div class="arrow">→</div>
+    <div class="step">Evolução</div>
+  </div>
+  <div class="callout" style="text-align:left">
+    <p class="big-statement">Estamos construindo a solução certa, da maneira certa, e temos evidências de que ela funciona?</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Próxima etapa</div>
+  <h2>Agora, vamos olhar para os projetos.</h2>
+  <div class="grid">
+    <div class="panel"><strong>Problema e usuário</strong><p class="desc">Está claro quem precisa da solução e por quê?</p></div>
+    <div class="panel"><strong>MVP e valor</strong><p class="desc">Qual é o menor fluxo completo que já resolve algo?</p></div>
+    <div class="panel"><strong>Arquitetura e API</strong><p class="desc">As decisões são proporcionais ao problema?</p></div>
+    <div class="panel"><strong>Testes e evidências</strong><p class="desc">Como provamos que as regras funcionam?</p></div>
+  </div>
+</section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'none',
+    backgroundTransition: 'none',
+    width: 1280,
+    height: 720,
+    margin: 0.06,
+    minScale: 0.55,
+    maxScale: 1.35,
+    keyboard: true,
+    overview: true,
+    help: true
+  });
+</script>
+</body>
+</html>

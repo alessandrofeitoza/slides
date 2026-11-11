@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Backend Moderno — Arquitetura e Construção de APIs</title>
+
+    <meta name="description" content="Aula prática sobre desenvolvimento backend, APIs, qualidade de código, segurança, testes e uso de IA na engenharia de software.">
+
+    <meta name="author" content="Alessandro Feitoza">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/white.css">
+
+    <style>
+        .reveal {
+            font-size: 32px;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+        }
+
+        .reveal pre {
+            width: 100%;
+            font-size: 0.65em;
+        }
+
+        .reveal code {
+            font-family: "Fira Code", monospace;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section class="center">
+            <div class="eyebrow">Aula prática · Engenharia de Backend com IA</div>
+            <h1>Backend de qualidade<br><span class="accent">além do código</span></h1>
+            <p class="subtitle">Diagnóstico, discussão e aplicação — use o Mentimeter para ouvir a turma e estes slides para aprofundar as respostas.</p>
+            <div class="callout" style="text-align:left">
+                <p><strong>Dinâmica:</strong> apresente o contexto → alterne para o Mentimeter → vote → volte para discutir.</p>
+            </div>
+            <p class="small">Navegação: ← → ou espaço · tecla F para tela cheia · tecla S para notas do apresentador</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Como vamos trabalhar</div>
+            <h2>Uma pergunta, uma conversa, um aprendizado</h2>
+            <div class="flow">
+                <div class="step">CONTEXTO<br><span class="muted">Reveal.js</span></div><div class="arrow">→</div>
+                <div class="step">PARTICIPAÇÃO<br><span class="muted">Mentimeter</span></div><div class="arrow">→</div>
+                <div class="step">RESULTADO<br><span class="muted">Mentimeter</span></div><div class="arrow">→</div>
+                <div class="step">DISCUSSÃO<br><span class="muted">Reveal.js</span></div>
+            </div>
+            <div class="callout"><p>Não estamos procurando apenas a alternativa correta. Queremos entender o raciocínio por trás dela.</p></div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Pergunta 01 · Nuvem de palavras</div>
+            <h2>Backend de qualidade</h2>
+            <div class="question"><div class="q">Quando você ouve “backend de qualidade”, qual é a primeira palavra que vem à sua cabeça?</div></div>
+            <div class="grid three">
+                <div class="panel"><strong>Confiabilidade</strong><p class="desc">Faz o que deveria fazer, inclusive diante de falhas.</p></div>
+                <div class="panel"><strong>Segurança</strong><p class="desc">Protege dados, operações e usuários.</p></div>
+                <div class="panel"><strong>Evolução</strong><p class="desc">Pode mudar sem se tornar impossível de manter.</p></div>
+            </div>
+            <aside class="notes">Depois da nuvem: destaque palavras recorrentes. Pergunte se “funcionar” é suficiente. Conecte qualidade a atributos observáveis, não a preferência pessoal.</aside>
+        </section>
+
+        <section>
+            <div class="eyebrow">Discussão 01</div>
+            <h2>HTTP 200 não é certificado de qualidade</h2>
+            <div class="two-col">
+                <div class="panel"><strong>O endpoint respondeu?</strong><p class="desc">É uma evidência de que uma requisição foi processada.</p></div>
+                <div class="panel"><strong>O sistema se comportou corretamente?</strong><p class="desc">É preciso verificar regras, permissões, consistência e falhas.</p></div>
+            </div>
+            <div class="callout"><p class="big-statement">Uma API pode responder rápido, com status 200, e ainda produzir um resultado errado.</p></div>
+            <aside class="notes">Peça um exemplo de resposta HTTP 200 que represente um erro de negócio. Ex.: pedido confirmado sem reservar estoque.</aside>
+        </section>
+
+        <section>
+            <div class="eyebrow">Pergunta 02 · Frequência</div>
+            <h2>IA no desenvolvimento</h2>
+            <div class="question"><div class="q">Com que frequência você utiliza IA durante o desenvolvimento?</div></div>
+            <div class="grid">
+                <div class="panel"><strong>Antes do código</strong><p class="desc">Entender requisitos, explorar alternativas e modelar.</p></div>
+                <div class="panel"><strong>Durante o código</strong><p class="desc">Implementar, explicar, refatorar e investigar erros.</p></div>
+                <div class="panel"><strong>Depois do código</strong><p class="desc">Gerar testes, revisar e procurar vulnerabilidades.</p></div>
+                <div class="panel"><strong>Ao longo do ciclo</strong><p class="desc">Documentar decisões e apoiar a evolução.</p></div>
+            </div>
+            <aside class="notes">Use o resultado para identificar se a turma associa IA apenas à geração de código ou ao ciclo completo de desenvolvimento.</aside>
+        </section>
+    </div>
+</div>
+
+<script src="../../../../dist/reveal.js"></script>
+<script src="../../../../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'fade',
+        navigationMode: 'linear',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+
+</body>
+</html>

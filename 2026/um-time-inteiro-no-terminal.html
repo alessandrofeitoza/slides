@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Um time de desenvolvimento inteiro dentro do seu terminal</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reset.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== Tokens ===== */
+  :root {
+    --noite: #0F1B2D;      /* estádio à noite: fundo base */
+    --giz: #FAFAF7;        /* giz da prancheta: texto claro */
+    --azul: #4285F4;
+    --vermelho: #EA4335;
+    --amarelo: #FBBC04;
+    --verde: #34A853;
+    --apagado: rgba(250, 250, 247, .28);
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  }
+
+  /* ===== Base: legível do fundo do anfiteatro ===== */
+  .reveal { font-family: var(--display); font-size: 56px; color: var(--giz); }
+  .reveal .slides section { text-align: left; height: 100%; }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: var(--display); color: inherit; text-transform: none;
+    letter-spacing: -.035em; line-height: .95; margin: 0;
+  }
+  .reveal h1 { font-size: 2.6em; font-weight: 800; }
+  .reveal h2 { font-size: 1.9em; font-weight: 800; }
+  .reveal h3 { font-size: 1.1em; font-weight: 600; letter-spacing: -.02em; }
+  .reveal p { margin: 0; line-height: 1.2; }
+  .claro { color: var(--noite); }
+  .center { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+  .middle { text-align: center !important; align-items: center; }
+
+  /* ===== Espaço para imagem/GIF ===== */
+  .slot {
+    border: 6px dashed currentColor; opacity: .55; border-radius: 28px;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-family: var(--mono); font-size: .42em; padding: 1em; line-height: 1.4;
+  }
+  .slot img, .slot video { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
+
+  /* ===== Título: prompt de terminal ===== */
+  .prompt { font-family: var(--mono); font-size: .62em; color: var(--verde); margin-bottom: 1.1em; }
+  .prompt .cmd { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom;
+    width: 0; animation: digitar 1.4s steps(21) .6s forwards; color: var(--giz); }
+  .prompt .cursor { display: inline-block; width: .55em; height: 1em; background: var(--amarelo);
+    vertical-align: -.15em; animation: piscar 1s steps(1) infinite; }
+  @keyframes digitar { to { width: 21ch; } }
+  @keyframes piscar { 50% { opacity: 0; } }
+  .assinatura { position: absolute; bottom: 0; left: 0; font-size: .5em; line-height: 1.35; opacity: .8; }
+  .cores { display: flex; gap: 16px; margin-top: .9em; }
+  .cores span { width: 90px; height: 14px; border-radius: 7px; }
+
+  /* ===== Enquete ===== */
+  .enquete { list-style: none; margin: .8em 0 0 !important; padding: 0; }
+  .enquete li { display: flex; align-items: center; gap: .6em; font-size: 1.15em; font-weight: 600; margin: .35em 0; }
+  .enquete .ico { font-size: 1.3em; width: 1.4em; text-align: center; }
+
+  /* ===== Riscado animado ===== */
+  .reveal .risca { position: relative; display: inline-block; align-self: flex-start; }
+  .risca::after { content: ""; position: absolute; left: -2%; top: 52%; height: .12em; width: 0;
+    background: var(--vermelho); transition: width .7s cubic-bezier(.7,0,.3,1); }
+  .risca.visible::after { width: 104%; }
+  .reveal .fragment.risca { opacity: 1; visibility: visible; transform: none; }
+
+  /* ===== Linha do tempo das ondas ===== */
+  .track { position: relative; display: flex; justify-content: space-between; margin: 0 0 1.1em; }
+  .track::before { content: ""; position: absolute; left: 60px; right: 60px; top: 60px; height: 8px;
+    background: var(--apagado); border-radius: 4px; }
+  .no { position: relative; display: flex; flex-direction: column; align-items: center; width: 25%; opacity: .3; }
+  .no .bola { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 1em; background: var(--noite); border: 8px solid var(--apagado); }
+  .no .nome { font-size: .5em; font-weight: 600; margin-top: .5em; }
+  .no.on { opacity: 1; }
+  .no.atual .bola { width: 150px; height: 150px; margin-top: -15px; font-size: 1.25em; }
+  .no.n1.on .bola { border-color: var(--azul); }
+  .no.n2.on .bola { border-color: var(--vermelho); }
+  .no.n3.on .bola { border-color: var(--amarelo); }
+  .no.n4.on .bola { border-color: var(--verde); }
+  .onda { display: grid; grid-template-columns: 1.05fr 1fr; gap: 70px; align-items: stretch; height: 600px; }
+  .onda .frase { display: flex; flex-direction: column; justify-content: center; }
+  .onda .frase h2 { font-size: 1.55em; }
+  .onda .frase .ia { margin-top: .25em; }
+  .tag { font-family: var(--mono); font-size: .4em; opacity: .7; margin-bottom: 1em; }
+
+  /* ===== Fluxograma do agente ===== */
+  .loop svg { width: 100%; height: 860px; }
+  .loop text { font-family: var(--display); fill: var(--giz); }
+  .loop .etapa rect { fill: var(--noite); stroke-width: 7; }
+  .loop .seta { stroke: var(--apagado); stroke-width: 7; fill: none; }
+
+  /* ===== Partes 3 a 9 ===== */
+  .diagrama svg { width: 100%; height: 900px; }
+  .diagrama text { font-family: var(--display); fill: var(--giz); }
+  .diagrama .caixa { fill: var(--noite); stroke-width: 7; }
+  .diagrama .seta { stroke: var(--apagado); stroke-width: 7; fill: none; }
+
+  .reveal pre.codigo {
+    width: auto; box-shadow: none; margin: 0; font-family: var(--mono); font-size: .6em; line-height: 1.45;
+    background: rgba(0, 0, 0, .38); border-radius: 28px; padding: 1.1em 1.3em; white-space: pre; color: var(--giz);
+  }
+  .reveal pre.codigo code { font-family: inherit; max-height: none; padding: 0; background: none; }
+  .codigo .k { color: var(--azul); } .codigo .s { color: var(--amarelo); }
+  .codigo .h { color: var(--verde); font-weight: 700; } .codigo .c { color: var(--apagado); }
+  .codigo .x { color: var(--vermelho); }
+
+  .reveal .fragment.destaque { opacity: 1; visibility: inherit; transition: color .3s, background-color .3s; border-radius: 10px; }
+  .reveal .fragment.destaque.current-fragment { color: var(--noite); background: var(--amarelo); }
+
+  .troca { display: grid; }
+  .troca > * { grid-area: 1 / 1; }
+
+  .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .rotulo { font-size: .5em; font-weight: 600; margin-bottom: .6em; opacity: .85; }
+
+  .cartoes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px; margin-top: 1em; }
+  .cartao > div { background: var(--amarelo); color: var(--noite); border-radius: 26px; height: 520px;
+    padding: 1em .8em; display: flex; flex-direction: column; justify-content: flex-end; }
+  .cartao:nth-child(1) > div { transform: rotate(-4deg); } .cartao:nth-child(2) > div { transform: rotate(3deg); }
+  .cartao:nth-child(3) > div { transform: rotate(-2deg); } .cartao:nth-child(4) > div { transform: rotate(5deg); }
+  .cartao .ico { font-size: 1.4em; margin-bottom: auto; }
+  .cartao p { font-size: .62em; font-weight: 800; line-height: 1.05; letter-spacing: -.02em; }
+
+  .papeis { display: grid; grid-template-columns: 1fr 1fr; gap: 50px 80px; margin-top: .9em; }
+  .papel { border-left: 14px solid; padding: .15em 0 .15em .7em; }
+  .papel h3 { font-size: 1.15em; font-weight: 800; }
+  .papel p { font-size: .66em; opacity: .85; margin-top: .3em; }
+
+  .passos { list-style: none; margin: .6em 0 0 !important; padding: 0; counter-reset: p; }
+  .passos li { counter-increment: p; display: flex; align-items: center; gap: .7em; font-size: .78em; font-weight: 600; margin: .42em 0; }
+  .passos li::before { content: counter(p); flex: none; width: 1.6em; height: 1.6em; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; background: var(--giz); color: var(--noite); font-weight: 800; }
+  .passos li.pausa::before { background: var(--amarelo); }
+  .passos small { font-size: .62em; font-weight: 400; opacity: .7; margin-left: .3em; }
+
+  .comparar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-top: .9em; font-size: .75em; }
+  .comparar > div { padding: .55em .4em; border-bottom: 3px solid var(--apagado); }
+  .comparar .cab { font-weight: 800; font-size: 1.15em; }
+  .comparar .m { font-family: var(--mono); font-size: .85em; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prompt .cmd { animation: none; width: 21ch; }
+    .prompt .cursor { animation: none; }
+    .risca::after { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ================= PARTE 1 · ABERTURA ================= -->
+
+<!-- 1. Título -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <div class="prompt">$ <span class="cmd">gemini --time-inteiro</span><span class="cursor"></span></div>
+    <h1>Um time de desenvolvimento inteiro dentro do seu terminal</h1>
+    <div class="cores"><span style="background:var(--azul)"></span><span style="background:var(--vermelho)"></span><span style="background:var(--amarelo)"></span><span style="background:var(--verde)"></span></div>
+  </div>
+  <div class="assinatura">[Seu nome]<br>DevFest Fortaleza 2026</div>
+  <aside class="notes">Deixe este slide no telão enquanto o público entra. O cursor piscando chama atenção sem você dizer nada.</aside>
+</section>
+
+<!-- 2. Quem sou eu -->
+<section data-background-color="#0F1B2D">
+  <div style="display:grid;grid-template-columns:620px 1fr;gap:90px;height:100%;align-items:center">
+    <div class="slot" style="height:760px">FOTO SUA<br>620 × 760</div>
+    <div>
+      <h2>[Seu nome]</h2>
+      <p style="font-size:.85em;margin-top:.7em;opacity:.85">[Cargo] em [empresa]</p>
+      <p class="fragment fade-up" style="font-size:.85em;margin-top:.5em">Passo o dia orquestrando agentes no terminal.</p>
+    </div>
+  </div>
+  <aside class="notes">No máximo 30 segundos aqui. Mencione que usa Claude Code no dia a dia e hoje vai mostrar o Gemini CLI: os conceitos são os mesmos.</aside>
+</section>
+
+<!-- 3. Provocação -->
+<section data-background-color="#EA4335" data-auto-animate>
+  <div class="center">
+    <h1 data-id="prov" style="font-size:2.2em">Se a IA escreve todo o código…</h1>
+    <h1 class="fragment fade-up claro" style="font-size:2.2em;margin-top:.3em">…pra que serve você?</h1>
+  </div>
+  <aside class="notes">Faça a pergunta e fique em silêncio por uns 3 segundos. Não responda: a palestra inteira é a resposta.</aside>
+</section>
+
+<!-- 4. Enquete -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <h2>Levanta a mão quem já…</h2>
+    <ul class="enquete">
+      <li class="fragment fade-left"><span class="ico">⌨️</span>aceitou um autocomplete da IA</li>
+      <li class="fragment fade-left"><span class="ico">💬</span>colou código que veio do chat</li>
+      <li class="fragment fade-left"><span class="ico">🤖</span>delegou uma tarefa inteira</li>
+      <li class="fragment fade-left"><span class="ico">🧑‍✈️</span>coordenou vários agentes ao mesmo tempo</li>
+    </ul>
+  </div>
+  <aside class="notes">Uma pergunta por clique. As mãos vão baixando a cada item: comente isso, é o retrato da sala.</aside>
+</section>
+
+<!-- 5. Metáfora -->
+<section data-background-color="#FBBC04">
+  <div style="display:grid;grid-template-columns:1fr 760px;gap:80px;height:100%;align-items:center" class="claro">
+    <div>
+      <h2>E se a gente matasse no peito…</h2>
+      <h2 class="fragment fade-up" style="margin-top:.4em">…e deixasse a IA fazer o gol?</h2>
+    </div>
+    <div class="slot" style="height:760px">GIF: domínio no peito<br>+ gol<br>(lance do Fortaleza ou do Ceará)</div>
+  </div>
+  <aside class="notes">Se o GIF for de um lance local, a plateia reage na hora. Teste antes se o projetor roda GIF pesado.</aside>
+</section>
+
+<!-- 6. Virada -->
+<section data-background-color="#0F1B2D">
+  <div class="center middle">
+    <h1 class="r-fit-text">Gol sem tática é sorte.</h1>
+    <p class="fragment fade-up" style="font-size:1em;margin-top:.8em;opacity:.85">Hoje a gente fala da tática.</p>
+  </div>
+  <aside class="notes">Frase para a foto. Pausa curta antes de passar para a parte 2.</aside>
+</section>
+
+<!-- ================= PARTE 2 · DAS ONDAS AO TIME ================= -->
+
+<!-- 7. Abertura de seção -->
+<section data-background-color="#4285F4">
+  <div class="center">
+    <p style="font-size:.6em;opacity:.85;margin-bottom:.6em">Como chegamos aqui</p>
+    <h1 class="r-fit-text">Quatro jogadas.</h1>
+  </div>
+  <aside class="notes">Vamos ver como a relação entre dev e IA mudou em poucos anos.</aside>
+</section>
+
+<!-- 8. Onda 1: Autocomplete -->
+<section data-auto-animate data-background-color="#0F1B2D">
+  <div class="track">
+    <div class="no n1 on atual" data-id="n1"><div class="bola">⌨️</div><div class="nome">Autocomplete</div></div>
+    <div class="no n2" data-id="n2"><div class="bola">💬</div><div class="nome">Chat</div></div>
+    <div class="no n3" data-id="n3"><div class="bola">🤖</div><div class="nome">Agente</div></div>
+    <div class="no n4" data-id="n4"><div class="bola">🧑‍✈️</div><div class="nome">Time de agentes</div></div>
+  </div>
+  <div class="onda">
+    <div class="frase">
+      <h2 data-id="voce">Você digita.</h2>
+      <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--azul)">A IA completa.</h2>
+    </div>
+    <div class="slot" data-id="midia">GIF: sugestão cinza<br>aparecendo no editor</div>
+  </div>
+  <aside class="notes">A IA adivinha a próxima linha. Você continua no controle de cada caractere.</aside>
+</section>
+
+<!-- 9. Onda 2: Chat -->
+<section data-auto-animate data-background-color="#1A1420">
+  <div class="track">
+    <div class="no n1 on" data-id="n1"><div class="bola">⌨️</div><div class="nome">Autocomplete</div></div>
+    <div class="no n2 on atual" data-id="n2"><div class="bola">💬</div><div class="nome">Chat</div></div>
+    <div class="no n3" data-id="n3"><div class="bola">🤖</div><div class="nome">Agente</div></div>
+    <div class="no n4" data-id="n4"><div class="bola">🧑‍✈️</div><div class="nome">Time de agentes</div></div>
+  </div>
+  <div class="onda">
+    <div class="frase">
+      <h2 data-id="voce">Você pergunta.</h2>
+      <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--vermelho)">A IA responde.</h2>
+      <p class="fragment fade-up" style="font-size:.6em;margin-top:1em;opacity:.8">E você copia, cola e reza.</p>
+    </div>
+    <div class="slot" data-id="midia">GIF: Ctrl+C / Ctrl+V<br>em loop</div>
+  </div>
+  <aside class="notes">O ciclo do copia e cola. Quem integra, testa e corrige ainda é você.</aside>
+</section>
+
+<!-- 10. Onda 3: Agente -->
+<section data-auto-animate data-background-color="#1F1A0E">
+  <div class="track">
+    <div class="no n1 on" data-id="n1"><div class="bola">⌨️</div><div class="nome">Autocomplete</div></div>
+    <div class="no n2 on" data-id="n2"><div class="bola">💬</div><div class="nome">Chat</div></div>
+    <div class="no n3 on atual" data-id="n3"><div class="bola">🤖</div><div class="nome">Agente</div></div>
+    <div class="no n4" data-id="n4"><div class="bola">🧑‍✈️</div><div class="nome">Time de agentes</div></div>
+  </div>
+  <div class="onda">
+    <div class="frase">
+      <h2 data-id="voce">Você delega.</h2>
+      <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--amarelo)">A IA executa.</h2>
+    </div>
+    <div class="slot" data-id="midia">SCREENSHOT: agente<br>rodando comandos<br>no terminal</div>
+  </div>
+  <aside class="notes">Aqui a IA ganha mãos: lê arquivos, roda comandos, vê o erro e tenta de novo. Próximo slide mostra o ciclo.</aside>
+</section>
+
+<!-- 11. Fluxograma: o ciclo do agente -->
+<section data-background-color="#0F1B2D" class="loop">
+  <svg viewBox="0 0 1800 860" role="img" aria-label="Ciclo do agente: entender, planejar, executar, verificar, corrigir">
+    <defs>
+      <marker id="ponta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
+      </marker>
+    </defs>
+    <text x="900" y="455" text-anchor="middle" font-size="96" font-weight="800">O ciclo</text>
+    <text x="900" y="530" text-anchor="middle" font-size="44" opacity=".7">sem você no meio</text>
+
+    <g class="fragment" data-fragment-index="1">
+      <g class="etapa"><rect x="690" y="20" width="420" height="140" rx="70" stroke="#4285F4"/>
+      <text x="900" y="108" text-anchor="middle" font-size="56" font-weight="600">Entender</text></g>
+    </g>
+    <g class="fragment" data-fragment-index="2">
+      <path class="seta" d="M1120 120 Q1380 150 1440 280" marker-end="url(#ponta)"/>
+      <g class="etapa"><rect x="1280" y="300" width="420" height="140" rx="70" stroke="#EA4335"/>
+      <text x="1490" y="388" text-anchor="middle" font-size="56" font-weight="600">Planejar</text></g>
+    </g>
+    <g class="fragment" data-fragment-index="3">
+      <path class="seta" d="M1440 450 Q1400 620 1230 680" marker-end="url(#ponta)"/>
+      <g class="etapa"><rect x="790" y="660" width="420" height="140" rx="70" stroke="#FBBC04"/>
+      <text x="1000" y="748" text-anchor="middle" font-size="56" font-weight="600">Executar</text></g>
+    </g>
+    <g class="fragment" data-fragment-index="4">
+      <path class="seta" d="M780 730 Q560 720 450 560" marker-end="url(#ponta)"/>
+      <g class="etapa"><rect x="100" y="400" width="420" height="140" rx="70" stroke="#34A853"/>
+      <text x="310" y="488" text-anchor="middle" font-size="56" font-weight="600">Verificar</text></g>
+    </g>
+    <g class="fragment" data-fragment-index="5">
+      <path class="seta" d="M320 390 Q360 180 680 110" marker-end="url(#ponta)"/>
+      <text x="470" y="260" font-size="44" opacity=".85">deu erro? corrige</text>
+    </g>
+  </svg>
+  <aside class="notes">Um clique por etapa. Destaque o Verificar: é isso que separa agente de chat. Ele roda o teste e volta sozinho.</aside>
+</section>
+
+<!-- 12. Onda 4: Time de agentes -->
+<section data-auto-animate data-background-color="#0E2418">
+  <div class="track">
+    <div class="no n1 on" data-id="n1"><div class="bola">⌨️</div><div class="nome">Autocomplete</div></div>
+    <div class="no n2 on" data-id="n2"><div class="bola">💬</div><div class="nome">Chat</div></div>
+    <div class="no n3 on" data-id="n3"><div class="bola">🤖</div><div class="nome">Agente</div></div>
+    <div class="no n4 on atual" data-id="n4"><div class="bola">🧑‍✈️</div><div class="nome">Time de agentes</div></div>
+  </div>
+  <div class="onda">
+    <div class="frase">
+      <h2 data-id="voce">Você orquestra.</h2>
+      <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--verde)">O time entrega.</h2>
+    </div>
+    <div class="slot" data-id="midia">SCREENSHOT: /agents<br>no Gemini CLI com<br>subagentes em paralelo</div>
+  </div>
+  <aside class="notes">Vários agentes, cada um com seu papel, rodando em paralelo. É o tema do resto da palestra.</aside>
+</section>
+
+<!-- 13. Tese -->
+<section data-background-color="#FAFAF7">
+  <div class="center claro">
+    <h2 class="fragment risca" data-fragment-index="1" style="color:rgba(15,27,45,.45)">O gargalo era digitar.</h2>
+    <h1 class="fragment fade-up" data-fragment-index="2" style="margin-top:.5em;font-size:2.2em">Agora é especificar e coordenar.</h1>
+  </div>
+  <aside class="notes">Primeiro clique risca a frase. Segundo clique revela a tese. Leia devagar: é a frase que vão fotografar.</aside>
+</section>
+
+<!-- 14. Ponte para a parte 3 -->
+<section data-background-color="#0F1B2D" data-background-transition="zoom">
+  <div class="center middle">
+    <p style="font-size:.7em;opacity:.75;margin-bottom:.6em">Mas o que acontece quando ninguém coordena?</p>
+    <div class="slot" style="width:1100px;height:560px;opacity:.7">GIF: pelada sem marcação,<br>todo mundo correndo atrás da bola</div>
+  </div>
+  <aside class="notes">Gancho para a parte 3, o vibe coding sem plano.</aside>
+</section>
+
+<!-- ================= PARTE 3 · VIBE CODING ================= -->
+
+<!-- 15. Abertura de seção -->
+<section data-background-color="#EA4335">
+  <div class="center">
+    <p style="font-size:.6em;margin-bottom:.6em" class="claro">O problema</p>
+    <h1 class="r-fit-text">Prompt vago, código vago.</h1>
+  </div>
+  <aside class="notes">Vibe coding: pedir no improviso, aceitar o que vier e torcer. Funciona em protótipo, quebra em produto.</aside>
+</section>
+
+<!-- 16. Três sintomas, um por vez no mesmo lugar -->
+<section data-background-color="#0F1B2D">
+  <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:80px;height:100%;align-items:center">
+    <div class="troca">
+      <h2 class="fragment fade-in-then-out" data-fragment-index="0">Funciona.<br>Ninguém sabe por quê.</h2>
+      <h2 class="fragment fade-in-then-out" data-fragment-index="1">Amanhã o agente esqueceu tudo.</h2>
+      <h2 class="fragment fade-in" data-fragment-index="2" style="color:var(--vermelho)">Cinco agentes.<br>Um arquivo.</h2>
+    </div>
+    <div class="slot" style="height:720px">GIF: “this is fine”<br>(cachorro na sala pegando fogo)<br>ou similar</div>
+  </div>
+  <aside class="notes">Três cliques, três sintomas no mesmo lugar da tela. 1: código que passa e ninguém entende. 2: a sessão acaba e o contexto vai embora. 3: vários agentes sem plano brigam pelo mesmo arquivo.</aside>
+</section>
+
+<!-- 17. Fluxograma do caos -->
+<section data-background-color="#0F1B2D" class="diagrama">
+  <svg viewBox="0 0 1800 900" role="img" aria-label="Três agentes editando o mesmo arquivo ao mesmo tempo">
+    <defs>
+      <marker id="ponta2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
+      </marker>
+    </defs>
+    <g class="fragment" data-fragment-index="1">
+      <rect class="caixa" x="60" y="80" width="460" height="150" rx="75" stroke="#4285F4"/>
+      <text x="290" y="172" text-anchor="middle" font-size="54" font-weight="600">🤖 Agente A</text>
+      <path class="seta" d="M530 155 Q900 160 1150 390" marker-end="url(#ponta2)"/>
+    </g>
+    <g class="fragment" data-fragment-index="2">
+      <rect class="caixa" x="60" y="375" width="460" height="150" rx="75" stroke="#FBBC04"/>
+      <text x="290" y="467" text-anchor="middle" font-size="54" font-weight="600">🤖 Agente B</text>
+      <path class="seta" d="M530 450 L1130 450" marker-end="url(#ponta2)"/>
+    </g>
+    <g class="fragment" data-fragment-index="3">
+      <rect class="caixa" x="60" y="670" width="460" height="150" rx="75" stroke="#34A853"/>
+      <text x="290" y="762" text-anchor="middle" font-size="54" font-weight="600">🤖 Agente C</text>
+      <path class="seta" d="M530 745 Q900 740 1150 510" marker-end="url(#ponta2)"/>
+    </g>
+    <rect class="caixa" x="1160" y="360" width="580" height="180" rx="28" stroke="#FAFAF7"/>
+    <text x="1450" y="468" text-anchor="middle" font-size="50" style="font-family:'JetBrains Mono',monospace">inscricoes.ts</text>
+    <g class="fragment zoom-in" data-fragment-index="4">
+      <text x="1450" y="300" text-anchor="middle" font-size="120">💥</text>
+      <text x="1450" y="650" text-anchor="middle" font-size="58" font-weight="800" style="fill:#EA4335">conflito</text>
+    </g>
+  </svg>
+  <aside class="notes">Cada clique, um agente mexendo no mesmo arquivo. O último clique é o conflito. Pergunte: de quem é a culpa? De ninguém, porque ninguém dividiu o trabalho.</aside>
+</section>
+
+<!-- 18. Ponte -->
+<section data-background-color="#FAFAF7">
+  <div class="center middle claro">
+    <h1 class="r-fit-text">Falta uma fonte de verdade.</h1>
+  </div>
+  <aside class="notes">Ponte direta para o SDD.</aside>
+</section>
+
+<!-- ================= PARTE 4 · SDD ================= -->
+
+<!-- 19. Abertura de seção -->
+<section data-background-color="#4285F4">
+  <div class="center">
+    <p style="font-size:.6em;opacity:.9;margin-bottom:.6em">Spec-Driven Development</p>
+    <h1>A spec é o esquema tático.</h1>
+  </div>
+  <aside class="notes">Em vez de improvisar no chat, a intenção vira Markdown versionado no repositório. O time de agentes joga em cima desse esquema.</aside>
+</section>
+
+<!-- 20. Fluxograma do ciclo SDD com portões de revisão -->
+<section data-background-color="#0F1B2D" class="diagrama">
+  <svg viewBox="0 0 1800 900" role="img" aria-label="Contexto, spec, plano e código, com revisão humana entre as etapas">
+    <defs>
+      <marker id="ponta3" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
+      </marker>
+    </defs>
+    <g>
+      <rect class="caixa" x="20" y="330" width="330" height="170" rx="85" stroke="#4285F4"/>
+      <text x="185" y="432" text-anchor="middle" font-size="56" font-weight="600">Contexto</text>
+    </g>
+    <g class="fragment" data-fragment-index="1">
+      <path class="seta" d="M360 415 L470 415" marker-end="url(#ponta3)"/>
+      <rect class="caixa" x="480" y="330" width="300" height="170" rx="85" stroke="#EA4335"/>
+      <text x="630" y="432" text-anchor="middle" font-size="56" font-weight="600">Spec</text>
+    </g>
+    <g class="fragment" data-fragment-index="2">
+      <circle cx="905" cy="415" r="80" fill="#FBBC04"/>
+      <text x="905" y="440" text-anchor="middle" font-size="72">👀</text>
+      <text x="905" y="590" text-anchor="middle" font-size="40" font-weight="600" style="fill:#FBBC04">você revisa</text>
+      <path class="seta" d="M790 415 L815 415"/>
+    </g>
+    <g class="fragment" data-fragment-index="3">
+      <path class="seta" d="M995 415 L1040 415" marker-end="url(#ponta3)"/>
+      <rect class="caixa" x="1050" y="330" width="300" height="170" rx="85" stroke="#FBBC04"/>
+      <text x="1200" y="432" text-anchor="middle" font-size="56" font-weight="600">Plano</text>
+    </g>
+    <g class="fragment" data-fragment-index="4">
+      <circle cx="1450" cy="415" r="70" fill="#FBBC04"/>
+      <text x="1450" y="438" text-anchor="middle" font-size="64">👀</text>
+      <path class="seta" d="M1360 415 L1375 415"/>
+      <path class="seta" d="M1525 415 L1560 415" marker-end="url(#ponta3)"/>
+      <rect class="caixa" x="1570" y="330" width="220" height="170" rx="85" stroke="#34A853"/>
+      <text x="1680" y="432" text-anchor="middle" font-size="56" font-weight="600">Código</text>
+    </g>
+    <g class="fragment fade-up" data-fragment-index="5">
+      <text x="900" y="160" text-anchor="middle" font-size="64" font-weight="800">Nenhuma linha antes do 👀</text>
+    </g>
+  </svg>
+  <aside class="notes">O ponto central: entre cada etapa existe um portão humano. O agente pesquisa o código, faz perguntas e gera a spec e o plano. Só depois da sua aprovação ele implementa.</aside>
+</section>
+
+<!-- 21. Os artefatos (árvore de arquivos) -->
+<section data-background-color="#0F1B2D">
+  <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:70px;height:100%;align-items:center">
+<pre class="codigo"><code><span class="c">$ tree conductor/</span>
+conductor/
+├── <span class="fragment destaque" data-fragment-index="1">product.md</span>
+├── <span class="fragment destaque" data-fragment-index="1">tech-stack.md</span>
+├── <span class="fragment destaque" data-fragment-index="1">workflow.md</span>
+└── tracks/
+    └── inscricoes/
+        ├── <span class="fragment destaque" data-fragment-index="2">spec.md</span>
+        └── <span class="fragment destaque" data-fragment-index="3">plan.md</span></code></pre>
+    <div class="troca">
+      <div class="fragment fade-in-then-out" data-fragment-index="1"><h2>Contexto</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">O produto, a stack e o jeito do time trabalhar.</p></div>
+      <div class="fragment fade-in-then-out" data-fragment-index="2"><h2 style="color:var(--vermelho)">Spec</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">O que vamos construir e por quê.</p></div>
+      <div class="fragment fade-in" data-fragment-index="3"><h2 style="color:var(--amarelo)">Plano</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">Fases e tarefas que dá pra delegar.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Estrutura do Conductor. ATENÇÃO: confira os nomes de pasta e comandos na versão que você vai usar (o SDD foi migrado para comandos /spec embutidos em algumas versões). A ideia é a mesma: tudo em Markdown, tudo no Git.</aside>
+</section>
+
+<!-- 22. spec.md e plan.md lado a lado -->
+<section data-background-color="#0F1B2D" data-auto-animate>
+  <div class="duas" style="height:100%;align-items:center">
+    <div>
+      <p class="rotulo">spec.md</p>
+<pre class="codigo"><code><span class="h"># Inscrição em eventos</span>
+
+<span class="k">## Objetivo</span>
+Participante se inscreve
+com um clique.
+
+<span class="k">## Critérios de aceite</span>
+- [ ] Bloquear quando lotar
+- [ ] E-mail de confirmação</code></pre>
+    </div>
+    <div class="fragment fade-left">
+      <p class="rotulo">plan.md</p>
+<pre class="codigo"><code><span class="k">## Fase 1: API</span>
+- [ ] POST /inscricoes
+- [ ] Teste de lotação
+
+<span class="k">## Fase 2: Tela</span>
+- [ ] Botão “Quero ir”
+- [ ] Estado de lotado
+
+<span class="k">## Fase 3: Verificação</span>
+- [ ] Teste no navegador</code></pre>
+    </div>
+  </div>
+  <aside class="notes">Mostre que a spec fala de negócio e o plano fala de execução. As fases do plano viram as tarefas de cada subagente na parte seguinte.</aside>
+</section>
+
+<!-- 23. Frase -->
+<section data-background-color="#EA4335">
+  <div class="center">
+    <h1>O prompt some no chat.</h1>
+    <h1 class="fragment fade-up claro" style="margin-top:.35em">A spec fica no Git.</h1>
+  </div>
+  <aside class="notes">Frase para a foto. E reforce: a spec funciona em qualquer ferramenta, inclusive no Claude Code que você usa no dia a dia.</aside>
+</section>
+
+<!-- ================= PARTE 5 · O ELENCO ================= -->
+
+<!-- 24. Abertura de seção -->
+<section data-background-color="#FBBC04">
+  <div class="center claro">
+    <p style="font-size:.6em;margin-bottom:.6em">Subagentes no Gemini CLI</p>
+    <h1 class="r-fit-text">Montando o elenco.</h1>
+  </div>
+  <aside class="notes">Com a tática pronta, a gente escala os jogadores.</aside>
+</section>
+
+<!-- 25. O campo com o time -->
+<section data-background-color="#0E2418" class="diagrama">
+  <svg viewBox="0 0 1800 900" role="img" aria-label="Campo com quatro subagentes e você como técnico">
+    <g stroke="rgba(250,250,247,.22)" stroke-width="6" fill="none">
+      <rect x="40" y="30" width="1720" height="700" rx="20"/>
+      <line x1="900" y1="30" x2="900" y2="730"/>
+      <circle cx="900" cy="380" r="110"/>
+      <rect x="40" y="200" width="200" height="360"/>
+      <rect x="1560" y="200" width="200" height="360"/>
+    </g>
+    <g class="fragment" data-fragment-index="1">
+      <circle cx="420" cy="230" r="70" fill="#4285F4"/>
+      <text x="420" y="252" text-anchor="middle" font-size="60">🛠️</text>
+      <text x="420" y="350" text-anchor="middle" font-size="46" font-weight="700">backend</text>
+    </g>
+    <g class="fragment" data-fragment-index="2">
+      <circle cx="420" cy="540" r="70" fill="#EA4335"/>
+      <text x="420" y="562" text-anchor="middle" font-size="60">🎨</text>
+      <text x="420" y="660" text-anchor="middle" font-size="46" font-weight="700">frontend</text>
+    </g>
+    <g class="fragment" data-fragment-index="3">
+      <circle cx="1330" cy="230" r="70" fill="#FBBC04"/>
+      <text x="1330" y="252" text-anchor="middle" font-size="60">🧪</text>
+      <text x="1330" y="350" text-anchor="middle" font-size="46" font-weight="700">testes</text>
+    </g>
+    <g class="fragment" data-fragment-index="4">
+      <circle cx="1330" cy="540" r="70" fill="#34A853"/>
+      <text x="1330" y="562" text-anchor="middle" font-size="60">🛡️</text>
+      <text x="1330" y="660" text-anchor="middle" font-size="46" font-weight="700">segurança</text>
+    </g>
+    <g class="fragment fade-up" data-fragment-index="5">
+      <rect x="650" y="770" width="500" height="110" rx="55" fill="#FAFAF7"/>
+      <text x="900" y="842" text-anchor="middle" font-size="50" font-weight="800" style="fill:#0F1B2D">🧑‍✈️ técnico: você</text>
+    </g>
+  </svg>
+  <aside class="notes">Um jogador por clique. O último clique coloca você na beira do campo: você não entra em campo para digitar, você comanda.</aside>
+</section>
+
+<!-- 26. O arquivo de um subagente -->
+<section data-background-color="#0F1B2D">
+  <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:70px;height:100%;align-items:center">
+    <div>
+      <p class="rotulo" style="font-family:var(--mono)">.gemini/agents/backend.md</p>
+<pre class="codigo"><code>---
+<span class="k">name</span>: backend
+<span class="k">description</span>: <span class="fragment destaque" data-fragment-index="1">Especialista na API de
+  inscrições. Use para criar ou
+  alterar rotas em /api.</span>
+<span class="k">tools</span>:
+  - read_file
+  - write_file
+  - run_shell_command
+---
+<span class="fragment destaque" data-fragment-index="2">Siga a spec e o plano aprovados.
+Nunca edite arquivos fora de /api.</span></code></pre>
+    </div>
+    <div class="troca">
+      <div class="fragment fade-in-then-out" data-fragment-index="1"><h2>A descrição é a escalação.</h2><p style="font-size:.6em;margin-top:.6em;opacity:.85">É ela que diz quando o orquestrador chama esse jogador.</p></div>
+      <div class="fragment fade-in" data-fragment-index="2"><h2>A instrução é a marcação.</h2><p style="font-size:.6em;margin-top:.6em;opacity:.85">Limite claro: cada um na sua área do campo.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Um Markdown com frontmatter YAML. Na pasta do projeto, vai para o Git e o time inteiro ganha o mesmo elenco. Confira os campos exatos na doc de subagentes da sua versão.</aside>
+</section>
+
+<!-- 27. Descrição vaga vs boa -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <h2 style="margin-bottom:.8em">Qual você chamaria?</h2>
+    <div class="duas">
+      <div class="fragment fade-right">
+        <p class="rotulo" style="color:var(--vermelho)">❌ vago</p>
+<pre class="codigo"><code><span class="k">description</span>: Ajuda com
+  código.</code></pre>
+      </div>
+      <div class="fragment fade-left">
+        <p class="rotulo" style="color:var(--verde)">✅ específico</p>
+<pre class="codigo"><code><span class="k">description</span>: Escreve testes
+  de integração da API de
+  inscrições com Vitest.</code></pre>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Descrição vaga gera delegação errada, ou um agente principal que tenta fazer tudo sozinho. Escrever isso bem é trabalho de engenheiro.</aside>
+</section>
+
+<!-- 28. Gemini CLI x Claude Code -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <h2>Mesma ideia, outro uniforme.</h2>
+    <div class="comparar">
+      <div></div><div class="cab">Gemini CLI</div><div class="cab">Claude Code</div>
+      <div class="fragment" data-fragment-index="1">Onde fica</div><div class="m fragment" data-fragment-index="1">.gemini/agents/</div><div class="m fragment" data-fragment-index="1">.claude/agents/</div>
+      <div class="fragment" data-fragment-index="2">Formato</div><div class="fragment" data-fragment-index="2">Markdown + YAML</div><div class="fragment" data-fragment-index="2">Markdown + YAML</div>
+      <div class="fragment" data-fragment-index="3">Ver o elenco</div><div class="m fragment" data-fragment-index="3">/agents</div><div class="m fragment" data-fragment-index="3">/agents</div>
+    </div>
+    <p class="fragment fade-up" data-fragment-index="4" style="font-size:.85em;font-weight:800;margin-top:1em">A ferramenta muda. A habilidade fica.</p>
+  </div>
+  <aside class="notes">Aqui entra sua experiência com Claude Code. Quem aprende a orquestrar em uma ferramenta leva isso para qualquer outra.</aside>
+</section>
+
+<!-- ================= PARTE 6 · DEMO ================= -->
+
+<!-- 29. Abertura da demo -->
+<section data-background-color="#34A853">
+  <div class="center claro">
+    <p style="font-size:.6em;margin-bottom:.6em">Demo ao vivo</p>
+    <h1 class="r-fit-text">Bola rolando.</h1>
+  </div>
+  <aside class="notes">Antes de trocar para o terminal: aumente a fonte do terminal (mínimo 28pt), feche notificações e deixe o vídeo de backup aberto em outra aba.</aside>
+</section>
+
+<!-- 30. Roteiro da demo -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <h2>O jogo de hoje</h2>
+    <ol class="passos">
+      <li class="fragment fade-left">Carregar o contexto <small>produto e stack</small></li>
+      <li class="fragment fade-left pausa">Gerar spec e plano <small>e revisar em voz alta</small></li>
+      <li class="fragment fade-left">Backend e frontend em paralelo</li>
+      <li class="fragment fade-left">Testes e navegador validam</li>
+      <li class="fragment fade-left pausa">Você revisa o diff e faz o commit</li>
+    </ol>
+  </div>
+  <aside class="notes">Os passos em amarelo são os momentos do engenheiro. Pare neles de propósito e diga o que você mudaria.</aside>
+</section>
+
+<!-- 31. Fluxograma da orquestração -->
+<section data-background-color="#0F1B2D" class="diagrama">
+  <svg viewBox="0 0 1800 900" role="img" aria-label="Orquestrador divide o plano entre backend e frontend em paralelo, depois testes e sua revisão">
+    <defs>
+      <marker id="ponta4" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
+      </marker>
+    </defs>
+    <rect class="caixa" x="20" y="365" width="360" height="170" rx="85" stroke="#FAFAF7"/>
+    <text x="200" y="440" text-anchor="middle" font-size="46" font-weight="600">orquestrador</text>
+    <text x="200" y="495" text-anchor="middle" font-size="36" opacity=".7">lê o plano</text>
+    <g class="fragment" data-fragment-index="1">
+      <path class="seta" d="M390 420 Q470 220 560 220" marker-end="url(#ponta4)"/>
+      <path class="seta" d="M390 480 Q470 680 560 680" marker-end="url(#ponta4)"/>
+      <rect class="caixa" x="570" y="140" width="400" height="160" rx="80" stroke="#4285F4"/>
+      <text x="770" y="235" text-anchor="middle" font-size="50" font-weight="600">🛠️ backend</text>
+      <rect class="caixa" x="570" y="600" width="400" height="160" rx="80" stroke="#EA4335"/>
+      <text x="770" y="695" text-anchor="middle" font-size="50" font-weight="600">🎨 frontend</text>
+      <text x="770" y="465" text-anchor="middle" font-size="44" font-weight="800" style="fill:#FBBC04">∥ em paralelo</text>
+    </g>
+    <g class="fragment" data-fragment-index="2">
+      <path class="seta" d="M980 220 Q1060 220 1110 400" marker-end="url(#ponta4)"/>
+      <path class="seta" d="M980 680 Q1060 680 1110 500" marker-end="url(#ponta4)"/>
+      <rect class="caixa" x="1120" y="370" width="300" height="160" rx="80" stroke="#FBBC04"/>
+      <text x="1270" y="465" text-anchor="middle" font-size="50" font-weight="600">🧪 testes</text>
+    </g>
+    <g class="fragment" data-fragment-index="3">
+      <path class="seta" d="M1430 450 L1520 450" marker-end="url(#ponta4)"/>
+      <circle cx="1640" cy="450" r="110" fill="#FBBC04"/>
+      <text x="1640" y="475" text-anchor="middle" font-size="80">👀</text>
+      <text x="1640" y="620" text-anchor="middle" font-size="44" font-weight="700" style="fill:#FBBC04">você</text>
+    </g>
+  </svg>
+  <aside class="notes">Paralelo só onde os arquivos não se cruzam: backend em /api, frontend em /web. O próprio Google recomenda cuidado com paralelo em tarefas que editam muito código.</aside>
+</section>
+
+<!-- 32. Backup da demo -->
+<section data-background-color="#0F1B2D">
+  <div class="center middle">
+    <div class="slot" style="width:1600px;height:820px">VÍDEO DE BACKUP DA DEMO<br>&lt;video src="demo.mp4" controls&gt;<br>(ou use data-background-video nesta section)</div>
+  </div>
+  <aside class="notes">Pule este slide se a demo ao vivo funcionar. Se o Wi-Fi cair, toque o vídeo e narre por cima.</aside>
+</section>
+
+<!-- ================= PARTE 7 · O ENGENHEIRO ================= -->
+
+<!-- 33. A pergunta volta -->
+<section data-background-color="#EA4335">
+  <div class="center">
+    <p style="font-size:.6em;margin-bottom:.6em" class="claro">Lembra da pergunta?</p>
+    <h1 style="font-size:2.2em">Pra que serve você?</h1>
+  </div>
+  <aside class="notes">Mesma cor e mesma frase do começo. Agora a plateia já viu a resposta acontecer na demo.</aside>
+</section>
+
+<!-- 34. Os quatro papéis -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <h2>Você ocupa quatro posições.</h2>
+    <div class="papeis">
+      <div class="papel fragment fade-up" style="border-color:var(--azul)"><h3>Técnico</h3><p>escreve a spec e o plano</p></div>
+      <div class="papel fragment fade-up" style="border-color:var(--vermelho)"><h3>Diretor</h3><p>monta o elenco e define permissões</p></div>
+      <div class="papel fragment fade-up" style="border-color:var(--amarelo)"><h3>Capitão</h3><p>divide o trabalho e decide o que roda em paralelo</p></div>
+      <div class="papel fragment fade-up" style="border-color:var(--verde)"><h3>Árbitro</h3><p>revisa, testa e aprova o que entra</p></div>
+    </div>
+  </div>
+  <aside class="notes">Cada papel corresponde a um momento da demo. Aponte isso: o técnico foi a spec, o diretor foi o /agents, o capitão foi o paralelo, o árbitro foi o diff.</aside>
+</section>
+
+<!-- 35. Frase central -->
+<section data-background-color="#FAFAF7">
+  <div class="center claro">
+    <h1 style="font-size:2.3em">A IA escreve código.</h1>
+    <h1 class="fragment fade-up" style="font-size:2.3em;margin-top:.3em;color:var(--azul)">O engenheiro entrega software.</h1>
+  </div>
+  <aside class="notes">A frase mais importante da palestra. Fale devagar e espere as fotos.</aside>
+</section>
+
+<!-- ================= PARTE 8 · LIMITES ================= -->
+
+<!-- 36. Cartões amarelos -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <h2>Cartão amarelo.</h2>
+    <div class="cartoes">
+      <div class="cartao fragment fade-down"><div><span class="ico">⚔️</span><p>Paralelo sem divisão gera conflito</p></div></div>
+      <div class="cartao fragment fade-down"><div><span class="ico">🪙</span><p>Contexto custa tokens</p></div></div>
+      <div class="cartao fragment fade-down"><div><span class="ico">🔑</span><p>Terminal aberto exige cuidado com segredos</p></div></div>
+      <div class="cartao fragment fade-down"><div><span class="ico">🚀</span><p>Spec ruim vira código ruim mais rápido</p></div></div>
+    </div>
+  </div>
+  <aside class="notes">Honestidade gera credibilidade. Um cartão por clique, uma frase curta para cada.</aside>
+</section>
+
+<!-- 37. Meu gol contra -->
+<section data-background-color="#EA4335">
+  <div style="display:grid;grid-template-columns:1fr 860px;gap:80px;height:100%;align-items:center">
+    <div>
+      <h2>Meu gol contra.</h2>
+      <p class="fragment fade-up" style="font-size:.7em;margin-top:.6em">[Uma frase sobre o caso]</p>
+    </div>
+    <div class="slot" style="height:720px">PRINT DO ERRO REAL<br>(diff, log ou mensagem do agente)</div>
+  </div>
+  <aside class="notes">Conte um caso real, de preferência do Claude Code, em que o agente errou feio e como a revisão salvou. É o momento mais humano da palestra.</aside>
+</section>
+
+<!-- ================= PARTE 9 · FECHAMENTO ================= -->
+
+<!-- 38. Retomada da metáfora -->
+<section data-background-color="#FBBC04">
+  <div class="center claro">
+    <h1>O agente faz o gol.</h1>
+    <h1 class="fragment fade-up" style="margin-top:.35em">Quem escala o time é você.</h1>
+  </div>
+  <aside class="notes">Fecha o arco aberto no slide do “matar no peito”.</aside>
+</section>
+
+<!-- 39. Chamada para ação -->
+<section data-background-color="#0F1B2D">
+  <div class="center">
+    <h2>Esta semana:</h2>
+    <ol class="passos" style="margin-top:.8em !important">
+      <li class="fragment fade-left" style="font-size:1em">Escreva sua primeira spec.</li>
+      <li class="fragment fade-left" style="font-size:1em">Crie seu primeiro subagente.</li>
+    </ol>
+  </div>
+  <aside class="notes">Duas tarefas pequenas e concretas. Nada de “estude IA”.</aside>
+</section>
+
+<!-- 40. Obrigado e perguntas -->
+<section data-background-color="#0F1B2D">
+  <div style="display:grid;grid-template-columns:1fr 640px;gap:90px;height:100%;align-items:center">
+    <div>
+      <div class="prompt">$ <span style="color:var(--giz)">gemini --perguntas</span><span class="cursor"></span></div>
+      <h1>Obrigado!</h1>
+      <p style="font-size:.6em;margin-top:1em;opacity:.85">[Seu nome]<br>[@seu_usuario]</p>
+      <div class="cores"><span style="background:var(--azul)"></span><span style="background:var(--vermelho)"></span><span style="background:var(--amarelo)"></span><span style="background:var(--verde)"></span></div>
+    </div>
+    <div class="slot" style="height:640px">QR CODE<br>repositório da demo<br>(spec, plano e agentes)</div>
+  </div>
+  <aside class="notes">Deixe este slide no telão durante as perguntas. O QR code leva ao repositório com spec, plano e definições dos agentes.</aside>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1920,
+    height: 1080,
+    margin: 0.06,
+    hash: true,
+    center: false,
+    controls: true,
+    progress: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    backgroundTransition: 'fade',
+    autoAnimateDuration: 0.9,
+    autoAnimateEasing: 'cubic-bezier(.7,0,.3,1)',
+    plugins: [RevealNotes]
+  });
+</script>
+</body>
+</html>
