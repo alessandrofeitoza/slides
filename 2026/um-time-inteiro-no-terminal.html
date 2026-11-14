@@ -11,154 +11,177 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
-<style>
-  /* ===== Tokens ===== */
-  :root {
-    --noite: #0F1B2D;      /* estádio à noite: fundo base */
-    --giz: #FAFAF7;        /* giz da prancheta: texto claro */
-    --azul: #4285F4;
-    --vermelho: #EA4335;
-    --amarelo: #FBBC04;
-    --verde: #34A853;
-    --apagado: rgba(250, 250, 247, .28);
-    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-    --mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  }
+  <style>
+    /* ===== Tokens ===== */
+    :root {
+      --noite: #0F1B2D;      /* estádio à noite: fundo base */
+      --giz: #FAFAF7;        /* giz da prancheta: texto claro */
+      --azul: #4285F4;
+      --vermelho: #EA4335;
+      --amarelo: #FBBC04;
+      --verde: #34A853;
+      --apagado: rgba(250, 250, 247, .28);
+      --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+      --mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+    }
 
-  /* ===== Base: legível do fundo do anfiteatro ===== */
-  .reveal { font-family: var(--display); font-size: 56px; color: var(--giz); }
-  .reveal .slides section { text-align: left; height: 100%; }
-  .reveal h1, .reveal h2, .reveal h3 {
-    font-family: var(--display); color: inherit; text-transform: none;
-    letter-spacing: -.035em; line-height: .95; margin: 0;
-  }
-  .reveal h1 { font-size: 2.6em; font-weight: 800; }
-  .reveal h2 { font-size: 1.9em; font-weight: 800; }
-  .reveal h3 { font-size: 1.1em; font-weight: 600; letter-spacing: -.02em; }
-  .reveal p { margin: 0; line-height: 1.2; }
-  .claro { color: var(--noite); }
-  .center { display: flex; flex-direction: column; justify-content: center; height: 100%; }
-  .middle { text-align: center !important; align-items: center; }
+    /* ===== Base: legível do fundo do anfiteatro ===== */
+    .reveal { font-family: var(--display); font-size: 56px; color: var(--giz); }
+    .reveal .slides section { text-align: left; height: 100%; }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: var(--display); color: inherit; text-transform: none;
+      letter-spacing: -.035em; line-height: .95; margin: 0;
+    }
+    .reveal h1 { font-size: 2.6em; font-weight: 800; }
+    .reveal h2 { font-size: 1.9em; font-weight: 800; }
+    .reveal h3 { font-size: 1.1em; font-weight: 600; letter-spacing: -.02em; }
+    .reveal p { margin: 0; line-height: 1.2; }
+    .claro { color: var(--noite); }
+    .center { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+    .middle { text-align: center !important; align-items: center; }
 
-  /* ===== Espaço para imagem/GIF ===== */
-  .slot {
-    border: 6px dashed currentColor; opacity: .55; border-radius: 28px;
-    display: flex; align-items: center; justify-content: center; text-align: center;
-    font-family: var(--mono); font-size: .42em; padding: 1em; line-height: 1.4;
-  }
-  .slot img, .slot video { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
+    /* ===== Espaço para imagem/GIF ===== */
+    .slot {
+      border: 6px dashed currentColor; opacity: .55; border-radius: 28px;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      font-family: var(--mono); font-size: .42em; padding: 1em; line-height: 1.4;
+    }
+    .slot img, .slot video { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
 
-  /* ===== Título: prompt de terminal ===== */
-  .prompt { font-family: var(--mono); font-size: .62em; color: var(--verde); margin-bottom: 1.1em; }
-  .prompt .cmd { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom;
-    width: 0; animation: digitar 1.4s steps(21) .6s forwards; color: var(--giz); }
-  .prompt .cursor { display: inline-block; width: .55em; height: 1em; background: var(--amarelo);
-    vertical-align: -.15em; animation: piscar 1s steps(1) infinite; }
-  @keyframes digitar { to { width: 21ch; } }
-  @keyframes piscar { 50% { opacity: 0; } }
-  .assinatura { position: absolute; bottom: 0; left: 0; font-size: .5em; line-height: 1.35; opacity: .8; }
-  .cores { display: flex; gap: 16px; margin-top: .9em; }
-  .cores span { width: 90px; height: 14px; border-radius: 7px; }
+    /* ===== Título: prompt de terminal ===== */
+    .prompt { font-family: var(--mono); font-size: .62em; color: var(--verde); margin-bottom: 1.1em; }
+    .prompt .cmd { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom;
+      width: 0; animation: digitar 1.4s steps(21) .6s forwards; color: var(--giz); }
+    .prompt .cursor { display: inline-block; width: .55em; height: 1em; background: var(--amarelo);
+      vertical-align: -.15em; animation: piscar 1s steps(1) infinite; }
+    @keyframes digitar { to { width: 21ch; } }
+    @keyframes piscar { 50% { opacity: 0; } }
+    .assinatura { position: absolute; bottom: 0; left: 0; font-size: .5em; line-height: 1.35; opacity: .8; }
+    .cores { display: flex; gap: 16px; margin-top: .9em; }
+    .cores span { width: 90px; height: 14px; border-radius: 7px; }
 
-  /* ===== Enquete ===== */
-  .enquete { list-style: none; margin: .8em 0 0 !important; padding: 0; }
-  .enquete li { display: flex; align-items: center; gap: .6em; font-size: 1.15em; font-weight: 600; margin: .35em 0; }
-  .enquete .ico { font-size: 1.3em; width: 1.4em; text-align: center; }
+    /* ===== Enquete ===== */
+    .enquete { list-style: none; margin: .8em 0 0 !important; padding: 0; }
+    .enquete li { display: flex; align-items: center; gap: .6em; font-size: 1.15em; font-weight: 600; margin: .35em 0; }
+    .enquete .ico { font-size: 1.3em; width: 1.4em; text-align: center; }
 
-  /* ===== Riscado animado ===== */
-  .reveal .risca { position: relative; display: inline-block; align-self: flex-start; }
-  .risca::after { content: ""; position: absolute; left: -2%; top: 52%; height: .12em; width: 0;
-    background: var(--vermelho); transition: width .7s cubic-bezier(.7,0,.3,1); }
-  .risca.visible::after { width: 104%; }
-  .reveal .fragment.risca { opacity: 1; visibility: visible; transform: none; }
+    /* ===== Riscado animado ===== */
+    .reveal .risca { position: relative; display: inline-block; align-self: flex-start; }
+    .risca::after { content: ""; position: absolute; left: -2%; top: 52%; height: .12em; width: 0;
+      background: var(--vermelho); transition: width .7s cubic-bezier(.7,0,.3,1); }
+    .risca.visible::after { width: 104%; }
+    .reveal .fragment.risca { opacity: 1; visibility: visible; transform: none; }
 
-  /* ===== Linha do tempo das ondas ===== */
-  .track { position: relative; display: flex; justify-content: space-between; margin: 0 0 1.1em; }
-  .track::before { content: ""; position: absolute; left: 60px; right: 60px; top: 60px; height: 8px;
-    background: var(--apagado); border-radius: 4px; }
-  .no { position: relative; display: flex; flex-direction: column; align-items: center; width: 25%; opacity: .3; }
-  .no .bola { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center;
-    justify-content: center; font-size: 1em; background: var(--noite); border: 8px solid var(--apagado); }
-  .no .nome { font-size: .5em; font-weight: 600; margin-top: .5em; }
-  .no.on { opacity: 1; }
-  .no.atual .bola { width: 150px; height: 150px; margin-top: -15px; font-size: 1.25em; }
-  .no.n1.on .bola { border-color: var(--azul); }
-  .no.n2.on .bola { border-color: var(--vermelho); }
-  .no.n3.on .bola { border-color: var(--amarelo); }
-  .no.n4.on .bola { border-color: var(--verde); }
-  .onda { display: grid; grid-template-columns: 1.05fr 1fr; gap: 70px; align-items: stretch; height: 600px; }
-  .onda .frase { display: flex; flex-direction: column; justify-content: center; }
-  .onda .frase h2 { font-size: 1.55em; }
-  .onda .frase .ia { margin-top: .25em; }
-  .tag { font-family: var(--mono); font-size: .4em; opacity: .7; margin-bottom: 1em; }
+    /* ===== Linha do tempo das ondas ===== */
+    .track { position: relative; display: flex; justify-content: space-between; margin: 0 0 1.1em; }
+    .track::before { content: ""; position: absolute; left: 60px; right: 60px; top: 60px; height: 8px;
+      background: var(--apagado); border-radius: 4px; }
+    .no { position: relative; display: flex; flex-direction: column; align-items: center; width: 25%; opacity: .3; }
+    .no .bola { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 1em; background: var(--noite); border: 8px solid var(--apagado); }
+    .no .nome { font-size: .5em; font-weight: 600; margin-top: .5em; }
+    .no.on { opacity: 1; }
+    .no.atual .bola { width: 150px; height: 150px; margin-top: -15px; font-size: 1.25em; }
+    .no.n1.on .bola { border-color: var(--azul); }
+    .no.n2.on .bola { border-color: var(--vermelho); }
+    .no.n3.on .bola { border-color: var(--amarelo); }
+    .no.n4.on .bola { border-color: var(--verde); }
+    .onda { display: grid; grid-template-columns: 1.05fr 1fr; gap: 70px; align-items: stretch; height: 600px; }
+    .onda .frase { display: flex; flex-direction: column; justify-content: center; }
+    .onda .frase h2 { font-size: 1.55em; }
+    .onda .frase .ia { margin-top: .25em; }
+    .tag { font-family: var(--mono); font-size: .4em; opacity: .7; margin-bottom: 1em; }
 
-  /* ===== Fluxograma do agente ===== */
-  .loop svg { width: 100%; height: 860px; }
-  .loop text { font-family: var(--display); fill: var(--giz); }
-  .loop .etapa rect { fill: var(--noite); stroke-width: 7; }
-  .loop .seta { stroke: var(--apagado); stroke-width: 7; fill: none; }
+    /* ===== Fluxograma do agente ===== */
+    .loop svg { width: 100%; height: 860px; }
+    .loop text { font-family: var(--display); fill: var(--giz); }
+    .loop .etapa rect { fill: var(--noite); stroke-width: 7; }
+    .loop .seta { stroke: var(--apagado); stroke-width: 7; fill: none; }
 
-  /* ===== Partes 3 a 9 ===== */
-  .diagrama svg { width: 100%; height: 900px; }
-  .diagrama text { font-family: var(--display); fill: var(--giz); }
-  .diagrama .caixa { fill: var(--noite); stroke-width: 7; }
-  .diagrama .seta { stroke: var(--apagado); stroke-width: 7; fill: none; }
+    /* ===== Partes 3 a 9 ===== */
+    .diagrama svg { width: 100%; height: 900px; }
+    .diagrama text { font-family: var(--display); fill: var(--giz); }
+    .diagrama .caixa { fill: var(--noite); stroke-width: 7; }
+    .diagrama .seta { stroke: var(--apagado); stroke-width: 7; fill: none; }
 
-  .reveal pre.codigo {
-    width: auto; box-shadow: none; margin: 0; font-family: var(--mono); font-size: .6em; line-height: 1.45;
-    background: rgba(0, 0, 0, .38); border-radius: 28px; padding: 1.1em 1.3em; white-space: pre; color: var(--giz);
-  }
-  .reveal pre.codigo code { font-family: inherit; max-height: none; padding: 0; background: none; }
-  .codigo .k { color: var(--azul); } .codigo .s { color: var(--amarelo); }
-  .codigo .h { color: var(--verde); font-weight: 700; } .codigo .c { color: var(--apagado); }
-  .codigo .x { color: var(--vermelho); }
+    .reveal pre.codigo {
+      width: auto; box-shadow: none; margin: 0; font-family: var(--mono); font-size: .6em; line-height: 1.45;
+      background: rgba(0, 0, 0, .38); border-radius: 28px; padding: 1.1em 1.3em; white-space: pre; color: var(--giz);
+    }
+    .reveal pre.codigo code { font-family: inherit; max-height: none; padding: 0; background: none; }
+    .codigo .k { color: var(--azul); } .codigo .s { color: var(--amarelo); }
+    .codigo .h { color: var(--verde); font-weight: 700; } .codigo .c { color: var(--apagado); }
+    .codigo .x { color: var(--vermelho); }
 
-  .reveal .fragment.destaque { opacity: 1; visibility: inherit; transition: color .3s, background-color .3s; border-radius: 10px; }
-  .reveal .fragment.destaque.current-fragment { color: var(--noite); background: var(--amarelo); }
+    .reveal .fragment.destaque { opacity: 1; visibility: inherit; transition: color .3s, background-color .3s; border-radius: 10px; }
+    .reveal .fragment.destaque.current-fragment { color: var(--noite); background: var(--amarelo); }
 
-  .troca { display: grid; }
-  .troca > * { grid-area: 1 / 1; }
+    .troca { display: grid; }
+    .troca > * { grid-area: 1 / 1; }
 
-  .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-  .rotulo { font-size: .5em; font-weight: 600; margin-bottom: .6em; opacity: .85; }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .rotulo { font-size: .5em; font-weight: 600; margin-bottom: .6em; opacity: .85; }
 
-  .cartoes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px; margin-top: 1em; }
-  .cartao > div { background: var(--amarelo); color: var(--noite); border-radius: 26px; height: 520px;
-    padding: 1em .8em; display: flex; flex-direction: column; justify-content: flex-end; }
-  .cartao:nth-child(1) > div { transform: rotate(-4deg); } .cartao:nth-child(2) > div { transform: rotate(3deg); }
-  .cartao:nth-child(3) > div { transform: rotate(-2deg); } .cartao:nth-child(4) > div { transform: rotate(5deg); }
-  .cartao .ico { font-size: 1.4em; margin-bottom: auto; }
-  .cartao p { font-size: .62em; font-weight: 800; line-height: 1.05; letter-spacing: -.02em; }
+    .cartoes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px; margin-top: 1em; }
+    .cartao > div { background: var(--amarelo); color: var(--noite); border-radius: 26px; height: 520px;
+      padding: 1em .8em; display: flex; flex-direction: column; justify-content: flex-end; }
+    .cartao:nth-child(1) > div { transform: rotate(-4deg); } .cartao:nth-child(2) > div { transform: rotate(3deg); }
+    .cartao:nth-child(3) > div { transform: rotate(-2deg); } .cartao:nth-child(4) > div { transform: rotate(5deg); }
+    .cartao .ico { font-size: 1.4em; margin-bottom: auto; }
+    .cartao p { font-size: .62em; font-weight: 800; line-height: 1.05; letter-spacing: -.02em; }
 
-  .papeis { display: grid; grid-template-columns: 1fr 1fr; gap: 50px 80px; margin-top: .9em; }
-  .papel { border-left: 14px solid; padding: .15em 0 .15em .7em; }
-  .papel h3 { font-size: 1.15em; font-weight: 800; }
-  .papel p { font-size: .66em; opacity: .85; margin-top: .3em; }
+    .papeis { display: grid; grid-template-columns: 1fr 1fr; gap: 50px 80px; margin-top: .9em; }
+    .papel { border-left: 14px solid; padding: .15em 0 .15em .7em; }
+    .papel h3 { font-size: 1.15em; font-weight: 800; }
+    .papel p { font-size: .66em; opacity: .85; margin-top: .3em; }
 
-  .passos { list-style: none; margin: .6em 0 0 !important; padding: 0; counter-reset: p; }
-  .passos li { counter-increment: p; display: flex; align-items: center; gap: .7em; font-size: .78em; font-weight: 600; margin: .42em 0; }
-  .passos li::before { content: counter(p); flex: none; width: 1.6em; height: 1.6em; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; background: var(--giz); color: var(--noite); font-weight: 800; }
-  .passos li.pausa::before { background: var(--amarelo); }
-  .passos small { font-size: .62em; font-weight: 400; opacity: .7; margin-left: .3em; }
+    .passos { list-style: none; margin: .6em 0 0 !important; padding: 0; counter-reset: p; }
+    .passos li { counter-increment: p; display: flex; align-items: center; gap: .7em; font-size: .78em; font-weight: 600; margin: .42em 0; }
+    .passos li::before { content: counter(p); flex: none; width: 1.6em; height: 1.6em; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; background: var(--giz); color: var(--noite); font-weight: 800; }
+    .passos li.pausa::before { background: var(--amarelo); }
+    .passos small { font-size: .62em; font-weight: 400; opacity: .7; margin-left: .3em; }
 
-  .comparar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-top: .9em; font-size: .75em; }
-  .comparar > div { padding: .55em .4em; border-bottom: 3px solid var(--apagado); }
-  .comparar .cab { font-weight: 800; font-size: 1.15em; }
-  .comparar .m { font-family: var(--mono); font-size: .85em; }
+    .comparar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-top: .9em; font-size: .75em; }
+    .comparar > div { padding: .55em .4em; border-bottom: 3px solid var(--apagado); }
+    .comparar .cab { font-weight: 800; font-size: 1.15em; }
+    .comparar .m { font-family: var(--mono); font-size: .85em; }
 
-  @media (prefers-reduced-motion: reduce) {
-    .prompt .cmd { animation: none; width: 21ch; }
-    .prompt .cursor { animation: none; }
-    .risca::after { transition: none; }
-  }
-</style>
+    .refs { display: grid; grid-template-columns: 1fr 1fr; gap: 46px 90px; margin-top: .9em; }
+    .refs .grupo { font-size: .5em; font-weight: 600; opacity: .7; margin-bottom: .5em; }
+    .refs a { display: block; color: var(--giz); text-decoration: none; margin-bottom: .55em; }
+    .refs a strong { display: block; font-size: .68em; font-weight: 700; line-height: 1.15; }
+    .refs a span { display: block; font-family: var(--mono); font-size: .44em; opacity: .7; margin-top: .15em; }
+    .refs a:hover strong, .refs a:focus-visible strong { text-decoration: underline; }
+
+    .barras { display: grid; grid-template-columns: 430px 1fr; gap: 36px 44px; align-items: center; margin-top: .8em; }
+    .barras .nome { font-size: .78em; font-weight: 600; text-align: right; }
+    .barras .trilho { height: 92px; }
+    .barras .barra { height: 100%; border-radius: 46px; background: var(--giz); }
+    .barras .barra.impl { background: var(--amarelo); }
+    .nota { font-size: .45em; opacity: .55; margin-top: 1.2em; }
+    .quem { display: grid; grid-template-columns: .9fr 1.2fr 1.2fr; margin-top: .7em; font-size: .8em; }
+    .quem > div { padding: .45em .4em; border-bottom: 3px solid var(--apagado); }
+    .quem .cab { font-weight: 800; font-size: 1.1em; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .prompt .cmd { animation: none; width: 21ch; }
+      .prompt .cursor { animation: none; }
+      .risca::after { transition: none; }
+    }
+  </style>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
 
 <!-- ================= PARTE 1 · ABERTURA ================= -->
+
+<section data-background="img/devfest/terminal-ant-2.jpeg">
+  <h1>Um time inteiro no terminal</h1>
+  <br><br><br><br><br>
+  <img src="img/devfest/time.png" alt="">
+</section>
 
 <!-- 1. Título -->
 <section data-background-color="#0F1B2D">
@@ -167,17 +190,19 @@
     <h1>Um time de desenvolvimento inteiro dentro do seu terminal</h1>
     <div class="cores"><span style="background:var(--azul)"></span><span style="background:var(--vermelho)"></span><span style="background:var(--amarelo)"></span><span style="background:var(--verde)"></span></div>
   </div>
-  <div class="assinatura">[Seu nome]<br>DevFest Fortaleza 2026</div>
-  <aside class="notes">Deixe este slide no telão enquanto o público entra. O cursor piscando chama atenção sem você dizer nada.</aside>
+  <div class="assinatura">Alessandro Feitoza<br>DevFest Fortaleza 2026</div>
 </section>
 
 <!-- 2. Quem sou eu -->
 <section data-background-color="#0F1B2D">
   <div style="display:grid;grid-template-columns:620px 1fr;gap:90px;height:100%;align-items:center">
-    <div class="slot" style="height:760px">FOTO SUA<br>620 × 760</div>
+    <div class="slot" style="height:760px; background: url('../img/AlessandroFeitoza-2026-2.jpg'); opacity: unset; background-size: 100%;">
+
+    </div>
     <div>
-      <h2>[Seu nome]</h2>
-      <p style="font-size:.85em;margin-top:.7em;opacity:.85">[Cargo] em [empresa]</p>
+      <h2>Alessandro Feitoza</h2>
+      <p style="font-size:.85em;margin-top:.7em;opacity:.85">Techlead na <span style="color: #ff5858; font-weight: bold;">Bússola Social</span></p>
+      <p style="font-size:.85em;margin-top:.7em;opacity:.85">Faço parte da <span style="color: #5a87ff; font-weight: bold;">PHP com Rapadura</span></p>
       <p class="fragment fade-up" style="font-size:.85em;margin-top:.5em">Passo o dia orquestrando agentes no terminal.</p>
     </div>
   </div>
@@ -188,7 +213,7 @@
 <section data-background-color="#EA4335" data-auto-animate>
   <div class="center">
     <h1 data-id="prov" style="font-size:2.2em">Se a IA escreve todo o código…</h1>
-    <h1 class="fragment fade-up claro" style="font-size:2.2em;margin-top:.3em">…pra que serve você?</h1>
+    <h1 class="fragment fade-up claro" style="font-size:2.2em;margin-top:.3em">…pra que a gente serve?</h1>
   </div>
   <aside class="notes">Faça a pergunta e fique em silêncio por uns 3 segundos. Não responda: a palestra inteira é a resposta.</aside>
 </section>
@@ -214,7 +239,9 @@
       <h2>E se a gente matasse no peito…</h2>
       <h2 class="fragment fade-up" style="margin-top:.4em">…e deixasse a IA fazer o gol?</h2>
     </div>
-    <div class="slot" style="height:760px">GIF: domínio no peito<br>+ gol<br>(lance do Fortaleza ou do Ceará)</div>
+    <div class="slot" style="height:760px; opacity: unset; background: url('img/devfest/mata-no-peito.jpg')">
+
+    </div>
   </div>
   <aside class="notes">Se o GIF for de um lance local, a plateia reage na hora. Teste antes se o projetor roda GIF pesado.</aside>
 </section>
@@ -252,7 +279,8 @@
       <h2 data-id="voce">Você digita.</h2>
       <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--azul)">A IA completa.</h2>
     </div>
-    <div class="slot" data-id="midia">GIF: sugestão cinza<br>aparecendo no editor</div>
+    <div class="slot" data-id="midia" style="background: url('img/devfest/gif-01.webp'); background-size: cover">
+    </div>
   </div>
   <aside class="notes">A IA adivinha a próxima linha. Você continua no controle de cada caractere.</aside>
 </section>
@@ -271,7 +299,7 @@
       <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--vermelho)">A IA responde.</h2>
       <p class="fragment fade-up" style="font-size:.6em;margin-top:1em;opacity:.8">E você copia, cola e reza.</p>
     </div>
-    <div class="slot" data-id="midia">GIF: Ctrl+C / Ctrl+V<br>em loop</div>
+    <div class="slot" data-id="midia" style="background: url('img/devfest/gif-02.gif'); background-size: cover"></div>
   </div>
   <aside class="notes">O ciclo do copia e cola. Quem integra, testa e corrige ainda é você.</aside>
 </section>
@@ -289,7 +317,7 @@
       <h2 data-id="voce">Você delega.</h2>
       <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--amarelo)">A IA executa.</h2>
     </div>
-    <div class="slot" data-id="midia">SCREENSHOT: agente<br>rodando comandos<br>no terminal</div>
+    <div class="slot" data-id="midia" style="background: url('img/devfest/gif-03.png'); background-size: cover"></div>
   </div>
   <aside class="notes">Aqui a IA ganha mãos: lê arquivos, roda comandos, vê o erro e tenta de novo. Próximo slide mostra o ciclo.</aside>
 </section>
@@ -345,7 +373,7 @@
       <h2 data-id="voce">Você orquestra.</h2>
       <h2 data-id="ia" class="ia fragment fade-up" style="color:var(--verde)">O time entrega.</h2>
     </div>
-    <div class="slot" data-id="midia">SCREENSHOT: /agents<br>no Gemini CLI com<br>subagentes em paralelo</div>
+    <div class="slot" data-id="midia"  style=" width: 1000px; background: url('img/devfest/subagends.png'); opacity: unset; background-size: 100%"></div>
   </div>
   <aside class="notes">Vários agentes, cada um com seu papel, rodando em paralelo. É o tema do resto da palestra.</aside>
 </section>
@@ -432,6 +460,164 @@
   </div>
   <aside class="notes">Ponte direta para o SDD.</aside>
 </section>
+
+
+  <!-- Abertura do bloco SDLC -->
+  <section data-background-color="#FAFAF7">
+    <div class="center claro">
+      <p style="font-size:.6em;margin-bottom:.6em">SDLC: o ciclo de vida do software</p>
+      <h1>O ciclo não morreu.</h1>
+      <h1 class="fragment fade-up" style="margin-top:.3em;color:var(--azul)">Ele mudou de dono.</h1>
+    </div>
+    <aside class="notes">Antes de falar de spec, um passo atrás: o ciclo de vida do software continua o mesmo. O que muda é quem faz cada parte.</aside>
+  </section>
+
+  <!-- O ciclo clássico -->
+  <section data-background-color="#0F1B2D" class="diagrama">
+    <svg viewBox="0 0 1800 900" role="img" aria-label="Ciclo de vida do software: requisitos, design, implementação, testes, deploy e manutenção">
+      <ellipse cx="900" cy="450" rx="620" ry="330" fill="none" stroke="rgba(250,250,247,.22)" stroke-width="7" stroke-dasharray="4 22" stroke-linecap="round"/>
+      <text x="900" y="445" text-anchor="middle" font-size="110" font-weight="800">SDLC</text>
+      <text x="900" y="515" text-anchor="middle" font-size="42" opacity=".7">e volta pro começo</text>
+      <g class="fragment"><rect class="caixa" x="690" y="60" width="420" height="120" rx="60" stroke="#4285F4"/><text x="900" y="138" text-anchor="middle" font-size="50" font-weight="600">Requisitos</text></g>
+      <g class="fragment"><rect class="caixa" x="1227" y="225" width="420" height="120" rx="60" stroke="#4285F4"/><text x="1437" y="303" text-anchor="middle" font-size="50" font-weight="600">Design</text></g>
+      <g class="fragment"><rect class="caixa" x="1227" y="555" width="420" height="120" rx="60" stroke="#FBBC04"/><text x="1437" y="633" text-anchor="middle" font-size="50" font-weight="600">Implementação</text></g>
+      <g class="fragment"><rect class="caixa" x="690" y="720" width="420" height="120" rx="60" stroke="#34A853"/><text x="900" y="798" text-anchor="middle" font-size="50" font-weight="600">Testes</text></g>
+      <g class="fragment"><rect class="caixa" x="153" y="555" width="420" height="120" rx="60" stroke="#34A853"/><text x="363" y="633" text-anchor="middle" font-size="50" font-weight="600">Deploy</text></g>
+      <g class="fragment"><rect class="caixa" x="153" y="225" width="420" height="120" rx="60" stroke="#EA4335"/><text x="363" y="303" text-anchor="middle" font-size="50" font-weight="600">Manutenção</text></g>
+    </svg>
+    <aside class="notes">O ciclo que todo mundo estudou na faculdade, uma fase por clique. Não precisa explicar cada fase: a plateia conhece. O ponto é o próximo slide.</aside>
+  </section>
+
+  <!-- Onde o tempo ia -->
+  <section data-background-color="#0F1B2D" data-auto-animate>
+    <h2 data-id="tit-tempo" style="margin-top:.3em">Onde você passava o dia</h2>
+    <div class="barras">
+      <div class="nome">Requisitos</div><div class="trilho"><div class="barra" data-id="b0" style="width:22%"></div></div>
+      <div class="nome">Design</div><div class="trilho"><div class="barra" data-id="b1" style="width:28%"></div></div>
+      <div class="nome">Implementação</div><div class="trilho"><div class="barra impl" data-id="b2" style="width:100%"></div></div>
+      <div class="nome">Testes</div><div class="trilho"><div class="barra" data-id="b3" style="width:40%"></div></div>
+      <div class="nome">Deploy</div><div class="trilho"><div class="barra" data-id="b4" style="width:18%"></div></div>
+      <div class="nome">Manutenção</div><div class="trilho"><div class="barra" data-id="b5" style="width:36%"></div></div>
+    </div>
+    <p class="nota" data-id="nota">Proporções ilustrativas</p>
+    <aside class="notes">Pergunte: quem aqui passava a maior parte do tempo digitando código? A barra amarela é a implementação.</aside>
+  </section>
+
+  <!-- Onde o tempo vai -->
+  <section data-background-color="#0E2418" data-auto-animate>
+    <h2 data-id="tit-tempo" style="margin-top:.3em">Onde você passa o dia agora</h2>
+    <div class="barras">
+      <div class="nome">Requisitos</div><div class="trilho"><div class="barra" data-id="b0" style="width:80%"></div></div>
+      <div class="nome">Design</div><div class="trilho"><div class="barra" data-id="b1" style="width:72%"></div></div>
+      <div class="nome">Implementação</div><div class="trilho"><div class="barra impl" data-id="b2" style="width:24%"></div></div>
+      <div class="nome">Testes</div><div class="trilho"><div class="barra" data-id="b3" style="width:70%"></div></div>
+      <div class="nome">Deploy</div><div class="trilho"><div class="barra" data-id="b4" style="width:30%"></div></div>
+      <div class="nome">Manutenção</div><div class="trilho"><div class="barra" data-id="b5" style="width:46%"></div></div>
+    </div>
+    <p class="nota" data-id="nota">Proporções ilustrativas</p>
+    <aside class="notes">As barras se mexem sozinhas na transição. A implementação encolhe porque os agentes aceleram essa fase. As pontas crescem: requisitos, design e testes viram o seu trabalho principal.</aside>
+  </section>
+
+  <!-- Quem faz o quê em cada fase -->
+  <section data-background-color="#0F1B2D">
+    <h2 style="margin-top:.3em">Quem faz o quê</h2>
+    <div class="quem">
+      <div class="cab">Fase</div><div class="cab" style="color:var(--amarelo)">🤖 Agentes</div><div class="cab" style="color:var(--azul)">🧑‍✈️ Você</div>
+      <div class="fragment" data-fragment-index="1">Requisitos</div><div class="fragment" data-fragment-index="1">fazem perguntas</div><div class="fragment" data-fragment-index="1">escreve e aprova a spec</div>
+      <div class="fragment" data-fragment-index="2">Design</div><div class="fragment" data-fragment-index="2">propõem o plano</div><div class="fragment" data-fragment-index="2">decide a arquitetura</div>
+      <div class="fragment" data-fragment-index="3">Implementação</div><div class="fragment" data-fragment-index="3">escrevem o código</div><div class="fragment" data-fragment-index="3">divide e coordena</div>
+      <div class="fragment" data-fragment-index="4">Testes</div><div class="fragment" data-fragment-index="4">rodam e corrigem</div><div class="fragment" data-fragment-index="4">define o que é “pronto”</div>
+      <div class="fragment" data-fragment-index="5">Deploy</div><div class="fragment" data-fragment-index="5">preparam o PR</div><div class="fragment" data-fragment-index="5">revisa e aprova</div>
+      <div class="fragment" data-fragment-index="6">Manutenção</div><div class="fragment" data-fragment-index="6">investigam o bug</div><div class="fragment" data-fragment-index="6">prioriza e decide</div>
+    </div>
+    <aside class="notes">Uma linha por clique. Repare que a coluna “Você” é toda de verbos de decisão: aprovar, decidir, coordenar, definir.</aside>
+  </section>
+
+  <!-- Frase de transição para o SDD -->
+  <section data-background-color="#4285F4">
+    <div class="center">
+      <h1>O agente acelera o meio.</h1>
+      <h1 class="fragment fade-up claro" style="margin-top:.35em">As pontas são suas.</h1>
+      <p class="fragment fade-up" style="font-size:1.5em;margin-top:1.2em; color: #d2ffac;">E a ponta de entrada tem nome: <strong style="font-weight: bold;">spec</strong>.</p>
+    </div>
+    <aside class="notes">Gancho direto para o Spec-Driven Development, que é o próximo bloco.</aside>
+  </section>
+
+  <!-- ================= PARTE 4 · SDD ================= -->
+
+  <!-- 19. Abertura de seção -->
+  <section data-background-color="#4285F4">
+    <div class="center">
+      <p style="font-size:.6em;opacity:.9;margin-bottom:.6em">Spec-Driven Development</p>
+      <h1>A spec é o esquema tático.</h1>
+    </div>
+    <aside class="notes">Em vez de improvisar no chat, a intenção vira Markdown versionado no repositório. O time de agentes joga em cima desse esquema.</aside>
+  </section>
+
+  <!-- 20. Fluxograma do ciclo SDD com portões de revisão -->
+  <section data-background-color="#0F1B2D" class="diagrama">
+    <svg viewBox="0 0 1800 900" role="img" aria-label="Contexto, spec, plano e código, com revisão humana entre as etapas">
+      <defs>
+        <marker id="ponta3" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
+        </marker>
+      </defs>
+      <g>
+        <rect class="caixa" x="20" y="330" width="330" height="170" rx="85" stroke="#4285F4"/>
+        <text x="185" y="432" text-anchor="middle" font-size="56" font-weight="600">Contexto</text>
+      </g>
+      <g class="fragment" data-fragment-index="1">
+        <path class="seta" d="M360 415 L470 415" marker-end="url(#ponta3)"/>
+        <rect class="caixa" x="480" y="330" width="300" height="170" rx="85" stroke="#EA4335"/>
+        <text x="630" y="432" text-anchor="middle" font-size="56" font-weight="600">Spec</text>
+      </g>
+      <g class="fragment" data-fragment-index="2">
+        <circle cx="905" cy="415" r="80" fill="#FBBC04"/>
+        <text x="905" y="440" text-anchor="middle" font-size="72">👀</text>
+        <text x="905" y="590" text-anchor="middle" font-size="40" font-weight="600" style="fill:#FBBC04">você revisa</text>
+        <path class="seta" d="M790 415 L815 415"/>
+      </g>
+      <g class="fragment" data-fragment-index="3">
+        <path class="seta" d="M995 415 L1040 415" marker-end="url(#ponta3)"/>
+        <rect class="caixa" x="1050" y="330" width="300" height="170" rx="85" stroke="#FBBC04"/>
+        <text x="1200" y="432" text-anchor="middle" font-size="56" font-weight="600">Plano</text>
+      </g>
+      <g class="fragment" data-fragment-index="4">
+        <circle cx="1450" cy="415" r="70" fill="#FBBC04"/>
+        <text x="1450" y="438" text-anchor="middle" font-size="64">👀</text>
+        <path class="seta" d="M1360 415 L1375 415"/>
+        <path class="seta" d="M1525 415 L1560 415" marker-end="url(#ponta3)"/>
+        <rect class="caixa" x="1570" y="330" width="220" height="170" rx="85" stroke="#34A853"/>
+        <text x="1680" y="432" text-anchor="middle" font-size="56" font-weight="600">Código</text>
+      </g>
+      <g class="fragment fade-up" data-fragment-index="5">
+        <text x="900" y="160" text-anchor="middle" font-size="64" font-weight="800">Nenhuma linha de código antes do 👀</text>
+      </g>
+    </svg>
+    <aside class="notes">O ponto central: entre cada etapa existe um portão humano. O agente pesquisa o código, faz perguntas e gera a spec e o plano. Só depois da sua aprovação ele implementa.</aside>
+  </section>
+
+  <!-- 21. Os artefatos (árvore de arquivos) -->
+  <section data-background-color="#0F1B2D">
+    <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:70px;height:100%;align-items:center">
+<pre class="codigo"><code><span class="c">$ tree conductor/</span>
+conductor/
+├── <span class="fragment destaque" data-fragment-index="1">product.md</span>
+├── <span class="fragment destaque" data-fragment-index="1">tech-stack.md</span>
+├── <span class="fragment destaque" data-fragment-index="1">workflow.md</span>
+└── tracks/
+    └── inscricoes/
+        ├── <span class="fragment destaque" data-fragment-index="2">spec.md</span>
+        └── <span class="fragment destaque" data-fragment-index="3">plan.md</span></code></pre>
+      <div class="troca">
+        <div class="fragment fade-in-then-out" data-fragment-index="1"><h2>Contexto</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">O produto, a stack e o jeito do time trabalhar.</p></div>
+        <div class="fragment fade-in-then-out" data-fragment-index="2"><h2 style="color:var(--vermelho)">Spec</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">O que vamos construir e por quê.</p></div>
+        <div class="fragment fade-in" data-fragment-index="3"><h2 style="color:var(--amarelo)">Plano</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">Fases e tarefas que dá pra delegar.</p></div>
+      </div>
+    </div>
+    <aside class="notes">Estrutura do Conductor. ATENÇÃO: confira os nomes de pasta e comandos na versão que você vai usar (o SDD foi migrado para comandos /spec embutidos em algumas versões). A ideia é a mesma: tudo em Markdown, tudo no Git.</aside>
+  </section>
+
 
 <!-- ================= PARTE 4 · SDD ================= -->
 
@@ -725,7 +911,7 @@ Nunca edite arquivos fora de /api.</span></code></pre>
 <!-- 32. Backup da demo -->
 <section data-background-color="#0F1B2D">
   <div class="center middle">
-    <div class="slot" style="width:1600px;height:820px">VÍDEO DE BACKUP DA DEMO<br>&lt;video src="demo.mp4" controls&gt;<br>(ou use data-background-video nesta section)</div>
+    <div class="slot" style="width:1600px;height:820px; background: url('img/devfest/gif-04.gif'); background-size: 100%;"></div>
   </div>
   <aside class="notes">Pule este slide se a demo ao vivo funcionar. Se o Wi-Fi cair, toque o vídeo e narre por cima.</aside>
 </section>
@@ -820,14 +1006,43 @@ Nunca edite arquivos fora de /api.</span></code></pre>
   <div style="display:grid;grid-template-columns:1fr 640px;gap:90px;height:100%;align-items:center">
     <div>
       <div class="prompt">$ <span style="color:var(--giz)">gemini --perguntas</span><span class="cursor"></span></div>
-      <h1>Obrigado!</h1>
-      <p style="font-size:.6em;margin-top:1em;opacity:.85">[Seu nome]<br>[@seu_usuario]</p>
+      <h1>Valeu o boi, valeu o vaqueiro!!</h1>
+      <p style="font-size:.6em;margin-top:1em;opacity:.85">Alessandro Feitoza<br> @alessandro_feitoza</p>
       <div class="cores"><span style="background:var(--azul)"></span><span style="background:var(--vermelho)"></span><span style="background:var(--amarelo)"></span><span style="background:var(--verde)"></span></div>
     </div>
     <div class="slot" style="height:640px">QR CODE<br>repositório da demo<br>(spec, plano e agentes)</div>
   </div>
   <aside class="notes">Deixe este slide no telão durante as perguntas. O QR code leva ao repositório com spec, plano e definições dos agentes.</aside>
 </section>
+
+  <!-- 41. Referências -->
+  <section data-background-color="#0F1B2D">
+    <h2 style="margin-top:.3em">Referências</h2>
+    <div class="refs">
+      <div class="fragment fade-up">
+        <p class="grupo" style="color:var(--azul)">Gemini CLI</p>
+        <a href="https://github.com/google-gemini/gemini-cli"><strong>Repositório oficial</strong><span>github.com/google-gemini/gemini-cli</span></a>
+        <a href="https://geminicli.com/docs/core/subagents/"><strong>Documentação de subagentes</strong><span>geminicli.com/docs/core/subagents</span></a>
+        <a href="https://developers.googleblog.com/en/subagents-have-arrived-in-gemini-cli/"><strong>Subagents have arrived in Gemini CLI</strong><span>developers.googleblog.com</span></a>
+      </div>
+      <div class="fragment fade-up">
+        <p class="grupo" style="color:var(--vermelho)">Spec-Driven Development</p>
+        <a href="https://github.com/gemini-cli-extensions/conductor"><strong>Conductor</strong><span>github.com/gemini-cli-extensions/conductor</span></a>
+        <a href="https://developers.googleblog.com/evolving-spec-driven-development-conductor-now-supports-antigravity/"><strong>Evolving Spec-Driven Development</strong><span>developers.googleblog.com</span></a>
+        <a href="https://github.com/github/spec-kit"><strong>Spec Kit</strong><span>github.com/github/spec-kit</span></a>
+      </div>
+      <div class="fragment fade-up">
+        <p class="grupo" style="color:var(--amarelo)">Claude Code</p>
+        <a href="https://code.claude.com/docs/en/sub-agents"><strong>Documentação de subagentes</strong><span>code.claude.com/docs/en/sub-agents</span></a>
+      </div>
+      <div class="fragment fade-up">
+        <p class="grupo" style="color:var(--verde)">Estes slides</p>
+        <a href="https://revealjs.com"><strong>Feitos com Reveal.js</strong><span>revealjs.com</span></a>
+      </div>
+    </div>
+    <aside class="notes">Slide de consulta: deixe os links também no README do repositório da demo, já que ninguém vai digitar URL olhando o telão.</aside>
+  </section>
+
 
 </div>
 </div>

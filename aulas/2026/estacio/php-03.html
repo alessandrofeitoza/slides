@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aula 04 — Arquitetura MVC com PHP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<style>
+:root{--ink:#142238;--muted:#526174;--blue:#2463eb;--green:#14845d;--purple:#7652c8;--orange:#d97706;--line:#dce4ed;--paper:#f4f7fb}
+.reveal{font-family:Arial,sans-serif;color:var(--ink);font-size:28px}.reveal .slides{text-align:left}
+.reveal h1,.reveal h2,.reveal h3{color:var(--ink);text-transform:none;letter-spacing:-.03em}.reveal h1{font-size:2.1em;font-weight:850}.reveal h2{font-size:1.5em;font-weight:800}.reveal h3{font-size:1em}
+.reveal p,.reveal li{font-size:.78em;line-height:1.35}.reveal li{margin:.25em 0}.reveal pre{width:100%;box-shadow:none;border:1px solid var(--line);border-radius:12px}.reveal pre code{max-height:440px;padding:18px;font-size:17px;line-height:1.4}
+.kicker{font-size:.43em!important;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);font-weight:bold}.sub{color:var(--muted);font-size:.9em!important}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:center}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 20px}.panel p{margin:.25em 0}.small{font-size:.55em!important;color:var(--muted)}.call{border-left:6px solid var(--blue);background:#eef4ff;padding:12px 18px;border-radius:8px;font-size:.72em}
+.big{font-size:1.2em!important;font-weight:850}.tag{display:inline-block;padding:6px 11px;border-radius:99px;font-size:.48em;font-weight:bold;background:#eaf1ff;color:#1d4ed8}
+.diagram{width:100%;height:auto;display:block;margin:auto}.tree{background:#101b2d;color:#e7efff;border-radius:14px;padding:20px;font:18px/1.55 monospace}.folder{color:#7dd3fc}.file{color:#d1fae5}
+.reveal .progress{height:5px;color:var(--blue)}.reveal .controls{color:var(--blue)}
+@media(max-width:900px){.reveal{font-size:22px}.cols,.three{grid-template-columns:1fr}.reveal pre code{font-size:14px}}
+</style></head><body><div class="reveal"><div class="slides">
+
+<section data-background="#f4f7fb">
+<p class="kicker">Desenvolvimento Web · PHP</p><h1>Organizando aplicações<br>com arquitetura MVC</h1>
+<p class="sub">Como separar apresentação, controle e modelo para construir aplicações mais fáceis de entender e evoluir.</p>
+<svg class="diagram" viewBox="0 0 900 270" role="img" aria-label="Ilustração dos componentes MVC">
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect x="45" y="55" width="230" height="150" rx="22" fill="#eaf1ff" stroke="#2463eb" stroke-width="3"/><rect x="335" y="55" width="230" height="150" rx="22" fill="#e6f7ef" stroke="#14845d" stroke-width="3"/><rect x="625" y="55" width="230" height="150" rx="22" fill="#f1eaff" stroke="#7652c8" stroke-width="3"/>
+<g text-anchor="middle" font-family="Arial" fill="#142238"><text x="160" y="115" font-size="32" font-weight="bold">VIEW</text><text x="160" y="150" font-size="19">Apresentação</text><text x="450" y="115" font-size="27" font-weight="bold">CONTROLLER</text><text x="450" y="150" font-size="19">Coordenação</text><text x="740" y="115" font-size="32" font-weight="bold">MODEL</text><text x="740" y="150" font-size="19">Dados e regras</text></g>
+<path d="M280 130H325M570 130H615" stroke="#64748b" stroke-width="4" marker-end="url(#a)"/><text x="450" y="245" text-anchor="middle" font-family="Arial" font-size="18" fill="#526174">Responsabilidades diferentes. Uma aplicação integrada.</text></svg>
+<p class="small">Aula 04 · Do PHP misturado à separação de responsabilidades</p></section>
+
+<section><p class="kicker">01 · Ponto de partida</p><h2>Quando tudo fica no mesmo arquivo...</h2><div class="cols">
+<pre><code class="language-php">&lt;?php
+$pdo = new PDO($dsn, $user, $pass);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome = $_POST['nome'];
+    $stmt = $pdo-&gt;prepare(
+        'INSERT INTO alunos (nome) VALUES (?)'
+    );
+    $stmt-&gt;execute([$nome]);
+}
+?&gt;
+
+&lt;form method="POST"&gt;
+  &lt;input name="nome"&gt;
+  &lt;button&gt;Salvar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+<div class="panel"><h3>Um arquivo, várias responsabilidades</h3><p>Conexão com banco</p><p>Leitura da requisição</p><p>Validação</p><p>Comando SQL</p><p>HTML da tela</p><p class="call">O problema não é o PHP. É a mistura de responsabilidades.</p></div></div></section>
+
+<section><p class="kicker">01 · Ponto de partida</p><h2>O que começa a ficar difícil?</h2><div class="three">
+<div class="panel"><h3>01 · Manutenção</h3><p>Uma alteração visual pode afetar o processamento.</p></div><div class="panel"><h3>02 · Reutilização</h3><p>O mesmo código acaba copiado em várias páginas.</p></div><div class="panel"><h3>03 · Testes</h3><p>É difícil testar regras isoladas da tela e do banco.</p></div></div><p class="call">Como organizar o código para que cada parte tenha uma responsabilidade clara?</p></section>
+
+<section><p class="kicker">02 · Conceito</p><h2>MVC: Model · View · Controller</h2><p class="sub">Um padrão arquitetural que organiza a aplicação em responsabilidades distintas.</p>
+<svg class="diagram" viewBox="0 0 960 350" role="img" aria-label="Diagrama explicativo do MVC">
+<rect x="25" y="45" width="275" height="235" rx="22" fill="#eaf1ff" stroke="#2463eb" stroke-width="3"/><rect x="342" y="45" width="275" height="235" rx="22" fill="#e6f7ef" stroke="#14845d" stroke-width="3"/><rect x="660" y="45" width="275" height="235" rx="22" fill="#f1eaff" stroke="#7652c8" stroke-width="3"/>
+<g font-family="Arial" text-anchor="middle" fill="#142238"><text x="162" y="105" font-size="39" font-weight="bold">VIEW</text><text x="162" y="155" font-size="24">Interface</text><text x="162" y="205" font-size="19">HTML · CSS</text><text x="162" y="240" font-size="18">Apresenta dados</text><text x="480" y="105" font-size="32" font-weight="bold">CONTROLLER</text><text x="480" y="155" font-size="24">Coordenação</text><text x="480" y="205" font-size="19">Recebe requisições</text><text x="480" y="240" font-size="18">Orquestra a operação</text><text x="797" y="105" font-size="39" font-weight="bold">MODEL</text><text x="797" y="155" font-size="24">Domínio</text><text x="797" y="205" font-size="19">Dados e regras</text><text x="797" y="240" font-size="18">Persistência</text></g>
+<path d="M305 160H335M622 160H652" stroke="#64748b" stroke-width="4"/><text x="480" y="325" text-anchor="middle" font-family="Arial" font-size="18" fill="#526174">O Controller coordena a interação entre os componentes.</text></svg></section>
+
+<section><p class="kicker">02 · Conceito</p><h2>As três responsabilidades</h2><div class="three">
+<div class="panel" style="border-top:7px solid #2463eb"><span class="tag">VIEW</span><h3>Apresentação</h3><p>Exibe informações e oferece interação ao usuário.</p><p class="small">Ex.: formulário e listagem de alunos.</p></div>
+<div class="panel" style="border-top:7px solid #14845d"><span class="tag" style="background:#e6f7ef;color:#08784d">CONTROLLER</span><h3>Controle</h3><p>Recebe a requisição, coordena a operação e escolhe a resposta.</p><p class="small">Ex.: cadastrar, listar, editar.</p></div>
+<div class="panel" style="border-top:7px solid #7652c8"><span class="tag" style="background:#f1eaff;color:#6841b6">MODEL</span><h3>Modelo</h3><p>Representa conceitos do domínio, dados e regras relacionadas.</p><p class="small">Ex.: Aluno e operações do domínio.</p></div></div><p class="small">A camada de dados pode ser separada em repositórios ou classes de persistência. MVC não exige uma única estrutura de pastas.</p></section>
+
+<section><p class="kicker">03 · Fluxo de uma requisição</p><h2>O que acontece ao cadastrar um aluno?</h2>
+<svg class="diagram" viewBox="0 0 1000 530" role="img" aria-label="Fluxograma do cadastro de aluno">
+<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<g><rect x="310" y="10" width="380" height="70" rx="14" fill="#eaf1ff" stroke="#2463eb" stroke-width="2"/><text x="500" y="40" text-anchor="middle" class="flowtitle">1. Navegador / View</text><text x="500" y="64" text-anchor="middle" class="flowtext">Envia formulário (POST)</text>
+<path d="M500 80V115" stroke="#64748b" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="310" y="120" width="380" height="70" rx="14" fill="#e6f7ef" stroke="#14845d" stroke-width="2"/><text x="500" y="150" text-anchor="middle" class="flowtitle">2. Controller</text><text x="500" y="174" text-anchor="middle" class="flowtext">Recebe e valida a requisição</text>
+<path d="M500 190V225" stroke="#64748b" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="310" y="230" width="380" height="70" rx="14" fill="#f1eaff" stroke="#7652c8" stroke-width="2"/><text x="500" y="260" text-anchor="middle" class="flowtitle">3. Model</text><text x="500" y="284" text-anchor="middle" class="flowtext">Aplica regras e executa a operação</text>
+<path d="M500 300V335" stroke="#64748b" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="310" y="340" width="380" height="70" rx="14" fill="#fff3df" stroke="#d97706" stroke-width="2"/><text x="500" y="370" text-anchor="middle" class="flowtitle">4. Banco de dados</text><text x="500" y="394" text-anchor="middle" class="flowtext">Persiste o registro</text>
+<path d="M700 375H830V465H700" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+<rect x="310" y="440" width="380" height="70" rx="14" fill="#eaf1ff" stroke="#2463eb" stroke-width="2"/><text x="500" y="470" text-anchor="middle" class="flowtitle">5. View / resposta</text><text x="500" y="494" text-anchor="middle" class="flowtext">Apresenta confirmação ao usuário</text></g></svg>
+<p class="small">Fluxo didático simplificado. A implementação pode incluir roteamento, serviços, repositórios e tratamento de erros.</p></section>
+
+<section><p class="kicker">03 · Fluxo de uma requisição</p><h2>O Controller não deve fazer tudo</h2><div class="cols"><div class="panel"><h3>Responsabilidade do Controller</h3><ul><li>Receber os dados.</li><li>Acionar validações.</li><li>Solicitar operação ao Model.</li><li>Decidir a resposta.</li></ul></div><div class="panel"><h3>Evite transformá-lo em...</h3><ul><li>Uma página HTML inteira.</li><li>Um conjunto de consultas SQL.</li><li>Um lugar para todas as regras.</li><li>Um arquivo impossível de testar.</li></ul></div></div><p class="call">Controller coordena. Model trata o domínio. View apresenta.</p></section>
+
+<section><p class="kicker">04 · Exemplo prático</p><h2>Vamos modelar o cadastro de alunos</h2><div class="cols">
+<div class="panel"><h3>Requisito</h3><p>O usuário informa nome e e-mail e solicita o cadastro.</p>
+<svg class="diagram" viewBox="0 0 420 255" role="img" aria-label="Ilustração de formulário web"><rect x="35" y="10" width="350" height="230" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><text x="65" y="50" font-family="Arial" font-size="25" font-weight="bold" fill="#142238">Novo aluno</text><text x="65" y="88" font-family="Arial" font-size="16" fill="#526174">Nome</text><rect x="65" y="98" width="290" height="37" rx="7" fill="#f5f8fc" stroke="#cbd5e1"/><text x="65" y="163" font-family="Arial" font-size="16" fill="#526174">E-mail</text><rect x="65" y="173" width="290" height="37" rx="7" fill="#f5f8fc" stroke="#cbd5e1"/></svg></div>
+<div><div class="tag">VIEW</div><p>Formulário HTML</p><div class="tag" style="background:#e6f7ef;color:#08784d">CONTROLLER</div><p>Recebe POST e coordena o cadastro</p><div class="tag" style="background:#f1eaff;color:#6841b6">MODEL</div><p>Representa o aluno e executa a operação</p><div class="tag" style="background:#fff3df;color:#a35400">BANCO</div><p>Armazena os dados</p></div></div></section>
+
+<section><p class="kicker">04 · Exemplo prático</p><h2>Uma estrutura possível de projeto</h2><div class="cols">
+<div class="tree"><span class="folder">sistema-alunos/</span><br>├── <span class="folder">app/</span><br>│&nbsp;&nbsp;├── <span class="folder">Controllers/</span><br>│&nbsp;&nbsp;│&nbsp;&nbsp;└── <span class="file">AlunoController.php</span><br>│&nbsp;&nbsp;├── <span class="folder">Models/</span><br>│&nbsp;&nbsp;│&nbsp;&nbsp;└── <span class="file">Aluno.php</span><br>│&nbsp;&nbsp;└── <span class="folder">Views/</span><br>│&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="folder">alunos/</span><br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">index.php</span><br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="file">criar.php</span><br>├── <span class="folder">config/</span><br>│&nbsp;&nbsp;└── <span class="file">database.php</span><br>└── <span class="folder">public/</span><br>&nbsp;&nbsp;&nbsp;└── <span class="file">index.php</span></div>
+<div><h3>Por que organizar assim?</h3><ul><li>Localizar responsabilidades.</li><li>Evitar misturar HTML e SQL.</li><li>Facilitar manutenção.</li><li>Preparar o projeto para crescer.</li></ul><p class="small">Convenção didática, não uma estrutura obrigatória do MVC.</p></div></div></section>
+
+<section>
+    <h1>Mas antes: um pouco de organização do PHP</h1>
+</section>
+
+
+    <section>
+        <p class="kicker">Preparação · PHP</p>
+        <h2>Antes de falar sobre classes, vamos falar sobre funções</h2>
+
+        <p>Uma função permite agrupar instruções que executam uma tarefa específica.</p>
+
+        <pre><code class="language-php">
+function cadastrarAluno(string $nome): void
+{
+    echo "Aluno cadastrado: " . $nome;
+}
+
+cadastrarAluno("Maria");
+    </code></pre>
+
+        <div class="panel">
+            <h3>Por que utilizar funções?</h3>
+            <ul>
+                <li>Evitar repetição de código.</li>
+                <li>Organizar instruções por responsabilidade.</li>
+                <li>Facilitar a leitura e a manutenção.</li>
+            </ul>
+        </div>
+    </section>
+
+
+
+    <section>
+        <p class="kicker">Preparação · PHP</p>
+        <h2>Uma classe é uma estrutura para organizar código</h2>
+
+        <p>Em PHP, podemos agrupar funções relacionadas dentro de uma estrutura chamada classe.</p>
+
+        <pre><code class="language-php">
+class Aluno
+{
+    public function cadastrar(): void
+    {
+        echo "Cadastrando aluno...";
+    }
+
+    public function listar(): void
+    {
+        echo "Listando alunos...";
+    }
+
+    public function excluir(): void
+    {
+        echo "Excluindo aluno...";
+    }
+}
+    </code></pre>
+
+        <p class="call">Observe: as operações relacionadas a alunos estão agrupadas em uma mesma estrutura.</p>
+    </section>
+
+    <section>
+        <p class="kicker">Preparação · PHP</p>
+        <h2>Métodos são funções declaradas dentro de uma classe</h2>
+
+        <div class="cols">
+            <div class="panel">
+                <h3>Função</h3>
+                <pre><code class="language-php">
+function somar(
+    int $a,
+    int $b
+): int {
+    return $a + $b;
+}
+            </code></pre>
+            </div>
+            <div class="panel">
+                <h3>Método</h3>
+                <pre><code class="language-php">
+class Calculadora
+{
+    public function somar(
+        int $a,
+        int $b
+    ): int {
+        return $a + $b;
+    }
+}
+            </code></pre>
+            </div>
+        </div>
+
+        <p class="call">A lógica é semelhante. A diferença que estamos estudando agora é onde a função foi declarada.</p>
+    </section>
+
+    <section>
+        <p class="kicker">Preparação · PHP</p>
+        <h2>Um exemplo mais próximo do nosso projeto</h2>
+
+        <pre><code class="language-php">
+class AlunoController
+{
+    public function listar(): void
+    {
+        echo "Exibindo alunos...";
+    }
+
+    public function criar(): void
+    {
+        echo "Criando aluno...";
+    }
+
+    public function editar(): void
+    {
+        echo "Editando aluno...";
+    }
+
+    public function excluir(): void
+    {
+        echo "Excluindo aluno...";
+    }
+}
+    </code></pre>
+
+        <div class="panel">
+            **Observe os nomes dos métodos:**
+            <p><code>listar()</code> · <code>criar()</code> · <code>editar()</code> · <code>excluir()</code></p>
+            <p>São operações relacionadas ao gerenciamento de alunos.</p>
+        </div>
+    </section>
+
+    <section>
+        <p class="kicker">Preparação · PHP</p>
+        <h2>Arquivos diferentes, responsabilidades diferentes</h2>
+
+        <div class="cols">
+            <div class="tree"><pre style="font-size: 1.5rem">
+ sistema-alunos/
+ ├── Controllers/
+ │   └── AlunoController.php
+ ├── Models/
+ │   └── Aluno.php
+ └── Views/
+ └── alunos/
+ ├── index.php
+ └── criar.php
+            </pre></div>
+
+            <div>
+                <div class="panel">
+                    <h3>AlunoController.php</h3>
+                    <p>Organiza operações que controlam o fluxo da aplicação.</p>
+                </div>
+                <div class="panel">
+                    <h3>Aluno.php</h3>
+                    <p>Organiza operações e regras relacionadas aos alunos.</p>
+                </div>
+                <div class="panel">
+                    <h3>Views</h3>
+                    <p>Contêm os arquivos responsáveis pela apresentação.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<section><p class="kicker">05 · Código</p><h2>View: o formulário</h2><pre><code class="language-php">&lt;!-- app/Views/alunos/criar.php --&gt;
+&lt;h1&gt;Cadastrar aluno&lt;/h1&gt;
+
+&lt;form action="/alunos" method="POST"&gt;
+    &lt;label for="nome"&gt;Nome&lt;/label&gt;
+    &lt;input id="nome" name="nome" required&gt;
+
+    &lt;label for="email"&gt;E-mail&lt;/label&gt;
+    &lt;input id="email" name="email" type="email" required&gt;
+
+    &lt;button type="submit"&gt;Salvar&lt;/button&gt;
+&lt;/form&gt;</code></pre><p class="call">A View cuida da apresentação. Não deve abrir conexão com o banco nem executar SQL.</p></section>
+
+<section><p class="kicker">05 · Código</p><h2>Controller: recebe e coordena</h2><pre><code class="language-php">&lt;?php
+
+class AlunoController
+{
+    public function store(): void
+    {
+        $nome = trim($_POST['nome'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+
+        if ($nome === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            http_response_code(422);
+            require __DIR__ . '/../Views/alunos/criar.php';
+            return;
+        }
+
+        $aluno = new Aluno();
+        $aluno-&gt;criar($nome, $email);
+
+        header('Location: /alunos');
+        exit;
+    }
+}</code></pre><p class="small">Exemplo simplificado. Em um projeto real, dependências, validações e erros merecem estrutura própria.</p></section>
+
+<section><p class="kicker">05 · Código</p><h2>Model: representa e opera sobre o domínio</h2><pre><code class="language-php">&lt;?php
+
+class Aluno
+{
+    public function criar(string $nome, string $email): void
+    {
+        $pdo = require __DIR__ . '/../../config/database.php';
+
+        $sql = 'INSERT INTO alunos (nome, email)
+                VALUES (:nome, :email)';
+
+        $stmt = $pdo-&gt;prepare($sql);
+        $stmt-&gt;execute([
+            'nome' =&gt; $nome,
+            'email' =&gt; $email,
+        ]);
+    }
+}</code></pre><p class="call">Em aplicações maiores, é comum separar persistência em Repository e configurar dependências fora do Model.</p></section>
+
+<section><p class="kicker">05 · Código</p><h2>Comparando as responsabilidades</h2>
+<table style="font-size:.68em;width:100%;border-collapse:collapse"><thead><tr><th style="padding:12px;border-bottom:2px solid #cbd5e1">Pergunta</th><th style="padding:12px;border-bottom:2px solid #cbd5e1">Componente</th></tr></thead><tbody>
+<tr><td style="padding:12px;border-bottom:1px solid #dce4ed">Como o formulário aparece?</td><td style="padding:12px;border-bottom:1px solid #dce4ed"><b>View</b></td></tr><tr><td style="padding:12px;border-bottom:1px solid #dce4ed">Quem recebe o POST?</td><td style="padding:12px;border-bottom:1px solid #dce4ed"><b>Controller</b></td></tr><tr><td style="padding:12px;border-bottom:1px solid #dce4ed">Onde ficam as regras do aluno?</td><td style="padding:12px;border-bottom:1px solid #dce4ed"><b>Model</b></td></tr><tr><td style="padding:12px;border-bottom:1px solid #dce4ed">Quem coordena a resposta?</td><td style="padding:12px;border-bottom:1px solid #dce4ed"><b>Controller</b></td></tr><tr><td style="padding:12px">Quem apresenta a listagem?</td><td style="padding:12px"><b>View</b></td></tr></tbody></table></section>
+
+<section><p class="kicker">06 · Atenção aos conceitos</p><h2>MVC não é simplesmente criar três pastas</h2><div class="cols"><div class="panel"><h3>Não significa</h3><ul><li>Colocar todo SQL em qualquer arquivo chamado Model.</li><li>Colocar toda regra dentro do Controller.</li><li>Criar pastas sem entender o motivo.</li></ul></div><div class="panel"><h3>Significa</h3><ul><li>Definir responsabilidades.</li><li>Reduzir acoplamento desnecessário.</li><li>Organizar o fluxo.</li><li>Facilitar evolução e testes.</li></ul></div></div><p class="call">Separar responsabilidades não é burocracia: é reduzir o custo de mudar o sistema.</p></section>
+
+<section><p class="kicker">07 · Prática guiada</p><h2>Desafio: cadastro de alunos com MVC</h2><div class="cols"><div><h3>Missão</h3><p>Implementar o cadastro de um aluno seguindo a separação MVC.</p><ul><li>View: formulário com nome e e-mail.</li><li>Controller: recebe e valida os dados.</li><li>Model: realiza o cadastro.</li><li>Banco: armazena o registro.</li></ul></div><div class="panel"><h3>Critérios de sucesso</h3><p>O cadastro funciona.</p><p>Os dados são validados.</p><p>O SQL não está na View.</p><p>O HTML não está no Model.</p><p>O Controller coordena o fluxo.</p></div></div></section>
+
+<section><p class="kicker">07 · Prática guiada</p><h2>Antes de codificar, desenhe o fluxo</h2>
+<svg class="diagram" viewBox="0 0 1000 260" role="img" aria-label="Fluxo do exercício: formulário, controller, model, banco">
+<defs><marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<g font-family="Arial" text-anchor="middle"><rect x="15" y="65" width="205" height="115" rx="16" fill="#eaf1ff" stroke="#2463eb" stroke-width="2"/><text x="117" y="110" font-size="23" font-weight="bold" fill="#142238">Formulário</text><text x="117" y="140" font-size="17" fill="#526174">View</text><rect x="270" y="65" width="205" height="115" rx="16" fill="#e6f7ef" stroke="#14845d" stroke-width="2"/><text x="372" y="110" font-size="23" font-weight="bold" fill="#142238">Receber</text><text x="372" y="140" font-size="17" fill="#526174">Controller</text><rect x="525" y="65" width="205" height="115" rx="16" fill="#f1eaff" stroke="#7652c8" stroke-width="2"/><text x="627" y="110" font-size="23" font-weight="bold" fill="#142238">Executar</text><text x="627" y="140" font-size="17" fill="#526174">Model</text><rect x="780" y="65" width="205" height="115" rx="16" fill="#fff3df" stroke="#d97706" stroke-width="2"/><text x="882" y="110" font-size="23" font-weight="bold" fill="#142238">Persistir</text><text x="882" y="140" font-size="17" fill="#526174">Banco</text></g>
+<path d="M225 122H260M480 122H515M735 122H770" stroke="#64748b" stroke-width="3" marker-end="url(#arr2)"/><text x="500" y="230" text-anchor="middle" font-family="Arial" font-size="18" fill="#526174">Só depois de entender o caminho, escreva o código.</text></svg></section>
+
+<section><p class="kicker">08 · Fechamento</p><h2>O que aprendemos?</h2><div class="three"><div class="panel"><h3>View</h3><p>Apresenta os dados.</p></div><div class="panel"><h3>Controller</h3><p>Coordena a requisição.</p></div><div class="panel"><h3>Model</h3><p>Representa o domínio e suas operações.</p></div></div><p class="big">Uma aplicação organizada é mais fácil de compreender, testar e evoluir.</p></section>
+
+<section data-background="#142238">
+    <p class="kicker" style="color:#93b5ff"></p><h1 style="color:#fff">Do conceito à aplicação</h1>
+    <p style="color:#d8e3f2;font-size:1em">Construindo um CRUD completo em PHP usando MVC.</p>
+<svg class="diagram" viewBox="0 0 700 175" role="img" aria-label="Etapas do CRUD">
+    <g font-family="Arial" text-anchor="middle">
+        <rect x="20" y="25" width="140" height="120" rx="16" fill="#eaf1ff"/>
+        <text x="90" y="78" font-size="20" font-weight="bold" fill="#1d4ed8">LISTAR</text>
+        <text x="90" y="110" font-size="17" fill="#526174">READ</text>
+        <rect x="180" y="25" width="170" height="120" rx="16" fill="#e6f7ef"/>
+        <text x="260" y="78" font-size="20" font-weight="bold" fill="#08784d">CADASTRAR</text>
+        <text x="260" y="110" font-size="17" fill="#526174">CREATE</text>
+        <rect x="370" y="25" width="150" height="120" rx="16" fill="#f1eaff"/>
+        <text x="440" y="78" font-size="20" font-weight="bold" fill="#6841b6">EDITAR</text>
+        <text x="440" y="110" font-size="17" fill="#526174">UPDATE</text></g>
+        <rect x="540" y="25" width="150" height="120" rx="16" fill="#990000"/>
+        <text x="580" y="78" font-size="20" font-weight="bold" fill="#ffffff">EXCLUIR</text>
+        <text x="580" y="110" font-size="17" fill="#ffffff">DELETE</text></g>
+</svg>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+<script>Reveal.initialize({hash:true,slideNumber:'c/t',controls:true,progress:true,transition:'fade',backgroundTransition:'fade',width:1280,height:720,margin:.06,minScale:.45,maxScale:1.25});document.querySelectorAll('pre code').forEach(e=>hljs.highlightElement(e));</script>
+</body></html>
