@@ -322,44 +322,6 @@
   <aside class="notes">Aqui a IA ganha mãos: lê arquivos, roda comandos, vê o erro e tenta de novo. Próximo slide mostra o ciclo.</aside>
 </section>
 
-<!-- 11. Fluxograma: o ciclo do agente -->
-<section data-background-color="#0F1B2D" class="loop">
-  <svg viewBox="0 0 1800 860" role="img" aria-label="Ciclo do agente: entender, planejar, executar, verificar, corrigir">
-    <defs>
-      <marker id="ponta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-        <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
-      </marker>
-    </defs>
-    <text x="900" y="455" text-anchor="middle" font-size="96" font-weight="800">O ciclo</text>
-    <text x="900" y="530" text-anchor="middle" font-size="44" opacity=".7">sem você no meio</text>
-
-    <g class="fragment" data-fragment-index="1">
-      <g class="etapa"><rect x="690" y="20" width="420" height="140" rx="70" stroke="#4285F4"/>
-      <text x="900" y="108" text-anchor="middle" font-size="56" font-weight="600">Entender</text></g>
-    </g>
-    <g class="fragment" data-fragment-index="2">
-      <path class="seta" d="M1120 120 Q1380 150 1440 280" marker-end="url(#ponta)"/>
-      <g class="etapa"><rect x="1280" y="300" width="420" height="140" rx="70" stroke="#EA4335"/>
-      <text x="1490" y="388" text-anchor="middle" font-size="56" font-weight="600">Planejar</text></g>
-    </g>
-    <g class="fragment" data-fragment-index="3">
-      <path class="seta" d="M1440 450 Q1400 620 1230 680" marker-end="url(#ponta)"/>
-      <g class="etapa"><rect x="790" y="660" width="420" height="140" rx="70" stroke="#FBBC04"/>
-      <text x="1000" y="748" text-anchor="middle" font-size="56" font-weight="600">Executar</text></g>
-    </g>
-    <g class="fragment" data-fragment-index="4">
-      <path class="seta" d="M780 730 Q560 720 450 560" marker-end="url(#ponta)"/>
-      <g class="etapa"><rect x="100" y="400" width="420" height="140" rx="70" stroke="#34A853"/>
-      <text x="310" y="488" text-anchor="middle" font-size="56" font-weight="600">Verificar</text></g>
-    </g>
-    <g class="fragment" data-fragment-index="5">
-      <path class="seta" d="M320 390 Q360 180 680 110" marker-end="url(#ponta)"/>
-      <text x="470" y="260" font-size="44" opacity=".85">deu erro? corrige</text>
-    </g>
-  </svg>
-  <aside class="notes">Um clique por etapa. Destaque o Verificar: é isso que separa agente de chat. Ele roda o teste e volta sozinho.</aside>
-</section>
-
 <!-- 12. Onda 4: Time de agentes -->
 <section data-auto-animate data-background-color="#0E2418">
   <div class="track">
@@ -378,7 +340,47 @@
   <aside class="notes">Vários agentes, cada um com seu papel, rodando em paralelo. É o tema do resto da palestra.</aside>
 </section>
 
-<!-- 13. Tese -->
+
+  <!-- 11. Fluxograma: o ciclo do agente -->
+  <section data-background-color="#0F1B2D" class="loop">
+    <svg viewBox="0 0 1800 860" role="img" aria-label="Ciclo do agente: entender, planejar, executar, verificar, corrigir">
+      <defs>
+        <marker id="ponta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
+        </marker>
+      </defs>
+      <text x="900" y="455" text-anchor="middle" font-size="96" font-weight="800">O ciclo</text>
+      <text x="900" y="530" text-anchor="middle" font-size="44" opacity=".7">sem você no meio</text>
+
+      <g class="fragment" data-fragment-index="1">
+        <g class="etapa"><rect x="690" y="20" width="420" height="140" rx="70" stroke="#4285F4"/>
+          <text x="900" y="108" text-anchor="middle" font-size="56" font-weight="600">Entender</text></g>
+      </g>
+      <g class="fragment" data-fragment-index="2">
+        <path class="seta" d="M1120 120 Q1380 150 1440 280" marker-end="url(#ponta)"/>
+        <g class="etapa"><rect x="1280" y="300" width="420" height="140" rx="70" stroke="#EA4335"/>
+          <text x="1490" y="388" text-anchor="middle" font-size="56" font-weight="600">Planejar</text></g>
+      </g>
+      <g class="fragment" data-fragment-index="3">
+        <path class="seta" d="M1440 450 Q1400 620 1230 680" marker-end="url(#ponta)"/>
+        <g class="etapa"><rect x="790" y="660" width="420" height="140" rx="70" stroke="#FBBC04"/>
+          <text x="1000" y="748" text-anchor="middle" font-size="56" font-weight="600">Executar</text></g>
+      </g>
+      <g class="fragment" data-fragment-index="4">
+        <path class="seta" d="M780 730 Q560 720 450 560" marker-end="url(#ponta)"/>
+        <g class="etapa"><rect x="100" y="400" width="420" height="140" rx="70" stroke="#34A853"/>
+          <text x="310" y="488" text-anchor="middle" font-size="56" font-weight="600">Verificar</text></g>
+      </g>
+      <g class="fragment" data-fragment-index="5">
+        <path class="seta" d="M320 390 Q360 180 680 110" marker-end="url(#ponta)"/>
+        <text x="470" y="260" font-size="44" opacity=".85">deu erro? corrige</text>
+      </g>
+    </svg>
+    <aside class="notes">Um clique por etapa. Destaque o Verificar: é isso que separa agente de chat. Ele roda o teste e volta sozinho.</aside>
+  </section>
+
+
+  <!-- 13. Tese -->
 <section data-background-color="#FAFAF7">
   <div class="center claro">
     <h2 class="fragment risca" data-fragment-index="1" style="color:rgba(15,27,45,.45)">O gargalo era digitar.</h2>
@@ -545,14 +547,7 @@
 
   <!-- ================= PARTE 4 · SDD ================= -->
 
-  <!-- 19. Abertura de seção -->
-  <section data-background-color="#4285F4">
-    <div class="center">
-      <p style="font-size:.6em;opacity:.9;margin-bottom:.6em">Spec-Driven Development</p>
-      <h1>A spec é o esquema tático.</h1>
-    </div>
-    <aside class="notes">Em vez de improvisar no chat, a intenção vira Markdown versionado no repositório. O time de agentes joga em cima desse esquema.</aside>
-  </section>
+
 
   <!-- 20. Fluxograma do ciclo SDD com portões de revisão -->
   <section data-background-color="#0F1B2D" class="diagrama">
@@ -628,70 +623,6 @@ conductor/
     <h1>A spec é o esquema tático.</h1>
   </div>
   <aside class="notes">Em vez de improvisar no chat, a intenção vira Markdown versionado no repositório. O time de agentes joga em cima desse esquema.</aside>
-</section>
-
-<!-- 20. Fluxograma do ciclo SDD com portões de revisão -->
-<section data-background-color="#0F1B2D" class="diagrama">
-  <svg viewBox="0 0 1800 900" role="img" aria-label="Contexto, spec, plano e código, com revisão humana entre as etapas">
-    <defs>
-      <marker id="ponta3" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-        <path d="M0,0 L10,5 L0,10 z" fill="rgba(250,250,247,.5)"/>
-      </marker>
-    </defs>
-    <g>
-      <rect class="caixa" x="20" y="330" width="330" height="170" rx="85" stroke="#4285F4"/>
-      <text x="185" y="432" text-anchor="middle" font-size="56" font-weight="600">Contexto</text>
-    </g>
-    <g class="fragment" data-fragment-index="1">
-      <path class="seta" d="M360 415 L470 415" marker-end="url(#ponta3)"/>
-      <rect class="caixa" x="480" y="330" width="300" height="170" rx="85" stroke="#EA4335"/>
-      <text x="630" y="432" text-anchor="middle" font-size="56" font-weight="600">Spec</text>
-    </g>
-    <g class="fragment" data-fragment-index="2">
-      <circle cx="905" cy="415" r="80" fill="#FBBC04"/>
-      <text x="905" y="440" text-anchor="middle" font-size="72">👀</text>
-      <text x="905" y="590" text-anchor="middle" font-size="40" font-weight="600" style="fill:#FBBC04">você revisa</text>
-      <path class="seta" d="M790 415 L815 415"/>
-    </g>
-    <g class="fragment" data-fragment-index="3">
-      <path class="seta" d="M995 415 L1040 415" marker-end="url(#ponta3)"/>
-      <rect class="caixa" x="1050" y="330" width="300" height="170" rx="85" stroke="#FBBC04"/>
-      <text x="1200" y="432" text-anchor="middle" font-size="56" font-weight="600">Plano</text>
-    </g>
-    <g class="fragment" data-fragment-index="4">
-      <circle cx="1450" cy="415" r="70" fill="#FBBC04"/>
-      <text x="1450" y="438" text-anchor="middle" font-size="64">👀</text>
-      <path class="seta" d="M1360 415 L1375 415"/>
-      <path class="seta" d="M1525 415 L1560 415" marker-end="url(#ponta3)"/>
-      <rect class="caixa" x="1570" y="330" width="220" height="170" rx="85" stroke="#34A853"/>
-      <text x="1680" y="432" text-anchor="middle" font-size="56" font-weight="600">Código</text>
-    </g>
-    <g class="fragment fade-up" data-fragment-index="5">
-      <text x="900" y="160" text-anchor="middle" font-size="64" font-weight="800">Nenhuma linha antes do 👀</text>
-    </g>
-  </svg>
-  <aside class="notes">O ponto central: entre cada etapa existe um portão humano. O agente pesquisa o código, faz perguntas e gera a spec e o plano. Só depois da sua aprovação ele implementa.</aside>
-</section>
-
-<!-- 21. Os artefatos (árvore de arquivos) -->
-<section data-background-color="#0F1B2D">
-  <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:70px;height:100%;align-items:center">
-<pre class="codigo"><code><span class="c">$ tree conductor/</span>
-conductor/
-├── <span class="fragment destaque" data-fragment-index="1">product.md</span>
-├── <span class="fragment destaque" data-fragment-index="1">tech-stack.md</span>
-├── <span class="fragment destaque" data-fragment-index="1">workflow.md</span>
-└── tracks/
-    └── inscricoes/
-        ├── <span class="fragment destaque" data-fragment-index="2">spec.md</span>
-        └── <span class="fragment destaque" data-fragment-index="3">plan.md</span></code></pre>
-    <div class="troca">
-      <div class="fragment fade-in-then-out" data-fragment-index="1"><h2>Contexto</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">O produto, a stack e o jeito do time trabalhar.</p></div>
-      <div class="fragment fade-in-then-out" data-fragment-index="2"><h2 style="color:var(--vermelho)">Spec</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">O que vamos construir e por quê.</p></div>
-      <div class="fragment fade-in" data-fragment-index="3"><h2 style="color:var(--amarelo)">Plano</h2><p style="font-size:.7em;margin-top:.5em;opacity:.85">Fases e tarefas que dá pra delegar.</p></div>
-    </div>
-  </div>
-  <aside class="notes">Estrutura do Conductor. ATENÇÃO: confira os nomes de pasta e comandos na versão que você vai usar (o SDD foi migrado para comandos /spec embutidos em algumas versões). A ideia é a mesma: tudo em Markdown, tudo no Git.</aside>
 </section>
 
 <!-- 22. spec.md e plan.md lado a lado -->
